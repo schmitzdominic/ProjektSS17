@@ -53,8 +53,8 @@ Plugins:
 > - /giphy (Gifs) Beispiel: `/giphy Geburtstag`  
 
 Slackbot:
-> - Repository link (_Zeigt den Aktuellen Repository Link_)  
-> - Git tutorial (_Zeigt den Link zum Git Repository_)  
-> - backlog (_Zeigt den Link zu unserem Backlog_)  
+> - Git tutorial (_Zeigt den Link zum Git Repository_) 
+> - link Repository (_Zeigt den Aktuellen Repository Link_)  
+> - link backlog (_Zeigt den Link zu unserem Backlog_)  
 > - link drive (_Zeigt den Link zu unserem Google Drive_)
 
