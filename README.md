@@ -10,7 +10,7 @@
 
 ## Todo´s
 
-> - [] **Pre-Projekt-Workshop** - 13.03, Start 10:00:   
+> - [ ] **Pre-Projekt-Workshop** - 13.03, Start 10:00:   
 >       Inhalte:  
 >       - Git / Github (_Domi_)  
 >       - Scrum (_Fabi_)  
