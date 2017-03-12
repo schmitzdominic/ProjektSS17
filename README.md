@@ -27,7 +27,7 @@
 
 ## Allgemeines
 
-> - **Retro und Planing - (vrs. Mittwoch 14:00 - o.e)**  
+> - **Retro/Review und Planing - (vrs. Mittwoch 14:00 - o.e)**  
 > - **Daily - (vrs. NOCH NICHT VEREINBART!)**
 >
 ***
