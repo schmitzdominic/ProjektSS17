@@ -2,14 +2,14 @@
 
 ## Neuigkeiten
 >
->  Willkommen auf dem Repository des Projekts "Kassenzettel App"
+>  Willkommen auf dem Repository des Projekts "BonPix" (Kassenzettel App)
 >
 >
 ***
 
 ## Todo´s
 
-> - [ ] **Pre-Projekt-Workshop - 13.03, Start 10:00 ~ 14:00:**   
+> - [x] **Pre-Projekt-Workshop - 13.03, Start 10:00 ~ 14:00:**
 >       Inhalte:  
 >       - Git / Github (_Domi_)  
 >       - Scrum (_Fabi_)  
@@ -27,8 +27,19 @@
 
 ## Allgemeines
 
-> - **Retro und Planing - (vrs. Mittwoch 14:00 - o.e)**  
+> - **Retro/Review und Planing - (vrs. Mittwoch 14:00 - o.e)**  
 > - **Daily - (vrs. NOCH NICHT VEREINBART!)**
+>
+
+**Projektteilnehmer:**
+> Dominik Edin  
+> Dominic Schmitz  
+> Johanns Varela  
+> Sascha Braun  
+> Alexander Leicher  
+> Uli Satzger  
+> Daniel Königl  
+> Fabian Sippl
 >
 ***
 
