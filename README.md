@@ -2,7 +2,7 @@
 
 ## Neuigkeiten
 >
->  Willkommen auf dem Repository des Projekts "Kassenzettel App"
+>  Willkommen auf dem Repository des Projekts "BonPix" (Kassenzettel App)
 >
 >
 ***
