@@ -35,7 +35,7 @@
 > Dominik Edin  
 > Dominic Schmitz  
 > Johanns Varela  
-> Sascha Braun  
+> Sascha Braun (E-mail: saschabraun83@gmail.com)
 > Alexander Leicher  
 > Uli Satzger  
 > Daniel Königl  
