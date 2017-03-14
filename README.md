@@ -32,6 +32,7 @@
 >
 
 **Projektteilnehmer:**
+> Dominik Edin
 > Dominic Schmitz
 > Johanns Varela
 ***
