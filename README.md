@@ -36,6 +36,7 @@
 > Dominic Schmitz
 > Johanns Varela
 > Sascha Braun  
+> Alexander Leicher  
 ***
 
 ## Setup
