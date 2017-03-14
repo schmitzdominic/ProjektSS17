@@ -32,13 +32,14 @@
 >
 
 **Projektteilnehmer:**
-> Dominik Edin
-> Dominic Schmitz
-> Johanns Varela
+> Dominik Edin  
+> Dominic Schmitz  
+> Johanns Varela  
 > Sascha Braun  
 > Alexander Leicher  
 > Uli Satzger  
 > Daniel Königl  
+> Fabian Sippl  
 ***
 
 ## Setup
