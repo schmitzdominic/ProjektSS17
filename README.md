@@ -37,7 +37,7 @@
 > Johanns Varela  
 > Sascha Braun  
 > Alexander Leicher  
-> Uli Satzger  
+> Uli Satzger (uli.satzger@freenet.de)
 > Daniel Königl  
 > Fabian Sippl
 >
