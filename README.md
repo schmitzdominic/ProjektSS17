@@ -5,6 +5,7 @@
 >  Willkommen auf dem Repository des Projekts "BonPix" (Kassenzettel App)
 >
 >
+>
 ***
 
 ## Todo´s
@@ -33,7 +34,7 @@
 
 **Projektteilnehmer:**
 > Dominik Edin  
-> Dominic Schmitz  
+> Dominic Schmitz (Dominic.Schmitz@HS-Augsburg.de)
 > Johanns Varela  
 > Sascha Braun  
 > Alexander Leicher  
