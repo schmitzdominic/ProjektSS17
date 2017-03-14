@@ -33,6 +33,7 @@
 
 **Projektteilnehmer:**
 > Dominic Schmitz
+> Johanns Varela
 ***
 
 ## Setup
