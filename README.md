@@ -38,6 +38,7 @@
 > Sascha Braun  
 > Alexander Leicher  
 > Uli Satzger  
+> Daniel Königl  
 ***
 
 ## Setup
