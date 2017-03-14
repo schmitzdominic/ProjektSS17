@@ -37,6 +37,7 @@
 > Johanns Varela
 > Sascha Braun  
 > Alexander Leicher  
+> Uli Satzger  
 ***
 
 ## Setup
