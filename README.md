@@ -33,7 +33,7 @@
 
 **Projektteilnehmer:**
 > Dominik Edin  
-> Dominic Schmitz  
+> Dominic Schmitz (Dominic.Schmitz@HS-Augsburg.de)
 > Johanns Varela  
 > Sascha Braun  
 > Alexander Leicher  
