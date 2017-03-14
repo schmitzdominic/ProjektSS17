@@ -39,7 +39,7 @@
 > Alexander Leicher  
 > Uli Satzger  
 > Daniel Königl  
-> Fabian Sippl
+> Fabian Sippl (fabianegmont.sippl@hs-augsburg.de)
 >
 ***
 
