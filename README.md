@@ -32,7 +32,7 @@
 >
 
 **Projektteilnehmer:**
->
+> Dominic Schmitz
 ***
 
 ## Setup
