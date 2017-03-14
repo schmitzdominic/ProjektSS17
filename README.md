@@ -39,7 +39,8 @@
 > Alexander Leicher  
 > Uli Satzger  
 > Daniel Königl  
-> Fabian Sippl  
+> Fabian Sippl
+>
 ***
 
 ## Setup
