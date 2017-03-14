@@ -32,7 +32,7 @@
 >
 
 **Projektteilnehmer:**
-> Dominik Edin  
+> Dominik Edin (Email: dominik.edin@hs-augsburg.de)
 > Dominic Schmitz  
 > Johanns Varela  
 > Sascha Braun  
