@@ -2,7 +2,7 @@
 
 ## Neuigkeiten
 >
->  Willkommen auf dem Repository des Projekts "Kassenzettel App"
+>  Willkommen auf dem Repository des Projekts "BonPix" (Kassenzettel App)
 >
 >
 ***
@@ -32,12 +32,14 @@
 >
 
 **Projektteilnehmer:**
-> Dominik Edin
-> Dominic Schmitz
-> Johanns Varela
+> Dominik Edin  
+> Dominic Schmitz  
+> Johanns Varela  
 > Sascha Braun  
 > Alexander Leicher  
 > Uli Satzger  
+> Daniel Königl  
+> Fabian Sippl  
 ***
 
 ## Setup
