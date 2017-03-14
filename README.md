@@ -36,7 +36,7 @@
 > Dominic Schmitz  
 > Johanns Varela  
 > Sascha Braun  
-> Alexander Leicher (E-Mail: Alexanderleicher@gmx)
+> Alexander Leicher (E-Mail: Alexanderleicher@gmx.de)
 > Uli Satzger  
 > Daniel Königl  
 > Fabian Sippl
