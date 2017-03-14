@@ -34,7 +34,7 @@
 **Projektteilnehmer:**
 > Dominik Edin  
 > Dominic Schmitz  
-> Johanns Varela  
+> Johanns Varela (joeymez1993@yahoo.de)
 > Sascha Braun  
 > Alexander Leicher  
 > Uli Satzger  
