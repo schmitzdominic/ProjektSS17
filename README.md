@@ -38,7 +38,7 @@
 > Sascha Braun  
 > Alexander Leicher  
 > Uli Satzger  
-> Daniel Königl  
+> Daniel Königl  (daniel@koenigl-bayern.de)
 > Fabian Sippl
 >
 ***
