@@ -30,6 +30,14 @@
 > - **Retro/Review und Planing - (vrs. Mittwoch 14:00 - o.e)**  
 > - **Daily - (vrs. NOCH NICHT VEREINBART!)**
 >
+
+**Projektteilnehmer:**
+> Dominik Edin
+> Dominic Schmitz
+> Johanns Varela
+> Sascha Braun  
+> Alexander Leicher  
+> Uli Satzger  
 ***
 
 ## Setup
