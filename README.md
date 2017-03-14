@@ -16,7 +16,7 @@
 >       - Zenhub (_Fabi / Domi_)  
 >       - Slack (_Domi / Marcus_)
 >
-> - [ ] **Pre-Projekt-Workshop - 14.04, Start 10:00 ~ 14:00:**  
+> - [x] **Pre-Projekt-Workshop - 14.04, Start 10:00 ~ 14:00:**
 >       Inhalte:  
 >       - Diskusion über das gesamte Projekt (_Alle_)  
 >       - Android Studio und App Aufbau (_Marcus_)  
