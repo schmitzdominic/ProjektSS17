@@ -35,13 +35,12 @@
 **Projektteilnehmer:**
 > Dominik Edin  
 > Dominic Schmitz (Dominic.Schmitz@HS-Augsburg.de)
-> Johanns Varela  
+> Johanns Varela
+> Alexander Leicher (E-Mail: Alexanderleicher@gmx.de)
 > Sascha Braun (E-mail: saschabraun83@gmail.com)
-> Alexander Leicher  
 > Uli Satzger (uli.satzger@freenet.de)
 > Daniel Königl  (daniel@koenigl-bayern.de)
 > Fabian Sippl (fabianegmont.sippl@hs-augsburg.de)
-
 >
 ***
 
