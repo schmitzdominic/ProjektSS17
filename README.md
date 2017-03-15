@@ -38,8 +38,8 @@
 > Johanns Varela  
 > Sascha Braun  
 > Alexander Leicher  
-> Uli Satzger  
-> Daniel Königl  (daniel@koenigl-bayern.de) 
+> Uli Satzger (uli.satzger@freenet.de)
+> Daniel Königl  (daniel@koenigl-bayern.de)
 > Fabian Sippl (fabianegmont.sippl@hs-augsburg.de)
 
 >
