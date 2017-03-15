@@ -36,7 +36,7 @@
 > Dominik Edin  
 > Dominic Schmitz (Dominic.Schmitz@HS-Augsburg.de)
 > Johanns Varela  
-> Sascha Braun  
+> Sascha Braun (E-mail: saschabraun83@gmail.com)
 > Alexander Leicher  
 > Uli Satzger (uli.satzger@freenet.de)
 > Daniel Königl  (daniel@koenigl-bayern.de)
