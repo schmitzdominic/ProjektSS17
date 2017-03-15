@@ -35,7 +35,7 @@
 **Projektteilnehmer:**
 > Dominik Edin  
 > Dominic Schmitz (Dominic.Schmitz@HS-Augsburg.de)
-> Johanns Varela
+> Johanns Varela (joeymez1993@yahoo.de)
 > Alexander Leicher (E-Mail: Alexanderleicher@gmx.de)
 > Sascha Braun (E-mail: saschabraun83@gmail.com)
 > Uli Satzger (uli.satzger@freenet.de)
