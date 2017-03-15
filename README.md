@@ -36,11 +36,11 @@
 > Dominik Edin  
 > Dominic Schmitz (Dominic.Schmitz@HS-Augsburg.de)
 > Johanns Varela (joeymez1993@yahoo.de)
-> Sascha Braun
-> Alexander Leicher  
-> Uli Satzger  
-> Daniel Königl  
-> Fabian Sippl
+> Alexander Leicher (E-Mail: Alexanderleicher@gmx.de)
+> Sascha Braun (E-mail: saschabraun83@gmail.com)
+> Uli Satzger (uli.satzger@freenet.de)
+> Daniel Königl  (daniel@koenigl-bayern.de)
+> Fabian Sippl (fabianegmont.sippl@hs-augsburg.de)
 >
 ***
 
