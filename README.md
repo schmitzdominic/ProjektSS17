@@ -5,6 +5,7 @@
 >  Willkommen auf dem Repository des Projekts "BonPix" (Kassenzettel App)
 >
 >
+>
 ***
 
 ## Todo´s
@@ -33,13 +34,13 @@
 
 **Projektteilnehmer:**
 > Dominik Edin  
-> Dominic Schmitz  
-> Johanns Varela  
-> Sascha Braun  
+> Dominic Schmitz (Dominic.Schmitz@HS-Augsburg.de)
+> Johanns Varela
 > Alexander Leicher (E-Mail: Alexanderleicher@gmx.de)
-> Uli Satzger  
-> Daniel Königl  
-> Fabian Sippl
+> Sascha Braun (E-mail: saschabraun83@gmail.com)
+> Uli Satzger (uli.satzger@freenet.de)
+> Daniel Königl  (daniel@koenigl-bayern.de)
+> Fabian Sippl (fabianegmont.sippl@hs-augsburg.de)
 >
 ***
 
