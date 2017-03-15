@@ -9,26 +9,14 @@
 
 ## Todo´s
 
-> - [x] **Pre-Projekt-Workshop - 13.03, Start 10:00 ~ 14:00:**
->       Inhalte:  
->       - Git / Github (_Domi_)  
->       - Scrum (_Fabi_)  
->       - Zenhub (_Fabi / Domi_)  
->       - Slack (_Domi / Marcus_)
->
-> - [ ] **Pre-Projekt-Workshop - 14.04, Start 10:00 ~ 14:00:**  
->       Inhalte:  
->       - Diskusion über das gesamte Projekt (_Alle_)  
->       - Android Studio und App Aufbau (_Marcus_)  
->       - Grooming (_Alle_)  
->       - Planing (_Alle_)  
+> - [ ] **Daily - 15.03, Start 17:30 ~ 17:45:**
 >
 ***
 
 ## Allgemeines
 
-> - **Retro/Review und Planing - (vrs. Mittwoch 14:00 - o.e)**  
-> - **Daily - (vrs. NOCH NICHT VEREINBART!)**
+> - **Retro/Review und Planing - (Dienstag 09:50 - 13:10)**
+> - **Daily - (variabel)**
 >
 
 **Projektteilnehmer:**
