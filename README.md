@@ -33,7 +33,7 @@
 >
 
 **Projektteilnehmer:**
-> Dominik Edin  
+> Dominik Edin (Email: dominik.edin@hs-augsburg.de)
 > Dominic Schmitz (Dominic.Schmitz@HS-Augsburg.de)
 > Johanns Varela (joeymez1993@yahoo.de)
 > Alexander Leicher (E-Mail: Alexanderleicher@gmx.de)
