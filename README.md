@@ -33,14 +33,15 @@
 >
 
 **Projektteilnehmer:**
-> Dominik Edin (Email: dominik.edin@hs-augsburg.de)  
-> Dominic Schmitz (Dominic.Schmitz@HS-Augsburg.de)  
-> Johanns Varela (joeymez1993@yahoo.de)  
-> Alexander Leicher (E-Mail: Alexanderleicher@gmx.de)  
-> Sascha Braun (E-mail: saschabraun83@gmail.com)  
-> Uli Satzger (uli.satzger@freenet.de)  
-> Daniel Königl  (daniel@koenigl-bayern.de)  
-> Fabian Sippl (fabianegmont.sippl@hs-augsburg.de)  
+> Dominik Edin (**E-Mail:** dominik.edin@hs-augsburg.de)  
+> Dominic Schmitz (**E-Mail:** Dominic.Schmitz@HS-Augsburg.de)  
+> Johanns Varela (**E-Mail:** joeymez1993@yahoo.de)  
+> Alexander Leicher (**E-Mail:** Alexanderleicher@gmx.de)  
+> Sascha Braun (**E-Mail:** saschabraun83@gmail.com)  
+> Uli Satzger (**E-Mail:** uli.satzger@freenet.de)  
+> Daniel Königl (**E-Mail:** daniel@koenigl-bayern.de)  
+> Fabian Sippl (**E-Mail:** fabianegmont.sippl@hs-augsburg.de)
+> Marcus Hedrich (**E-Mail:** marcushedrich92@gmail.com)
 >
 ***
 
