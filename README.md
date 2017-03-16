@@ -40,7 +40,7 @@
 > Sascha Braun (**E-Mail:** saschabraun83@gmail.com)  
 > Uli Satzger (**E-Mail:** uli.satzger@freenet.de)  
 > Daniel Königl (**E-Mail:** daniel@koenigl-bayern.de)  
-> Fabian Sippl (**E-Mail:** fabianegmont.sippl@hs-augsburg.de)  
+> Fabian Sippl (**E-Mail:** fabianegmont.sippl@hs-augsburg.de)    
 > Marcus Hedrich (**E-Mail:** marcushedrich92@gmail.com)
 >
 ***
