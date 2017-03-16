@@ -10,14 +10,17 @@
 
 ## Todo´s
 
-> User Story´s
+> User Story´s Allgemein
+> - [18](https://github.com/schmitzdominic/ProjektSS17/issues/18) i_tutorial_suchen (Bitte Vorschläge in das Issue schreiben)  
+> - [19](https://github.com/schmitzdominic/ProjektSS17/issues/19) i_tutorial_studieren (Bitte die Tutorials aus Issue 18 durch machen)  
+> - [29](https://github.com/schmitzdominic/ProjektSS17/issues/29) i_ideen_sammeln (Bitte Vorschläge in das Issue schreiben)  
 >
 ***
 
 ## Allgemeines
 
 > - **Retro/Review und Planing - (Dienstag 09:50 - 13:10)**  
-> - **Daily - ()**
+> - **Daily - (Montag, Mittwoch, Donnerstag)**
 >
 
 **Projektteilnehmer:**
