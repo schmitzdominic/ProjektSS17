@@ -18,7 +18,7 @@
 
 ## Allgemeines
 
-> - **Retro/Review und Planing - (Dienstag 09:50 - 13:10)**  
+> - **Retro/Review und Planing - (Dienstag 09:50 - 13:10 / Raum J4.13)**  
 > - **Daily - (Montag, Mittwoch, Donnerstag)**
 >
 
