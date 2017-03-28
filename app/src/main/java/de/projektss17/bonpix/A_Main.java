@@ -64,6 +64,20 @@ public class A_Main extends AppCompatActivity {
 
         fabBGLayout=findViewById(R.id.fabBGLayout);
 
+        fotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO Click auf den Foto button
+            }
+        });
+
+        fotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO Click auf den Manuell button
+            }
+        });
+
         kameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,59 +93,6 @@ public class A_Main extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 closeFABMenu();
-            }
-        });
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(isFABOpen){
-            closeFABMenu();
-        }else{
-            super.onBackPressed();
-        }
-    }
-
-    private void showFABMenu(){
-        isFABOpen=true;
-        this.fotoLayout.setVisibility(View.VISIBLE);
-        this.manuellLayout.setVisibility(View.VISIBLE);
-
-        this.kameraButton.animate().rotationBy(90);
-        this.fotoLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
-        this.manuellLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
-    }
-
-    private void closeFABMenu(){
-        isFABOpen=false;
-        fabBGLayout.setVisibility(View.GONE);
-        this.kameraButton.animate().rotationBy(-90);
-        this.fotoButton.animate().translationY(0);
-        this.manuellButton.animate().translationY(0);
-        this.fotoLayout.animate().translationY(0);
-        this.manuellLayout.animate().translationY(0).setListener(new Animator.AnimatorListener(){
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                if(!isFABOpen){
-                    fotoLayout.setVisibility(View.GONE);
-                    manuellLayout.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
             }
         });
     }
@@ -228,5 +189,57 @@ public class A_Main extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isFABOpen){
+            closeFABMenu();
+        }else{
+            super.onBackPressed();
+        }
+    }
+
+    private void showFABMenu(){
+        isFABOpen=true;
+        this.fotoLayout.setVisibility(View.VISIBLE);
+        this.manuellLayout.setVisibility(View.VISIBLE);
+
+        this.kameraButton.animate().rotationBy(90);
+        this.fotoLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
+        this.manuellLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
+    }
+
+    private void closeFABMenu(){
+        isFABOpen=false;
+        fabBGLayout.setVisibility(View.GONE);
+        this.kameraButton.animate().rotationBy(-90);
+        this.fotoButton.animate().translationY(0);
+        this.manuellButton.animate().translationY(0);
+        this.fotoLayout.animate().translationY(0);
+        this.manuellLayout.animate().translationY(0).setListener(new Animator.AnimatorListener(){
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                if(!isFABOpen){
+                    fotoLayout.setVisibility(View.GONE);
+                    manuellLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
     }
 }
