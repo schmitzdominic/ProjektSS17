@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item android:id="@+id/nav_budget"
+            android:title="@string/nav_budget" />
+
+        <item android:id="@+id/nav_gruppen"
+            android:title="@string/nav_gruppen" />
+
+        <item android:id="@+id/nav_favoriten"
+            android:title="@string/nav_favoriten" />
+
+        <item android:id="@+id/nav_garantie"
+            android:title="@string/nav_garantie" />
+
+        <item android:id="@+id/nav_einstllungen"
+            android:title="@string/nav_einstellungen" />
+</menu>

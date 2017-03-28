@@ -9,6 +9,14 @@
     <string name="foto_button">Foto</string>
     <string name="manuell_button">Manuell</string>
 
+    <!-- Navigation Drawer -->
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="nav_budget">Budget</string>
+    <string name="nav_gruppen">Gruppen</string>
+    <string name="nav_favoriten">Favoriten</string>
+    <string name="nav_garantie">Garantie</string>
+    <string name="nav_einstellungen">Einstellungen</string>
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
