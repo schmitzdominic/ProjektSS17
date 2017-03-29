@@ -20,4 +20,6 @@
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
+    <string name="title_activity_gruppen">Gruppen</string>
+    <string name="title_activity_test">Test</string>
 </resources>

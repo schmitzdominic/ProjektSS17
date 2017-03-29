@@ -2,6 +2,7 @@ package de.projektss17.bonpix;
 
 /**
  * Created by Domi on 28.03.2017.
+ * Hier bitte die Logik des dritten Tabs
  */
 
 import android.support.v4.app.Fragment;
