@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 app:fabSize="mini"
-                app:srcCompat="@mipmap/ic_mode_edit_white_24dp" />
+                app:srcCompat="@mipmap/ic_playlist_add_white_24dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -114,7 +114,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:gravity="center_vertical"
-            app:srcCompat="@mipmap/ic_playlist_add_white_24dp" />
+            app:srcCompat="@mipmap/ic_add_white_24dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 
