@@ -16,8 +16,7 @@ public class S extends Activity {
     public static void showFoto(AppCompatActivity beforeActivity){
         // TODO Aufruf der e_kamera_ocr
         /**Beispiel:
-        Intent intent = new Intent(beforeActivity, OTHERACTIVITY.class);
-        beforeActivity.startActivity(intent);
+        S.startActivity(beforeActivity, OTHERACTVITIY.class);
         */
     }
 
@@ -40,7 +39,6 @@ public class S extends Activity {
      */
     public static void showGruppen(AppCompatActivity beforeActivity){
         // TODO Activity A_Gruppen aufrufen
-
     }
 
     /**
@@ -62,6 +60,16 @@ public class S extends Activity {
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
         // TODO Activity A_Einstellungen aufrufen
+    }
+
+    /**
+     * Startet Activitys
+     * @param beforeActivity Vorherige Instanz der Activity
+     * @param cls Activity Klasse die gestartet werden soll
+     */
+    public static void startActivitiy(AppCompatActivity beforeActivity, Class<?> cls){
+        Intent intent = new Intent(beforeActivity, cls);
+        beforeActivity.startActivity(intent);
     }
 
 }
