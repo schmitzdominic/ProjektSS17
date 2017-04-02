@@ -18,7 +18,10 @@
     <string name="nav_garantie">Garantie</string>
     <string name="nav_einstellungen">Einstellungen</string>
 
+    <!-- A_Einstellungen -->
+    <string name="title_activity_a__einstellungen">Einstellungen</string>
+
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
-    <string name="title_activity_a__einstellungen">A_Einstellungen</string>
+
 </resources>
