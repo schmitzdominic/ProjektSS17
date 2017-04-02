@@ -38,7 +38,7 @@ public class S extends Activity {
      * Ruft die Gruppen Activity auf
      */
     public static void showGruppen(AppCompatActivity beforeActivity){
-        // TODO Activity A_Gruppen aufrufen
+        S.startActivitiy(beforeActivity, A_Gruppen.class);
     }
 
     /**
