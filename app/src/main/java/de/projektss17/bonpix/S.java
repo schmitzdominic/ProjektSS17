@@ -31,7 +31,7 @@ public class S extends Activity {
      * Ruft die Budget Activity auf
      */
     public static void showBudget(AppCompatActivity beforeActivity){
-        // TODO Activity A_Budget aufrufen
+        S.startActivitiy(beforeActivity, A_Budget.class);
     }
 
     /**

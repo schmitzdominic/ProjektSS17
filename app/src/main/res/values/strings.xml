@@ -18,6 +18,12 @@
     <string name="nav_garantie">Garantie</string>
     <string name="nav_einstellungen">Einstellungen</string>
 
+
+    <!-- A_Budget-->
+    <string name="title_activity_a__budget">A_Budget</string>
+
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
+
+
 </resources>
