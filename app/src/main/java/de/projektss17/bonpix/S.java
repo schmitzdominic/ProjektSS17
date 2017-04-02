@@ -59,7 +59,8 @@ public class S extends Activity {
      * Ruft die Budget Activity auf
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
-        // TODO Activity A_Einstellungen aufrufen
+
+        S.startActivitiy(beforeActivity, A_Einstellungen.class);
     }
 
     /**

@@ -20,4 +20,5 @@
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
+    <string name="title_activity_a__einstellungen">A_Einstellungen</string>
 </resources>
