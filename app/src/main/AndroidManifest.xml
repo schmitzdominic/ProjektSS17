@@ -20,6 +20,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".A_Gruppen"
+            android:label="@string/title_activity_a__gruppen"
+            android:parentActivityName=".A_Main"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Main" />
+        </activity>
+        <activity
             android:name=".A_Einstellungen"
             android:label="@string/title_activity_a__einstellungen"
             android:parentActivityName=".A_Main"
@@ -27,12 +36,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
