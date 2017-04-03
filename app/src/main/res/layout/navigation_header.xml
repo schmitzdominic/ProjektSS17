@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="140dp"
-    android:background="@color/colorPrimary">
+android:layout_width="match_parent"
+android:layout_height="140dp"
+android:background="@color/colorPrimary">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:paddingLeft="20dp"
-        android:paddingTop="50dp"
-        android:text="Navigation"
-        android:textColor="@android:color/white"
-        android:textSize="30dp" />
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:paddingLeft="20dp"
+    android:paddingTop="50dp"
+    android:text="Navigation"
+    android:textColor="@android:color/white"
+    android:textSize="30dp" />
 </RelativeLayout>

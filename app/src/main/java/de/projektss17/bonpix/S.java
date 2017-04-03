@@ -38,14 +38,14 @@ public class S extends Activity {
      * Ruft die Gruppen Activity auf
      */
     public static void showGruppen(AppCompatActivity beforeActivity){
-        // TODO Activity A_Gruppen aufrufen
+        S.startActivitiy(beforeActivity, A_Gruppen.class);
     }
 
     /**
      * Ruft die Favoriten Activity auf
      */
     public static void showFavoriten(AppCompatActivity beforeActivity){
-        // TODO Activity A_Favoriten aufrufen
+        S.startActivitiy(beforeActivity, A_Favoriten.class);
     }
 
     /**
@@ -59,7 +59,8 @@ public class S extends Activity {
      * Ruft die Budget Activity auf
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
-        // TODO Activity A_Einstellungen aufrufen
+
+        S.startActivitiy(beforeActivity, A_Einstellungen.class);
     }
 
     /**

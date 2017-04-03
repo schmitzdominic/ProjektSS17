@@ -18,12 +18,18 @@
     <string name="nav_garantie">Garantie</string>
     <string name="nav_einstellungen">Einstellungen</string>
 
-
     <!-- A_Budget-->
     <string name="title_activity_a__budget">Budget</string>
 
+    <!-- A_Favoriten -->
+    <string name="title_activity_a__favoriten">Favoriten</string>
+
+    <!-- A_Gruppen -->
+    <string name="title_activity_a__gruppen">Gruppen</string>
+
+    <!-- A_Einstellungen -->
+    <string name="title_activity_a__einstellungen">Einstellungen</string>
+
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
-
-
 </resources>
