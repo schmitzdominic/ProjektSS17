@@ -45,7 +45,7 @@ public class S extends Activity {
      * Ruft die Favoriten Activity auf
      */
     public static void showFavoriten(AppCompatActivity beforeActivity){
-        // TODO Activity A_Favoriten aufrufen
+        S.startActivitiy(beforeActivity, A_Favoriten.class);
     }
 
     /**
