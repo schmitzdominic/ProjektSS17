@@ -52,7 +52,7 @@ public class S extends Activity {
      * Ruft die Garantie Activity auf
      */
     public static void showGarantie(AppCompatActivity beforeActivity){
-        // TODO Activity A_Garantie aufrufen
+        S.startActivitiy(beforeActivity, A_Garantie.class);
     }
 
     /**
