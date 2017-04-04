@@ -11,12 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Tab3Bons extends Fragment{
+public class A_Tab3Bons extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab3_bons, container, false);
+        View rootView = inflater.inflate(R.layout.box_tab3_bons_content, container, false);
         return rootView;
     }
 }

@@ -5,7 +5,7 @@ android:layout_height="140dp"
 android:background="@color/colorPrimary">
 
 <TextView
-    android:id="@+id/textView"
+    android:id="@+id/navigation_drawer_textView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentLeft="true"
