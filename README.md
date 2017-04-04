@@ -21,9 +21,9 @@
 ## Allgemeines
 
 > - **Review/Retro-[Berichte](https://drive.google.com/drive/folders/0B9qV3EwhEWCuMXNUbmxJRGlJTEU) und Planing - (Dienstag 09:50 - 13:10 / Raum J4.13)**
-> - **Daily - (Montag 13:30, Mittwoch und Donnerstag 18:00)**
+> - **Daily - (Montag 13:30, Mittwoch und Donnerstag 18:00)**  
 > - **Für Board Beschreibung bitte [hier](https://docs.google.com/spreadsheets/d/1wwcHz11pjHTqc3ZZ2051L105-6TcFSmYNDd835qzN6Y/edit#gid=0) klicken**  
-> - **Für SCRUM Beschreibung bitte [hier](https://docs.google.com/document/d/1TptmE4f_AjRHl74fE4fBC21at8F3jo1Q0S12jlMV-pM/edit) klicken**  
+> - **Für SCRUM Beschreibung bitte [hier](https://docs.google.com/document/d/1TptmE4f_AjRHl74fE4fBC21at8F3jo1Q0S12jlMV-pM/edit) klicken**    
 >
 
 **Projektteilnehmer:**
