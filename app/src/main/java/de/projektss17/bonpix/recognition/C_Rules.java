@@ -1,5 +1,7 @@
 package de.projektss17.bonpix.recognition;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,19 +25,24 @@ public class C_Rules {
         for(int i = 0; i < txt.length(); i++){
             if(this.isDigit(txt.charAt(i))){
                 dummy += txt.charAt(i);
-                if(afterComma <= 1 && afterComma < 3){
+                if(afterComma > 0 && afterComma < 3){
                     afterComma++;
                 }
                 continue;
             }
             if(this.isSeparate(txt.charAt(i))){
-                dummy += txt.charAt(i);
+                if(txt.charAt(i) == '.'){
+                    dummy += ',';
+                }else{
+                    dummy += txt.charAt(i);
+                }
                 afterComma = 1;
                 continue;
             }
             if(this.isReturn(txt.charAt(i)) || afterComma == 2){
-                if(!dummy.equals("")){
+                if(!dummy.equals("") && (dummy.contains(",") || dummy.contains("."))){
                     betraege.add(dummy);
+                    Log.i("",""+dummy);
                     dummy = "";
                     afterComma = 0;
                 } else {
@@ -52,12 +59,17 @@ public class C_Rules {
         }
 
         for(String x : betraegeReverse){
-            if(x.contains(",") || x.contains(".") && x.length() > 3){
+            if(this.isOK(x)){
                 rueck += (x + "\n");
             }
         }
-
         return rueck;
+    }
+
+    public boolean isOK(String x){
+        return ((x.contains(",") ||
+                x.contains(".")) &&
+                x.length() > 3);
     }
 
     public boolean isDigit(char c){

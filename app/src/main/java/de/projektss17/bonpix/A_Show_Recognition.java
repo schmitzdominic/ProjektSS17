@@ -64,11 +64,11 @@ public class A_Show_Recognition extends AppCompatActivity {
             String adder = "";
             for(int i=0; i<items.size();++i){
                 TextBlock item = items.valueAt(i);
-                adder = this.rules.formater(item.getValue());
-                stringBuilder.append(adder);
+                //adder = this.rules.formater(item.getValue());
+                stringBuilder.append(item.getValue());
                 stringBuilder.append("\n");
             }
-            txtResult.setText(stringBuilder.toString());
+            txtResult.setText(this.rules.formater(stringBuilder.toString()));
         }
     }
 
