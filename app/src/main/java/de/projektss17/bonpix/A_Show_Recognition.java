@@ -7,8 +7,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,6 +23,9 @@ import java.util.ArrayList;
 import de.projektss17.bonpix.R;
 
 public class A_Show_Recognition extends AppCompatActivity {
+
+    ImageView imageView;
+    TextView txtResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +35,7 @@ public class A_Show_Recognition extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        txtResult = (TextView) findViewById(R.id.show_recognition_textview_result);
 
         ArrayList<String> aList = getIntent().getStringArrayListExtra("ArrayList");
 
@@ -32,10 +43,30 @@ public class A_Show_Recognition extends AppCompatActivity {
         if(imgFile.exists())
         {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            ImageView imageView=(ImageView)findViewById(R.id.show_recognition_imageview);
+            imageView=(ImageView)findViewById(R.id.show_recognition_imageview);
             imageView.setImageBitmap(myBitmap);
+            this.recognize(myBitmap);
         }
 
+    }
+
+    private void recognize(Bitmap bitmap){
+        TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+        if(!textRecognizer.isOperational()){
+            Log.e("ERROR","Detector dependencies are not yet available");
+        } else {
+            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+            SparseArray<TextBlock> items = textRecognizer.detect(frame);
+            StringBuilder stringBuilder = new StringBuilder();
+            for(int i=0; i<items.size();++i){
+                TextBlock item = items.valueAt(i);
+                stringBuilder.append(item.getValue());
+                stringBuilder.append("\n");
+            }
+            S.outLong(A_Show_Recognition.this, stringBuilder.toString());
+            txtResult.setText(stringBuilder.toString());
+
+        }
     }
 
 }
