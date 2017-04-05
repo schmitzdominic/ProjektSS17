@@ -9,6 +9,9 @@ public class C_Rules {
     public String formater(String txt){
 
 
+        txt = txt.replaceAll(" ", "");
+
+
         return txt;
     }
 }
