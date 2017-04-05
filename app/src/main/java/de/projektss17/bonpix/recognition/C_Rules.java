@@ -1,6 +1,7 @@
 package de.projektss17.bonpix.recognition;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -12,19 +13,32 @@ public class C_Rules {
     public String formater(String txt){
         txt = txt.replaceAll(" ", "");
 
-        List<String> betraege = new ArrayList();
+        HashSet<String> betraege = new HashSet<>();
 
         String dummy = "";
+        int afterComma = 0;
 
         for(int i = 0; i < txt.length(); i++){
             if(this.isDigit(txt.charAt(i))){
                 dummy += txt.charAt(i);
+                if(afterComma <= 1 && afterComma < 3){
+                    afterComma++;
+                }
+                continue;
             }
             if(this.isSeparate(txt.charAt(i))){
                 dummy += txt.charAt(i);
+                afterComma = 1;
             }
-            if(this.isReturn(txt.charAt(i))){
-                betraege.add(dummy);
+            if(this.isReturn(txt.charAt(i)) || afterComma == 2){
+                if(dummy.length() != 0){
+                    betraege.add(dummy);
+                    dummy = "";
+                    afterComma = 0;
+                } else {
+                    dummy = "";
+                    afterComma = 0;
+                }
             }
         }
 

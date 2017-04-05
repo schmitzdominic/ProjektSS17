@@ -61,12 +61,14 @@ public class A_Show_Recognition extends AppCompatActivity {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
             SparseArray<TextBlock> items = textRecognizer.detect(frame);
             StringBuilder stringBuilder = new StringBuilder();
+            String adder = "";
             for(int i=0; i<items.size();++i){
                 TextBlock item = items.valueAt(i);
-                stringBuilder.append(item.getValue());
+                adder = this.rules.formater(item.getValue());
+                stringBuilder.append(adder);
                 stringBuilder.append("\n");
             }
-            txtResult.setText(this.rules.formater(stringBuilder.toString()));
+            txtResult.setText(stringBuilder.toString());
         }
     }
 
