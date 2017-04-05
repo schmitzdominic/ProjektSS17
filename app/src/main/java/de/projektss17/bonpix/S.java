@@ -3,6 +3,9 @@ package de.projektss17.bonpix;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created by Domi on 29.03.2017.
@@ -20,8 +23,10 @@ public class S extends Activity {
     /**
      * Ruft die Recognition Activity auf
      */
-    public static void showRecognition(AppCompatActivity beforeActivity){
-        S.startActivitiy(beforeActivity, A_Show_Recognition.class);
+    public static void showRecognition(AppCompatActivity beforeActivity, ArrayList<String> path){
+        Intent intent = new Intent(beforeActivity, A_Show_Recognition.class);
+        intent.putExtra("ArrayList",path);
+        beforeActivity.startActivity(intent);
     }
 
     /**
@@ -75,6 +80,14 @@ public class S extends Activity {
     public static void startActivitiy(AppCompatActivity beforeActivity, Class<?> cls){
         Intent intent = new Intent(beforeActivity, cls);
         beforeActivity.startActivity(intent);
+    }
+
+    public static void outShort(AppCompatActivity context, String msg){
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void outLong(AppCompatActivity context, String msg){
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
 }

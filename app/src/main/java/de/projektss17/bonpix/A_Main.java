@@ -183,7 +183,7 @@ public class A_Main extends AppCompatActivity {
             cursor.moveToFirst();
             String picturePath = cursor.getString(column_index_data);
             picturePathList.add(picturePath);
-            Log.i("",""+picturePathList.get(picturePathList.size()-1));
+            S.showRecognition(A_Main.this,picturePathList);
         }
     }
 
