@@ -15,6 +15,7 @@ public class C_Rules {
 
 
         ArrayList<String> betraege = new ArrayList<>();
+        ArrayList<String> betraegeReverse = new ArrayList<>();
 
         String dummy = "";
         int afterComma = 0;
@@ -47,6 +48,10 @@ public class C_Rules {
         String rueck = "";
 
         for(String x : betraege){
+            betraegeReverse.add(x);
+        }
+
+        for(String x : betraegeReverse){
             if(x.contains(",") || x.contains(".") && x.length() > 3){
                 rueck += (x + "\n");
             }
