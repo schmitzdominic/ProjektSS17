@@ -19,7 +19,7 @@ import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.IOException;
 
-public class A_Camera extends AppCompatActivity {
+public class A_Camera_old extends AppCompatActivity {
 
     SurfaceView cameraView;
     TextView textView;
@@ -54,7 +54,7 @@ public class A_Camera extends AppCompatActivity {
 
         TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if(!textRecognizer.isOperational()){
-            Log.w("A_Camera", "Detector dependencies are not yet available");
+            Log.w("A_Camera_old", "Detector dependencies are not yet available");
         } else {
             cameraSource = new CameraSource.Builder(getApplicationContext(), textRecognizer)
                     .setFacing(CameraSource.CAMERA_FACING_BACK)
@@ -69,7 +69,7 @@ public class A_Camera extends AppCompatActivity {
                     try{
                         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
 
-                                ActivityCompat.requestPermissions(A_Camera.this,
+                                ActivityCompat.requestPermissions(A_Camera_old.this,
                                         new String[]{Manifest.permission.CAMERA},
                                         RequestCameraPermissonID);
                             return;
@@ -100,8 +100,6 @@ public class A_Camera extends AppCompatActivity {
 
                 @Override
                 public void receiveDetections(Detector.Detections<TextBlock> detections) {
-
-
                     final SparseArray<TextBlock> items = detections.getDetectedItems();
                     if(items.size() != 0){
                         textView.post(new Runnable(){

@@ -1,6 +1,11 @@
 package de.projektss17.bonpix;
 
 import android.animation.Animator;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +24,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.support.design.widget.NavigationView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 public class A_Main extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -29,6 +40,10 @@ public class A_Main extends AppCompatActivity {
     private FloatingActionButton kameraButton, fotoButton, manuellButton;
     private LinearLayout fotoLayout, manuellLayout;
     private View fabBGLayout;
+    private String fileNameTakenPhoto;
+    private Uri mCapturedImageURI;
+    public ArrayList<String> picturePathList;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
 
     /** Selbsterklärend. Wer noch nicht weiß was diese Methode bewirkt,
      * Bitte 2_layout.pdf lesen!
@@ -57,6 +72,7 @@ public class A_Main extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.main_container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        picturePathList = new ArrayList<>();
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -78,7 +94,8 @@ public class A_Main extends AppCompatActivity {
         fotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                S.showFoto(A_Main.this);
+                activeTakePhoto();
+                // /S.showFoto(A_Main.this);
             }
         });
 
@@ -295,4 +312,33 @@ public class A_Main extends AppCompatActivity {
             return null;
         }
     }
+
+    private void activeTakePhoto() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            Date date = Calendar.getInstance().getTime();
+            DateFormat formatter = new SimpleDateFormat("ddMMyyyyHH:mm");
+            String today = formatter.format(date);
+            fileNameTakenPhoto = today + ".jpg";
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, fileNameTakenPhoto);
+            mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = managedQuery(mCapturedImageURI, projection, null, null, null);
+            int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String picturePath = cursor.getString(column_index_data);
+            picturePathList.add(picturePath);
+        }
+    }
 }
+

@@ -14,7 +14,14 @@ public class S extends Activity {
      * Ruft die Foto funktion auf
      */
     public static void showFoto(AppCompatActivity beforeActivity){
-        S.startActivitiy(beforeActivity, A_Camera.class);
+        S.startActivitiy(beforeActivity, A_Camera_old.class);
+    }
+
+    /**
+     * Ruft die Recognition Activity auf
+     */
+    public static void showRecognition(AppCompatActivity beforeActivity){
+        S.startActivitiy(beforeActivity, A_Show_Recognition.class);
     }
 
     /**
