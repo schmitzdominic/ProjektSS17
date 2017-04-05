@@ -14,10 +14,7 @@ public class S extends Activity {
      * Ruft die Foto funktion auf
      */
     public static void showFoto(AppCompatActivity beforeActivity){
-        // TODO Aufruf der e_kamera_ocr
-        /**Beispiel:
-        S.startActivity(beforeActivity, OTHERACTVITIY.class);
-        */
+        S.startActivitiy(beforeActivity, A_Camera.class);
     }
 
     /**
@@ -31,28 +28,28 @@ public class S extends Activity {
      * Ruft die Budget Activity auf
      */
     public static void showBudget(AppCompatActivity beforeActivity){
-        S.startActivity(beforeActivity, A_Budget.class);
+        S.startActivitiy(beforeActivity, A_Budget.class);
     }
 
     /**
      * Ruft die Gruppen Activity auf
      */
     public static void showGruppen(AppCompatActivity beforeActivity){
-        S.startActivity(beforeActivity, A_Gruppen.class);
+        S.startActivitiy(beforeActivity, A_Gruppen.class);
     }
 
     /**
      * Ruft die Favoriten Activity auf
      */
     public static void showFavoriten(AppCompatActivity beforeActivity){
-        S.startActivity(beforeActivity, A_Favoriten.class);
+        S.startActivitiy(beforeActivity, A_Favoriten.class);
     }
 
     /**
      * Ruft die Garantie Activity auf
      */
     public static void showGarantie(AppCompatActivity beforeActivity){
-        S.startActivity(beforeActivity, A_Garantie.class);
+        S.startActivitiy(beforeActivity, A_Garantie.class);
     }
 
     /**
@@ -60,7 +57,7 @@ public class S extends Activity {
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
 
-        S.startActivity(beforeActivity, A_Einstellungen.class);
+        S.startActivitiy(beforeActivity, A_Einstellungen.class);
     }
 
     /**
@@ -68,7 +65,7 @@ public class S extends Activity {
      * @param beforeActivity Vorherige Instanz der Activity
      * @param cls Activity Klasse die gestartet werden soll
      */
-    public static void startActivity(AppCompatActivity beforeActivity, Class<?> cls){
+    public static void startActivitiy(AppCompatActivity beforeActivity, Class<?> cls){
         Intent intent = new Intent(beforeActivity, cls);
         beforeActivity.startActivity(intent);
     }
