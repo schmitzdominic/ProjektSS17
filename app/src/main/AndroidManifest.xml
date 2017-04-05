@@ -72,15 +72,15 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="ocr" />
 
-        <activity android:name=".A_Camera_old" />
         <activity
             android:name=".A_Show_Recognition"
             android:label="@string/title_activity_a__show__recognition"
-            android:parentActivityName=".A_Camera_old"
+            android:parentActivityName=".A_Main"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.projektss17.bonpix.A_Camera_old" />
+                android:value="de.projektss17.bonpix.A_Main" />
         </activity>
     </application>
 
