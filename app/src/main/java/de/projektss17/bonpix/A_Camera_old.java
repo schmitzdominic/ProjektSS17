@@ -2,6 +2,7 @@ package de.projektss17.bonpix;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,8 @@ public class A_Camera_old extends AppCompatActivity {
     TextView textView;
     CameraSource cameraSource;
     final int RequestCameraPermissonID = 1001;
+    Camera camera;
+    private final String tag = "VideoServer";
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -119,5 +122,14 @@ public class A_Camera_old extends AppCompatActivity {
                 }
             });
        }
+    }
+
+    private void start_camera() {
+        try {
+            camera = Camera.open();
+        } catch (RuntimeException e) {
+            Log.e(tag, "init_camera: " + e);
+            return;
+        }
     }
 }

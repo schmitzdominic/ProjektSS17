@@ -19,6 +19,8 @@ public class A_Show_Recognition extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
     }
 
 }

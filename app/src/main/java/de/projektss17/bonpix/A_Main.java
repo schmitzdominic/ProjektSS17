@@ -18,6 +18,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -95,7 +96,7 @@ public class A_Main extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 activeTakePhoto();
-                // /S.showFoto(A_Main.this);
+                //S.showFoto(A_Main.this);
             }
         });
 
@@ -152,6 +153,38 @@ public class A_Main extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void activeTakePhoto() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            Date date = Calendar.getInstance().getTime();
+            DateFormat formatter = new SimpleDateFormat("ddMMyyyyHH:mm");
+            String today = formatter.format(date);
+            fileNameTakenPhoto = today + ".jpg";
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, fileNameTakenPhoto);
+            mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = managedQuery(mCapturedImageURI, projection, null, null, null);
+            int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String picturePath = cursor.getString(column_index_data);
+            picturePathList.add(picturePath);
+            Log.i("",""+picturePathList.get(picturePathList.size()-1));
+        }
     }
 
     /**
@@ -310,34 +343,6 @@ public class A_Main extends AppCompatActivity {
                     return getResources().getString(R.string.title_tab3);
             }
             return null;
-        }
-    }
-
-    private void activeTakePhoto() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            Date date = Calendar.getInstance().getTime();
-            DateFormat formatter = new SimpleDateFormat("ddMMyyyyHH:mm");
-            String today = formatter.format(date);
-            fileNameTakenPhoto = today + ".jpg";
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, fileNameTakenPhoto);
-            mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = managedQuery(mCapturedImageURI, projection, null, null, null);
-            int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            String picturePath = cursor.getString(column_index_data);
-            picturePathList.add(picturePath);
         }
     }
 }

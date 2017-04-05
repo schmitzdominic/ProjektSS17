@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,4 +8,9 @@
     tools:context="de.projektss17.bonpix.A_Show_Recognition"
     tools:showIn="@layout/box_show_recognition_screen">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/show_recognition_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:color/white" />
+</RelativeLayout>
