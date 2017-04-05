@@ -13,7 +13,8 @@ public class C_Rules {
     public String formater(String txt){
         txt = txt.replaceAll(" ", "");
 
-        HashSet<String> betraege = new HashSet<>();
+
+        ArrayList<String> betraege = new ArrayList<>();
 
         String dummy = "";
         int afterComma = 0;
@@ -29,9 +30,10 @@ public class C_Rules {
             if(this.isSeparate(txt.charAt(i))){
                 dummy += txt.charAt(i);
                 afterComma = 1;
+                continue;
             }
             if(this.isReturn(txt.charAt(i)) || afterComma == 2){
-                if(dummy.length() != 0){
+                if(!dummy.equals("")){
                     betraege.add(dummy);
                     dummy = "";
                     afterComma = 0;
@@ -45,7 +47,9 @@ public class C_Rules {
         String rueck = "";
 
         for(String x : betraege){
-            rueck += (x + "\n");
+            if(x.contains(",") || x.contains(".") && x.length() > 3){
+                rueck += (x + "\n");
+            }
         }
 
         return rueck;
