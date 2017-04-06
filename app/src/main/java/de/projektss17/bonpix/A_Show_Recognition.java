@@ -3,25 +3,21 @@ package de.projektss17.bonpix;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.SparseArray;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.text.TextBlock;
-import com.google.android.gms.vision.text.TextRecognizer;
-import com.google.android.gms.vision.text.internal.client.RecognitionOptions;
+import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
-import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.recognition.C_Rules;
 
 public class A_Show_Recognition extends AppCompatActivity {
@@ -29,6 +25,8 @@ public class A_Show_Recognition extends AppCompatActivity {
     ImageView imageView;
     TextView txtResult;
     C_Rules rules;
+    public static final String TESS_DATA = "/tessdata";
+    private static final String DATA_PATH = Environment.getExternalStorageDirectory() + "/BonPix/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,21 +53,48 @@ public class A_Show_Recognition extends AppCompatActivity {
     }
 
     private void recognize(Bitmap bitmap){
-        TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-        if(!textRecognizer.isOperational()){
-            Log.e("ERROR","Detector dependencies are not yet available");
-        } else {
-            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-            SparseArray<TextBlock> items = textRecognizer.detect(frame);
-            StringBuilder stringBuilder = new StringBuilder();
-            for(int i=0; i<items.size();++i){
-                TextBlock item = items.valueAt(i);
-                stringBuilder.append(item.getValue());
-                stringBuilder.append("\n");
+        prepareTessDAta();
+        txtResult.setText(startOCR(bitmap));
+    }
+
+    private void prepareTessDAta(){
+
+        try{
+            File dir = new File(DATA_PATH + TESS_DATA);
+            if(!dir.exists()){
+                dir.mkdirs();
             }
-            String textFormated = this.rules.formater(stringBuilder.toString());
-            txtResult.setText(this.rules.getPrices(textFormated));
+            String fileList[] = getAssets().list("");
+            for(String fileName : fileList){
+                String pathToDataFile = DATA_PATH+TESS_DATA+"/"+fileName;
+                if(!(new File(pathToDataFile)).exists() || fileName == "deu.traineddata"){
+                    InputStream in = getAssets().open(fileName);
+                    OutputStream out = new FileOutputStream(pathToDataFile);
+                    byte [] buff = new byte[1024];
+                    int len ;
+                    while((len = in.read(buff)) > 0){
+                        out.write(buff,0,len);
+                    }
+                    in.close();
+                    out.close();
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+    }
+
+    private String startOCR(Bitmap bitmap){
+        TessBaseAPI tessBaseAPI = new TessBaseAPI();
+        tessBaseAPI.init(DATA_PATH,"deu");
+        tessBaseAPI.setImage(bitmap);
+        String result = "No Result";
+        result = tessBaseAPI.getUTF8Text();
+        tessBaseAPI.end();
+
+        return result;
     }
 
 }

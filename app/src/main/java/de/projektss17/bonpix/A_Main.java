@@ -356,6 +356,7 @@ public class A_Main extends AppCompatActivity {
     public void requestPermissions(){
         ActivityCompat.requestPermissions(A_Main.this,
                 new String[]{Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE},
                 1);
     }
