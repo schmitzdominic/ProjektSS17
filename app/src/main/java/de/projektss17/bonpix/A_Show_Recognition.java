@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.android.gms.vision.text.internal.client.RecognitionOptions;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,14 +62,13 @@ public class A_Show_Recognition extends AppCompatActivity {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
             SparseArray<TextBlock> items = textRecognizer.detect(frame);
             StringBuilder stringBuilder = new StringBuilder();
-            String adder = "";
             for(int i=0; i<items.size();++i){
                 TextBlock item = items.valueAt(i);
-                //adder = this.rules.formater(item.getValue());
                 stringBuilder.append(item.getValue());
                 stringBuilder.append("\n");
             }
-            txtResult.setText(this.rules.formater(stringBuilder.toString()));
+            String textFormated = this.rules.formater(stringBuilder.toString());
+            txtResult.setText(this.rules.getPrices(textFormated));
         }
     }
 

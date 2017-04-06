@@ -3,8 +3,6 @@ package de.projektss17.bonpix.recognition;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Created by Domi on 05.04.2017.
@@ -14,8 +12,10 @@ public class C_Rules {
 
     public String formater(String txt){
         txt = txt.replaceAll(" ", "");
+        return txt;
+    }
 
-
+    public String getPrices(String txt){
         ArrayList<String> betraege = new ArrayList<>();
         ArrayList<String> betraegeReverse = new ArrayList<>();
 
@@ -24,13 +24,19 @@ public class C_Rules {
 
         for(int i = 0; i < txt.length(); i++){
             if(this.isDigit(txt.charAt(i))){
-                dummy += txt.charAt(i);
-                if(afterComma > 0 && afterComma < 3){
-                    afterComma++;
+                if(afterComma == 0) {
+                    dummy += txt.charAt(i);
+                    continue;
                 }
-                continue;
+                if(afterComma > 0 && afterComma < 3){
+                    dummy += txt.charAt(i);
+                    afterComma++;
+                    continue;
+                }
             }
-            if(this.isSeparate(txt.charAt(i))){
+            if(this.isSeparate(txt.charAt(i)) &&
+                    afterComma == 0 &&
+                    dummy.length() > 0){
                 if(txt.charAt(i) == '.'){
                     dummy += ',';
                 }else{
@@ -40,7 +46,8 @@ public class C_Rules {
                 continue;
             }
             if(this.isReturn(txt.charAt(i)) || afterComma == 2){
-                if(!dummy.equals("") && (dummy.contains(",") || dummy.contains("."))){
+                if(!dummy.equals("") &&
+                        dummy.contains(",")){
                     betraege.add(dummy);
                     Log.i("",""+dummy);
                     dummy = "";
@@ -59,14 +66,14 @@ public class C_Rules {
         }
 
         for(String x : betraegeReverse){
-            if(this.isOK(x)){
+            if(this.isPriceOK(x)){
                 rueck += (x + "\n");
             }
         }
         return rueck;
     }
 
-    public boolean isOK(String x){
+    public boolean isPriceOK(String x){
         return ((x.contains(",") ||
                 x.contains(".")) &&
                 x.length() > 3);
