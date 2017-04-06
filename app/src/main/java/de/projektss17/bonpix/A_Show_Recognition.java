@@ -67,7 +67,7 @@ public class A_Show_Recognition extends AppCompatActivity {
             String fileList[] = getAssets().list("");
             for(String fileName : fileList){
                 String pathToDataFile = DATA_PATH+TESS_DATA+"/"+fileName;
-                if(!(new File(pathToDataFile)).exists() || fileName == "deu.traineddata"){
+                if(!(new File(pathToDataFile)).exists()){
                     InputStream in = getAssets().open(fileName);
                     OutputStream out = new FileOutputStream(pathToDataFile);
                     byte [] buff = new byte[1024];
@@ -81,7 +81,7 @@ public class A_Show_Recognition extends AppCompatActivity {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
     }
