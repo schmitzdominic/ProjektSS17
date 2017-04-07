@@ -24,7 +24,7 @@ public class S extends Activity {
      * Ruft die Manuell Activity auf
      */
     public static void showManuell(AppCompatActivity beforeActivity){
-        // TODO Aufruf der Manuell Funktion
+        S.startActivitiy(beforeActivity,A_OCR_Manuell.class);
     }
 
     /**

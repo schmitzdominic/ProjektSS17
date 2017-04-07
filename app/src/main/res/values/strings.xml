@@ -33,6 +33,10 @@
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>
 
+    <!-- A_OCR_Manuell -->
+    <string name="title_activity_a__ocr__manuell">Kassenzettel</string>
+
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
+
 </resources>

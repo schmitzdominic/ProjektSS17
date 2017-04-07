@@ -64,6 +64,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
+        <activity
+            android:name=".A_OCR_Manuell"
+            android:label="@string/title_activity_a__ocr__manuell"
+            android:parentActivityName=".A_Main"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Main" />
+        </activity>
     </application>
 
 </manifest>
