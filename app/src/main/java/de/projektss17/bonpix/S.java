@@ -64,6 +64,13 @@ public class S extends Activity {
     }
 
     /**
+     * Ruft die Version Activity auf
+     */
+    public static void showVersion(AppCompatActivity beforeActivity){
+        // TODO Aufruf der Version Activity
+    }
+
+    /**
      * Startet Activitys
      * @param beforeActivity Vorherige Instanz der Activity
      * @param cls Activity Klasse die gestartet werden soll

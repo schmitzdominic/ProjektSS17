@@ -32,6 +32,8 @@
 
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>
+    <string name="menu_einstellungen_version">Version</string>
+
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
