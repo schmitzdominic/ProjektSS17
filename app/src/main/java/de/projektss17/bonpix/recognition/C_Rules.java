@@ -90,4 +90,56 @@ public class C_Rules {
     public boolean isSeparate(char c){
         return (c == ',' || c == '.');
     }
+
+    public boolean isLetter(char c) {
+        return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+    }
+
+    public String getPLZ(String txt){
+
+        int count = 0;
+        String zahl = "";
+
+        for(int i = 0; i < txt.length(); i++){
+            if(isDigit(txt.charAt(i))){
+                count++;
+                zahl += txt.charAt(i);
+            } else {
+                count = 0;
+                zahl = "";
+            }
+            if(count == 5){
+                return zahl;
+            }
+        }
+        return "PLZ NICHT ERKANNT";
+    }
+
+    public String getTel(String txt){
+
+        if(txt.contains("Tel") || txt.contains("TEL") || txt.contains("tel")) {
+            String tel[];
+            if(txt.contains("Tel")) {
+                tel = txt.split("Tel");
+            } else if (txt.contains("TEL")) {
+                tel = txt.split("TEL");
+            } else if (txt.contains("tel")) {
+                tel = txt.split("tel");
+            } else {
+                tel = new String[2];
+            }
+            String retNumber = "";
+            for(int i = 0; i < 50; i++){
+                if(this.isDigit(tel[1].charAt(i))){
+                    retNumber += tel[1].charAt(i);
+                }
+                if(this.isLetter(tel[1].charAt(i))){
+                    break;
+                }
+            }
+            return retNumber;
+        } else {
+            return "KEINE TELEFONNUMMER ERKANNT!";
+        }
+    }
 }
