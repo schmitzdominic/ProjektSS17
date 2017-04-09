@@ -17,7 +17,7 @@ public class S extends Activity {
      * Ruft die Foto funktion auf
      */
     public static void showFoto(AppCompatActivity beforeActivity){
-
+        // TODO Kamera Klasse implementieren und die benötigten Einstellungen bauen
     }
 
     /**

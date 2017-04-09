@@ -49,6 +49,11 @@ public class A_Show_Recognition extends AppCompatActivity {
 
     }
 
+    /**
+     * Ließt den String eines Bildes über OCR aus und
+     * gibt diesen an eine TextView weiter
+     * @param bitmap
+     */
     private void recognize(Bitmap bitmap){
         TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if(!textRecognizer.isOperational()){
@@ -62,13 +67,15 @@ public class A_Show_Recognition extends AppCompatActivity {
                 stringBuilder.append(item.getValue());
                 stringBuilder.append("\n");
             }
+
+            // String wird richtig formatiert
             String textFormated = this.rules.formater(stringBuilder.toString());
-            //txtResult.setText(this.rules.getPrices(textFormated));
+            String all = textFormated + "\n\n\n";
             String plz = "PLZ.: " + this.rules.getPLZ(textFormated) + "\n";
             String tel = "Tel.: " + this.rules.getTel(textFormated) + "\n";
-            txtResult.setText(plz+tel);
-            //txtResult.setText(this.rules.getTel(stringBuilder.toString()));
-            //txtResult.setText(this.rules.getPLZ(stringBuilder.toString()));
+
+            // Formatierte Strings werden an eine TextView gegeben
+            txtResult.setText(all+plz+tel);
         }
     }
 

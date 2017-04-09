@@ -103,7 +103,6 @@ public class A_Main extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 activeTakePhoto();
-                //S.showFoto(A_Main.this);
             }
         });
 
@@ -162,38 +161,6 @@ public class A_Main extends AppCompatActivity {
         });
     }
 
-    public void activeTakePhoto() {
-
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            Date date = Calendar.getInstance().getTime();
-            DateFormat formatter = new SimpleDateFormat("ddMMyyyyHH:mm");
-            String today = formatter.format(date);
-            fileNameTakenPhoto = today + ".jpg";
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, fileNameTakenPhoto);
-            mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = managedQuery(mCapturedImageURI, projection, null, null, null);
-            int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            String picturePath = cursor.getString(column_index_data);
-            picturePathList.add(picturePath);
-            S.showRecognition(A_Main.this,picturePathList);
-        }
-    }
-
     /**
      * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
@@ -234,7 +201,6 @@ public class A_Main extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
     /**
      * Überschreibt den onBackPressed Button
@@ -353,6 +319,9 @@ public class A_Main extends AppCompatActivity {
         }
     }
 
+    /**
+     * Prüft ob die benötigten Permissions vorhanden sind
+     */
     public void requestPermissions(){
         ActivityCompat.requestPermissions(A_Main.this,
                 new String[]{Manifest.permission.CAMERA,
@@ -360,6 +329,12 @@ public class A_Main extends AppCompatActivity {
                 1);
     }
 
+    /**
+     * Frägt nach den noch benötigten Permissions
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -372,6 +347,48 @@ public class A_Main extends AppCompatActivity {
                 }
                 return;
             }
+        }
+    }
+
+    /**
+     * Ruft die Standard Android Kamera Anwendung auf
+     */
+    public void activeTakePhoto() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            Date date = Calendar.getInstance().getTime();
+            DateFormat formatter = new SimpleDateFormat("ddMMyyyyHH:mm");
+            String today = formatter.format(date);
+            fileNameTakenPhoto = today + ".jpg";
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, fileNameTakenPhoto);
+            mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+        }
+    }
+
+    /**
+     * Nachdem ein Bild geschossen wurde, wird die S.showRecognition aufgerufen und
+     * der Pfad zu dem eben geschossenen Bild übergeben.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = managedQuery(mCapturedImageURI, projection, null, null, null);
+            int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String picturePath = cursor.getString(column_index_data);
+            picturePathList.add(picturePath);
+            S.showRecognition(A_Main.this,picturePathList);
         }
     }
 }
