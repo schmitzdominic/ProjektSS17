@@ -19,6 +19,7 @@ public class A_Einstellungen extends AppCompatActivity {
 
         ImageButton versionButton = (ImageButton) findViewById(R.id.einstellungen_version_button);
 
+        // Button Version
         versionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
