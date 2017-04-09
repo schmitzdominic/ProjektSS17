@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="de.projektss17.bonpix.A_Version"
-    tools:showIn="@layout/box_a__version">
+    tools:showIn="@layout/box_version_screen">
 
 </android.support.constraint.ConstraintLayout>

@@ -35,10 +35,9 @@
     <string name="menu_einstellungen_version">Version</string>
 
     <!-- A_Version -->
-    <string name="title_version_screen">Appversion</string>
+    <string name="title_version_screen">Version</string>
 
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
-    <string name="title_activity_a__version">Version</string>
 </resources>

@@ -27,9 +27,9 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="60dp"
         android:background="?android:attr/colorBackground"
-        android:scaleType="fitStart" />
-        <!--app:srcCompat="@mipmap/ic_info_outline_black_24dp" />-->
-        <!--Wenn oberes Kommentar in Zeile 31 entfernt wird geht es nicht-->
+        android:scaleType="fitStart"
+        app:srcCompat="@mipmap/ic_info_outline_black_24dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
