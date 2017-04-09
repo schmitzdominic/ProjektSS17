@@ -33,10 +33,18 @@
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>
 
-    <!-- A_OCR_Manuell -->
-    <string name="title_activity_a__ocr__manuell">Kassenzettel</string>
+    <!-- A_OCR_Manuell - ACTIVITY -->
+    <string name="title_activity_a__ocr__manuell">Bons</string>
+    <string name="a_ocr_manuell_save">SPEICHERN</string>
+    <!-- A_OCR_Manuell - POPUP FENSTER -->
+    <string name="a_ocr_manuell_pop_up_title">Kassenbon</string>
+    <string name="a_ocr_manuell_pop_up_message">Sollen Ihre Eingaben übernommen werden?</string>
+    <string name="a_ocr_manuell_pop_up_confirm">Bestätigen</string>
+    <string name="a_ocr_manuell_pop_up_cancel">Abbruch</string>
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

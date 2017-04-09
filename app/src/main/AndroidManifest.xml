@@ -73,6 +73,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
+
     </application>
 
 </manifest>

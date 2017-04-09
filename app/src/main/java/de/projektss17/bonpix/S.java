@@ -1,7 +1,9 @@
 package de.projektss17.bonpix;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -71,6 +73,31 @@ public class S extends Activity {
     public static void startActivitiy(AppCompatActivity beforeActivity, Class<?> cls){
         Intent intent = new Intent(beforeActivity, cls);
         beforeActivity.startActivity(intent);
+    }
+
+
+    // Erstellt von Johanns am 09.04.17
+    /**
+     * Öffnet ein POPUP-Fenster (Hinweis/Alert) beim Aufruf
+     * @param beforeActivity Vorherige Instanz der Activity
+     * @param afterActivity Activity Klasse die gestartet werden soll
+     * @param title Legt den Titel des PopUp-Fensters fest (wird im Fenster angezeigt)
+     * @param message Legt die Nachricht (z.B. eine Frage) des Fenster fest
+     * @param cancel Legt den Ihnalt des Cancel-Buttons fest
+     * @param confirm Legt den Inhalt des Confirm-Buttons fest
+     */
+    public static void popUpDialog(final AppCompatActivity beforeActivity, final Class<?> afterActivity,int title, int message, int cancel, int confirm){
+
+        new AlertDialog.Builder(beforeActivity)
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeButton(cancel,null)
+                .setPositiveButton(confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        S.startActivitiy(beforeActivity, afterActivity);
+                    }
+                }).create().show();
     }
 
 }
