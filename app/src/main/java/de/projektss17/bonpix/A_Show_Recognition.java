@@ -73,10 +73,10 @@ public class A_Show_Recognition extends AppCompatActivity {
             String all = textFormated + "\n\n\n";
             String plz = "PLZ.: " + this.rules.getPLZ(textFormated) + "\n";
             String tel = "Tel.: " + this.rules.getTel(textFormated) + "\n";
+            String prices = "Preise: " + this.rules.getPrices(textFormated) + "\n";
 
             // Formatierte Strings werden an eine TextView gegeben
-            txtResult.setText(all+plz+tel);
+            txtResult.setText(all+plz+tel+prices);
         }
     }
-
 }
