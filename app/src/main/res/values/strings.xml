@@ -33,6 +33,10 @@
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>
 
+    <!-- A_Show_Recognition -->
+    <string name="title_show_recognition_screen">Ausgabe</string>
+
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
+
 </resources>
