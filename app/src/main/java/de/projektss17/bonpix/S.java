@@ -67,7 +67,7 @@ public class S extends Activity {
      * Ruft die Version Activity auf
      */
     public static void showVersion(AppCompatActivity beforeActivity){
-        // TODO Aufruf der Version Activity
+        S.startActivitiy(beforeActivity, A_Version.class);
     }
 
     /**

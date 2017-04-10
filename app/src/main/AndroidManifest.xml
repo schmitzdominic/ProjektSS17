@@ -64,6 +64,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
+        <activity
+            android:name=".A_Version"
+            android:label="@string/title_version_screen"
+            android:parentActivityName=".A_Einstellungen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Einstellungen" />
+
+        </activity>
     </application>
 
 </manifest>
