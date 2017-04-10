@@ -27,7 +27,7 @@ public class A_OCR_Manuell extends AppCompatActivity{
     private DatePicker datePicker;
     private Calendar calendar;
     private TextView dateView;
-    private int year, month, day;
+    private String year, month, day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +41,10 @@ public class A_OCR_Manuell extends AppCompatActivity{
         //Kalender
         dateView = (TextView) findViewById(R.id.ocr_manuell_Datum);
         calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(year, month+1, day);
+        year = "" + calendar.get(Calendar.YEAR);
+        month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH)+1);
+        day = "" + this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
+        showDate(year, month, day);
         dateView.setTextColor(Color.RED);
 
         //Referenzieren Spinner Element um Marke auszuwählen
@@ -140,7 +140,7 @@ public class A_OCR_Manuell extends AppCompatActivity{
     protected Dialog onCreateDialog(int id) {
         if (id == 999) {
             return new DatePickerDialog(this,
-                    myDateListener, year, month, day);
+                    myDateListener, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
         }
         return null;
     }
@@ -150,19 +150,24 @@ public class A_OCR_Manuell extends AppCompatActivity{
                 @Override
                 public void onDateSet(DatePicker arg0,
                                       int arg1, int arg2, int arg3) {
-                    showDate(arg1, arg2+1, arg3);
+                    showDate(""+getNumberWithZero(arg1),
+                            ""+getNumberWithZero(arg2+1),
+                            ""+getNumberWithZero(arg3));
                 }
             };
 
-    private void showDate(int year, int month, int day) {
-        if (month < 10) {
-            dateView.setText(new StringBuilder().append(day).append(".0")
-                    .append(month).append(".").append(year));
-        }else{
-        dateView.setText(new StringBuilder().append(day).append(".")
-                .append(month).append(".").append(year));}
+    private void showDate(String year, String month, String day) {
+        String separator = ".";
+        dateView.setText(day + separator +
+                        month + separator +
+                        year);
     }
-    //Ende Kalender
 
-
+    public String getNumberWithZero(int zahl){
+        if(zahl > 0 && zahl < 10){
+            return "0" + zahl;
+        } else {
+            return "" + zahl;
+        }
+    }
 }
