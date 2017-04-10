@@ -108,6 +108,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
                                     /*
                                     TODO
                                     1. in die Datenbank schreiben
+                                    über input.getText().toString() den eingegebenen Text auslesen
+                                    und in die datenbank schreiben
                                     Mit z.B. S.addSpinnerLaedenManuell()
                                     2. datenauslesen und in die parentView eintragen
                                     Mit z.B. S.getSpinnerLaedenManuell() in eine entsprechende Liste
