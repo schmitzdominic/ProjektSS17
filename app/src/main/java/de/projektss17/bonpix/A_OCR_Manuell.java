@@ -2,6 +2,7 @@ package de.projektss17.bonpix;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class A_OCR_Manuell extends AppCompatActivity{
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         showDate(year, month+1, day);
+        dateView.setTextColor(Color.RED);
 
         //Referenzieren Spinner Element um Marke auszuwählen
         spinnerMarke = (Spinner) findViewById(R.id.ocr_manuell_spinnerMarke);
@@ -153,8 +155,12 @@ public class A_OCR_Manuell extends AppCompatActivity{
             };
 
     private void showDate(int year, int month, int day) {
+        if (month < 10) {
+            dateView.setText(new StringBuilder().append(day).append(".0")
+                    .append(month).append(".").append(year));
+        }else{
         dateView.setText(new StringBuilder().append(day).append(".")
-                .append(month).append(".").append(year));
+                .append(month).append(".").append(year));}
     }
     //Ende Kalender
 
