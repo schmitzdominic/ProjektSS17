@@ -2,12 +2,13 @@ package de.projektss17.bonpix;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,7 +22,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 
-public class A_OCR_Manuell extends AppCompatActivity{
+public class A_OCR_Manuell extends AppCompatActivity {
 
     private Button saveButton;
     private Spinner spinnerMarke;
@@ -30,6 +31,7 @@ public class A_OCR_Manuell extends AppCompatActivity{
     private TextView dateView;
     private ArrayAdapter<String> spinnerAdapter;
     private String year, month, day;
+    public static int nextStep = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +43,10 @@ public class A_OCR_Manuell extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Kalender
-        dateView = (TextView) findViewById(R.id.ocr_manuell_Datum);
+        dateView = (TextView) findViewById(R.id.ocr_manuell_datum);
         calendar = Calendar.getInstance();
         year = "" + calendar.get(Calendar.YEAR);
-        month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH)+1);
+        month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
         day = "" + this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
         showDate(year, month, day);
         dateView.setTextColor(Color.RED);
@@ -85,34 +87,48 @@ public class A_OCR_Manuell extends AppCompatActivity{
              * @param id
              */
             @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+            public void onItemSelected(final AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
                 int itemId = (int) id;
 
                 /*
                  * Itemid == 1 = Benutzerdefiniert, d.h. Wenn manuell eine Marke eingegeben werden soll
                  */
-                if(itemId == 1) {
+                if (itemId == 1) {
 
-                    /*
-                    String back = S.popUpDialog();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(A_OCR_Manuell.this);
 
-                    if(back == null || back == ""){
-                        parentView.setSelection(0);
-                    } else {
+                    final EditText input = new EditText(A_OCR_Manuell.this);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
 
-                        TODO
-                        1. in die Datenbank schreiben
-                        Mit z.B. S.addSpinnerLaedenManuell()
-                        2. datenauslesen und in die parentView eintragen
-                        Mit z.B. S.getSpinnerLaedenManuell() in eine entsprechende Liste
-                        refreshSpinner();
-                        3. selection setzen
-                        parentView.setSelection(PLATZINDERENTSPRECHENDENLISTE);
-                    }*/
-
-                    
+                    builder.setMessage("Bitte Laden eingeben")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    /*
+                                    TODO
+                                    1. in die Datenbank schreiben
+                                    Mit z.B. S.addSpinnerLaedenManuell()
+                                    2. datenauslesen und in die parentView eintragen
+                                    Mit z.B. S.getSpinnerLaedenManuell() in eine entsprechende Liste
+                                    refreshSpinner();
+                                    3. selection setzen
+                                    parentView.setSelection(PLATZINDERENTSPRECHENDENLISTE);
+                                    */
+                                    // TODO Remove later the following 2 lines!
+                                    Toast.makeText(A_OCR_Manuell.this, input.getText().toString(), Toast.LENGTH_LONG).show();
+                                    parentView.setSelection(0);
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    parentView.setSelection(0);
+                                }
+                            })
+                            .create().show();
                 }
             }
+
             /**
              * Ähnlich wie obige, nur wenn nichts selektiert wurde
              * @param parentView
@@ -127,6 +143,7 @@ public class A_OCR_Manuell extends AppCompatActivity{
     /**
      * Kleine Notification (als Toast)
      * beim öffnen des kalenders
+     *
      * @param view
      */
     @SuppressWarnings("deprecation")
@@ -139,6 +156,7 @@ public class A_OCR_Manuell extends AppCompatActivity{
 
     /**
      * TODO Bitte änderrn, da deprecated!
+     *
      * @param id
      * @return
      */
@@ -156,14 +174,15 @@ public class A_OCR_Manuell extends AppCompatActivity{
                 @Override
                 public void onDateSet(DatePicker arg0,
                                       int arg1, int arg2, int arg3) {
-                    showDate(""+getNumberWithZero(arg1),
-                            ""+getNumberWithZero(arg2+1),
-                            ""+getNumberWithZero(arg3));
+                    showDate("" + getNumberWithZero(arg1),
+                            "" + getNumberWithZero(arg2 + 1),
+                            "" + getNumberWithZero(arg3));
                 }
             };
 
     /**
      * Setzt das Aktuelle Datum in die TextView
+     *
      * @param year
      * @param month
      * @param day
@@ -171,17 +190,18 @@ public class A_OCR_Manuell extends AppCompatActivity{
     private void showDate(String year, String month, String day) {
         String separator = ".";
         dateView.setText(day + separator +
-                        month + separator +
-                        year);
+                month + separator +
+                year);
     }
 
     /**
      * Gibt eine Zahl wenn sie kleiner 10 ist mit einer 0 davor aus
+     *
      * @param zahl
      * @return
      */
-    public String getNumberWithZero(int zahl){
-        if(zahl > 0 && zahl < 10){
+    public String getNumberWithZero(int zahl) {
+        if (zahl > 0 && zahl < 10) {
             return "0" + zahl;
         } else {
             return "" + zahl;
@@ -191,12 +211,12 @@ public class A_OCR_Manuell extends AppCompatActivity{
     /**
      * Methode zum Auslesen Daten aus Datenbank für Spinner / Refresh
      */
-    public void refreshSpinner(){
+    public void refreshSpinner() {
 
         // 1. lese Optionen aus Datenbank
         // Mit z.B. S.getSpinnerLaedenManuell() in eine entsprechende Liste
         // 2. füge diese Daten zu einem String Array hinzu
-        String array[] = {"Bitte Laden auswählen","Hinzufügen","EDEKA","REWE","MEDIA MARKT"};
+        String array[] = {"Bitte Laden auswählen", "Hinzufügen", "EDEKA", "REWE", "MEDIA MARKT"};
 
         ArrayAdapter<String> adapterMarke = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array);
         adapterMarke.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

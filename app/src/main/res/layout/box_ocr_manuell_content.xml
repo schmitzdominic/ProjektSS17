@@ -41,7 +41,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/ocr_manuell_Datum"
+        android:id="@+id/ocr_manuell_datum"
         android:onClick="setDate"
         android:layout_width="369dp"
         android:layout_height="24dp"
@@ -109,20 +109,6 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/ocr_manuell_editTextUID"
-        android:layout_width="355dp"
-        android:layout_height="50dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ocr_manuell_textViewUID" />
-
-    <EditText
         android:id="@+id/ocr_manuell_editTextAnschrift"
         android:layout_width="355dp"
         android:layout_height="50dp"
@@ -139,6 +125,20 @@
         app:layout_constraintTop_toBottomOf="@+id/ocr_manuell_textViewAnschrift"
         app:layout_constraintVertical_bias="0.0" />
 
+    <EditText
+        android:id="@+id/ocr_manuell_editTextUID"
+        android:layout_width="355dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ocr_manuell_textViewUID" />
+
     <TextView
         android:id="@+id/ocr_manuell_textViewUID"
         android:layout_width="wrap_content"
@@ -151,7 +151,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ocr_manuell_Datum"
+        app:layout_constraintTop_toBottomOf="@+id/ocr_manuell_datum"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintVertical_bias="0.0" />
 
