@@ -75,7 +75,7 @@ public class A_Show_Recognition extends AppCompatActivity {
             String tel = "Tel.: " + this.rules.getTel(textFormated) + "\n";
             String prices = "Preise: " + this.rules.getPrices(textFormated) + "\n";
 
-            // Formatierte Strings werden an eine TextView gegeben
+            // Formatierte Strings werden an eine TextView gegeben und angezeigt.
             txtResult.setText(all+plz+tel+prices);
         }
     }
