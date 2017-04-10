@@ -42,20 +42,6 @@
     <string name="a_ocr_manuell_pop_up_confirm">Bestätigen</string>
     <string name="a_ocr_manuell_pop_up_cancel">Abbruch</string>
 
-    <!-- A_OCR_Manuell - Spinner Werte Dropdown Marke auswählen -->
-    <string-array name="marke_auswaehlen_array">
-        <item>Bitte Marke auswählen</item>
-        <item>Benutzerdefiniert</item>
-        <item>ALDI Süd</item>
-        <item>ALDI Nord</item>
-        <item>EDEKA</item>
-        <item>REWE</item>
-        <item>FRISTO</item>
-        <item>NETTO</item>
-        <item>MARKTKAUF</item>
-        <item>KAUFLAND</item>
-    </string-array>
-
     <!-- A_OCR_Manuell - Datumsauswahl -->
     <string name="date_button_set">Set Date</string>
     <string name="date_selected"></string>
