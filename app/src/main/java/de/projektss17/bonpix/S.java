@@ -82,10 +82,22 @@ public class S extends Activity {
         beforeActivity.startActivity(intent);
     }
 
+    /**
+     * Ausgabe eines Strings (kurz)
+     * Ausgabe erfolgt über einen Toast
+     * @param context Class.this (instanz übergeben)
+     * @param msg Text der Ausgegeben werden soll
+     */
     public static void outShort(AppCompatActivity context, String msg){
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Ausgabe eines Strings (lang)
+     * Ausgabe erfolgt über einen Toast
+     * @param context Class.this (instanz übergeben)
+     * @param msg Text der Ausgegeben werden soll
+     */
     public static void outLong(AppCompatActivity context, String msg){
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
