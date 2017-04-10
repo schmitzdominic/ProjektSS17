@@ -25,13 +25,11 @@ import java.util.Calendar;
 public class A_OCR_Manuell extends AppCompatActivity {
 
     private Button saveButton;
-    private Spinner spinnerMarke;
-    private DatePicker datePicker;
+    private Spinner spinnerLaden;
     private Calendar calendar;
     private TextView dateView;
     private ArrayAdapter<String> spinnerAdapter;
     private String year, month, day;
-    public static int nextStep = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         dateView.setTextColor(Color.RED);
 
         //Referenzieren Spinner Element um Marke auszuwählen
-        spinnerMarke = (Spinner) findViewById(R.id.ocr_manuell_spinnerMarke);
+        spinnerLaden = (Spinner) findViewById(R.id.ocr_manuell_spinnerMarke);
 
         // Referenzieren des Speichern-Button
         saveButton = (Button) findViewById(R.id.ocr_manuell_save_button);
@@ -73,11 +71,18 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // Refresht den Spinner
+        // Refresht den Spinner und belegt diesen mit daten
         this.refreshSpinner();
 
+        // Wenn Spinner Bitte Laden auswählen anzeigt, wird der Text Rot markiert
+        if(this.spinnerLaden.getSelectedItemPosition() == 0){
+            spinnerLaden.setSelection(0, true);
+            View v = spinnerLaden.getSelectedView();
+            ((TextView)v).setTextColor(Color.RED);
+        }
+
         //Spinner selected listener => Aktion beim selektieren
-        spinnerMarke.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerLaden.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             /**
              * Durch diese Methode lassen sich Aktionen beim selektieren der Spinner Werte durchführen
@@ -139,6 +144,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parentView) {
                 parentView.setSelection(0);
             }
+
+
         });
     }
 
@@ -218,11 +225,11 @@ public class A_OCR_Manuell extends AppCompatActivity {
         // 1. lese Optionen aus Datenbank
         // Mit z.B. S.getSpinnerLaedenManuell() in eine entsprechende Liste
         // 2. füge diese Daten zu einem String Array hinzu
-        String array[] = {"Bitte Laden auswählen", "Hinzufügen", "EDEKA", "REWE", "MEDIA MARKT"};
+        // TODO Remove next line after database has implmented
+        String array[] = {"Bitte Laden auswählen","Hinzufügen", "EDEKA", "REWE", "MEDIA MARKT"};
 
-        ArrayAdapter<String> adapterMarke = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array);
-        adapterMarke.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.spinnerAdapter = adapterMarke;
-        this.spinnerMarke.setAdapter(this.spinnerAdapter);
+        this.spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array);
+        this.spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.spinnerLaden.setAdapter(this.spinnerAdapter);
     }
 }

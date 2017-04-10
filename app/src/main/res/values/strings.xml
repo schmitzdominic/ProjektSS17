@@ -34,7 +34,7 @@
     <string name="title_einstellungen_screen">Einstellungen</string>
 
     <!-- A_OCR_Manuell - ACTIVITY -->
-    <string name="title_activity_a__ocr__manuell">Bons</string>
+    <string name="title__manuell_screen">Bon hinzufügen</string>
     <string name="a_ocr_manuell_save">SPEICHERN</string>
     <!-- A_OCR_Manuell - POPUP FENSTER -->
     <string name="a_ocr_manuell_pop_up_title">Kassenbon</string>
