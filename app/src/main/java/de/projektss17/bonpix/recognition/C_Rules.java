@@ -28,61 +28,57 @@ public class C_Rules {
      * @return nur die Preise
      */
     public String getPrices(String txt){
-        ArrayList<String> betraege = new ArrayList<>();
-        ArrayList<String> betraegeReverse = new ArrayList<>();
 
-        String dummy = "";
-        int afterComma = 0;
+        String retString = "",
+                dumString = "";
+        int count = 0;
 
         for(int i = 0; i < txt.length(); i++){
+
             if(this.isDigit(txt.charAt(i))){
-                if(afterComma == 0) {
-                    dummy += txt.charAt(i);
+                if(count == 0){
+                    dumString += txt.charAt(i);
+                    continue;
+                } else if(count > 0 && count < 3){
+                    dumString += txt.charAt(i);
+                    count++;
+                    continue;
+                } else if(count >= 3){
+                    count++;
+                    dumString = "";
+                    continue;
+                } else {
+                    dumString = "";
+                    count = 0;
                     continue;
                 }
-                if(afterComma > 0 && afterComma < 3){
-                    dummy += txt.charAt(i);
-                    afterComma++;
+
+            } else if(this.isSeparate(txt.charAt(i))){
+
+                if(count == 0){
+                    if(txt.charAt(i) == '.'){
+                        dumString += ',';
+                    } else {
+                        dumString += txt.charAt(i);
+                    }
+                    count++;
+                    continue;
+                } else {
+                    count = 0;
+                    dumString = "";
                     continue;
                 }
-            }
-            if(this.isSeparate(txt.charAt(i)) &&
-                    afterComma == 0 &&
-                    dummy.length() > 0){
-                if(txt.charAt(i) == '.'){
-                    dummy += ',';
-                }else{
-                    dummy += txt.charAt(i);
+            } else {
+                if(count == 3){
+                    retString += dumString + "\n";
                 }
-                afterComma = 1;
+                dumString = "";
+                count = 0;
                 continue;
             }
-            if(this.isReturn(txt.charAt(i)) || afterComma == 2){
-                if(!dummy.equals("") &&
-                        dummy.contains(",")){
-                    betraege.add(dummy);
-                    Log.i("",""+dummy);
-                    dummy = "";
-                    afterComma = 0;
-                } else {
-                    dummy = "";
-                    afterComma = 0;
-                }
-            }
         }
 
-        String rueck = "";
-
-        for(String x : betraege){
-            betraegeReverse.add(x);
-        }
-
-        for(String x : betraegeReverse){
-            if(this.isPriceOK(x)){
-                rueck += (x + "\n");
-            }
-        }
-        return rueck;
+        return retString;
     }
 
     /**
@@ -94,17 +90,30 @@ public class C_Rules {
 
         int count = 0;
         String zahl = "";
+        boolean block = false;
 
         for(int i = 0; i < txt.length(); i++){
-            if(isDigit(txt.charAt(i))){
+
+            if(isDigit(txt.charAt(i)) && count == 5){
+                count = 0;
+                zahl = "";
+                block = true;
+            } else if(!isDigit(txt.charAt(i))){
+                block = false;
+            }
+
+            if(count == 5 && isLetter(txt.charAt(i))){
+                return zahl;
+            }
+
+            if(isDigit(txt.charAt(i)) && !block){
                 count++;
                 zahl += txt.charAt(i);
+                continue;
             } else {
                 count = 0;
                 zahl = "";
-            }
-            if(count == 5){
-                return zahl;
+                continue;
             }
         }
         return "PLZ NICHT ERKANNT";
