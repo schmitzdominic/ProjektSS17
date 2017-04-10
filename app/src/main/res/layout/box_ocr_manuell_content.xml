@@ -41,13 +41,14 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/ocr_manuell_textViewDummyDatum"
+        android:id="@+id/ocr_manuell_Datum"
+        android:onClick="setDate"
         android:layout_width="369dp"
         android:layout_height="24dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:text="Dummy für Kaufbelegdatum - Domi hier einfügen"
+        android:text="@string/date_selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -56,6 +57,25 @@
         app:layout_constraintTop_toBottomOf="@+id/ocr_manuell_textViewBelegDatum"
         app:layout_constraintVertical_bias="0.0" />
 
+<!--//Falls Button zum Datum setzen gewünscht
+    <Button
+        android:id="@+id/button1"
+        android:onClick="setDate"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginRight="8dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ocr_manuell_textViewBelegDatum"
+        app:layout_constraintVertical_bias="0.0"/>-->
+
+
     <TextView
         android:id="@+id/ocr_manuell_textViewBelegDatum"
         android:layout_width="wrap_content"
@@ -63,7 +83,7 @@
         android:layout_marginBottom="95dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:text="Belegdatum"
+        android:text="Belegdatum (Enter Date to Change)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -131,7 +151,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ocr_manuell_textViewDummyDatum"
+        app:layout_constraintTop_toBottomOf="@+id/ocr_manuell_Datum"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintVertical_bias="0.0" />
 

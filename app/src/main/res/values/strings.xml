@@ -56,7 +56,9 @@
         <item>KAUFLAND</item>
     </string-array>
 
-
+    <!-- A_OCR_Manuell - Datumsauswahl -->
+    <string name="date_button_set">Set Date</string>
+    <string name="date_selected"></string>
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
