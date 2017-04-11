@@ -45,7 +45,7 @@
 - Team ( **projektss17** )
 
 Plugins:  
-> - /poll (Abstimmung) Beispiel: `/poll "Was sollen wir essen?" "Pizza" "Döner"` 
+> - /poll (Abstimmung) Beispiel: `/poll "Was sollen wir essen?" "Pizza" "Döner"`   
 > - /giphy (Gifs) Beispiel: `/giphy Geburtstag`      
 
 Slackbot:
