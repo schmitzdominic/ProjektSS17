@@ -46,7 +46,7 @@
 
 Plugins:  
 > - /poll (Abstimmung) Beispiel: `/poll "Was sollen wir essen?" "Pizza" "Döner"` 
-> - /giphy (Gifs) Beispiel: `/giphy Geburtstag`    
+> - /giphy (Gifs) Beispiel: `/giphy Geburtstag`      
 
 Slackbot:
 > - Git tutorial (_Zeigt den Link zum Git Repository_) 
