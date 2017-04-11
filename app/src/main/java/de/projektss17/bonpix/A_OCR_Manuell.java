@@ -50,7 +50,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         dateView.setTextColor(Color.RED);
 
         //Referenzieren Spinner Element um Marke auszuwählen
-        spinnerLaden = (Spinner) findViewById(R.id.ocr_manuell_spinnerMarke);
+        spinnerLaden = (Spinner) findViewById(R.id.ocr_manuell_spinner_laden);
 
         // Referenzieren des Speichern-Button
         saveButton = (Button) findViewById(R.id.ocr_manuell_save_button);

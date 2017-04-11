@@ -34,17 +34,19 @@
     <string name="title_einstellungen_screen">Einstellungen</string>
 
     <!-- A_OCR_Manuell - ACTIVITY -->
-    <string name="title__manuell_screen">Bon hinzufügen</string>
+    <string name="title_manuell_screen">Bon hinzufügen</string>
     <string name="a_ocr_manuell_save">SPEICHERN</string>
-    <!-- A_OCR_Manuell - POPUP FENSTER -->
+
     <string name="a_ocr_manuell_pop_up_title">Kassenbon</string>
     <string name="a_ocr_manuell_pop_up_message">Sollen Ihre Eingaben übernommen werden?</string>
     <string name="a_ocr_manuell_pop_up_confirm">Bestätigen</string>
     <string name="a_ocr_manuell_pop_up_cancel">Abbruch</string>
 
-    <!-- A_OCR_Manuell - Datumsauswahl -->
-    <string name="date_button_set">Set Date</string>
-    <string name="date_selected"></string>
+    <string name="a_ocr_manuell_date_button_set">Set Date</string>
+    <string name="a_ocr_manuell_date_selected"></string>
+
+    <string name="a_ocr_manuell_hint_anschrift">Anschrift</string>
+    <string name="a_ocr_manuell_hint_uid">UID (Optional)</string>
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
