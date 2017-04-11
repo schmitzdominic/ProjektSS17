@@ -3,6 +3,9 @@ package de.projektss17.bonpix;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created by Domi on 29.03.2017.
@@ -14,10 +17,16 @@ public class S extends Activity {
      * Ruft die Foto funktion auf
      */
     public static void showFoto(AppCompatActivity beforeActivity){
-        // TODO Aufruf der e_kamera_ocr
-        /**Beispiel:
-        S.startActivity(beforeActivity, OTHERACTVITIY.class);
-        */
+        // TODO Kamera Klasse implementieren und die benötigten Einstellungen bauen
+    }
+
+    /**
+     * Ruft die Recognition Activity auf
+     */
+    public static void showRecognition(AppCompatActivity beforeActivity, ArrayList<String> path){
+        Intent intent = new Intent(beforeActivity, A_Show_Recognition.class);
+        intent.putExtra("ArrayList",path);
+        beforeActivity.startActivity(intent);
     }
 
     /**
@@ -64,6 +73,13 @@ public class S extends Activity {
     }
 
     /**
+     * Ruft die Version Activity auf
+     */
+    public static void showVersion(AppCompatActivity beforeActivity){
+        S.startActivitiy(beforeActivity, A_Version.class);
+    }
+
+    /**
      * Startet Activitys
      * @param beforeActivity Vorherige Instanz der Activity
      * @param cls Activity Klasse die gestartet werden soll
@@ -71,6 +87,26 @@ public class S extends Activity {
     public static void startActivitiy(AppCompatActivity beforeActivity, Class<?> cls){
         Intent intent = new Intent(beforeActivity, cls);
         beforeActivity.startActivity(intent);
+    }
+
+    /**
+     * Ausgabe eines Strings (kurz)
+     * Ausgabe erfolgt über einen Toast
+     * @param context Class.this (instanz übergeben)
+     * @param msg Text der Ausgegeben werden soll
+     */
+    public static void outShort(AppCompatActivity context, String msg){
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Ausgabe eines Strings (lang)
+     * Ausgabe erfolgt über einen Toast
+     * @param context Class.this (instanz übergeben)
+     * @param msg Text der Ausgegeben werden soll
+     */
+    public static void outLong(AppCompatActivity context, String msg){
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
 }

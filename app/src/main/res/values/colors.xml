@@ -8,4 +8,7 @@
     <!-- Transparenz für die Floating buttons -->
     <color name="colorTransBg">#26000000</color>
 
+    <!-- Linien Farbe -->
+    <color name="linie">#CCCCCC</color>
+
 </resources>
