@@ -12,14 +12,17 @@
         android:id="@+id/ocr_manuell_image_view_shop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         app:srcCompat="@mipmap/ic_shopping_cart_black_24dp" />
 
     <Spinner
         android:id="@+id/ocr_manuell_spinner_laden"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="-6dp"
         android:layout_marginBottom="20dp"
         android:layout_toEndOf="@+id/ocr_manuell_image_view_shop"
