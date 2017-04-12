@@ -3,7 +3,9 @@ package de.projektss17.bonpix;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +31,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private Spinner spinnerLaden;
     private Calendar calendar;
     private TextView dateView;
+    private ImageView imageOCR;
     private ArrayAdapter<String> spinnerAdapter;
     private String year, month, day;
+    private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,24 +46,23 @@ public class A_OCR_Manuell extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Kalender
-        dateView = (TextView) findViewById(R.id.ocr_manuell_datum);
-        calendar = Calendar.getInstance();
-        year = "" + calendar.get(Calendar.YEAR);
-        month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
-        day = "" + this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
-        showDate(year, month, day);
-        dateView.setTextColor(Color.RED);
+        this.dateView = (TextView) findViewById(R.id.ocr_manuell_datum);
+        this.calendar = Calendar.getInstance();
+        this.year = "" + this.calendar.get(Calendar.YEAR);
+        this.month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
+        this.day = "" + this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
+        this.showDate(year, month, day);
+        this.dateView.setTextColor(Color.RED);
 
-        //Referenzieren Spinner Element um Marke auszuwählen
-        spinnerLaden = (Spinner) findViewById(R.id.ocr_manuell_spinner_laden);
+        this.imageOCR = (ImageView) findViewById(R.id.ocr_manuell_image_ocr); // Image OCR Element
+        this.spinnerLaden = (Spinner) findViewById(R.id.ocr_manuell_spinner_laden); // Spinner Laden Element
+        this.saveButton = (Button) findViewById(R.id.ocr_manuell_save_button); // Speichern Button
 
-        // Referenzieren des Speichern-Button
-        saveButton = (Button) findViewById(R.id.ocr_manuell_save_button);
-
+        this.refreshSpinner(); // Spinner Refresh
 
         // Aktion welches beim drücken des Save-Buttons ausgeführt wird
         // In diesem Fall wird ein Hinweis-Fenster (POPUP) geöffnet (Nachfragen ob Speicherung durchgenommen werden soll)
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -71,8 +75,17 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // Refresht den Spinner und belegt diesen mit daten
-        this.refreshSpinner();
+        // Onclick listener image OCR
+        this.imageOCR.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            }
+        });
+
+
+
 
         // Wenn Spinner Bitte Laden auswählen anzeigt, wird der Text Rot markiert
         if(this.spinnerLaden.getSelectedItemPosition() == 0){
@@ -231,5 +244,21 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array);
         this.spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.spinnerLaden.setAdapter(this.spinnerAdapter);
+    }
+
+    /**
+     * Was passiert wenn das Bild ausgewählt wurde
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri imageUri = data.getData();
+            this.imageOCR.setImageURI(null);
+            this.imageOCR.setImageURI(imageUri);
+        }
     }
 }
