@@ -64,6 +64,27 @@ public class S extends Activity {
     }
 
     /**
+     * Ruft die Backup Activity auf
+     */
+    public static void showBackup(AppCompatActivity beforeActivity){
+        // TODO verweiß auf die Backup Activity
+    }
+
+    /**
+     * Ruft die Sprache Activity auf
+     */
+    public static void showSprache(AppCompatActivity beforeActivity){
+        // TODO verweiß auf die Sprache Activity
+    }
+
+    /**
+     * Ruft die Kontakt Activity auf
+     */
+    public static void showKontakt(AppCompatActivity beforeActivity){
+        // TODO verweiß auf die Kontakt Activity
+    }
+
+    /**
      * Ruft die Version Activity auf
      */
     public static void showVersion(AppCompatActivity beforeActivity){

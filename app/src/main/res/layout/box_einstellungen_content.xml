@@ -8,49 +8,204 @@
     tools:context="de.projektss17.bonpix.A_Einstellungen"
     tools:showIn="@layout/box_einstellungen_screen">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:layout_marginTop="45dp"
-        android:background="@color/linie"
-        android:visibility="visible" />
-
-
-    <ImageButton
-        android:id="@+id/einstellungen_version_button"
+    <ImageView
+        android:id="@+id/einstellungen_backup_icon"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/standard_30"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="60dp"
-        android:background="?android:attr/colorBackground"
-        android:scaleType="fitStart"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:tint="#757575"
+        android:clickable="false"
+        app:srcCompat="@mipmap/ic_backup_black_24dp"/>
+
+    <TextView
+        android:id="@+id/einstellungen_backup_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/einstellungen_backup_icon"
+        android:layout_alignLeft="@+id/einstellungen_backup_icon"
+        android:layout_alignStart="@+id/einstellungen_backup_icon"
+        android:layout_alignTop="@+id/einstellungen_backup_icon"
+        android:clickable="false"
+        android:gravity="start"
+        android:layout_marginLeft="50dp"
+        android:text="@string/menu_einstellungen_backup"
+        android:textAlignment="textStart"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/einstellungen_backup_click"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/einstellungen_backup_icon"
+        android:layout_alignLeft="@+id/einstellungen_backup_icon"
+        android:layout_alignStart="@+id/einstellungen_backup_icon"
+        android:layout_alignTop="@+id/einstellungen_backup_icon"
+        android:clickable="true"
+        android:gravity="start"/>
+
+    <View
+        android:id="@+id/einstellungen_backup_linie"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linie"
+        android:visibility="visible"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_alignTop="@+id/einstellungen_backup_icon"
+        android:layout_alignLeft="@+id/einstellungen_backup_icon"
+        android:layout_alignStart="@+id/einstellungen_backup_icon"/>
+
+
+    <ImageView
+        android:id="@+id/einstellungen_sprache_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/einstellungen_backup_icon"
+        android:layout_alignStart="@+id/einstellungen_backup_icon"
+        android:layout_alignTop="@+id/einstellungen_backup_linie"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:tint="#757575"
+        app:srcCompat="@mipmap/ic_language_black_24dp" />
+
+    <TextView
+        android:id="@+id/einstellungen_sprache_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/einstellungen_sprache_icon"
+        android:layout_alignLeft="@+id/einstellungen_sprache_icon"
+        android:layout_alignStart="@+id/einstellungen_sprache_icon"
+        android:layout_alignTop="@+id/einstellungen_sprache_icon"
+        android:clickable="false"
+        android:gravity="start"
+        android:layout_marginLeft="50dp"
+        android:text="@string/menu_einstellungen_sprache"
+        android:textAlignment="textStart"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/einstellungen_sprache_click"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/einstellungen_sprache_icon"
+        android:layout_alignLeft="@+id/einstellungen_sprache_icon"
+        android:layout_alignStart="@+id/einstellungen_sprache_icon"
+        android:layout_alignTop="@+id/einstellungen_sprache_icon"
+        android:clickable="true"
+        android:gravity="start"/>
+
+    <View
+        android:id="@+id/einstellungen_sprache_linie"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linie"
+        android:visibility="visible"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_alignTop="@+id/einstellungen_sprache_icon"
+        android:layout_alignLeft="@+id/einstellungen_sprache_icon"
+        android:layout_alignStart="@+id/einstellungen_sprache_icon"/>
+
+    <ImageView
+        android:id="@+id/einstellungen_kontakt_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/einstellungen_sprache_icon"
+        android:layout_alignStart="@+id/einstellungen_sprache_icon"
+        android:layout_alignTop="@+id/einstellungen_sprache_linie"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:tint="#757575"
+        app:srcCompat="@mipmap/ic_contact_mail_black_24dp" />
+
+    <TextView
+        android:id="@+id/einstellungen_kontakt_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/einstellungen_kontakt_icon"
+        android:layout_alignLeft="@+id/einstellungen_kontakt_icon"
+        android:layout_alignStart="@+id/einstellungen_kontakt_icon"
+        android:layout_alignTop="@+id/einstellungen_kontakt_icon"
+        android:clickable="false"
+        android:gravity="start"
+        android:layout_marginLeft="50dp"
+        android:text="@string/menu_einstellungen_kontakt"
+        android:textAlignment="textStart"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/einstellungen_kontakt_click"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/einstellungen_kontakt_icon"
+        android:layout_alignLeft="@+id/einstellungen_kontakt_icon"
+        android:layout_alignStart="@+id/einstellungen_kontakt_icon"
+        android:layout_alignTop="@+id/einstellungen_kontakt_icon"
+        android:clickable="true"
+        android:gravity="start"/>
+
+    <View
+        android:id="@+id/einstellungen_kontakt_linie"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linie"
+        android:visibility="visible"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_alignTop="@+id/einstellungen_kontakt_icon"
+        android:layout_alignLeft="@+id/einstellungen_kontakt_icon"
+        android:layout_alignStart="@+id/einstellungen_kontakt_icon"/>
+
+    <ImageView
+        android:id="@+id/einstellungen_app_info_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/einstellungen_kontakt_icon"
+        android:layout_alignStart="@+id/einstellungen_kontakt_icon"
+        android:layout_alignTop="@+id/einstellungen_kontakt_linie"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:tint="#757575"
         app:srcCompat="@mipmap/ic_info_outline_black_24dp" />
 
     <TextView
+        android:id="@+id/einstellungen_app_info_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/einstellungen_version_button"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="61dp"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/einstellungen_app_info_icon"
+        android:layout_alignLeft="@+id/einstellungen_app_info_icon"
+        android:layout_alignStart="@+id/einstellungen_app_info_icon"
+        android:layout_alignTop="@+id/einstellungen_app_info_icon"
         android:clickable="false"
         android:gravity="start"
-        android:text="@string/menu_einstellungen_version"
-        android:textColor="@android:color/black"
-        android:textSize="20sp">
-    </TextView>
+        android:layout_marginLeft="50dp"
+        android:text="@string/menu_einstellungen_app_info"
+        android:textAlignment="textStart"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/einstellungen_app_info_click"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/einstellungen_app_info_icon"
+        android:layout_alignLeft="@+id/einstellungen_app_info_icon"
+        android:layout_alignStart="@+id/einstellungen_app_info_icon"
+        android:layout_alignTop="@+id/einstellungen_app_info_icon"
+        android:clickable="true"
+        android:gravity="start"/>
 
     <View
+        android:id="@+id/einstellungen_app_info_linie"
         android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="50dp"
+        android:layout_height="0.5dp"
         android:background="@color/linie"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_alignTop="@+id/einstellungen_app_info_icon"
+        android:layout_alignLeft="@+id/einstellungen_app_info_icon"
+        android:layout_alignStart="@+id/einstellungen_app_info_icon"/>
 
 
 </RelativeLayout>

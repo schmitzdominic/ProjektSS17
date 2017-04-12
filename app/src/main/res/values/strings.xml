@@ -35,7 +35,10 @@
 
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>
-    <string name="menu_einstellungen_version">Version</string>
+    <string name="menu_einstellungen_backup">Backup</string>
+    <string name="menu_einstellungen_sprache">Sprache</string>
+    <string name="menu_einstellungen_kontakt">Kontakt</string>
+    <string name="menu_einstellungen_app_info">App Informationen</string>
 
     <!-- A_Version -->
     <string name="title_version_screen">Version</string>
