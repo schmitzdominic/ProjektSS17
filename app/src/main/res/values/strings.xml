@@ -50,6 +50,9 @@
     <string name="a_ocr_manuell_hint_anschrift">Anschrift</string>
     <string name="a_ocr_manuell_hint_uid">UID (Optional)</string>
 
+    <string name="button_add_new_text">Add new</string>
+    <string name="button_delete_row_description">Delete</string>
+
     <!-- A_Max_Bon_Pic -->
     <string name="title_max_bon_pic_screen">Bon</string>
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="de.projektss17.bonpix.A_OCR_Manuell"
+    tools:showIn="@layout/box_ocr_manuell_screen">
+
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint=""
+            android:maxLines="1">
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15"
+            android:ems="10"
+            android:gravity="right"
+            android:hint=""
+            android:maxLines="1" />
+
+        <ImageButton
+            android:id="@+id/buttonDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:contentDescription="@string/button_delete_row_description"
+            android:onClick="onDeleteClicked"
+            android:src="@mipmap/ic_delete_black_24dp" />
+
+</LinearLayout>

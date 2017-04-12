@@ -2,6 +2,7 @@ package de.projektss17.bonpix;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,14 +11,19 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +42,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private String year, month, day;
     private String imageOCRUriString;
     private static int RESULT_LOAD_IMAGE = 1;
+    private LinearLayout mContainerView;
+    private Button mAddButton;
+    private View mExclusiveEmptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Liste zum anzeigen/hinzufügen der Produkte
+        mContainerView = (LinearLayout) findViewById(R.id.parentView);
+        mAddButton = (Button) findViewById(R.id.btnAddNewItem);
+
+        // TestDaten Liste Produkte
+        inflateEditRow("Test1");
+        inflateEditRow("Test2");
 
         //Kalender
         this.dateView = (TextView) findViewById(R.id.ocr_manuell_datum);
@@ -273,5 +290,89 @@ public class A_OCR_Manuell extends AppCompatActivity {
             this.imageOCRUriString = imageUri.toString();
             this.imageOCR.setClickable(true);
         }
+    }
+
+    /**
+     * List view zum Hinzufügen neuer Produkte
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+            }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    // Handler für den "Add new" button;
+    public void onAddNewClicked(View v) {
+        // Inflate a new row and hide the button self.
+        inflateEditRow(null);
+        v.setVisibility(View.GONE);
+    }
+
+    // Handler für Löschen button
+    public void onDeleteClicked(View v) {
+        // aufruf getParent on button zum löschen zeile
+        mContainerView.removeView((View) v.getParent());
+    }
+
+    private void inflateEditRow(String name) {
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.box_ocr_manuell_listview, null);
+        final ImageButton deleteButton = (ImageButton) rowView
+                .findViewById(R.id.buttonDelete);
+        final EditText editText = (EditText) rowView
+                .findViewById(R.id.editText);
+
+        if (name != null && !name.isEmpty()) {
+            editText.setText(name);
+        } else {
+            mExclusiveEmptyView = rowView;
+            deleteButton.setVisibility(View.INVISIBLE);
+        }
+
+        // Verwaltung anzeige des Buttons add
+        // handle the exclusive empty view.
+        editText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (s.toString().isEmpty()) {
+                    mAddButton.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.INVISIBLE);
+
+                    if (mExclusiveEmptyView != null
+                            && mExclusiveEmptyView != rowView) {
+                        mContainerView.removeView(mExclusiveEmptyView);
+                    }
+                    mExclusiveEmptyView = rowView;
+                } else {
+
+                    if (mExclusiveEmptyView == rowView) {
+                        mExclusiveEmptyView = null;
+                    }
+
+                    mAddButton.setVisibility(View.VISIBLE);
+                    deleteButton.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
+        });
+
+        // AddButton verwaltung
+        mContainerView.addView(rowView, mContainerView.getChildCount() - 1);
     }
 }

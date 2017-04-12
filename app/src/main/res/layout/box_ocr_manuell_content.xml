@@ -132,4 +132,37 @@
         android:layout_toEndOf="@+id/ocr_manuell_image_uid"
         android:layout_toRightOf="@+id/ocr_manuell_image_uid" />
 
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ocr_manuell_image_uid">
+    <LinearLayout
+        android:id="@+id/parentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/ocr_manuell_edit_text_uid"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/ocr_manuell_edit_text_uid"
+        android:layout_alignEnd="@+id/ocr_manuell_edit_text_uid">
+
+        <Button
+            android:id="@+id/btnAddNewItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#00000000"
+            android:gravity="center_vertical|left"
+            android:onClick="onAddNewClicked"
+            android:paddingLeft="5dp"
+            android:text="@string/button_add_new_text"
+            android:textColor="@android:color/darker_gray" />
+
+
+    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
+
