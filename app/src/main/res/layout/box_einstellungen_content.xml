@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:tint="#757575"
+        android:tint="@color/colorMenueIcon"
         android:clickable="false"
         app:srcCompat="@mipmap/ic_backup_black_24dp"/>
 
@@ -26,12 +26,13 @@
         android:layout_alignLeft="@+id/einstellungen_backup_icon"
         android:layout_alignStart="@+id/einstellungen_backup_icon"
         android:layout_alignTop="@+id/einstellungen_backup_icon"
+        android:layout_marginLeft="50dp"
         android:clickable="false"
         android:gravity="start"
-        android:layout_marginLeft="50dp"
         android:text="@string/menu_einstellungen_backup"
         android:textAlignment="textStart"
-        android:textSize="18sp"/>
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/einstellungen_backup_click"
@@ -47,8 +48,8 @@
     <View
         android:id="@+id/einstellungen_backup_linie"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/linie"
+        android:layout_height="1dp"
+        android:background="@color/colorLines"
         android:visibility="visible"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="40dp"
@@ -66,7 +67,7 @@
         android:layout_alignTop="@+id/einstellungen_backup_linie"
         android:layout_marginTop="20dp"
         android:clickable="false"
-        android:tint="#757575"
+        android:tint="@color/colorMenueIcon"
         app:srcCompat="@mipmap/ic_language_black_24dp" />
 
     <TextView
@@ -77,12 +78,13 @@
         android:layout_alignLeft="@+id/einstellungen_sprache_icon"
         android:layout_alignStart="@+id/einstellungen_sprache_icon"
         android:layout_alignTop="@+id/einstellungen_sprache_icon"
+        android:layout_marginLeft="50dp"
         android:clickable="false"
         android:gravity="start"
-        android:layout_marginLeft="50dp"
         android:text="@string/menu_einstellungen_sprache"
         android:textAlignment="textStart"
-        android:textSize="18sp"/>
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/einstellungen_sprache_click"
@@ -98,8 +100,8 @@
     <View
         android:id="@+id/einstellungen_sprache_linie"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/linie"
+        android:layout_height="1dp"
+        android:background="@color/colorLines"
         android:visibility="visible"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="40dp"
@@ -116,7 +118,7 @@
         android:layout_alignTop="@+id/einstellungen_sprache_linie"
         android:layout_marginTop="20dp"
         android:clickable="false"
-        android:tint="#757575"
+        android:tint="@color/colorMenueIcon"
         app:srcCompat="@mipmap/ic_contact_mail_black_24dp" />
 
     <TextView
@@ -127,12 +129,13 @@
         android:layout_alignLeft="@+id/einstellungen_kontakt_icon"
         android:layout_alignStart="@+id/einstellungen_kontakt_icon"
         android:layout_alignTop="@+id/einstellungen_kontakt_icon"
+        android:layout_marginLeft="50dp"
         android:clickable="false"
         android:gravity="start"
-        android:layout_marginLeft="50dp"
         android:text="@string/menu_einstellungen_kontakt"
         android:textAlignment="textStart"
-        android:textSize="18sp"/>
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/einstellungen_kontakt_click"
@@ -148,8 +151,8 @@
     <View
         android:id="@+id/einstellungen_kontakt_linie"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/linie"
+        android:layout_height="1dp"
+        android:background="@color/colorLines"
         android:visibility="visible"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="40dp"
@@ -166,7 +169,7 @@
         android:layout_alignTop="@+id/einstellungen_kontakt_linie"
         android:layout_marginTop="20dp"
         android:clickable="false"
-        android:tint="#757575"
+        android:tint="@color/colorMenueIcon"
         app:srcCompat="@mipmap/ic_info_outline_black_24dp" />
 
     <TextView
@@ -177,12 +180,13 @@
         android:layout_alignLeft="@+id/einstellungen_app_info_icon"
         android:layout_alignStart="@+id/einstellungen_app_info_icon"
         android:layout_alignTop="@+id/einstellungen_app_info_icon"
+        android:layout_marginLeft="50dp"
         android:clickable="false"
         android:gravity="start"
-        android:layout_marginLeft="50dp"
         android:text="@string/menu_einstellungen_app_info"
         android:textAlignment="textStart"
-        android:textSize="18sp"/>
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/einstellungen_app_info_click"
@@ -198,8 +202,8 @@
     <View
         android:id="@+id/einstellungen_app_info_linie"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/linie"
+        android:layout_height="1dp"
+        android:background="@color/colorLines"
         android:visibility="visible"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="40dp"
