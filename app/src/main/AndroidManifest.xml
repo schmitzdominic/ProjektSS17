@@ -73,7 +73,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
-
+        <activity
+            android:name=".A_Max_Bon_Pic"
+            android:label="@string/title_max_bon_pic_screen"
+            android:parentActivityName=".A_OCR_Manuell"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_OCR_Manuell" />
+        </activity>
     </application>
 
 </manifest>

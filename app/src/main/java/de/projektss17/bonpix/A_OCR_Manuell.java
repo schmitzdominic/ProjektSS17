@@ -27,13 +27,14 @@ import java.util.Calendar;
 
 public class A_OCR_Manuell extends AppCompatActivity {
 
-    private Button saveButton;
+    private Button saveButton, kameraButton;
     private Spinner spinnerLaden;
     private Calendar calendar;
     private TextView dateView;
     private ImageView imageOCR;
     private ArrayAdapter<String> spinnerAdapter;
     private String year, month, day;
+    private String imageOCRUriString;
     private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
@@ -55,9 +56,11 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.dateView.setTextColor(Color.RED);
 
         this.imageOCR = (ImageView) findViewById(R.id.ocr_manuell_image_ocr); // Image OCR Element
+        this.kameraButton = (Button) findViewById(R.id.ocr_manuell_image_button_auswahl); // Image auswahl Button
         this.spinnerLaden = (Spinner) findViewById(R.id.ocr_manuell_spinner_laden); // Spinner Laden Element
         this.saveButton = (Button) findViewById(R.id.ocr_manuell_save_button); // Speichern Button
 
+        this.imageOCR.setClickable(false); // Icon ist am anfang nicht klickbar
         this.refreshSpinner(); // Spinner Refresh
 
         // Aktion welches beim drücken des Save-Buttons ausgeführt wird
@@ -79,13 +82,21 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.imageOCR.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                if(imageOCRUriString != null){
+                    S.showMaxBonPic(A_OCR_Manuell.this, imageOCRUriString);
+                }
+
+            }
+        });
+
+        // klick auf den Kamera auswahl button
+        this.kameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
-
-
-
 
         // Wenn Spinner Bitte Laden auswählen anzeigt, wird der Text Rot markiert
         if(this.spinnerLaden.getSelectedItemPosition() == 0){
@@ -259,6 +270,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
             Uri imageUri = data.getData();
             this.imageOCR.setImageURI(null);
             this.imageOCR.setImageURI(imageUri);
+            this.imageOCRUriString = imageUri.toString();
+            this.imageOCR.setClickable(true);
         }
     }
 }

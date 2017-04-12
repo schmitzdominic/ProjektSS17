@@ -3,6 +3,7 @@ package de.projektss17.bonpix;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
@@ -66,6 +67,15 @@ public class S extends Activity {
     }
 
     /**
+     * Ruft die Max Bon Activity auf
+     */
+    public static void showMaxBonPic(AppCompatActivity beforeActivity, String uriPath){
+        Intent intent = new Intent(beforeActivity, A_Max_Bon_Pic.class);
+        intent.putExtra("imageUri", uriPath);
+        beforeActivity.startActivity(intent);
+    }
+
+    /**
      * Startet Activitys
      * @param beforeActivity Vorherige Instanz der Activity
      * @param cls Activity Klasse die gestartet werden soll
@@ -99,5 +109,7 @@ public class S extends Activity {
                     }
                 }).create().show();
     }
+
+
 
 }
