@@ -10,262 +10,156 @@
 
 
     <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:id="@+id/ocr_manuell_image_ocr"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/ocr_manuell_image_view_shop"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="73dp"
-        android:layout_marginStart="73dp"
-        android:visibility="invisible"
-        app:srcCompat="@mipmap/ic_add_white_24dp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/imageView11"
-        android:layout_alignEnd="@+id/imageView11"
-        android:id="@+id/relativeLayout15">
-
-
-        <ImageView
-            android:id="@+id/ocr_manuell_image_ocr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:clickable="true"
-            app:srcCompat="@mipmap/ic_linked_camera_black_24dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="26dp"
-            android:layout_marginStart="26dp" />
-
-        <ImageView
-            android:id="@+id/ocr_manuell_image_view_shop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="41dp"
-            android:tint="@color/colorMenueIcon"
-            app:srcCompat="@mipmap/ic_shopping_cart_black_24dp"
-            android:layout_below="@+id/ocr_manuell_image_ocr"
-            android:layout_alignLeft="@+id/ocr_manuell_image_ocr"
-            android:layout_alignStart="@+id/ocr_manuell_image_ocr" />
-
-        <ImageView
-            android:id="@+id/ocr_manuell_image_view_ort"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:tint="@color/colorMenueIcon"
-            app:srcCompat="@mipmap/ic_home_black_24dp"
-            android:layout_below="@+id/ocr_manuell_image_view_shop"
-            android:layout_alignLeft="@+id/ocr_manuell_image_view_shop"
-            android:layout_alignStart="@+id/ocr_manuell_image_view_shop" />
-
-        <ImageView
-            android:id="@+id/ocr_manuell_image_uid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="37dp"
-            android:tint="@color/colorMenueIcon"
-            app:srcCompat="@mipmap/ic_polymer_black_24dp"
-            android:layout_below="@+id/ocr_manuell_image_kalender"
-            android:layout_alignLeft="@+id/ocr_manuell_image_kalender"
-            android:layout_alignStart="@+id/ocr_manuell_image_kalender" />
-        <ImageView
-            android:id="@+id/ocr_manuell_image_kalender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:tint="@color/colorMenueIcon"
-            app:srcCompat="@mipmap/ic_date_range_black_24dp"
-            android:layout_below="@+id/ocr_manuell_image_view_ort"
-            android:layout_alignLeft="@+id/ocr_manuell_image_view_ort"
-            android:layout_alignStart="@+id/ocr_manuell_image_view_ort" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/relativeLayout16"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/imageView11"
-        android:layout_alignStart="@+id/imageView11"
-        android:layout_toLeftOf="@+id/imageView13"
-        android:layout_toStartOf="@+id/imageView13">
-
-        <Button
-            android:id="@+id/ocr_manuell_image_button_auswahl"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/imageView12"
-            android:background="?android:attr/colorBackground"
-            android:fontFamily="sans-serif"
-            android:hint="@string/a_ocr_manuell_bildauswahl"
-            android:textAlignment="textStart"
-            android:textSize="15sp" />
-
-        <Spinner
-            android:id="@+id/ocr_manuell_spinner_laden"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/ocr_manuell_image_button_auswahl"
-            android:layout_marginTop="29dp"/>
-
-        <EditText
-            android:id="@+id/ocr_manuell_edit_text_anschrift"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/ocr_manuell_spinner_laden"
-            android:layout_marginTop="29dp"
-            android:fontFamily="sans-serif"
-            android:hint="@string/a_ocr_manuell_hint_anschrift"
-            android:inputType="textPersonName"
-            android:textSize="16sp"
-            android:backgroundTint="@color/colorPrimary"/>
-
-
-        <TextView
-            android:id="@+id/ocr_manuell_datum"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/ocr_manuell_edit_text_anschrift"
-            android:layout_marginTop="33dp"
-            android:fontFamily="sans-serif"
-            android:onClick="setDate"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/ocr_manuell_edit_text_uid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/ocr_manuell_datum"
-            android:layout_marginTop="28dp"
-            android:fontFamily="sans-serif"
-            android:hint="@string/a_ocr_manuell_hint_uid"
-            android:inputType="textPersonName"
-            android:textSize="16sp"
-            android:backgroundTint="@color/colorPrimary"/>
-
-
-        <ImageView
-            android:id="@+id/imageView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:visibility="invisible"
-            app:srcCompat="@mipmap/ic_add_white_24dp" />
-
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:visibility="invisible"
-        app:srcCompat="@mipmap/ic_add_white_24dp" />
-
-    <ImageView
-        android:id="@+id/imageView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="125dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginRight="21dp"
-        android:layout_toLeftOf="@+id/relativeLayout16"
-        android:layout_toStartOf="@+id/relativeLayout16"
-        android:visibility="invisible"
-        app:srcCompat="@mipmap/ic_add_white_24dp" />
-
-
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignLeft="@+id/imageView14"
-        android:layout_alignStart="@+id/imageView14"
-        android:layout_alignTop="@+id/imageView14"
-        android:layout_alignRight="@+id/relativeLayout16"
-        android:layout_alignEnd="@+id/relativeLayout16"
-        android:layout_alignParentBottom="true">
-
-
-        <LinearLayout
-            android:id="@+id/parentView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="invisible">
-
-            <Button
-                android:id="@+id/btnAddNewItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="#00000000"
-                android:fontFamily="sans-serif"
-                android:gravity="center_vertical|left"
-                android:onClick="onAddNewClicked"
-                android:paddingLeft="5dp"
-                android:text="@string/button_add_new_text"
-                android:textAlignment="center"
-                android:textColor="@android:color/darker_gray"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-    </ScrollView>
-
-
-    <View
-        android:id="@+id/ocr_manuell_seperator"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/button2"
-        android:layout_centerHorizontal="true"
-        android:background="#CFD8DC"
-        android:layout_marginTop="60dp"/>
+        android:layout_alignStart="@+id/ocr_manuell_image_view_shop"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        app:srcCompat="@mipmap/ic_linked_camera_black_24dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/ocr_manuell_image_button_auswahl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:text="Button"
-        android:visibility="invisible" />
+        android:layout_above="@+id/ocr_manuell_spinner_laden"
+        android:layout_alignEnd="@+id/ocr_manuell_spinner_laden"
+        android:layout_alignRight="@+id/ocr_manuell_spinner_laden"
+        android:layout_alignTop="@+id/ocr_manuell_image_ocr"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_toRightOf="@+id/ocr_manuell_image_ocr"
+        android:background="?android:attr/colorBackground"
+        android:text="@string/a_ocr_manuell_bildauswahl" />
 
+
+    <ImageView
+        android:id="@+id/ocr_manuell_image_view_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:tint="@color/colorMenueIcon"
+        android:layout_below="@+id/ocr_manuell_image_ocr"
+        app:srcCompat="@mipmap/ic_shopping_cart_black_24dp" />
+
+    <Spinner
+        android:id="@+id/ocr_manuell_spinner_laden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="-6dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toEndOf="@+id/ocr_manuell_image_view_shop"
+        android:layout_toRightOf="@+id/ocr_manuell_image_view_shop"
+        android:layout_below="@+id/ocr_manuell_image_ocr"/>
+
+    <ImageView
+        android:id="@+id/ocr_manuell_image_view_ort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:tint="@color/colorMenueIcon"
+        app:srcCompat="@mipmap/ic_home_black_24dp"
+        android:layout_alignLeft="@+id/ocr_manuell_image_view_shop"
+        android:layout_alignStart="@+id/ocr_manuell_image_view_shop"
+        android:layout_below="@+id/ocr_manuell_image_view_shop" />
+
+    <EditText
+        android:id="@+id/ocr_manuell_edit_text_anschrift"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="15dp"
+        android:inputType="textPersonName"
+        android:hint="@string/a_ocr_manuell_hint_anschrift"
+        android:layout_below="@+id/ocr_manuell_spinner_laden"
+        android:layout_toEndOf="@+id/ocr_manuell_image_kalender"
+        android:layout_toRightOf="@+id/ocr_manuell_image_kalender" />
+
+    <ImageView
+        android:id="@+id/ocr_manuell_image_kalender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:tint="@color/colorMenueIcon"
+        app:srcCompat="@mipmap/ic_date_range_black_24dp"
+        android:layout_below="@+id/ocr_manuell_image_view_ort"
+        android:layout_alignLeft="@+id/ocr_manuell_image_view_ort"
+        android:layout_alignStart="@+id/ocr_manuell_image_view_ort" />
+
+    <TextView
+        android:id="@+id/ocr_manuell_datum"
+        android:onClick="setDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/ocr_manuell_edit_text_anschrift"
+        android:layout_toEndOf="@+id/ocr_manuell_image_kalender"
+        android:layout_toRightOf="@+id/ocr_manuell_image_kalender"/>
+
+    <ImageView
+        android:id="@+id/ocr_manuell_image_uid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ocr_manuell_image_kalender"
+        android:layout_alignStart="@+id/ocr_manuell_image_kalender"
+        android:layout_below="@+id/ocr_manuell_image_kalender"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:tint="@color/colorMenueIcon"
+        app:srcCompat="@mipmap/ic_polymer_black_24dp" />
+
+    <EditText
+        android:id="@+id/ocr_manuell_edit_text_uid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="15dp"
+        android:inputType="textPersonName"
+        android:hint="@string/a_ocr_manuell_hint_uid"
+        android:layout_below="@+id/ocr_manuell_image_kalender"
+        android:layout_toEndOf="@+id/ocr_manuell_image_uid"
+        android:layout_toRightOf="@+id/ocr_manuell_image_uid" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/ocr_manuell_image_uid">
+
+    <LinearLayout
+        android:id="@+id/parentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnAddNewItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#00000000"
+            android:gravity="center_vertical|left"
+            android:onClick="onAddNewClicked"
+            android:paddingLeft="5dp"
+            android:text="@string/button_add_new_text"
+            android:textColor="@android:color/darker_gray" />
+
+
+    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
 
