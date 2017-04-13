@@ -58,5 +58,4 @@ public class A_Einstellungen extends AppCompatActivity {
         editor.putBoolean("switch", onOffSwitch.isChecked());
         editor.apply();
     }
-
 }

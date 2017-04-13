@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import de.projektss17.bonpix.daten.C_DatabaseHandler;
+
 public class A_Main extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -92,6 +94,7 @@ public class A_Main extends AppCompatActivity {
         String testUpdate = "testContentUpdate";
         String filter = "bons_id=" + id;
         ArrayList<String> content = new ArrayList();
+        ArrayList<String> con = new ArrayList();
 
         // DataBase Connection
         C_DatabaseHandler mDbHelper = new C_DatabaseHandler(this);
@@ -102,14 +105,19 @@ public class A_Main extends AppCompatActivity {
         values.put(KEY_TEST, testInsert);
         db.insert("bons", null, values);
 
-        ContentValues values1 = new ContentValues();
-        values1.put(KEY_TEST, testInsert2);
-        db.insert("bons", null, values1);
+        // Test setLaeden
+        mDbHelper.setLaeden(db, "Aldi");
+        mDbHelper.setLaeden(db, "Lidl");
 
         // DatabaseHandler Function Example
         for (String pass : mDbHelper.getAllBons(db)) {
             content.add(pass);
             Log.e("#CONTENT INSIDE LOOP: ", " ### " + pass);
+        }
+
+        for (String pass : mDbHelper.getAllLaeden(db)) {
+            con.add(pass);
+            Log.e("#CONTENT LOOP: ", " ### " + pass);
         }
 
         // Update Example
@@ -123,7 +131,7 @@ public class A_Main extends AppCompatActivity {
             do {
                 String temp = cursor.getString(1);
                 String temp1 = cursor.getString(0);
-                Log.i("#MAIN CONTENT CURSOR:"," ### " + temp1 + "   " + temp);
+                Log.e("#MAIN CONTENT CURSOR:"," ### " + temp1 + "   " + temp);
             } while (cursor.moveToNext());
         }
         cursor.close();
