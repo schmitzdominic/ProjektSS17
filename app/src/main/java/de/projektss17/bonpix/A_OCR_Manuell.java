@@ -151,17 +151,15 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     builder.setMessage("Bitte Laden eingeben")
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+
                                     /*
-                                    TODO
-                                    1. in die Datenbank schreiben
-                                    über input.getText().toString() den eingegebenen Text auslesen
-                                    und in die datenbank schreiben
-                                    Mit z.B. S.addSpinnerLaedenManuell()
-                                    2. datenauslesen und in die parentView eintragen
-                                    Mit z.B. S.getSpinnerLaedenManuell() in eine entsprechende Liste
+                                    TODO Bitte so implementieren:
+                                    S.dbHandler.setLaeden(S.db, input.getText().toString());
+                                    ArrayList<String> x = S.dbHandler.getAllLaeden(S.db);
                                     refreshSpinner();
-                                    3. selection setzen
-                                    parentView.setSelection(PLATZINDERENTSPRECHENDENLISTE);
+                                    parentView.setSelection(x.indexOf(input.getText().toString())+2);
+
+
                                     */
                                     // TODO Remove later the following 2 lines!
                                     Toast.makeText(A_OCR_Manuell.this, input.getText().toString(), Toast.LENGTH_LONG).show();
@@ -269,6 +267,22 @@ public class A_OCR_Manuell extends AppCompatActivity {
         // 2. füge diese Daten zu einem String Array hinzu
         // TODO Remove next line after database has implmented
         String array[] = {"Bitte Laden auswählen","Hinzufügen", "EDEKA", "REWE", "MEDIA MARKT"};
+
+        /* TODO mit Datenbank bitte so implementieren!
+        ArrayList<String> x = S.dbHandler.getAllLaeden(S.db);
+
+        String array[] = new String[x.size()+2];
+
+        int count = 2;
+
+        array[0] = "Bitte Laden auswählen";
+        array[1] = "Hinzufügen";
+
+        for(String a : x){
+            array[count] = a;
+            count ++;
+        }
+         */
 
         this.spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array);
         this.spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
