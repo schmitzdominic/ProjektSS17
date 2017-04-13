@@ -2,6 +2,7 @@ package de.projektss17.bonpix;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -13,6 +14,9 @@ import java.util.ArrayList;
  */
 
 public class S extends Activity {
+
+    public static SQLiteDatabase db;
+
     /**
      * Ruft die Foto funktion auf
      */

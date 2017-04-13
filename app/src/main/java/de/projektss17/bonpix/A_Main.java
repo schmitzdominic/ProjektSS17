@@ -98,26 +98,26 @@ public class A_Main extends AppCompatActivity {
 
         // DataBase Connection
         C_DatabaseHandler mDbHelper = new C_DatabaseHandler(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        S.db = mDbHelper.getWritableDatabase();
 
         // Insert Examples
         ContentValues values = new ContentValues();
         values.put(KEY_TEST, testInsert);
-        db.insert("bons", null, values);
+        S.db.insert("bons", null, values);
 
         // Test Functions
-        mDbHelper.checkTables(db);
-        mDbHelper.setLaeden(db, "Aldi");
-        mDbHelper.setLaeden(db, "Lidl");
+        mDbHelper.checkTables(S.db);
+        mDbHelper.setLaeden(S.db, "Aldi");
+        mDbHelper.setLaeden(S.db, "Lidl");
 
 
         // DatabaseHandler Function Example
-        for (String pass : mDbHelper.getAllBons(db)) {
+        for (String pass : mDbHelper.getAllBons(S.db)) {
             content.add(pass);
             Log.e("#CONTENT INSIDE LOOP: ", " ### " + pass);
         }
 
-        for (String pass : mDbHelper.getAllLaeden(db)) {
+        for (String pass : mDbHelper.getAllLaeden(S.db)) {
             con.add(pass);
             Log.e("#CONTENT LOOP: ", " ### " + pass);
         }
@@ -125,10 +125,10 @@ public class A_Main extends AppCompatActivity {
         // Update Example
         ContentValues values3 = new ContentValues();
         values3.put(KEY_TEST, testUpdate);
-        db.update("bons", values3, filter, null);
+        S.db.update("bons", values3, filter, null);
 
         // Loop Example to get multiple Data from row
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = S.db.rawQuery(query, null);
         if (cursor.moveToFirst()){
             do {
                 String temp = cursor.getString(1);
