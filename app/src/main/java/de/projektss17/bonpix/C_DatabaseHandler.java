@@ -32,6 +32,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
+    // Example Function to pass all Bons
     public ArrayList<String> getAllBons(SQLiteDatabase db){
         ArrayList<String> bonsList = new ArrayList();
         String query = "SELECT * FROM bons";
@@ -43,6 +44,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 Log.i("#DBHANDLER CURSOR:"," ### " + pass);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return bonsList;
     }
 }

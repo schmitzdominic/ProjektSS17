@@ -83,18 +83,21 @@ public class A_Main extends AppCompatActivity {
          * ### READ THE CODE EXAMPLES ###
          */
 
+        // Values
         final String KEY_TEST = "bons_name";
+        int id = 1;
+        String query = "SELECT * FROM bons WHERE bons_id < 5";
         String testInsert = "testContent";
         String testInsert2 = "testContentZWEI";
         String testUpdate = "testContentUpdate";
-        String query = "SELECT * FROM bons WHERE bons_id < 5";
-        int id = 1;
         String filter = "bons_id=" + id;
-
-        C_DatabaseHandler mDbHelper = new C_DatabaseHandler(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ArrayList<String> content = new ArrayList();
 
+        // DataBase Connection
+        C_DatabaseHandler mDbHelper = new C_DatabaseHandler(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        // Insert Examples
         ContentValues values = new ContentValues();
         values.put(KEY_TEST, testInsert);
         db.insert("bons", null, values);
@@ -103,15 +106,18 @@ public class A_Main extends AppCompatActivity {
         values1.put(KEY_TEST, testInsert2);
         db.insert("bons", null, values1);
 
+        // DatabaseHandler Function Example
         for (String pass : mDbHelper.getAllBons(db)) {
             content.add(pass);
             Log.e("#CONTENT INSIDE LOOP: ", " ### " + pass);
         }
 
+        // Update Example
         ContentValues values3 = new ContentValues();
         values3.put(KEY_TEST, testUpdate);
         db.update("bons", values3, filter, null);
 
+        // Loop Example to get multiple Data from row
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()){
             do {

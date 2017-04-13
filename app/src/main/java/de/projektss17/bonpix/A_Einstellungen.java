@@ -21,19 +21,19 @@ public class A_Einstellungen extends AppCompatActivity {
         setContentView(R.layout.box_einstellungen_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // Scopes
+        Switch onOffSwitch = (Switch)  findViewById(R.id.switch1);
         ImageButton versionButton = (ImageButton) findViewById(R.id.einstellungen_version_button);
 
-        // Button Version
+        // Listener
         versionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 S.showVersion(A_Einstellungen.this);
             }
         });
-        Switch onOffSwitch = (Switch)  findViewById(R.id.switch1);
         onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -56,7 +56,6 @@ public class A_Einstellungen extends AppCompatActivity {
         SharedPreferences.Editor editor = settings.edit();
         Switch onOffSwitch = (Switch)  findViewById(R.id.switch1);
         editor.putBoolean("switch", onOffSwitch.isChecked());
-
         editor.apply();
     }
 
