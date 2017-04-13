@@ -109,7 +109,7 @@ public class A_Main extends AppCompatActivity {
         S.dbHandler.checkTables(S.db);
         S.dbHandler.setLaeden(S.db, "Aldi");
         S.dbHandler.setLaeden(S.db, "Lidl");
-
+        S.dbHandler.deleteLaden(S.db, 1);
 
         // DatabaseHandler Function Example
         for (String pass : S.dbHandler.getAllBons(S.db)) {
@@ -138,6 +138,7 @@ public class A_Main extends AppCompatActivity {
         }
         cursor.close();
         // END --- Database Test Section
+
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

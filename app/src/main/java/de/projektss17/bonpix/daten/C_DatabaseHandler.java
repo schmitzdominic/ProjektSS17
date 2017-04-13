@@ -72,10 +72,17 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         db.insert("laeden", null, values);
     }
 
+    // Create Tables
     public void checkTables(SQLiteDatabase db){
         String CREATE_TABLE_Laeden = "CREATE TABLE IF NOT EXISTS laeden (laeden_id INTEGER PRIMARY KEY AUTOINCREMENT, laeden_name VARCHAR(255))";
         db.execSQL(CREATE_TABLE_Laeden);
         String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS bons (bons_id INTEGER PRIMARY KEY AUTOINCREMENT, bons_name VARCHAR(255))";
         db.execSQL(CREATE_TABLE);
+    }
+
+    // Delete specific Laden
+    public void deleteLaden(SQLiteDatabase db, int id){
+        String filter = "laeden_id=" + id;
+        db.delete("laeden", filter, null);
     }
 }
