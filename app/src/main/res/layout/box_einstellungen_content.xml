@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:tint="@color/colorMenueIcon"
+        android:tint="@color/colorPrimary"
         android:clickable="false"
         app:srcCompat="@mipmap/ic_backup_black_24dp"/>
 
@@ -67,7 +67,7 @@
         android:layout_alignTop="@+id/einstellungen_backup_linie"
         android:layout_marginTop="20dp"
         android:clickable="false"
-        android:tint="@color/colorMenueIcon"
+        android:tint="@color/colorPrimary"
         app:srcCompat="@mipmap/ic_language_black_24dp" />
 
     <TextView
@@ -118,7 +118,7 @@
         android:layout_alignTop="@+id/einstellungen_sprache_linie"
         android:layout_marginTop="20dp"
         android:clickable="false"
-        android:tint="@color/colorMenueIcon"
+        android:tint="@color/colorPrimary"
         app:srcCompat="@mipmap/ic_contact_mail_black_24dp" />
 
     <TextView
@@ -169,7 +169,7 @@
         android:layout_alignTop="@+id/einstellungen_kontakt_linie"
         android:layout_marginTop="20dp"
         android:clickable="false"
-        android:tint="@color/colorMenueIcon"
+        android:tint="@color/colorPrimary"
         app:srcCompat="@mipmap/ic_info_outline_black_24dp" />
 
     <TextView
