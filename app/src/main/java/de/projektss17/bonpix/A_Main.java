@@ -105,9 +105,11 @@ public class A_Main extends AppCompatActivity {
         values.put(KEY_TEST, testInsert);
         db.insert("bons", null, values);
 
-        // Test setLaeden
+        // Test Functions
+        mDbHelper.checkTables(db);
         mDbHelper.setLaeden(db, "Aldi");
         mDbHelper.setLaeden(db, "Lidl");
+
 
         // DatabaseHandler Function Example
         for (String pass : mDbHelper.getAllBons(db)) {

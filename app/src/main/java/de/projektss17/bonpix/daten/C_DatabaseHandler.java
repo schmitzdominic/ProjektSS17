@@ -26,10 +26,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-            String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS bons (bons_id INTEGER PRIMARY KEY AUTOINCREMENT, bons_name VARCHAR(255))";
-            db.execSQL(CREATE_TABLE);
-            String CREATE_TABLE_Laeden = "CREATE TABLE IF NOT EXISTS laeden (laeden_id INTEGER PRIMARY KEY AUTOINCREMENT, laeden_name VARCHAR(255)";
-            db.execSQL(CREATE_TABLE_Laeden);
+        checkTables(db);
     }
 
     @Override
@@ -73,5 +70,12 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_LAEDEN, pass);
         db.insert("laeden", null, values);
+    }
+
+    public void checkTables(SQLiteDatabase db){
+        String CREATE_TABLE_Laeden = "CREATE TABLE IF NOT EXISTS laeden (laeden_id INTEGER PRIMARY KEY AUTOINCREMENT, laeden_name VARCHAR(255))";
+        db.execSQL(CREATE_TABLE_Laeden);
+        String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS bons (bons_id INTEGER PRIMARY KEY AUTOINCREMENT, bons_name VARCHAR(255))";
+        db.execSQL(CREATE_TABLE);
     }
 }
