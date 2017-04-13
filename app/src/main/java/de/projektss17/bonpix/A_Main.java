@@ -107,7 +107,6 @@ public class A_Main extends AppCompatActivity {
             content.add(pass);
             Log.e("#CONTENT INSIDE LOOP: ", " ### " + pass);
         }
-        Log.e("#CONTENT AFTER LOOP"," ### " + content.get(2));
 
         ContentValues values3 = new ContentValues();
         values3.put(KEY_TEST, testUpdate);
