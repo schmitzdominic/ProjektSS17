@@ -38,6 +38,7 @@ public class A_Einstellungen extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.e("Switch State: ", " ### " + isChecked);
+
             }
         });
 

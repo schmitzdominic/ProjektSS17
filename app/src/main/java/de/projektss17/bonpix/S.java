@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import de.projektss17.bonpix.daten.C_DatabaseHandler;
+
 /**
  * Created by Domi on 29.03.2017.
  * Diese KLasse wird verwendet um den kompletten statischen Kontent aufzunehmen
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 
 public class S extends Activity {
 
+    public static C_DatabaseHandler dbHandler;
     public static SQLiteDatabase db;
 
     /**

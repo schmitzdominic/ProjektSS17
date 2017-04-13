@@ -97,8 +97,8 @@ public class A_Main extends AppCompatActivity {
         ArrayList<String> con = new ArrayList();
 
         // DataBase Connection
-        C_DatabaseHandler mDbHelper = new C_DatabaseHandler(this);
-        S.db = mDbHelper.getWritableDatabase();
+        S.dbHandler = new C_DatabaseHandler(this);
+        S.db = S.dbHandler.getWritableDatabase();
 
         // Insert Examples
         ContentValues values = new ContentValues();
@@ -106,18 +106,18 @@ public class A_Main extends AppCompatActivity {
         S.db.insert("bons", null, values);
 
         // Test Functions
-        mDbHelper.checkTables(S.db);
-        mDbHelper.setLaeden(S.db, "Aldi");
-        mDbHelper.setLaeden(S.db, "Lidl");
+        S.dbHandler.checkTables(S.db);
+        S.dbHandler.setLaeden(S.db, "Aldi");
+        S.dbHandler.setLaeden(S.db, "Lidl");
 
 
         // DatabaseHandler Function Example
-        for (String pass : mDbHelper.getAllBons(S.db)) {
+        for (String pass : S.dbHandler.getAllBons(S.db)) {
             content.add(pass);
             Log.e("#CONTENT INSIDE LOOP: ", " ### " + pass);
         }
 
-        for (String pass : mDbHelper.getAllLaeden(S.db)) {
+        for (String pass : S.dbHandler.getAllLaeden(S.db)) {
             con.add(pass);
             Log.e("#CONTENT LOOP: ", " ### " + pass);
         }
