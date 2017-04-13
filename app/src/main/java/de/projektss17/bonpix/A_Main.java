@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
@@ -21,6 +22,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,6 +72,57 @@ public class A_Main extends AppCompatActivity {
         mToggle.syncState();
 
         requestPermissions();
+
+
+        /** Database Test Section
+         * Create Connection - DO SOME TESTS
+         * USE db.insert/delete/update etc.
+         * for other shit -> db.execSQL(query) (without return)
+         * WITH RETURN -> Cursor cursor = db.rawQuery(query, null);
+         * THEN USE CURSOR to get Data - for example -> String x = cursor.getString(0);
+         * ### READ THE CODE EXAMPLES ###
+         */
+
+        final String KEY_TEST = "bons_name";
+        String testInsert = "testContent";
+        String testInsert2 = "testContentZWEI";
+        String testUpdate = "testContentUpdate";
+        String query = "SELECT * FROM bons WHERE bons_id < 5";
+        int id = 1;
+        String filter = "bons_id=" + id;
+
+        C_DatabaseHandler mDbHelper = new C_DatabaseHandler(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ArrayList<String> content = new ArrayList();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_TEST, testInsert);
+        db.insert("bons", null, values);
+
+        ContentValues values1 = new ContentValues();
+        values1.put(KEY_TEST, testInsert2);
+        db.insert("bons", null, values1);
+
+        for (String pass : mDbHelper.getAllBons(db)) {
+            content.add(pass);
+            Log.e("#CONTENT INSIDE LOOP: ", " ### " + pass);
+        }
+        Log.e("#CONTENT AFTER LOOP"," ### " + content.get(2));
+
+        ContentValues values3 = new ContentValues();
+        values3.put(KEY_TEST, testUpdate);
+        db.update("bons", values3, filter, null);
+
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            do {
+                String temp = cursor.getString(1);
+                String temp1 = cursor.getString(0);
+                Log.i("#MAIN CONTENT CURSOR:"," ### " + temp1 + "   " + temp);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // END --- Database Test Section
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

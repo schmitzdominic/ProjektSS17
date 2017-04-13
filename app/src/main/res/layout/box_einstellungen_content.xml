@@ -41,7 +41,8 @@
         android:gravity="start"
         android:text="@string/menu_einstellungen_version"
         android:textColor="@android:color/black"
-        android:textSize="20sp">
+        android:textSize="20sp"
+        android:id="@+id/textView">
     </TextView>
 
     <View
@@ -51,6 +52,17 @@
         android:layout_marginLeft="50dp"
         android:background="@color/linie"
         android:visibility="visible" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="85dp"
+        android:layout_marginStart="85dp"
+        android:text="TestSwitch " />
 
 
 </RelativeLayout>
