@@ -41,7 +41,6 @@ public class A_Einstellungen extends AppCompatActivity {
             }
         });
 
-        // SHARED PREFERENCES
         // Restore preferences
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         boolean switchStat = settings.getBoolean("switch", false);
@@ -52,6 +51,7 @@ public class A_Einstellungen extends AppCompatActivity {
     protected void onStop(){
         super.onStop();
 
+        // Save preferences
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         Switch onOffSwitch = (Switch)  findViewById(R.id.switch1);
