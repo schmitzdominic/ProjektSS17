@@ -70,7 +70,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
         this.day = "" + this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
         this.showDate(year, month, day);
-        this.dateView.setTextColor(Color.RED);
+        this.dateView.setTextColor(Color.parseColor("#9E9E9E"));           // ÄNDRERT FARBE:  vom Datumstext
 
         this.imageOCR = (ImageView) findViewById(R.id.ocr_manuell_image_ocr); // Image OCR Element
         this.kameraButton = (Button) findViewById(R.id.ocr_manuell_image_button_auswahl); // Image auswahl Button
@@ -119,7 +119,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         if(this.spinnerLaden.getSelectedItemPosition() == 0){
             spinnerLaden.setSelection(0, true);
             View v = spinnerLaden.getSelectedView();
-            ((TextView)v).setTextColor(Color.RED);
+            ((TextView)v).setTextColor(Color.parseColor("#9E9E9E"));    // ÄNDRERT FARBE:  vom Spinnertext
         }
 
         //Spinner selected listener => Aktion beim selektieren
@@ -242,6 +242,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         dateView.setText(day + separator +
                 month + separator +
                 year);
+        dateView.setTextColor(Color.parseColor("#000000"));     // Ändert die Farbe wenn Datum ausgewählt wird
     }
 
     /**

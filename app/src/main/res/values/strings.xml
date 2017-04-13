@@ -37,7 +37,7 @@
     <string name="title_manuell_screen">Bon hinzufügen</string>
     <string name="a_ocr_manuell_save">SPEICHERN</string>
 
-    <string name="a_ocr_manuell_bildauswahl">Bild auswählen</string>
+    <string name="a_ocr_manuell_bildauswahl">Bild hinzufügen ...</string>
 
     <string name="a_ocr_manuell_pop_up_title">Kassenbon</string>
     <string name="a_ocr_manuell_pop_up_message">Sollen Ihre Eingaben übernommen werden?</string>
