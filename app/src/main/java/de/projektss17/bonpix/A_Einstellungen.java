@@ -1,19 +1,19 @@
 package de.projektss17.bonpix;
 
-        import android.content.Context;
-        import android.hardware.Sensor;
-        import android.hardware.SensorManager;
-        import android.os.Build;
-        import android.preference.PreferenceActivity;
-        import android.os.Bundle;
-        import android.support.v7.widget.Toolbar;
-        import android.util.Log;
-        import android.util.TypedValue;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.LinearLayout;
-        import android.widget.ListView;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.os.Build;
+import android.preference.PreferenceActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 
 public class A_Einstellungen extends PreferenceActivity {
