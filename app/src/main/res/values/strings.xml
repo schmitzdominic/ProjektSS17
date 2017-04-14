@@ -42,8 +42,6 @@
 
     <!-- A_Version -->
     <string name="title_version_screen">Version</string>
-    <string name="version_versionakt">Aktuelle Version</string>
-
 
     <!-- A_Show_Recognition -->
     <string name="title_show_recognition_screen">Ausgabe</string>

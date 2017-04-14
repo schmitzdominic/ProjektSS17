@@ -74,11 +74,19 @@ public class S extends Activity {
     }
 
     /**
-     * Ruft die Budget Activity auf
+     * Ruft die Einstellungen Activity auf
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
 
         S.startActivitiy(beforeActivity, A_Einstellungen.class);
+    }
+
+    /**
+     * Ruft die Versions Activity auf
+     */
+    public static void showVersion(AppCompatActivity beforeActivity){
+
+        S.startActivitiy(beforeActivity, A_Version.class);
     }
 
     /**
