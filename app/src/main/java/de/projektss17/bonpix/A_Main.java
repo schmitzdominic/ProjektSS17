@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +38,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
+import de.projektss17.bonpix.daten.C_Preferences;
 
 public class A_Main extends AppCompatActivity {
 
@@ -74,29 +77,21 @@ public class A_Main extends AppCompatActivity {
 
         requestPermissions();
 
-        // Set Default Preferences (Important if app was started the first time)
-        PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, false);
-
-        // Database Section
-        // Values
-        final String KEY_TEST = "bons_name";
-        String testInsert = "testContent";
 
         // DataBase Connection
         S.dbHandler = new C_DatabaseHandler(this);
         S.db = S.dbHandler.getWritableDatabase();
-
-        // Insert Examples
-        ContentValues values = new ContentValues();
-        values.put(KEY_TEST, testInsert);
-        S.db.insert("bons", null, values);
-
-        // Test Functions
         S.dbHandler.checkTables(S.db);
-        S.dbHandler.setLaeden(S.db, "Aldi");
-        S.dbHandler.setLaeden(S.db, "Lidl");
-        S.dbHandler.deleteLaden(S.db, 1);
-        // END --- Database Section
+
+        // Settings Instance
+        S.prefs = new C_Preferences(this);
+
+        // Beim ersten Start der App
+        this.onFirstStart();
+
+        // TODO remove later! Just for debugging
+        this.showLogAllDBEntries();
+
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -414,6 +409,52 @@ public class A_Main extends AppCompatActivity {
             String picturePath = cursor.getString(column_index_data);
             picturePathList.add(picturePath);
             S.showRecognition(A_Main.this,picturePathList);
+        }
+    }
+
+    private void onFirstStart(){
+        final String PREFS_NAME = C_Preferences.APP_SHARED_PREFS;
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        if (settings.getBoolean("my_first_time", true)) {
+            this.setDefaultSettings();
+            this.setDefaultDBValues();
+
+            // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
+            S.prefs.savePrefBoolean("my_first_time", false);
+        }
+    }
+
+    private void setDefaultDBValues(){
+        String laeden[] = {"EDEKA","Lidl", "REWE", "Media Markt"};
+        String bons[] = {"BON_CONTENT1", "BON_CONTENT2"};
+
+        for(String laden : laeden){
+            S.dbHandler.setLaeden(S.db, laden);
+        }
+
+        ContentValues values;
+
+        for(String bonContent : bons){
+            values = new ContentValues();
+            values.put("bons_name", bonContent);
+            S.db.insert("bons", null, values);
+        }
+
+    }
+
+    private void setDefaultSettings(){
+        PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.box_backup_preferences, false);
+    }
+
+    private void showLogAllDBEntries(){
+        for(String x : S.dbHandler.getAllLaeden(S.db)){
+            Log.e("######### LAEDEN: ", x);
+        }
+
+        for(String y : S.dbHandler.getAllBons(S.db)){
+            Log.e("######### BONS: ", y);
         }
     }
 }

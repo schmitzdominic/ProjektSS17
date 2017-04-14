@@ -42,7 +42,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             do {
                 String pass = cursor.getString(1);
                 bonsList.add(pass);
-                Log.e("#DBHANDLER Bons:"," ### " + pass);
+                //Log.e("#DBHANDLER Bons:"," ### " + pass);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -58,7 +58,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             do {
                 String pass = cursor.getString(1);
                 list.add(pass);
-                Log.e("#DBHANDLER Laeden:"," ### " + pass);
+                //Log.e("#DBHANDLER Laeden:"," ### " + pass);
             } while (cursor.moveToNext());
         }
         cursor.close();

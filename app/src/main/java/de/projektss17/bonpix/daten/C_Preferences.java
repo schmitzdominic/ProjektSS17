@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
  */
 
 public class C_Preferences {
-    private static final String APP_SHARED_PREFS = C_Preferences.class.getSimpleName();
+    public static final String APP_SHARED_PREFS = C_Preferences.class.getSimpleName();
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor prefsEditor;
 

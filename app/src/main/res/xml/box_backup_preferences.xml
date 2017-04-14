@@ -27,7 +27,7 @@
             android:defaultValue="true"
             android:key="backup_incl_settings"
             android:summary="1.0 GB gesichert"
-            android:title="Inklusive Settings" />
+            android:title="Inklusive Settings"/>
 
     </PreferenceCategory>
 </PreferenceScreen>
