@@ -46,7 +46,7 @@ public class A_Main extends AppCompatActivity {
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private boolean isFABOpen = false, isDrawOpen = false;
+    private boolean isFABOpen = false, isDrawOpen = false, cameraPermissions;
     private FloatingActionButton kameraButton, fotoButton, manuellButton;
     private LinearLayout fotoLayout, manuellLayout;
     private View fabBGLayout;
@@ -86,9 +86,6 @@ public class A_Main extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
-        requestPermissions();
-
-
         // DataBase Connection
         S.dbHandler = new C_DatabaseHandler(this);
         S.db = S.dbHandler.getWritableDatabase();
@@ -102,6 +99,9 @@ public class A_Main extends AppCompatActivity {
 
         // TODO remove later! Just for debugging
         this.showLogAllDBEntries();
+
+        requestPermissions(new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE});
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -356,10 +356,9 @@ public class A_Main extends AppCompatActivity {
     /**
      * Prüft ob die benötigten Permissions vorhanden sind
      */
-    public void requestPermissions(){
+    public void requestPermissions(String[] permissionRequest){
         ActivityCompat.requestPermissions(A_Main.this,
-                new String[]{Manifest.permission.CAMERA,
-                        Manifest.permission.READ_EXTERNAL_STORAGE},
+                permissionRequest,
                 1);
     }
 
@@ -376,8 +375,10 @@ public class A_Main extends AppCompatActivity {
             case 1: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    cameraPermissions = true;
                 } else {
                     Toast.makeText(A_Main.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                    cameraPermissions = false;
                 }
                 return;
             }
