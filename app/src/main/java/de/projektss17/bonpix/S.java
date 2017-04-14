@@ -21,9 +21,9 @@ import de.projektss17.bonpix.daten.C_Preferences;
 
 public class S extends Activity {
 
-    public static C_DatabaseHandler dbHandler;
-    public static SQLiteDatabase db;
-    public static C_Preferences prefs;
+    public static C_DatabaseHandler dbHandler; // DB-Handler
+    public static SQLiteDatabase db; // DB
+    public static C_Preferences prefs; // Preferences
 
     /**
      * Ruft die Foto funktion auf

@@ -412,6 +412,9 @@ public class A_Main extends AppCompatActivity {
         }
     }
 
+    /**
+     * Wird nur beim ersten Start der App ausgeführt
+     */
     private void onFirstStart(){
         final String PREFS_NAME = C_Preferences.APP_SHARED_PREFS;
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -425,6 +428,9 @@ public class A_Main extends AppCompatActivity {
         }
     }
 
+    /**
+     * Setzt alle standard DB Werte
+     */
     private void setDefaultDBValues(){
         String laeden[] = {"EDEKA","Lidl", "REWE", "Media Markt"};
         String bons[] = {"BON_CONTENT1", "BON_CONTENT2"};
@@ -443,11 +449,17 @@ public class A_Main extends AppCompatActivity {
 
     }
 
+    /**
+     * Setzt alle Standardwerte
+     */
     private void setDefaultSettings(){
         PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, false);
         PreferenceManager.setDefaultValues(this, R.xml.box_backup_preferences, false);
     }
 
+    /**
+     * Gibt alle Laeden und Bons im Log aus (Rot)
+     */
     private void showLogAllDBEntries(){
         for(String x : S.dbHandler.getAllLaeden(S.db)){
             Log.e("######### LAEDEN: ", x);
