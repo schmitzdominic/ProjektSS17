@@ -79,68 +79,26 @@ public class A_Main extends AppCompatActivity {
         // Set Default Preferences (Important if app was started the first time)
         PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, false);
 
-        /** Database Test Section
-         * Create Connection - DO SOME TESTS
-         * USE db.insert/delete/update etc.
-         * for other shit -> db.execSQL(query) (without return)
-         * WITH RETURN -> Cursor cursor = db.rawQuery(query, null);
-         * THEN USE CURSOR to get Data - for example -> String x = cursor.getString(0);
-         * ### READ THE CODE EXAMPLES ###
-         */
-
+        // Database Section
         // Values
         final String KEY_TEST = "bons_name";
-        int id = 1;
-        String query = "SELECT * FROM bons WHERE bons_id < 5";
         String testInsert = "testContent";
-        String testUpdate = "testContentUpdate";
-        String filter = "bons_id=" + id;
-        ArrayList<String> content = new ArrayList();
-        ArrayList<String> con = new ArrayList();
 
         // DataBase Connection
         S.dbHandler = new C_DatabaseHandler(this);
         S.db = S.dbHandler.getWritableDatabase();
 
         // Insert Examples
-        //ContentValues values = new ContentValues();
-        //values.put(KEY_TEST, testInsert);
-        //S.db.insert("bons", null, values);
+        ContentValues values = new ContentValues();
+        values.put(KEY_TEST, testInsert);
+        S.db.insert("bons", null, values);
 
         // Test Functions
         S.dbHandler.checkTables(S.db);
-        //S.dbHandler.setLaeden(S.db, "Aldi");
-        //S.dbHandler.setLaeden(S.db, "Lidl");
+        S.dbHandler.setLaeden(S.db, "Aldi");
+        S.dbHandler.setLaeden(S.db, "Lidl");
         S.dbHandler.deleteLaden(S.db, 1);
-
-        // DatabaseHandler Function Example
-        for (String pass : S.dbHandler.getAllBons(S.db)) {
-            content.add(pass);
-            Log.e("#CONTENT INSIDE LOOP: ", " ### " + pass);
-        }
-
-        for (String pass : S.dbHandler.getAllLaeden(S.db)) {
-            con.add(pass);
-            Log.e("#CONTENT LOOP: ", " ### " + pass);
-        }
-
-        // Update Example
-        ContentValues values3 = new ContentValues();
-        values3.put(KEY_TEST, testUpdate);
-        S.db.update("bons", values3, filter, null);
-
-        // Loop Example to get multiple Data from row
-        Cursor cursor = S.db.rawQuery(query, null);
-        if (cursor.moveToFirst()){
-            do {
-                String temp = cursor.getString(1);
-                String temp1 = cursor.getString(0);
-                Log.e("#MAIN CONTENT CURSOR:"," ### " + temp1 + "   " + temp);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        // END --- Database Test Section
-
+        // END --- Database Section
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
