@@ -94,7 +94,7 @@
         </activity>
         <activity
             android:name=".A_Backup"
-            android:label="@string/title_version_screen"
+            android:label="@string/title_backup_screen"
             android:parentActivityName=".A_Einstellungen"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

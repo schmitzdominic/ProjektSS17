@@ -39,6 +39,9 @@
     <string name="einstellungen_default_email">Hubert@gmx.de</string>
     <string name="einstellungen_action_bar_desc">Einstellungen</string>
     <string name="einstellungen_action_bar_title">Einstellungen</string>
+
+    <!-- A_Backup -->
+    <string name="title_backup_screen">Backup</string>
     <string name="backup_action_bar_desc">Backup</string>
     <string name="backup_action_bar_title">Backup</string>
 
