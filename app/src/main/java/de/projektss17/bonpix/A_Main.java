@@ -90,7 +90,6 @@ public class A_Main extends AppCompatActivity {
         int id = 1;
         String query = "SELECT * FROM bons WHERE bons_id < 5";
         String testInsert = "testContent";
-        String testInsert2 = "testContentZWEI";
         String testUpdate = "testContentUpdate";
         String filter = "bons_id=" + id;
         ArrayList<String> content = new ArrayList();
