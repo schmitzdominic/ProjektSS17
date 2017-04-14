@@ -4,6 +4,7 @@ package de.projektss17.bonpix;
         import android.hardware.Sensor;
         import android.hardware.SensorManager;
         import android.os.Build;
+        import android.preference.Preference;
         import android.preference.PreferenceActivity;
         import android.os.Bundle;
         import android.support.v7.widget.Toolbar;
@@ -22,9 +23,11 @@ public class A_Einstellungen extends PreferenceActivity {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.box_einstellungen_content);
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new F_Einstellungen())

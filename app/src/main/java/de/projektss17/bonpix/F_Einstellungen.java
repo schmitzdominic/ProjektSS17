@@ -17,11 +17,23 @@ public class F_Einstellungen extends PreferenceFragment implements SharedPrefere
     final public String KEY_MAIL = "pref_email";
     final public String KEY_NAME = "pref_name";
     final public String KEY_SOUND = "pref_sound";
+    private Preference backup;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.box_einstellungen_preferences);
+
+        this.backup = (Preference) findPreference("pref_backup");
+
+        this.backup.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                S.showBackup(F_Einstellungen.this);
+                return true;
+            }
+        });
+
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

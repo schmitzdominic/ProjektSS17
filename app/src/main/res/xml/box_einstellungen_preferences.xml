@@ -43,5 +43,13 @@
             android:inputType="textEmailAddress"/>
 
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Daten"
+        android:key="category_data">
 
+        <Preference android:title="Backup"
+            android:key="pref_backup"
+            android:summary="Hier kannst du backups machen"/>
+
+    </PreferenceCategory>
 </PreferenceScreen>

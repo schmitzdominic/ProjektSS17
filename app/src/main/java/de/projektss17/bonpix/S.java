@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -80,6 +81,14 @@ public class S extends Activity {
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
         S.startActivitiy(beforeActivity, A_Einstellungen.class);
+    }
+
+    /**
+     * Ruft die Backup Activity auf
+     */
+    public static void showBackup(PreferenceFragment context){
+        Intent intent = new Intent(context.getActivity(), A_Backup.class);
+        context.startActivity(intent);
     }
 
     /**

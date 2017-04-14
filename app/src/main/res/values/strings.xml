@@ -39,6 +39,8 @@
     <string name="einstellungen_default_email">Hubert@gmx.de</string>
     <string name="einstellungen_action_bar_desc">Einstellungen</string>
     <string name="einstellungen_action_bar_title">Einstellungen</string>
+    <string name="backup_action_bar_desc">Backup</string>
+    <string name="backup_action_bar_title">Backup</string>
 
     <!-- A_Version -->
     <string name="title_version_screen">Version</string>
@@ -48,5 +50,8 @@
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
