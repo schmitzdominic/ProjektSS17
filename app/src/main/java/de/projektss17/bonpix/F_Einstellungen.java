@@ -2,7 +2,6 @@ package de.projektss17.bonpix;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
