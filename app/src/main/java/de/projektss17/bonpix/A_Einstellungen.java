@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import de.projektss17.bonpix.fragments.F_Einstellungen;
 import de.projektss17.bonpix.utils.C_ShakeDetector;
 
 

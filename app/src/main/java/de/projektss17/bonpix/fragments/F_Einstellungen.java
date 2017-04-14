@@ -1,10 +1,13 @@
-package de.projektss17.bonpix;
+package de.projektss17.bonpix.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+
+import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 
 /**
  * Created by Marcus on 14.04.2017.
