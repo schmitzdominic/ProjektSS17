@@ -30,7 +30,7 @@
             android:summary="Hier kannst du deinen Namen angeben"
             android:dialogTitle="Name"
             android:dialogMessage="Hier kannst du deinen Namen angeben"
-            android:defaultValue="@string/default_name_einstellungen"
+            android:defaultValue="@string/einstellungen_default_name"
             android:inputType="textCapWords"/>
 
         <EditTextPreference
@@ -39,7 +39,7 @@
             android:summary="Hier kannst du deine Email angeben"
             android:dialogTitle="Email Adresse"
             android:dialogMessage="Hier kannst du deine Email angeben"
-            android:defaultValue="@string/default_email_einstellungen"
+            android:defaultValue="@string/einstellungen_default_email"
             android:inputType="textEmailAddress"/>
 
     </PreferenceCategory>

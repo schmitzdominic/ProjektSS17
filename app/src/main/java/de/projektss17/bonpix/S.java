@@ -78,14 +78,7 @@ public class S extends Activity {
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
 
-        S.startActivitiy(beforeActivity, A_Einstellungen_test.class);
-    }
-
-    /**
-     * Ruft die Version Activity auf
-     */
-    public static void showVersion(AppCompatActivity beforeActivity){
-        S.startActivitiy(beforeActivity, A_Version.class);
+        S.startActivitiy(beforeActivity, A_Einstellungen.class);
     }
 
     /**

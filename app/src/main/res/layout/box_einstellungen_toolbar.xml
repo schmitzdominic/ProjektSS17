@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
-    app:navigationContentDescription="@string/action_bar_desc"
+    app:navigationContentDescription="@string/einstellungen_action_bar_desc"
     app:popupTheme="@style/AppTheme.PopupOverlay"
     android:background="?attr/colorPrimary"
     app:navigationIcon="?attr/homeAsUpIndicator"
-    app:title="@string/action_bar_title"
+    app:title="@string/einstellungen_action_bar_title"
     app:titleTextColor="#FFFFFF"
     />

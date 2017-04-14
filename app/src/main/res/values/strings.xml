@@ -35,14 +35,14 @@
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>
     <string name="menu_einstellungen_version">Version</string>
-    <string name="default_name_einstellungen">Hubert</string>
-    <string name="default_email_einstellungen">Hubert@gmx.de</string>
-    <string name="action_bar_desc">Einstellungen</string>
-    <string name="action_bar_title">Einstellungen</string>
+    <string name="einstellungen_default_name">Hubert</string>
+    <string name="einstellungen_default_email">Hubert@gmx.de</string>
+    <string name="einstellungen_action_bar_desc">Einstellungen</string>
+    <string name="einstellungen_action_bar_title">Einstellungen</string>
 
     <!-- A_Version -->
     <string name="title_version_screen">Version</string>
-    <string name="Versionakt">Aktuelle Version</string>
+    <string name="version_versionakt">Aktuelle Version</string>
 
 
     <!-- A_Show_Recognition -->

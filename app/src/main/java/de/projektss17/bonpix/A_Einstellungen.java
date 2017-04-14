@@ -1,62 +1,64 @@
 package de.projektss17.bonpix;
 
-import android.content.SharedPreferences;
+import android.os.Build;
+import android.preference.PreferenceActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
-import android.widget.Switch;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
-public class A_Einstellungen extends AppCompatActivity {
 
-    public static final String PREFS_NAME = "MyPrefsFile";
-
+public class A_Einstellungen extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.box_einstellungen_screen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Scopes
-        Switch onOffSwitch = (Switch)  findViewById(R.id.switch1);
-        ImageButton versionButton = (ImageButton) findViewById(R.id.einstellungen_version_button);
-
-        // Listener
-        versionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                S.showVersion(A_Einstellungen.this);
-            }
-        });
-        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.e("Switch State: ", " ### " + isChecked);
-
-            }
-        });
-
-        // Restore preferences
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        boolean switchStat = settings.getBoolean("switch", false);
-        onOffSwitch.setChecked(switchStat);
+        setContentView(R.layout.box_einstellungen_content);
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new F_Einstellungen())
+                .commit();
     }
 
     @Override
-    protected void onStop(){
-        super.onStop();
+    protected void onPostCreate(Bundle savedInstanceState) {
 
-        // Save preferences
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        Switch onOffSwitch = (Switch)  findViewById(R.id.switch1);
-        editor.putBoolean("switch", onOffSwitch.isChecked());
-        editor.apply();
+        super.onPostCreate(savedInstanceState);
+        Toolbar bar;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
+            bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.box_einstellungen_toolbar, root, false);
+            root.addView(bar, 0);
+        } else {
+            ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
+            ListView content = (ListView) root.getChildAt(0);
+
+            root.removeAllViews();
+
+            bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.box_einstellungen_toolbar, root, false);
+
+            int height;
+            TypedValue tv = new TypedValue();
+            if (getTheme().resolveAttribute(R.attr.actionBarSize, tv, true)) {
+                height = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+            }else{
+                height = bar.getHeight();
+            }
+
+            content.setPadding(0, height, 0, 0);
+            root.addView(content);
+            root.addView(bar);
+        }
+
+        bar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }
