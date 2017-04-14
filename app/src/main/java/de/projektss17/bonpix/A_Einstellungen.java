@@ -1,18 +1,27 @@
 package de.projektss17.bonpix;
 
-import android.os.Build;
-import android.preference.PreferenceActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+        import android.content.Context;
+        import android.content.Intent;
+        import android.hardware.Sensor;
+        import android.hardware.SensorManager;
+        import android.os.Build;
+        import android.preference.PreferenceActivity;
+        import android.os.Bundle;
+        import android.support.v7.widget.Toolbar;
+        import android.util.Log;
+        import android.util.TypedValue;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.LinearLayout;
+        import android.widget.ListView;
 
 
 public class A_Einstellungen extends PreferenceActivity {
+
+    private C_ShakeDetector mShakeDetector;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +30,17 @@ public class A_Einstellungen extends PreferenceActivity {
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new F_Einstellungen())
                 .commit();
+
+        // ShakeDetector initialization
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new C_ShakeDetector(new C_ShakeDetector.OnShakeListener() {
+            @Override
+            public void onShake() {
+                Log.e("#SHAKE DETECTOR"," ### SHAKED");
+
+            }
+        });
     }
 
     @Override
@@ -60,5 +80,17 @@ public class A_Einstellungen extends PreferenceActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    protected void onPause() {
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
     }
 }
