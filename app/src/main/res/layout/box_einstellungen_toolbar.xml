@@ -11,4 +11,5 @@
     android:background="?attr/colorPrimary"
     app:navigationIcon="?attr/homeAsUpIndicator"
     app:title="@string/action_bar_title"
+    app:titleTextColor="#FFFFFF"
     />
