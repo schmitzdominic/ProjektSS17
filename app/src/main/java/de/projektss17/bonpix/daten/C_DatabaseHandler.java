@@ -33,7 +33,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-    // Example Function to pass all Bons
+    /**
+     * Get all Bons via ArrayList<String>
+     * @param db
+     * @return
+     */
     public ArrayList<String> getAllBons(SQLiteDatabase db){
         ArrayList<String> bonsList = new ArrayList();
         String query = "SELECT * FROM bons";
@@ -49,7 +53,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         return bonsList;
     }
 
-    // Example Function to pass all Laeden
+    /**
+     * Get all Laeden via ArrayList
+     * @param db
+     * @return
+     */
     public ArrayList<String> getAllLaeden(SQLiteDatabase db){
         ArrayList<String> list = new ArrayList();
         String query = "SELECT * FROM laeden";
@@ -65,14 +73,21 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         return list;
     }
 
-    // Example Function to set new Laden
+    /**
+     * Set new Laden
+     * @param db
+     * @param pass
+     */
     public void setLaeden(SQLiteDatabase db, String pass){
         ContentValues values = new ContentValues();
         values.put(KEY_LAEDEN, pass);
         db.insert("laeden", null, values);
     }
 
-    // Create Tables
+    /**
+     * Create Tables if not exists
+     * @param db
+     */
     public void checkTables(SQLiteDatabase db){
         String CREATE_TABLE_Laeden = "CREATE TABLE IF NOT EXISTS laeden (laeden_id INTEGER PRIMARY KEY AUTOINCREMENT, laeden_name VARCHAR(255))";
         db.execSQL(CREATE_TABLE_Laeden);
@@ -80,7 +95,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE);
     }
 
-    // Delete specific Laden
+    /**
+     * Delete specific Laden
+     * @param db
+     * @param id
+     */
     public void deleteLaden(SQLiteDatabase db, int id){
         String filter = "laeden_id=" + id;
         db.delete("laeden", filter, null);
