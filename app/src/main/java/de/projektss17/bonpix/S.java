@@ -79,7 +79,6 @@ public class S extends Activity {
      * Ruft die Einstellungen Activity auf
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
-
         S.startActivitiy(beforeActivity, A_Einstellungen.class);
     }
 
@@ -87,7 +86,6 @@ public class S extends Activity {
      * Ruft die Versions Activity auf
      */
     public static void showVersion(PreferenceActivity context){
-
         Intent intent = new Intent(context, A_Version.class);
         context.startActivity(intent);
     }

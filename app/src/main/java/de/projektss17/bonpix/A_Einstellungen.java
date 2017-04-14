@@ -38,7 +38,7 @@ public class A_Einstellungen extends PreferenceActivity {
             @Override
             public void onShake() {
                 Log.e("#SHAKE DETECTOR"," ### SHAKED");
-
+                S.showVersion(A_Einstellungen.this);
             }
         });
     }
