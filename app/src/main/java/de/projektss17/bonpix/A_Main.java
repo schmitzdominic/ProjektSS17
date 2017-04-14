@@ -103,14 +103,14 @@ public class A_Main extends AppCompatActivity {
         S.db = S.dbHandler.getWritableDatabase();
 
         // Insert Examples
-        ContentValues values = new ContentValues();
-        values.put(KEY_TEST, testInsert);
-        S.db.insert("bons", null, values);
+        //ContentValues values = new ContentValues();
+        //values.put(KEY_TEST, testInsert);
+        //S.db.insert("bons", null, values);
 
         // Test Functions
         S.dbHandler.checkTables(S.db);
-        S.dbHandler.setLaeden(S.db, "Aldi");
-        S.dbHandler.setLaeden(S.db, "Lidl");
+        //S.dbHandler.setLaeden(S.db, "Aldi");
+        //S.dbHandler.setLaeden(S.db, "Lidl");
         S.dbHandler.deleteLaden(S.db, 1);
 
         // DatabaseHandler Function Example

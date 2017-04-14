@@ -37,6 +37,8 @@
     <string name="menu_einstellungen_version">Version</string>
     <string name="default_name_einstellungen">Hubert</string>
     <string name="default_email_einstellungen">Hubert@gmx.de</string>
+    <string name="action_bar_desc">Einstellungen</string>
+    <string name="action_bar_title">Einstellungen</string>
 
     <!-- A_Version -->
     <string name="title_version_screen">Version</string>
