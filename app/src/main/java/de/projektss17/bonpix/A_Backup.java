@@ -1,6 +1,5 @@
 package de.projektss17.bonpix;
 
-import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -21,7 +20,7 @@ public class A_Backup extends PreferenceActivity {
 
         setContentView(R.layout.box_backup_content);
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new F_Einstellungen())
+                .replace(android.R.id.content, new F_Backup())
                 .commit();
     }
 

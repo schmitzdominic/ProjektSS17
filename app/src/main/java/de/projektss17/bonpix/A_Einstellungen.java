@@ -4,7 +4,6 @@ package de.projektss17.bonpix;
         import android.hardware.Sensor;
         import android.hardware.SensorManager;
         import android.os.Build;
-        import android.preference.Preference;
         import android.preference.PreferenceActivity;
         import android.os.Bundle;
         import android.support.v7.widget.Toolbar;
