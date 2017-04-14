@@ -1,8 +1,10 @@
 package de.projektss17.bonpix;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -84,9 +86,10 @@ public class S extends Activity {
     /**
      * Ruft die Versions Activity auf
      */
-    public static void showVersion(AppCompatActivity beforeActivity){
+    public static void showVersion(PreferenceActivity context){
 
-        S.startActivitiy(beforeActivity, A_Version.class);
+        Intent intent = new Intent(context, A_Version.class);
+        context.startActivity(intent);
     }
 
     /**
