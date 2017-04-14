@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -75,6 +76,8 @@ public class A_Main extends AppCompatActivity {
 
         requestPermissions();
 
+        // Set Default Preferences (Important if app was started the first time)
+        PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, false);
 
         /** Database Test Section
          * Create Connection - DO SOME TESTS
@@ -96,7 +99,6 @@ public class A_Main extends AppCompatActivity {
         ArrayList<String> con = new ArrayList();
 
         // DataBase Connection
-
         S.dbHandler = new C_DatabaseHandler(this);
         S.db = S.dbHandler.getWritableDatabase();
 

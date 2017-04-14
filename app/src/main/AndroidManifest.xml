@@ -3,7 +3,7 @@
     package="de.projektss17.bonpix">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -75,7 +75,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Einstellungen" />
-
         </activity>
 
         <meta-data
@@ -92,6 +91,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
+        <activity android:name=".A_Einstellungen_test"></activity>
     </application>
 
 </manifest>

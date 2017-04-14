@@ -9,6 +9,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
+import de.projektss17.bonpix.daten.C_Preferences;
 
 /**
  * Created by Domi on 29.03.2017.
@@ -19,6 +20,7 @@ public class S extends Activity {
 
     public static C_DatabaseHandler dbHandler;
     public static SQLiteDatabase db;
+    public static C_Preferences prefs;
 
     /**
      * Ruft die Foto funktion auf
@@ -76,7 +78,7 @@ public class S extends Activity {
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
 
-        S.startActivitiy(beforeActivity, A_Einstellungen.class);
+        S.startActivitiy(beforeActivity, A_Einstellungen_test.class);
     }
 
     /**
