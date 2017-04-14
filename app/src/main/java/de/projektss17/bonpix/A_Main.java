@@ -96,6 +96,7 @@ public class A_Main extends AppCompatActivity {
         ArrayList<String> con = new ArrayList();
 
         // DataBase Connection
+
         S.dbHandler = new C_DatabaseHandler(this);
         S.db = S.dbHandler.getWritableDatabase();
 
