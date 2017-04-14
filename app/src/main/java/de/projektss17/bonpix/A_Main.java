@@ -46,7 +46,7 @@ public class A_Main extends AppCompatActivity {
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private boolean isFABOpen = false;
+    private boolean isFABOpen = false, isDrawOpen = false;
     private FloatingActionButton kameraButton, fotoButton, manuellButton;
     private LinearLayout fotoLayout, manuellLayout;
     private View fabBGLayout;
@@ -68,7 +68,18 @@ public class A_Main extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close){
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                isDrawOpen = false;
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                isDrawOpen = true;
+            }
+
+        };
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -91,7 +102,6 @@ public class A_Main extends AppCompatActivity {
 
         // TODO remove later! Just for debugging
         this.showLogAllDBEntries();
-
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -209,6 +219,7 @@ public class A_Main extends AppCompatActivity {
 
         // Wird ausgelöst wenn der NavigationDrawer aktiviert wird
         if (mToggle.onOptionsItemSelected(item)) {
+            this.isDrawOpen = true;
             return true;
         }
 
@@ -228,7 +239,10 @@ public class A_Main extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        if (isFABOpen) {
+
+        if (isDrawOpen) {
+            mDrawerLayout.closeDrawers();
+        }else if (isFABOpen) {
             closeFABMenu();
         } else {
             super.onBackPressed();
