@@ -13,7 +13,6 @@ import android.util.Log;
 public class F_Backup extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     final public String KEY_SETTINGS = "backup_incl_settings";
-    private Preference backup;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
