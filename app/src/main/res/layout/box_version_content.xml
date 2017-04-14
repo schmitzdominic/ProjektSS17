@@ -8,4 +8,11 @@
     tools:context="de.projektss17.bonpix.A_Version"
     tools:showIn="@layout/box_version_screen">
 
+    <TextView
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:text="Version 0.2"
+        android:textAlignment="center"
+        android:textSize="30dp" />
+
 </android.support.constraint.ConstraintLayout>

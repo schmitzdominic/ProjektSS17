@@ -1,4 +1,4 @@
-package de.projektss17.bonpix;
+package de.projektss17.bonpix.utils;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

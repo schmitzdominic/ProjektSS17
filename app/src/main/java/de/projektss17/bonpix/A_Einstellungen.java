@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import de.projektss17.bonpix.utils.C_ShakeDetector;
+
 
 public class A_Einstellungen extends PreferenceActivity {
 
