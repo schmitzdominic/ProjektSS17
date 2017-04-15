@@ -17,7 +17,7 @@ public class C_Rules {
      * @return String
      */
     public String formater(String txt){
-        txt = txt.replaceAll(" ", "");
+        txt = txt.replaceAll(" +", " ");
         return txt;
     }
 
