@@ -12,13 +12,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 import de.projektss17.bonpix.recognition.C_OCR;
-import de.projektss17.bonpix.recognition.C_Rules;
 
 public class A_Show_Recognition extends AppCompatActivity {
 
     ImageView imageView;
     TextView txtResult;
-    C_Rules rules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +29,6 @@ public class A_Show_Recognition extends AppCompatActivity {
         txtResult = (TextView) findViewById(R.id.show_recognition_textview_result);
 
         ArrayList<String> aList = getIntent().getStringArrayListExtra("ArrayList");
-        this.rules = new C_Rules();
 
         File imgFile = new File(aList.get(aList.size()-1));
         if(imgFile.exists())
