@@ -19,7 +19,6 @@ import de.projektss17.bonpix.auswerter.Default;
 public class C_OCR {
 
     private Context context;
-    private Resources res;
     private C_Laden laden;
     private String ladenName, adresse, recognizedText;
     private String[] produkte, preise;
@@ -27,10 +26,14 @@ public class C_OCR {
 
     public C_OCR(Context context){
         this.context = context;
-        this.res = this.context.getResources();
         this.laden = new C_Laden(this.context);
     }
 
+    /**
+     * Ließt anhand von OCR alle Zeichen aus und schreibt diese
+     * in die Instanzvariablen.
+     * @param bitmap Bild das ausgewertet werden soll
+     */
     public void recognize(Bitmap bitmap){
 
         this.recognizedText = this.recognizer(bitmap);

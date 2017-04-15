@@ -54,10 +54,8 @@ public class C_Laden{
         try {
 
             Class c = Class.forName("de.projektss17.bonpix.auswerter."+this.getAuswerterClass(className));
-
             Class[] cArg = new Class[1];
             cArg[0] = Context.class;
-
 
             Object d = c.getDeclaredConstructor(cArg).newInstance(this.context);
             if(d != null){
@@ -79,6 +77,11 @@ public class C_Laden{
         return null;
     }
 
+    /**
+     * Gibt den Klassennamen zurück
+     * @param name name nachdem gesucht werden soll
+     * @return Klassenname
+     */
     private String getAuswerterClass(String name){
 
         String [] classArray = this.context.getResources().getStringArray(R.array.klassen);
