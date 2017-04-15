@@ -52,12 +52,13 @@ public class A_Show_Recognition extends AppCompatActivity {
         ocr.recognize(bitmap);
 
         String all = ocr.getRecognizedText() + "\n\n\n";
+        String name = "Name: " + ocr.getLadenName() + "\n";
         String plz = "Adresse: " + ocr.getAdresse() + "\n";
         String products = "Produkte: " + ocr.getProdukte() + "\n";
         String prices = "Preise: " + ocr.getPreise() + "\n";
 
         // Formatierte Strings werden an eine TextView gegeben und angezeigt.
-        txtResult.setText(all+plz+products+prices);
+        txtResult.setText(all+name+plz+products+prices);
 
     }
 }

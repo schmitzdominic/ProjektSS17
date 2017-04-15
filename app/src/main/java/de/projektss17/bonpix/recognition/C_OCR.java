@@ -75,6 +75,14 @@ public class C_OCR {
     }
 
     /**
+     * Gibt den aktuell verwendeten Ladennamen zurück
+     * @return
+     */
+    public String getLadenName(){
+        return this.ladenName;
+    }
+
+    /**
      * Gibt alle Produkte zurück
      * @return
      */
@@ -105,6 +113,4 @@ public class C_OCR {
     public String getRecognizedText(){
         return this.recognizedText;
     }
-
-
 }

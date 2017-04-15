@@ -8,6 +8,8 @@ import android.content.Context;
 
 public class Aldi extends Default {
 
+    private String name = "Aldi";
+
     public Aldi(Context context){
         super(context);
     }
@@ -20,5 +22,10 @@ public class Aldi extends Default {
     @Override
     public String[] getPrices(String txt) {
         return super.getPrices(txt);
+    }
+
+    @Override
+    public String toString(){
+        return this.name;
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import de.projektss17.bonpix.R;
@@ -52,12 +51,14 @@ public class C_Laden{
      */
     public Default getInstanceOf(String className){
 
-        Class c = this.getAuswerterClass(className);
-
-        Class[] cArg = new Class[1];
-        cArg[0] = Context.class;
-
         try {
+
+            Class c = Class.forName("de.projektss17.bonpix.auswerter."+this.getAuswerterClass(className));
+
+            Class[] cArg = new Class[1];
+            cArg[0] = Context.class;
+
+
             Object d = c.getDeclaredConstructor(cArg).newInstance(this.context);
             if(d != null){
                 return (Default) d;
@@ -72,17 +73,21 @@ public class C_Laden{
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    private Class<?> getAuswerterClass(String name){
-        List<Class<?>> classes = ClassFinder.find("de.projektss17.bonpix.auswerter");
+    private String getAuswerterClass(String name){
+
+        String [] classArray = this.context.getResources().getStringArray(R.array.klassen);
+
         Pattern p  = Pattern.compile(name.replaceAll(" ", ""), Pattern.CASE_INSENSITIVE);;
 
-        for(Class<?> x : classes)
-            if(p.matcher(x.getSimpleName()).find())
-                return x;
+        for(String c : classArray)
+            if(p.matcher(c).find())
+                return c;
 
         return null;
     }
