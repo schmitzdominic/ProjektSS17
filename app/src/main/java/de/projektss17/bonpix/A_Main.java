@@ -1,8 +1,16 @@
 package de.projektss17.bonpix;
 
+import android.Manifest;
 import android.animation.Animator;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +26,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.support.design.widget.NavigationView;
+import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class A_Main extends AppCompatActivity {
 
@@ -29,6 +44,10 @@ public class A_Main extends AppCompatActivity {
     private FloatingActionButton kameraButton, fotoButton, manuellButton;
     private LinearLayout fotoLayout, manuellLayout;
     private View fabBGLayout;
+    private String fileNameTakenPhoto;
+    private Uri mCapturedImageURI;
+    public ArrayList<String> picturePathList;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
 
     /** Selbsterklärend. Wer noch nicht weiß was diese Methode bewirkt,
      * Bitte 2_layout.pdf lesen!
@@ -50,6 +69,8 @@ public class A_Main extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
+        requestPermissions();
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -57,6 +78,7 @@ public class A_Main extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.main_container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        picturePathList = new ArrayList<>();
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -78,7 +100,7 @@ public class A_Main extends AppCompatActivity {
         fotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                S.showFoto(A_Main.this);
+                activeTakePhoto();
             }
         });
 
@@ -177,7 +199,6 @@ public class A_Main extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
     /**
      * Überschreibt den onBackPressed Button
@@ -295,4 +316,78 @@ public class A_Main extends AppCompatActivity {
             return null;
         }
     }
+
+    /**
+     * Prüft ob die benötigten Permissions vorhanden sind
+     */
+    public void requestPermissions(){
+        ActivityCompat.requestPermissions(A_Main.this,
+                new String[]{Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE},
+                1);
+    }
+
+    /**
+     * Frägt nach den noch benötigten Permissions
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    Toast.makeText(A_Main.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    /**
+     * Ruft die Standard Android Kamera Anwendung auf
+     */
+    public void activeTakePhoto() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            Date date = Calendar.getInstance().getTime();
+            DateFormat formatter = new SimpleDateFormat("ddMMyyyyHH:mm");
+            String today = formatter.format(date);
+            fileNameTakenPhoto = today + ".jpg";
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, fileNameTakenPhoto);
+            mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+        }
+    }
+
+    /**
+     * Nachdem ein Bild geschossen wurde, wird die S.showRecognition aufgerufen und
+     * der Pfad zu dem eben geschossenen Bild übergeben.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = managedQuery(mCapturedImageURI, projection, null, null, null);
+            int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String picturePath = cursor.getString(column_index_data);
+            picturePathList.add(picturePath);
+            S.showRecognition(A_Main.this,picturePathList);
+        }
+    }
 }
+
