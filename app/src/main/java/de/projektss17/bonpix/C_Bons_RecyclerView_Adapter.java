@@ -59,7 +59,7 @@ public class C_Bons_RecyclerView_Adapter extends RecyclerView.Adapter<C_Bons_Rec
 
             title = (TextView)itemView.findViewById(R.id.item_text);
             icon = (ImageView)itemView.findViewById(R.id.supermarkticon);
-            icon2 = (ImageView)itemView.findViewById(R.id.Favoritenstern);
+            icon2 = (ImageView)itemView.findViewById(R.id.favoritenstern);
             container = itemView.findViewById(R.id.cont_item_root);
         }
 

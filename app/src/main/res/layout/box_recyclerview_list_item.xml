@@ -22,15 +22,14 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:paddingLeft="8dp"
-        android:text="TEST TEST TEST"
+        android:text="TEST TEST TEST TEST TEST TEST TEST TEST"
         />
 
     <ImageView
-        android:id="@+id/Favoritenstern"
+        android:id="@+id/favoritenstern"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:src="@android:drawable/ic_menu_edit"
-        android:tint="@color/colorPrimary"
+        android:src="@mipmap/ic_star_black_24dp"
         />
 
 </LinearLayout>
