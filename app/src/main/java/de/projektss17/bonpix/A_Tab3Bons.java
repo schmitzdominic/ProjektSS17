@@ -48,25 +48,9 @@ public class A_Tab3Bons extends Fragment{
     }
 
     private void prepareBonData(){
-        C_Bons bons = new C_Bons("TEST", "TEST");
-        bonsList.add(bons);
-        bons = new C_Bons("TEST1", "TESTA");
-        bonsList.add(bons);
-        bons = new C_Bons("TEST2", "TESTB");
-        bonsList.add(bons);
-        bons = new C_Bons("TEST3", "TESTC");
-        bonsList.add(bons);
-        bons = new C_Bons("TEST4", "TESTD");
-        bonsList.add(bons);
-        bons = new C_Bons("TEST5", "TESTE");
-        bonsList.add(bons);
-        bons = new C_Bons("TEST6", "TESTF");
-        bonsList.add(bons);
-        bons = new C_Bons("TEST7", "TESTG");
-        bonsList.add(bons);
-        bons = new C_Bons("TEST8", "TESTH");
-        bonsList.add(bons);
-        bons = new C_Bons("TEST9", "TESTI");
-        bonsList.add(bons);
+        for(int i = 0; i < 20; i++) {
+            C_Bons bons = new C_Bons("TEST"+i, "TEST"+(char)(i+65));
+            bonsList.add(bons);
+        }
     }
 }
