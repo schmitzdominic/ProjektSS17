@@ -22,10 +22,12 @@ public class C_OCR {
     private C_Laden laden;
     private String ladenName, adresse, recognizedText;
     private String[] produkte, preise;
+    private Resources res;
     private Default ladenInstanz;
 
     public C_OCR(Context context){
         this.context = context;
+        this.res = this.context.getResources();
         this.laden = new C_Laden(this.context);
     }
 
@@ -37,18 +39,37 @@ public class C_OCR {
     public void recognize(Bitmap bitmap){
 
         this.recognizedText = this.recognizer(bitmap);
+        this.recognize(bitmap, this.laden.getLaden(this.recognizedText));
 
-        // Um welchen Laden handelt es sich
-        this.ladenName = this.laden.getLaden(this.recognizedText);
+    }
+
+    /**
+     * Ließt anhand von OCR alle Zeichen aus und schreibt diese
+     * in die Instanzvariablen
+     * @param bitmap Bild das ausgewertet werden soll
+     * @param ladenName Der Laden um den es sich handelt (Bitte auswerter.xml beachten!)
+     */
+    public void recognize(Bitmap bitmap, String ladenName){
+
+        // Wenn der Text noch nicht ausgelesen wurde
+        if(this.recognizedText == null){
+            this.recognizedText = this.recognizer(bitmap);
+        }
+
+        // Nur um sicher zu gehen das der Name auch supportet wird
+        if(laden.getAuswerterClass(ladenName) == null){
+            ladenName = "NOT SUPPORTED";
+        }
 
         // Instanz des Ladens bilden
-        if(!this.ladenName.equals("NOT SUPPORTED")){
-            this.ladenInstanz = laden.getInstanceOf(this.ladenName);
+        if(!ladenName.equals("NOT SUPPORTED")){
+            this.ladenInstanz = laden.getInstanceOf(ladenName);
         } else {
             this.ladenInstanz = laden.getInstanceOf("Default");
         }
 
         // Attribute setzen
+        this.ladenName = ladenName;
         this.produkte = this.ladenInstanz.getProducts(this.recognizedText);
         this.preise = this.ladenInstanz.getProducts(this.recognizedText);
         this.adresse = this.ladenInstanz.getAdresse(this.recognizedText);

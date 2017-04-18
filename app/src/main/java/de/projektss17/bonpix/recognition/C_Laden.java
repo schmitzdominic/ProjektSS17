@@ -82,7 +82,7 @@ public class C_Laden{
      * @param name name nachdem gesucht werden soll
      * @return Klassenname
      */
-    private String getAuswerterClass(String name){
+    public String getAuswerterClass(String name){
 
         String [] classArray = this.context.getResources().getStringArray(R.array.klassen);
 
