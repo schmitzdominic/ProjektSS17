@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,7 +40,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private Button saveButton, kameraButton;
     private Spinner spinnerLaden;
     private Calendar calendar;
-    private TextView dateView;
+    private TextView dateView, totalPrice;
     private ImageView imageOCR;
     private ArrayAdapter<String> spinnerAdapter;
     private String year, month, day, imageOCRUriString;
@@ -78,6 +80,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.kameraButton = (Button) findViewById(R.id.ocr_manuell_image_button_auswahl); // Image auswahl Button
         this.spinnerLaden = (Spinner) findViewById(R.id.ocr_manuell_spinner_laden); // Spinner Laden Element
         this.saveButton = (Button) findViewById(R.id.ocr_manuell_save_button); // Speichern Button
+        this.totalPrice = (TextView) findViewById(R.id.ocr_manuell_total_price); // Totaler Preis
 
         this.imageOCR.setClickable(false); // Icon ist am anfang nicht klickbar
         this.refreshSpinner(); // Spinner Refresh
@@ -327,12 +330,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
         // Inflate a new row and hide the button self.
         inflateEditRow(null);
         v.setVisibility(View.GONE);
+
     }
 
     // Handler für Löschen button
     public void onDeleteClicked(View v) {
         // aufruf getParent on button zum löschen zeile
         mContainerView.removeView((View) v.getParent());
+        totalPrice.setText(""+getFinalPrice());
     }
 
     private void inflateEditRow(String name) {
@@ -345,8 +350,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 .findViewById(R.id.ocr_manuell_article_text);
         final EditText priceText = (EditText) rowView
                 .findViewById(R.id.ocr_manuell_price_text);
-
-        final int allInput = 0;
 
         if (name != null && !name.isEmpty()) {
             articleText.setText(name);
@@ -402,6 +405,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
                             && mExclusiveEmptyView != rowView) {
                         mContainerView.removeView(mExclusiveEmptyView);
                     }
+                    priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789-"));
+                    totalPrice.setText(""+getFinalPrice());
                     mExclusiveEmptyView = rowView;
                 } else {
 
@@ -409,6 +414,27 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         mExclusiveEmptyView = null;
                     }
 
+                    if(priceText.getText().toString().length() == 1 && priceText.getText().charAt(0) == '-'){
+                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                    } else {
+                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
+                    }
+
+                    if(priceText.getText().toString().contains(",")){
+
+                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+
+                        String[] array = priceText.getText().toString().split(",");
+                        if(array.length == 2){
+                            if(array[1].length() == 2){
+                                priceText.setKeyListener(DigitsKeyListener.getInstance(""));
+                            } else {
+                                priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                            }
+                        }
+                    }
+
+                    totalPrice.setText(""+getFinalPrice());
                     mAddButton.setVisibility(View.VISIBLE);
                     deleteAticleButton.setVisibility(View.VISIBLE);
                 }
@@ -434,16 +460,19 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * Gibt alle Preise als Double Array zurück
      * @return
      */
-    private double[] getAllPrices(){
+    private String[] getAllPrices(){
 
-        double[] arrayPrices = new double[mContainerView.getChildCount()];
+        String[] arrayPrices = new String[mContainerView.getChildCount()];
         View view;
         EditText textField;
 
         for(int i = 0; i < mContainerView.getChildCount(); i++){
             view = mContainerView.getChildAt(i);
             textField = (EditText) view.findViewById(R.id.ocr_manuell_price_text);
-            arrayPrices[i] = Double.parseDouble(textField.getText().toString());
+            if(textField != null && !textField.getText().toString().isEmpty())
+                arrayPrices[i] = textField.getText().toString();
+            else
+                arrayPrices[i] = "0.00";
         }
 
         return arrayPrices;
@@ -461,7 +490,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
         for(int i = 0; i < mContainerView.getChildCount(); i++){
             view = mContainerView.getChildAt(i);
             textField = (EditText) view.findViewById(R.id.ocr_manuell_article_text);
-            arrayArticles[i] = textField.getText().toString();
+            if(textField != null && !textField.getText().toString().isEmpty())
+                arrayArticles[i] = textField.getText().toString();
+            else
+                arrayArticles[i] = "";
         }
 
         return arrayArticles;
@@ -475,9 +507,23 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         double finalPrice = 0;
 
-        for(double wert : this.getAllPrices()){
-            finalPrice += wert;
+        for(String wert : this.getAllPrices()){
+
+            if(wert.contains(",")) {
+                wert = wert.replaceAll(",", ".");
+            }
+            if(wert.length() == 1 && wert.charAt(0) == '-') {
+                wert = "-0";
+            }
+
+            try{
+              finalPrice += Double.parseDouble(wert);
+            } catch (Exception e){
+                finalPrice += Double.parseDouble(wert.substring(0, wert.length()-1));
+            }
         }
+
+        finalPrice = Math.round(finalPrice * 100) / 100.00;
 
         return finalPrice;
     }

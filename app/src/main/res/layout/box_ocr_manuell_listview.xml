@@ -27,7 +27,7 @@
         android:layout_weight="1.0"
         android:hint="Preis"
         android:inputType="number"
-        android:digits="0123456789,"
+        android:digits="0123456789-"
         android:maxLength="10"/>
 
     <ImageButton

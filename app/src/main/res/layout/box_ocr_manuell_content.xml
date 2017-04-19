@@ -163,6 +163,7 @@
                 app:srcCompat="@mipmap/ic_euro_symbol_black_24dp" />
 
             <TextView
+                android:id="@+id/ocr_manuell_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ocr_manuell_image_uid"
