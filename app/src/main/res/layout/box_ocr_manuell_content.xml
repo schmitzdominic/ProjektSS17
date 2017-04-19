@@ -115,13 +115,14 @@
 
             <TextView
                 android:id="@+id/ocr_manuell_datum"
-                android:onClick="setDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:layout_below="@+id/ocr_manuell_edit_text_anschrift"
+                android:layout_marginBottom="20dp"
                 android:layout_toEndOf="@+id/ocr_manuell_image_kalender"
-                android:layout_toRightOf="@+id/ocr_manuell_image_kalender"/>
+                android:layout_toRightOf="@+id/ocr_manuell_image_kalender"
+                android:onClick="setDate"
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/ocr_manuell_image_uid"
@@ -147,21 +148,44 @@
                 android:layout_below="@+id/ocr_manuell_image_kalender"
                 android:layout_toEndOf="@+id/ocr_manuell_image_uid"
                 android:layout_toRightOf="@+id/ocr_manuell_image_uid" />
+
+            <ImageView
+                android:id="@+id/ocr_manuell_image_euro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/ocr_manuell_image_uid"
+                android:layout_alignStart="@+id/ocr_manuell_image_uid"
+                android:layout_below="@+id/ocr_manuell_image_uid"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:tint="@color/colorMenueIcon"
+                app:srcCompat="@mipmap/ic_euro_symbol_black_24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ocr_manuell_image_uid"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/ocr_manuell_image_euro"
+                android:layout_toRightOf="@+id/ocr_manuell_image_euro"
+                android:text="0.00"
+                android:textSize="24sp" />
         </RelativeLayout>
 
         <Button
-            android:id="@+id/btnAddNewItem"
+            android:id="@+id/ocr_manuell_btn_add_new_article"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:background="#00000000"
+            android:background="@color/colorTransparent"
             android:gravity="center_vertical|left"
             android:onClick="onAddNewClicked"
-            android:paddingLeft="5dp"
+            android:paddingLeft="8dp"
             android:text="@string/button_add_new_text"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@color/colorMenueIcon" />
 
 
     </LinearLayout>

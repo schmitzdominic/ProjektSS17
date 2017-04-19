@@ -28,7 +28,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class A_OCR_Manuell extends AppCompatActivity {
@@ -39,12 +41,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private TextView dateView;
     private ImageView imageOCR;
     private ArrayAdapter<String> spinnerAdapter;
-    private String year, month, day;
-    private String imageOCRUriString;
+    private String year, month, day, imageOCRUriString;
     private static int RESULT_LOAD_IMAGE = 1;
     private LinearLayout mContainerView;
     private Button mAddButton;
     private View mExclusiveEmptyView;
+    private List<Double> priceMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +58,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Liste zum anzeigen/hinzufügen der Produkte
+        this.priceMap = new ArrayList<>();
         mContainerView = (LinearLayout) findViewById(R.id.parentView);
-        mAddButton = (Button) findViewById(R.id.btnAddNewItem);
+        mAddButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article);
 
         // TestDaten Liste Produkte
-        inflateEditRow("Test1");
-        inflateEditRow("Test2");
+        //inflateEditRow("Test1");
 
         //Kalender
         this.dateView = (TextView) findViewById(R.id.ocr_manuell_datum);
@@ -337,28 +339,64 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.box_ocr_manuell_listview, null);
-        final ImageButton deleteButton = (ImageButton) rowView
-                .findViewById(R.id.buttonDelete);
-        final EditText editText = (EditText) rowView
-                .findViewById(R.id.editText);
+        final ImageButton deleteAticleButton = (ImageButton) rowView
+                .findViewById(R.id.ocr_manuell_button_delete_article);
+        final EditText articleText = (EditText) rowView
+                .findViewById(R.id.ocr_manuell_article_text);
+        final EditText priceText = (EditText) rowView
+                .findViewById(R.id.ocr_manuell_price_text);
+
+        final int allInput = 0;
 
         if (name != null && !name.isEmpty()) {
-            editText.setText(name);
+            articleText.setText(name);
         } else {
             mExclusiveEmptyView = rowView;
-            deleteButton.setVisibility(View.INVISIBLE);
+            deleteAticleButton.setVisibility(View.INVISIBLE);
         }
 
         // Verwaltung anzeige des Buttons add
         // handle the exclusive empty view.
-        editText.addTextChangedListener(new TextWatcher() {
+        articleText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (s.toString().isEmpty()) {
+                    deleteAticleButton.setVisibility(View.INVISIBLE);
 
+                    if (mExclusiveEmptyView != null
+                            && mExclusiveEmptyView != rowView) {
+                        mContainerView.removeView(mExclusiveEmptyView);
+                    }
+                    mExclusiveEmptyView = rowView;
+                } else {
+
+                    if (mExclusiveEmptyView == rowView) {
+                        mExclusiveEmptyView = null;
+                    }
+
+                    deleteAticleButton.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
+        });
+
+        priceText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
                     mAddButton.setVisibility(View.GONE);
-                    deleteButton.setVisibility(View.INVISIBLE);
+                    deleteAticleButton.setVisibility(View.INVISIBLE);
 
                     if (mExclusiveEmptyView != null
                             && mExclusiveEmptyView != rowView) {
@@ -372,7 +410,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     }
 
                     mAddButton.setVisibility(View.VISIBLE);
-                    deleteButton.setVisibility(View.VISIBLE);
+                    deleteAticleButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -389,5 +427,58 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         // AddButton verwaltung
         mContainerView.addView(rowView, mContainerView.getChildCount() - 1);
+        articleText.requestFocus(mContainerView.getChildCount() - 1);
+    }
+
+    /**
+     * Gibt alle Preise als Double Array zurück
+     * @return
+     */
+    private double[] getAllPrices(){
+
+        double[] arrayPrices = new double[mContainerView.getChildCount()];
+        View view;
+        EditText textField;
+
+        for(int i = 0; i < mContainerView.getChildCount(); i++){
+            view = mContainerView.getChildAt(i);
+            textField = (EditText) view.findViewById(R.id.ocr_manuell_price_text);
+            arrayPrices[i] = Double.parseDouble(textField.getText().toString());
+        }
+
+        return arrayPrices;
+    }
+
+    /**
+     * Gibt alle Artikel als String Array zurück
+     * @return
+     */
+    private String[] getAllArticles(){
+        String[] arrayArticles = new String[mContainerView.getChildCount()];
+        View view;
+        EditText textField;
+
+        for(int i = 0; i < mContainerView.getChildCount(); i++){
+            view = mContainerView.getChildAt(i);
+            textField = (EditText) view.findViewById(R.id.ocr_manuell_article_text);
+            arrayArticles[i] = textField.getText().toString();
+        }
+
+        return arrayArticles;
+    }
+
+    /**
+     * Summiert alle Preise und gibt die Summe als double zurück
+     * @return
+     */
+    private double getFinalPrice(){
+
+        double finalPrice = 0;
+
+        for(double wert : this.getAllPrices()){
+            finalPrice += wert;
+        }
+
+        return finalPrice;
     }
 }
