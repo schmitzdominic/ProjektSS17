@@ -3,7 +3,6 @@
     <string name="built_nr">0.2</string>
 
 
-
     <!-- A_main -->
     <string name="title_a_main">BonPix</string>
     <string name="title_tab1">HOME</string>
@@ -36,18 +35,26 @@
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>
     <string name="menu_einstellungen_version">Version</string>
+    <string name="einstellungen_default_name">Hubert</string>
+    <string name="einstellungen_default_email">Hubert@gmx.de</string>
+    <string name="einstellungen_action_bar_desc">Einstellungen</string>
+    <string name="einstellungen_action_bar_title">Einstellungen</string>
+
+    <!-- A_Backup -->
+    <string name="title_backup_screen">Backup</string>
+    <string name="backup_action_bar_desc">Backup</string>
+    <string name="backup_action_bar_title">Backup</string>
 
     <!-- A_Version -->
     <string name="title_version_screen">Version</string>
-    <string name="Versionakt">Aktuelle Version</string>
-
-
-
 
     <!-- A_Show_Recognition -->
     <string name="title_show_recognition_screen">Ausgabe</string>
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

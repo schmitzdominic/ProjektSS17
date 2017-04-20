@@ -3,7 +3,8 @@
     package="de.projektss17.bonpix">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -58,25 +59,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
-        <activity
-            android:name=".A_Einstellungen"
-            android:label="@string/title_einstellungen_screen"
-            android:parentActivityName=".A_Main"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.projektss17.bonpix.A_Main" />
-        </activity>
-        <activity
-            android:name=".A_Version"
-            android:label="@string/title_version_screen"
-            android:parentActivityName=".A_Einstellungen"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.projektss17.bonpix.A_Einstellungen" />
-
-        </activity>
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
@@ -91,6 +73,33 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
+        </activity>
+        <activity
+            android:name=".A_Einstellungen"
+            android:label="@string/title_einstellungen_screen"
+            android:parentActivityName=".A_Main"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Main" />
+        </activity>
+        <activity
+            android:name=".A_Version"
+            android:label="@string/title_version_screen"
+            android:parentActivityName=".A_Einstellungen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Einstellungen" />
+        </activity>
+        <activity
+            android:name=".A_Backup"
+            android:label="@string/title_backup_screen"
+            android:parentActivityName=".A_Einstellungen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Einstellungen" />
         </activity>
     </application>
 
