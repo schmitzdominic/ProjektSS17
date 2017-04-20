@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -637,7 +638,32 @@ public class A_OCR_Manuell extends AppCompatActivity {
             this.addArticleButton.setTextColor(Color.RED);
             allRelevantFieldsFull = false;
         } else {
-            this.addArticleButton.setTextColor(getResources().getColor(R.color.colorMenueIcon));
+            EditText articleField, priceField;
+            ImageButton deleteArticleButton;
+
+            for(int i = 0; i < linearLayout.getChildCount(); i++){
+                articleField = (EditText) linearLayout.getChildAt(i).findViewById(R.id.ocr_manuell_article_text);
+                priceField = (EditText) linearLayout.getChildAt(i).findViewById(R.id.ocr_manuell_price_text);
+                deleteArticleButton = (ImageButton) linearLayout.getChildAt(i).findViewById(R.id.ocr_manuell_button_delete_article);
+
+
+                if(articleField == null || articleField.getText().toString().isEmpty() || articleField.getText().toString().equals("")) {
+                    if(articleField instanceof EditText && deleteArticleButton instanceof ImageButton) {
+                        articleField.setHintTextColor(Color.RED);
+                        deleteArticleButton.setVisibility(View.VISIBLE);
+                        allRelevantFieldsFull = false;
+                    }
+                }
+
+                if(priceField == null || articleField.getText().toString().isEmpty() || priceField.getText().toString().equals("")) {
+                    if(priceField instanceof EditText && deleteArticleButton instanceof ImageButton) {
+                        priceField.setHintTextColor(Color.RED);
+                        deleteArticleButton.setVisibility(View.VISIBLE);
+                        allRelevantFieldsFull = false;
+                    }
+                }
+            }
+            this.addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
         }
 
         return allRelevantFieldsFull;
