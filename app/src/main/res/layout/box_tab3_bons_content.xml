@@ -6,6 +6,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/tab_bar"
-    tools:context="de.projektss17.bonpix.Tab2Statistik">
+    tools:context="de.projektss17.bonpix.A_Tab3Bons">
 
 </RelativeLayout>

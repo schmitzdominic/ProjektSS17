@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="de.projektss17.bonpix.A_Favoriten"
-    tools:showIn="@layout/activity_a__favoriten">
+    tools:context="de.projektss17.bonpix.A_Budget"
+    tools:showIn="@layout/box_budget_screen">
 
 </android.support.constraint.ConstraintLayout>
