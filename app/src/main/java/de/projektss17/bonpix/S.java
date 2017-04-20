@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created by Domi on 29.03.2017.
@@ -17,10 +20,16 @@ public class S extends Activity {
      * Ruft die Foto funktion auf
      */
     public static void showFoto(AppCompatActivity beforeActivity){
-        // TODO Aufruf der e_kamera_ocr
-        /**Beispiel:
-        S.startActivity(beforeActivity, OTHERACTVITIY.class);
-        */
+        // TODO Kamera Klasse implementieren und die benötigten Einstellungen bauen
+    }
+
+    /**
+     * Ruft die Recognition Activity auf
+     */
+    public static void showRecognition(AppCompatActivity beforeActivity, ArrayList<String> path){
+        Intent intent = new Intent(beforeActivity, A_Show_Recognition.class);
+        intent.putExtra("ArrayList",path);
+        beforeActivity.startActivity(intent);
     }
 
     /**
@@ -85,8 +94,6 @@ public class S extends Activity {
         beforeActivity.startActivity(intent);
     }
 
-
-    // Erstellt von Johanns am 09.04.17
     /**
      * Öffnet ein POPUP-Fenster (Hinweis/Alert) beim Aufruf
      * @param beforeActivity Vorherige Instanz der Activity
@@ -110,6 +117,24 @@ public class S extends Activity {
                 }).create().show();
     }
 
+    /**
+     * Ausgabe eines Strings (kurz)
+     * Ausgabe erfolgt über einen Toast
+     * @param context Class.this (instanz übergeben)
+     * @param msg Text der Ausgegeben werden soll
+     */
+    public static void outShort(AppCompatActivity context, String msg){
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
 
+    /**
+     * Ausgabe eines Strings (lang)
+     * Ausgabe erfolgt über einen Toast
+     * @param context Class.this (instanz übergeben)
+     * @param msg Text der Ausgegeben werden soll
+     */
+    public static void outLong(AppCompatActivity context, String msg){
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+    }
 
 }

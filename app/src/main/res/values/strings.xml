@@ -57,6 +57,9 @@
     <!-- A_Max_Bon_Pic -->
     <string name="title_max_bon_pic_screen">Bon</string>
 
+    <!-- A_Show_Recognition -->
+    <string name="title_show_recognition_screen">Ausgabe</string>
+
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
     <string name="appwidget_text">EXAMPLE</string>
