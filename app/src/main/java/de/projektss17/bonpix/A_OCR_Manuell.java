@@ -621,14 +621,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         boolean allRelevantFieldsFull = true;
 
-        // Prüft ob ein Bild angegeben wurde
-        if(this.imageOCRUriString == null) {
-            this.kameraButton.setTextColor(Color.RED);
-            allRelevantFieldsFull = false;
-        } else {
-            this.kameraButton.setTextColor(Color.BLACK);
-        }
-
         // Prüft ob ein Laden ausgewählt wurde
         if(this.ladenSpinner.getSelectedItemPosition() == 0){
             this.ladenSpinner.setSelection(0,true);
@@ -638,12 +630,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
         } else {
             View v = this.ladenSpinner.getSelectedView();
             ((TextView)v).setTextColor(Color.BLACK);
-        }
-
-        // Prüft ob die Anschrift eingegeben wurde
-        if(this.anschriftInput.getText() == null || this.anschriftInput.getText().toString().isEmpty()){
-            this.anschriftInput.setHintTextColor(Color.RED);
-            allRelevantFieldsFull = false;
         }
 
         // Prüft ob noch kein Artikel angegeben wurde
