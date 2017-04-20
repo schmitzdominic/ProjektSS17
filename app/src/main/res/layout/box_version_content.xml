@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,26 +9,10 @@
     tools:showIn="@layout/box_version_screen">
 
     <TextView
-        android:id="@+id/Versionakt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="125dp"
-        android:text="@string/Versionakt"
-        android:textSize="30sp"
-        tools:layout_editor_absoluteX="142dp"
-        tools:layout_editor_absoluteY="180dp" />
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:text="Version 0.2"
+        android:textAlignment="center"
+        android:textSize="30dp" />
 
-    <TextView
-        android:id="@+id/Versionnr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/built_nr"
-        android:textSize="30sp"
-        tools:layout_editor_absoluteX="178dp"
-        tools:layout_editor_absoluteY="283dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
