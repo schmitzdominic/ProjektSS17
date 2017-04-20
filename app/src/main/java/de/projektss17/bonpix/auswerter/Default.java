@@ -1,15 +1,37 @@
-package de.projektss17.bonpix.recognition;
+package de.projektss17.bonpix.auswerter;
 
-import android.util.Log;
-
-import java.util.ArrayList;
+import android.content.Context;
+import android.content.res.Resources;
 
 /**
- * Created by Domi on 05.04.2017.
- * Diese Klasse enthält Regeln
+ * Created by Domi on 15.04.2017.
  */
 
-public class C_Rules {
+public class Default implements I_Auswerter{
+
+    protected Context context;
+    protected Resources res;
+
+    public Default(Context context){
+        this.context = context;
+        this.res = this.context.getResources();
+    }
+
+    @Override
+    public String[] getProducts(String txt) {
+        return new String[0];
+    }
+
+    @Override
+    public String[] getPrices(String txt) {
+        return new String[0];
+    }
+
+    public String getAdresse(String txt){
+        return "";
+    }
+
+    //############################### deprecated Section!
 
     /**
      * Setzt ein gewisses Standardformat
@@ -17,7 +39,7 @@ public class C_Rules {
      * @return String
      */
     public String formater(String txt){
-        txt = txt.replaceAll(" ", "");
+        txt = txt.replaceAll(" +", " ");
         return txt;
     }
 
@@ -27,7 +49,7 @@ public class C_Rules {
      * @param txt Kompletter String
      * @return nur die Preise
      */
-    public String getPrices(String txt){
+    public String getPreise(String txt){
 
         String retString = "",
                 dumString = "";
@@ -160,17 +182,6 @@ public class C_Rules {
             // Falls nein, bitte gib eine Meldung zurück
             return "KEINE TELEFONNUMMER ERKANNT!";
         }
-    }
-
-    /**
-     * Wenn der Preis die Richtlinien erfüllt dann true, sonst false
-     * @param x
-     * @return true oder false
-     */
-    public boolean isPriceOK(String x){
-        return ((x.contains(",") ||
-                x.contains(".")) &&
-                x.length() > 3);
     }
 
     /**
