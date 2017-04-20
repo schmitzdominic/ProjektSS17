@@ -15,7 +15,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,25 +30,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+
+import de.projektss17.bonpix.daten.C_Article;
 
 
 public class A_OCR_Manuell extends AppCompatActivity {
 
-    private Button saveButton, kameraButton;
-    private Spinner spinnerLaden;
-    private Calendar calendar;
-    private TextView dateView, totalPrice, sonstigesView;
-    private ImageView imageOCR;
-    private ArrayAdapter<String> spinnerAdapter;
-    private String year, month, day, imageOCRUriString, sonstigesText;
     private static int RESULT_LOAD_IMAGE = 1;
-    private LinearLayout mContainerView;
-    private Button mAddButton;
+    private String year, month, day, imageOCRUriString, sonstigesText;
+    private ArrayAdapter<String> spinnerAdapter;
+    private Button saveButton, kameraButton, addArticleButton;
+    private Spinner ladenSpinner;
+    private Calendar calendar;
+    private TextView dateTextView, totalPrice, sonstigesView;
+    private ImageView ocrImageView;
     private View mExclusiveEmptyView;
-    private List<Double> priceMap;
+    private EditText anschriftInput;
+    private LinearLayout linearLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,52 +59,42 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Liste zum anzeigen/hinzufügen der Produkte
-        this.priceMap = new ArrayList<>();
-        mContainerView = (LinearLayout) findViewById(R.id.parentView);
-        mAddButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article);
-
-        // TestDaten Liste Produkte
-        //inflateEditRow("Test1");
-
-        //Kalender
-        this.dateView = (TextView) findViewById(R.id.ocr_manuell_datum);
-        this.calendar = Calendar.getInstance();
-        this.year = "" + this.calendar.get(Calendar.YEAR);
-        this.month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
-        this.day = "" + this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
-        this.showDate(year, month, day);
-        this.dateView.setTextColor(Color.parseColor("#9E9E9E"));           // ÄNDRERT FARBE:  vom Datumstext
-
-        this.imageOCR = (ImageView) findViewById(R.id.ocr_manuell_image_ocr); // Image OCR Element
-        this.kameraButton = (Button) findViewById(R.id.ocr_manuell_image_button_auswahl); // Image auswahl Button
-        this.spinnerLaden = (Spinner) findViewById(R.id.ocr_manuell_spinner_laden); // Spinner Laden Element
+        // XML Instanziieren
         this.saveButton = (Button) findViewById(R.id.ocr_manuell_save_button); // Speichern Button
+        this.linearLayout = (LinearLayout) findViewById(R.id.ocr_manuell_linear_layout); // Linear Layout
+        this.ocrImageView = (ImageView) findViewById(R.id.ocr_manuell_image_ocr); // Image OCR Element
+        this.kameraButton = (Button) findViewById(R.id.ocr_manuell_image_button_auswahl); // Image auswahl Button
+        this.ladenSpinner = (Spinner) findViewById(R.id.ocr_manuell_spinner_laden); // Spinner Laden Element
+        this.anschriftInput = (EditText) findViewById(R.id.ocr_manuell_edit_text_anschrift); // Anschrift eingabe
+        this.dateTextView = (TextView) findViewById(R.id.ocr_manuell_datum); // Datumsanzeige
         this.sonstigesView = (TextView) findViewById(R.id.ocr_manuell_edit_text_sonstiges); // Sonstiges Button
         this.totalPrice = (TextView) findViewById(R.id.ocr_manuell_total_price); // Totaler Preis
+        this.addArticleButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article); // Neuen Artikel hinzufügen Button
 
-        this.imageOCR.setClickable(false); // Icon ist am anfang nicht klickbar
+        this.createCalendar(); // Calendar wird befüllt
         this.refreshSpinner(); // Spinner Refresh
+        this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
 
-        // Aktion welches beim drücken des Save-Buttons ausgeführt wird
-        // In diesem Fall wird ein Hinweis-Fenster (POPUP) geöffnet (Nachfragen ob Speicherung durchgenommen werden soll)
+        // Save Button onClickListener
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                // Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet
-                S.popUpDialog(A_OCR_Manuell.this, A_Main.class,
-                        R.string.a_ocr_manuell_pop_up_title,
-                        R.string.a_ocr_manuell_pop_up_message,
-                        R.string.a_ocr_manuell_pop_up_cancel,
-                        R.string.a_ocr_manuell_pop_up_confirm);
+                if(checkAllRelevantValues()) {
+                    // Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet
+                    S.popUpDialog(A_OCR_Manuell.this, A_Main.class,
+                            R.string.a_ocr_manuell_pop_up_title,
+                            R.string.a_ocr_manuell_pop_up_message,
+                            R.string.a_ocr_manuell_pop_up_cancel,
+                            R.string.a_ocr_manuell_pop_up_confirm);
+                }
             }
         });
 
-        // Onclick listener image OCR
-        this.imageOCR.setOnClickListener(new View.OnClickListener(){
+        // OCR Image onClickListener
+        this.ocrImageView.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
+            public void onClick(View view){
                 if(imageOCRUriString != null){
                     S.showMaxBonPic(A_OCR_Manuell.this, imageOCRUriString);
                 }
@@ -113,7 +102,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // klick auf den Kamera auswahl button
+        // kamera Button onClickListener
         this.kameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,6 +111,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
+        // Sonstiges Eingabe onClickListener
         this.sonstigesView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,7 +126,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                 builder.setView(input);
 
-                builder.setMessage("Bitte Sonstige Optionen eingeben")
+                builder.setMessage(getResources().getString(R.string.a_ocr_manuell_hint_sonstige_infos))
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 sonstigesText = input.getText().toString();
@@ -151,36 +141,17 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // Wenn Spinner Bitte Laden auswählen anzeigt, wird der Text Rot markiert
-        if(this.spinnerLaden.getSelectedItemPosition() == 0){
-            spinnerLaden.setSelection(0, true);
-            View v = spinnerLaden.getSelectedView();
-            ((TextView)v).setTextColor(Color.parseColor("#9E9E9E"));    // ÄNDRERT FARBE:  vom Spinnertext
-        }
-
-        //Spinner selected listener => Aktion beim selektieren
-        spinnerLaden.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            /**
-             * Durch diese Methode lassen sich Aktionen beim selektieren der Spinner Werte durchführen
-             * @param parentView
-             * @param selectedItemView
-             * @param position
-             * @param id
-             */
+        //laden Spinner onClickListener
+        ladenSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
-                int itemId = (int) id;
-
-                /*
-                 * Itemid == 1 = Benutzerdefiniert, d.h. Wenn manuell eine Marke eingegeben werden soll
-                 */
-                if (itemId == 1) {
+                // Itemid == 1 = Benutzerdefiniert, d.h. Wenn manuell eine Marke eingegeben werden soll
+                if ((int) id == 1) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(A_OCR_Manuell.this);
-
                     final EditText input = new EditText(A_OCR_Manuell.this);
+
                     input.setInputType(InputType.TYPE_CLASS_TEXT);
                     builder.setView(input);
 
@@ -211,44 +182,69 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 }
             }
 
-            /**
-             * Ähnlich wie obige, nur wenn nichts selektiert wurde
-             * @param parentView
-             */
+            // Wenn nichts selektiert wurde
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 parentView.setSelection(0);
             }
-
-
         });
     }
 
     /**
-     * Kleine Notification (als Toast)
-     * beim öffnen des kalenders
-     *
-     * @param view
+     * Standard
      */
-    @SuppressWarnings("deprecation")
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Standard
+     * @param savedInstanceState Status
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    /**
+     * öffnet den Kalender
+     * onClickHandler für dateTextView
+     * @param view standard
+     */
     public void setDate(View view) {
-        showDialog(999);
-        Toast.makeText(getApplicationContext(), "Bitte Datum auswählen",
-                Toast.LENGTH_SHORT)
-                .show();
+        this.showDialog(999);
+    }
+
+    /**
+     * onClickHandler für den addArticleButton
+     * @param v Standard
+     */
+    public void onAddNewClicked(View v) {
+        this.inflateEditRow(null, null);
+        v.setVisibility(View.GONE);
+    }
+
+    /**
+     * onClickHandler für den artikel Löschen button (Mülleimer)
+     * @param v Standard
+     */
+    public void onDeleteClicked(View v) {
+        this.linearLayout.removeView((View) v.getParent());
+        this.totalPrice.setText(String.format("%s", getFinalPrice()));
+        this.addArticleButton.setVisibility(View.VISIBLE);
     }
 
     /**
      * TODO Bitte änderrn, da deprecated!
-     *
-     * @param id
-     * @return
+     * @param id Kalender ID
+     * @return NULL
      */
     @Override
     protected Dialog onCreateDialog(int id) {
         if (id == 999) {
             return new DatePickerDialog(this,
-                    myDateListener, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+                    this.myDateListener, Integer.parseInt(this.year), Integer.parseInt(this.month), Integer.parseInt(this.day));
         }
         return null;
     }
@@ -265,25 +261,34 @@ public class A_OCR_Manuell extends AppCompatActivity {
             };
 
     /**
+     * Erzeugt eine Calendar Instanz
+     * Weißt year, month, day einen aktuellen wert zu
+     * Setzt über showDate die werte in die TextView
+     */
+    public void createCalendar(){
+        this.calendar = Calendar.getInstance();
+        this.year = "" + this.calendar.get(Calendar.YEAR);
+        this.month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
+        this.day = "" + this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
+        this.showDate(year, month, day);
+    }
+
+    /**
      * Setzt das Aktuelle Datum in die TextView
-     *
-     * @param year
-     * @param month
-     * @param day
+     * @param year Das ausgewählte Jahr
+     * @param month Der ausgewählte Monat
+     * @param day Der ausgewählte Tag
      */
     private void showDate(String year, String month, String day) {
-        String separator = ".";
-        dateView.setText(day + separator +
-                month + separator +
-                year);
-        dateView.setTextColor(Color.parseColor("#000000"));     // Ändert die Farbe wenn Datum ausgewählt wird
+        String sepa = ".";
+        dateTextView.setText(day + sepa + month + sepa + year);
+        dateTextView.setTextColor(Color.parseColor("#000000")); // Ändert die Farbe wenn Datum ausgewählt wird
     }
 
     /**
      * Gibt eine Zahl wenn sie kleiner 10 ist mit einer 0 davor aus
-     *
-     * @param zahl
-     * @return
+     * @param zahl Zahl die ggf mit einer 0 vorne zurück gegeben wird
+     * @return Zahl mit ggf 0 vorne
      */
     public String getNumberWithZero(int zahl) {
         if (zahl > 0 && zahl < 10) {
@@ -317,62 +322,40 @@ public class A_OCR_Manuell extends AppCompatActivity {
         for(String a : x){
             array[count] = a;
             count ++;
-        }
-         */
+        } */
 
-        this.spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array);
+        this.spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, array);
         this.spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.spinnerLaden.setAdapter(this.spinnerAdapter);
+        this.ladenSpinner.setAdapter(this.spinnerAdapter);
     }
 
     /**
      * Was passiert wenn das Bild ausgewählt wurde
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * @param requestCode Standard
+     * @param resultCode Standard
+     * @param data Bild daten
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri imageUri = data.getData();
-            this.imageOCR.setImageURI(null);
-            this.imageOCR.setImageURI(imageUri);
+            this.ocrImageView.setImageURI(null);
+            this.ocrImageView.setImageURI(imageUri);
             this.imageOCRUriString = imageUri.toString();
-            this.imageOCR.setClickable(true);
+            this.ocrImageView.setClickable(true);
+            this.kameraButton.setTextColor(Color.BLACK);
         }
     }
 
     /**
-     * List view zum Hinzufügen neuer Produkte
+     * Erzeugt eine neue Artikel Reihe
+     * @param name Name des Artikels
+     * @param preis Preis des Artikels
      */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-            }
+    private void inflateEditRow(String name, String preis) {
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    // Handler für den "Add new" button;
-    public void onAddNewClicked(View v) {
-        // Inflate a new row and hide the button self.
-        inflateEditRow(null);
-        v.setVisibility(View.GONE);
-
-    }
-
-    // Handler für Löschen button
-    public void onDeleteClicked(View v) {
-        // aufruf getParent on button zum löschen zeile
-        mContainerView.removeView((View) v.getParent());
-        totalPrice.setText(""+getFinalPrice());
-    }
-
-    private void inflateEditRow(String name) {
-
+        // XML Instanziieren
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.box_ocr_manuell_listview, null);
         final ImageButton deleteAticleButton = (ImageButton) rowView
@@ -382,27 +365,37 @@ public class A_OCR_Manuell extends AppCompatActivity {
         final EditText priceText = (EditText) rowView
                 .findViewById(R.id.ocr_manuell_price_text);
 
+        // Wenn der Preis nicht leer ist dann setze ihn
+        if (preis != null && !preis.isEmpty()){
+            priceText.setText(preis);
+        }
+
+        // Wenn der Name nicht leer ist dann setze ihn
         if (name != null && !name.isEmpty()) {
             articleText.setText(name);
         } else {
-            mExclusiveEmptyView = rowView;
+           this.mExclusiveEmptyView = rowView;
             deleteAticleButton.setVisibility(View.INVISIBLE);
         }
 
-        // Verwaltung anzeige des Buttons add
-        // handle the exclusive empty view.
+        // Artikel Text changeListener
         articleText.addTextChangedListener(new TextWatcher() {
 
+            // Wenn der Text geändert wird
             @Override
             public void afterTextChanged(Editable s) {
+
+                // Wenn der Text leer ist
                 if (s.toString().isEmpty()) {
                     deleteAticleButton.setVisibility(View.INVISIBLE);
 
                     if (mExclusiveEmptyView != null
                             && mExclusiveEmptyView != rowView) {
-                        mContainerView.removeView(mExclusiveEmptyView);
+                        linearLayout.removeView(mExclusiveEmptyView);
                     }
                     mExclusiveEmptyView = rowView;
+
+                // Wenn etwas eingegeben wurde
                 } else {
 
                     if (mExclusiveEmptyView == rowView) {
@@ -424,21 +417,27 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
+        // Preis Text changeListener
         priceText.addTextChangedListener(new TextWatcher() {
 
+            // Wenn der Text geändert wird
             @Override
             public void afterTextChanged(Editable s) {
+
+                // Wenn der Text leer ist
                 if (s.toString().isEmpty()) {
-                    mAddButton.setVisibility(View.GONE);
+                    addArticleButton.setVisibility(View.GONE);
                     deleteAticleButton.setVisibility(View.INVISIBLE);
 
                     if (mExclusiveEmptyView != null
                             && mExclusiveEmptyView != rowView) {
-                        mContainerView.removeView(mExclusiveEmptyView);
+                        linearLayout.removeView(mExclusiveEmptyView);
                     }
                     priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789-"));
-                    totalPrice.setText(""+getFinalPrice());
+                    totalPrice.setText(String.format("%s", getFinalPrice()));
                     mExclusiveEmptyView = rowView;
+
+                // Wenn etwas eingegeben wurde
                 } else {
 
                     if (mExclusiveEmptyView == rowView) {
@@ -469,8 +468,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         }
                     }
 
-                    totalPrice.setText(""+getFinalPrice());
-                    mAddButton.setVisibility(View.VISIBLE);
+                    totalPrice.setText(String.format("%s", getFinalPrice()));
+                    addArticleButton.setVisibility(View.VISIBLE);
                     deleteAticleButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -486,23 +485,22 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // AddButton verwaltung
-        mContainerView.addView(rowView, mContainerView.getChildCount() - 1);
-        articleText.requestFocus(mContainerView.getChildCount() - 1);
+        this.linearLayout.addView(rowView, this.linearLayout.getChildCount() - 1); // Erzeugt eine neue Reihe
+        articleText.requestFocus(this.linearLayout.getChildCount() - 1); // Setzt den Focus auf die Zeile
     }
 
     /**
-     * Gibt alle Preise als Double Array zurück
-     * @return
+     * Gibt alle Preise als String Array zurück
+     * @return String Array mit allen Preisen
      */
     private String[] getAllPrices(){
 
-        String[] arrayPrices = new String[mContainerView.getChildCount()];
+        String[] arrayPrices = new String[linearLayout.getChildCount()];
         View view;
         EditText textField;
 
-        for(int i = 0; i < mContainerView.getChildCount(); i++){
-            view = mContainerView.getChildAt(i);
+        for(int i = 0; i < linearLayout.getChildCount(); i++){
+            view = linearLayout.getChildAt(i);
             textField = (EditText) view.findViewById(R.id.ocr_manuell_price_text);
             if(textField != null && !textField.getText().toString().isEmpty())
                 arrayPrices[i] = textField.getText().toString();
@@ -515,15 +513,15 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Gibt alle Artikel als String Array zurück
-     * @return
+     * @return String Array mit allen Artikeln
      */
     private String[] getAllArticles(){
-        String[] arrayArticles = new String[mContainerView.getChildCount()];
+        String[] arrayArticles = new String[linearLayout.getChildCount()];
         View view;
         EditText textField;
 
-        for(int i = 0; i < mContainerView.getChildCount(); i++){
-            view = mContainerView.getChildAt(i);
+        for(int i = 0; i < linearLayout.getChildCount(); i++){
+            view = linearLayout.getChildAt(i);
             textField = (EditText) view.findViewById(R.id.ocr_manuell_article_text);
             if(textField != null && !textField.getText().toString().isEmpty())
                 arrayArticles[i] = textField.getText().toString();
@@ -536,7 +534,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Summiert alle Preise und gibt die Summe als double zurück
-     * @return
+     * @return Alle Preise summiert als double
      */
     private double getFinalPrice(){
 
@@ -561,5 +559,60 @@ public class A_OCR_Manuell extends AppCompatActivity {
         finalPrice = Math.round(finalPrice * 100) / 100.00;
 
         return finalPrice;
+    }
+
+    /**
+     * Befüllt alle Werte
+     * @param imageUri Uri zum Bild
+     * @param ladenName Ladenname
+     * @param anschrift Anschrift
+     * @param datum Datum
+     * @param sonstiges Sonstiges
+     * @param articles Array mit Articles
+     */
+    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Article[] articles){
+
+
+        if(imageUri != null) {
+            this.ocrImageView.setImageURI(null);
+            this.ocrImageView.setImageURI(imageUri);
+            this.imageOCRUriString = imageUri.toString();
+            this.ocrImageView.setClickable(true);
+        }
+
+        if(ladenName != null && !ladenName.isEmpty()){
+            // TODO Datenbank anbindung und dann refresh spinner
+        }
+
+        if(anschrift != null && !anschrift.isEmpty()){
+            this.anschriftInput.setText(anschrift);
+        }
+
+        if(datum != null && !datum.isEmpty()){
+            this.dateTextView.setText(datum);
+        }
+
+        if(sonstiges != null && !sonstiges.isEmpty()){
+            this.sonstigesText = sonstiges;
+        }
+
+        if(articles != null){
+            for(C_Article article : articles){
+                this.inflateEditRow(article.getName(), article.getPrice());
+            }
+            this.totalPrice.setText(String.format("%s", getFinalPrice()));
+        }
+    }
+
+    public boolean checkAllRelevantValues(){
+
+        boolean allRelevantFieldsFull = true;
+
+        if(this.imageOCRUriString == null) {
+            this.kameraButton.setTextColor(Color.RED);
+            allRelevantFieldsFull = false;
+        }
+
+        return allRelevantFieldsFull;
     }
 }

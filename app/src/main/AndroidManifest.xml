@@ -67,6 +67,7 @@
         <activity
             android:name=".A_OCR_Manuell"
             android:label="@string/title_manuell_screen"
+            android:screenOrientation="portrait"
             android:parentActivityName=".A_Main"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
