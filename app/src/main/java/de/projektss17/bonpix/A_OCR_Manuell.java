@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -403,6 +404,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     }
 
                     deleteAticleButton.setVisibility(View.VISIBLE);
+                    if(priceText.getText() != null && !priceText.getText().toString().isEmpty()) {
+                        addArticleButton.setVisibility(View.VISIBLE);
+                        addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
+                    }
                 }
             }
 
@@ -469,7 +474,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     }
 
                     totalPrice.setText(String.format("%s", getFinalPrice()));
-                    addArticleButton.setVisibility(View.VISIBLE);
+                    if(articleText.getText() != null && !articleText.getText().toString().isEmpty()) {
+                        addArticleButton.setVisibility(View.VISIBLE);
+                        addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
+                    }
                     deleteAticleButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -604,13 +612,46 @@ public class A_OCR_Manuell extends AppCompatActivity {
         }
     }
 
+    /**
+     * Prüft ob alle relevanten Felder befüllt wurden
+     * Zeigt über die Rote Farbe an ob das Feld befüllt wurde oder nicht
+     * @return true, alles wurde befüllt. false ein wert fehlt
+     */
     public boolean checkAllRelevantValues(){
 
         boolean allRelevantFieldsFull = true;
 
+        // Prüft ob ein Bild angegeben wurde
         if(this.imageOCRUriString == null) {
             this.kameraButton.setTextColor(Color.RED);
             allRelevantFieldsFull = false;
+        } else {
+            this.kameraButton.setTextColor(Color.BLACK);
+        }
+
+        // Prüft ob ein Laden ausgewählt wurde
+        if(this.ladenSpinner.getSelectedItemPosition() == 0){
+            this.ladenSpinner.setSelection(0,true);
+            View v = this.ladenSpinner.getSelectedView();
+            ((TextView)v).setTextColor(Color.RED);
+            allRelevantFieldsFull = false;
+        } else {
+            View v = this.ladenSpinner.getSelectedView();
+            ((TextView)v).setTextColor(Color.BLACK);
+        }
+
+        // Prüft ob die Anschrift eingegeben wurde
+        if(this.anschriftInput.getText() == null || this.anschriftInput.getText().toString().isEmpty()){
+            this.anschriftInput.setHintTextColor(Color.RED);
+            allRelevantFieldsFull = false;
+        }
+
+        // Prüft ob noch kein Artikel angegeben wurde
+        if(this.linearLayout.getChildCount() == 2){
+            this.addArticleButton.setTextColor(Color.RED);
+            allRelevantFieldsFull = false;
+        } else {
+            this.addArticleButton.setTextColor(getResources().getColor(R.color.colorMenueIcon));
         }
 
         return allRelevantFieldsFull;
