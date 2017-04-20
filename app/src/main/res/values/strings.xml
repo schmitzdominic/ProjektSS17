@@ -48,6 +48,7 @@
     <string name="a_ocr_manuell_date_selected"></string>
 
     <string name="a_ocr_manuell_hint_anschrift">Anschrift</string>
+    <string name="a_ocr_manuell_hint_sonstiges">Sonstiges hinzufügen...</string>
     <string name="a_ocr_manuell_hint_uid">UID (Optional)</string>
 
     <string name="button_add_new_text">Artikel hinzufügen</string>

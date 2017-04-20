@@ -16,6 +16,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,10 +41,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private Button saveButton, kameraButton;
     private Spinner spinnerLaden;
     private Calendar calendar;
-    private TextView dateView, totalPrice;
+    private TextView dateView, totalPrice, sonstigesView;
     private ImageView imageOCR;
     private ArrayAdapter<String> spinnerAdapter;
-    private String year, month, day, imageOCRUriString;
+    private String year, month, day, imageOCRUriString, sonstigesText;
     private static int RESULT_LOAD_IMAGE = 1;
     private LinearLayout mContainerView;
     private Button mAddButton;
@@ -80,6 +81,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.kameraButton = (Button) findViewById(R.id.ocr_manuell_image_button_auswahl); // Image auswahl Button
         this.spinnerLaden = (Spinner) findViewById(R.id.ocr_manuell_spinner_laden); // Spinner Laden Element
         this.saveButton = (Button) findViewById(R.id.ocr_manuell_save_button); // Speichern Button
+        this.sonstigesView = (TextView) findViewById(R.id.ocr_manuell_edit_text_sonstiges); // Sonstiges Button
         this.totalPrice = (TextView) findViewById(R.id.ocr_manuell_total_price); // Totaler Preis
 
         this.imageOCR.setClickable(false); // Icon ist am anfang nicht klickbar
@@ -117,6 +119,35 @@ public class A_OCR_Manuell extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
+            }
+        });
+
+        this.sonstigesView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(A_OCR_Manuell.this);
+
+                final EditText input = new EditText(A_OCR_Manuell.this);
+                input.setSingleLine(false);
+                input.setLines(9);
+                input.setGravity(Gravity.LEFT | Gravity.TOP);
+                input.setHorizontalScrollBarEnabled(false);
+                input.setText(sonstigesText);
+
+                builder.setView(input);
+
+                builder.setMessage("Bitte Sonstige Optionen eingeben")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                sonstigesText = input.getText().toString();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        })
+                        .create().show();
             }
         });
 
@@ -414,19 +445,23 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         mExclusiveEmptyView = null;
                     }
 
+                    // Wenn die Eingabe ein - ist, dann sperre das Komma danach.
                     if(priceText.getText().toString().length() == 1 && priceText.getText().charAt(0) == '-'){
                         priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
                     } else {
                         priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
                     }
 
+                    // Wenn der Text ein Komma enthält
                     if(priceText.getText().toString().contains(",")){
 
+                        // Deaktiviere das Komma
                         priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
 
+                        // Splitte den String beim Komma
                         String[] array = priceText.getText().toString().split(",");
-                        if(array.length == 2){
-                            if(array[1].length() == 2){
+                        if(array.length == 2){ // Array muss mind 2 Werte haben (1 vor dem Komma, 1 Nach dem Komma)
+                            if(array[1].length() == 2){ // Wenn 2 Stellen nach dem Komma vorhanden sind, sperre die Tastatur
                                 priceText.setKeyListener(DigitsKeyListener.getInstance(""));
                             } else {
                                 priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
