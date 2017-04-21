@@ -453,7 +453,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     if(priceText.getText().toString().length() == 1 && priceText.getText().charAt(0) == '-'){
                         //priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
                     } else {
-                        //priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
+                        priceText.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
                     }
 
                     // Wenn der Text ein Komma enthält
