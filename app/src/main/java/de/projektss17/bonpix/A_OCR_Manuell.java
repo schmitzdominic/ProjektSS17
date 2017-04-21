@@ -438,8 +438,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                             && mExclusiveEmptyView != rowView) {
                         linearLayout.removeView(mExclusiveEmptyView);
                     }
-                    priceText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                    priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789-"));
+                    //priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789-"));
                     totalPrice.setText(String.format("%s", getFinalPrice()));
                     mExclusiveEmptyView = rowView;
 
@@ -452,28 +451,24 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                     // Wenn die Eingabe ein - ist, dann sperre das Komma danach.
                     if(priceText.getText().toString().length() == 1 && priceText.getText().charAt(0) == '-'){
-                        priceText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                        //priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
                     } else {
-                        priceText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
+                        //priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
                     }
 
                     // Wenn der Text ein Komma enthält
                     if(priceText.getText().toString().contains(",")){
 
                         // Deaktiviere das Komma
-                        priceText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                        //priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
 
                         // Splitte den String beim Komma
                         String[] array = priceText.getText().toString().split(",");
                         if(array.length == 2){ // Array muss mind 2 Werte haben (1 vor dem Komma, 1 Nach dem Komma)
                             if(array[1].length() == 2){ // Wenn 2 Stellen nach dem Komma vorhanden sind, sperre die Tastatur
-                                priceText.setKeyListener(DigitsKeyListener.getInstance(""));
+                                //priceText.setKeyListener(DigitsKeyListener.getInstance(""));
                             } else {
-                                priceText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                                priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                                //priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
                             }
                         }
                     }
