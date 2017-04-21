@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.0"
         android:hint="Preis"
-        android:inputType="number"
+        android:inputType="phone"
         android:digits="0123456789-"
         android:maxLength="10"/>
 
