@@ -8,6 +8,12 @@
     tools:context="de.projektss17.bonpix.A_OCR_Manuell"
     tools:showIn="@layout/box_ocr_manuell_screen">
 
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -143,6 +149,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="10dp"
+                android:lines="1"
                 android:layout_toEndOf="@+id/ocr_manuell_image_uid"
                 android:layout_toRightOf="@+id/ocr_manuell_image_uid"
                 android:clickable="true"
@@ -182,13 +189,12 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="5dp"
-            android:background="@color/colorTransparent"
+            android:layout_marginRight="8dp"
             android:gravity="center_vertical|left"
             android:onClick="onAddNewClicked"
             android:paddingLeft="8dp"
-            android:text="@string/button_add_new_text"
-            android:textColor="@color/colorMenueIcon" />
+            android:background="?android:attr/colorBackground"
+            android:text="@string/button_add_new_text" />
     </LinearLayout>
     </ScrollView>
 </RelativeLayout>

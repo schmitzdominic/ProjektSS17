@@ -132,6 +132,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 sonstigesText = input.getText().toString();
+                                sonstigesView.setText(sonstigesText);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -377,7 +378,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
             articleText.setText(name);
         } else {
            this.mExclusiveEmptyView = rowView;
-            deleteAticleButton.setVisibility(View.INVISIBLE);
         }
 
         // Artikel Text changeListener
@@ -389,7 +389,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                 // Wenn der Text leer ist
                 if (s.toString().isEmpty()) {
-                    deleteAticleButton.setVisibility(View.INVISIBLE);
 
                     if (mExclusiveEmptyView != null
                             && mExclusiveEmptyView != rowView) {
