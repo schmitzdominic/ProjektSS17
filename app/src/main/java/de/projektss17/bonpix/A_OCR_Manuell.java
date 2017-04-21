@@ -454,7 +454,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         //priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
                     } else {
                         priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
-                        priceText.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                        priceText.setRawInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     }
 
                     // Wenn der Text ein Komma enthält
