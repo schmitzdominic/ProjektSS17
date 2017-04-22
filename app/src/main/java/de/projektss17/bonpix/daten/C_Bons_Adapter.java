@@ -33,7 +33,7 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
             icon = (ImageView) view.findViewById(R.id.imageview_picture);
             title = (TextView) view.findViewById(R.id.view_name);
             content = (TextView) view.findViewById(R.id.view_state);
-            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.drawable.icon_laden_aldi);
+            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.drawable.icon_laden_rewe);
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(view.getResources(), imageBitmap);
             roundedBitmapDrawable.setCircular(true);
             roundedBitmapDrawable.setAntiAlias(true);
