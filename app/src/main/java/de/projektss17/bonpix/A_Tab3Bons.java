@@ -32,7 +32,6 @@ public class A_Tab3Bons extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View rootView = inflater.inflate(R.layout.box_bons_content, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.view_bons);
         mAdapter = new C_Bons_Adapter(bonsList);
