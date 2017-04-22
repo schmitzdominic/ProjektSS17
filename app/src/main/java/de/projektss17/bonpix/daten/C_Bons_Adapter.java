@@ -29,6 +29,10 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
         }
     }
 
+    /**
+     * Constructor
+     * @param bonsList
+     */
     public C_Bons_Adapter(List<C_Bons> bonsList){
         this.bonsList = bonsList;
     }
