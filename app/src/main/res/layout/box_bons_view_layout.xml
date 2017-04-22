@@ -34,7 +34,7 @@
         android:layout_toLeftOf="@id/imageview_button"
         android:layout_toRightOf="@+id/imageview_picture"
         android:paddingBottom="20dp"
-        android:text="test test test test test test test"
+        android:text="default"
         android:textSize="14sp"/>
 
     <ImageView
