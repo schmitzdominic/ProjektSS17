@@ -4,9 +4,11 @@ import android.Manifest;
 import android.animation.Animator;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +23,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,13 +37,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import de.projektss17.bonpix.daten.C_DatabaseHandler;
+import de.projektss17.bonpix.daten.C_Preferences;
+
 public class A_Main extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private boolean isFABOpen = false;
+    private boolean isFABOpen = false, isDrawOpen = false, cameraPermissions;
     private FloatingActionButton kameraButton, fotoButton, manuellButton;
     private LinearLayout fotoLayout, manuellLayout;
     private View fabBGLayout;
@@ -62,14 +68,40 @@ public class A_Main extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close){
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                isDrawOpen = false;
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                isDrawOpen = true;
+            }
+
+        };
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
-        requestPermissions();
+        // DataBase Connection
+        S.dbHandler = new C_DatabaseHandler(this);
+        S.db = S.dbHandler.getWritableDatabase();
+        S.dbHandler.checkTables(S.db);
+
+        // Settings Instance
+        S.prefs = new C_Preferences(this);
+
+        // Beim ersten Start der App
+        this.onFirstStart();
+
+        // TODO remove later! Just for debugging
+        this.showLogAllDBEntries();
+
+        requestPermissions(new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE});
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -187,6 +219,7 @@ public class A_Main extends AppCompatActivity {
 
         // Wird ausgelöst wenn der NavigationDrawer aktiviert wird
         if (mToggle.onOptionsItemSelected(item)) {
+            this.isDrawOpen = true;
             return true;
         }
 
@@ -206,7 +239,10 @@ public class A_Main extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        if (isFABOpen) {
+
+        if (isDrawOpen) {
+            mDrawerLayout.closeDrawers();
+        }else if (isFABOpen) {
             closeFABMenu();
         } else {
             super.onBackPressed();
@@ -320,10 +356,9 @@ public class A_Main extends AppCompatActivity {
     /**
      * Prüft ob die benötigten Permissions vorhanden sind
      */
-    public void requestPermissions(){
+    public void requestPermissions(String[] permissionRequest){
         ActivityCompat.requestPermissions(A_Main.this,
-                new String[]{Manifest.permission.CAMERA,
-                        Manifest.permission.READ_EXTERNAL_STORAGE},
+                permissionRequest,
                 1);
     }
 
@@ -340,8 +375,10 @@ public class A_Main extends AppCompatActivity {
             case 1: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    cameraPermissions = true;
                 } else {
                     Toast.makeText(A_Main.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                    cameraPermissions = false;
                 }
                 return;
             }
@@ -365,7 +402,6 @@ public class A_Main extends AppCompatActivity {
             mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
         }
     }
 
@@ -389,5 +425,62 @@ public class A_Main extends AppCompatActivity {
             S.showRecognition(A_Main.this,picturePathList);
         }
     }
-}
 
+    /**
+     * Wird nur beim ersten Start der App ausgeführt
+     */
+    private void onFirstStart(){
+        final String PREFS_NAME = C_Preferences.APP_SHARED_PREFS;
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        if (settings.getBoolean("my_first_time", true)) {
+            this.setDefaultSettings();
+            this.setDefaultDBValues();
+
+            // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
+            S.prefs.savePrefBoolean("my_first_time", false);
+        }
+    }
+
+    /**
+     * Setzt alle standard DB Werte
+     */
+    private void setDefaultDBValues(){
+        String laeden[] = {"EDEKA","Lidl", "REWE", "Media Markt"};
+        String bons[] = {"BON_CONTENT1", "BON_CONTENT2"};
+
+        for(String laden : laeden){
+            S.dbHandler.setLaeden(S.db, laden);
+        }
+
+        ContentValues values;
+
+        for(String bonContent : bons){
+            values = new ContentValues();
+            values.put("bons_name", bonContent);
+            S.db.insert("bons", null, values);
+        }
+
+    }
+
+    /**
+     * Setzt alle Standardwerte
+     */
+    private void setDefaultSettings(){
+        PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.box_backup_preferences, false);
+    }
+
+    /**
+     * Gibt alle Laeden und Bons im Log aus (Rot)
+     */
+    private void showLogAllDBEntries(){
+        for(String x : S.dbHandler.getAllLaeden(S.db)){
+            Log.e("######### LAEDEN: ", x);
+        }
+
+        for(String y : S.dbHandler.getAllBons(S.db)){
+            Log.e("######### BONS: ", y);
+        }
+    }
+}

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">BonPix</string>
+    <string name="built_nr">0.2</string>
+
 
     <!-- A_main -->
     <string name="title_a_main">BonPix</string>
@@ -32,6 +34,19 @@
 
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>
+    <string name="menu_einstellungen_version">Version</string>
+    <string name="einstellungen_default_name">Hubert</string>
+    <string name="einstellungen_default_email">Hubert@gmx.de</string>
+    <string name="einstellungen_action_bar_desc">Einstellungen</string>
+    <string name="einstellungen_action_bar_title">Einstellungen</string>
+
+    <!-- A_Backup -->
+    <string name="title_backup_screen">Backup</string>
+    <string name="backup_action_bar_desc">Backup</string>
+    <string name="backup_action_bar_title">Backup</string>
+
+    <!-- A_Version -->
+    <string name="title_version_screen">Version</string>
 
     <!-- A_OCR_Manuell - ACTIVITY -->
     <string name="title_manuell_screen">Bon hinzufügen</string>
@@ -64,5 +79,8 @@
     <string name="action_settings">DREIPUNKTEOPTION</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

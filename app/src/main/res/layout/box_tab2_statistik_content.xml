@@ -8,4 +8,5 @@
     android:paddingTop="@dimen/tab_bar"
     tools:context="de.projektss17.bonpix.A_Tab2Statistik">
 
+
 </RelativeLayout>

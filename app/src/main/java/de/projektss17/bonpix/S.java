@@ -2,13 +2,20 @@ package de.projektss17.bonpix;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
+import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import de.projektss17.bonpix.daten.C_DatabaseHandler;
+import de.projektss17.bonpix.daten.C_Preferences;
 
 /**
  * Created by Domi on 29.03.2017.
@@ -16,6 +23,11 @@ import java.util.ArrayList;
  */
 
 public class S extends Activity {
+
+    public static C_DatabaseHandler dbHandler; // DB-Handler
+    public static SQLiteDatabase db; // DB
+    public static C_Preferences prefs; // Preferences
+
     /**
      * Ruft die Foto funktion auf
      */
@@ -68,11 +80,26 @@ public class S extends Activity {
     }
 
     /**
-     * Ruft die Budget Activity auf
+     * Ruft die Einstellungen Activity auf
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
-
         S.startActivitiy(beforeActivity, A_Einstellungen.class);
+    }
+
+    /**
+     * Ruft die Backup Activity auf
+     */
+    public static void showBackup(PreferenceFragment context){
+        Intent intent = new Intent(context.getActivity(), A_Backup.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Ruft die Versions Activity auf
+     */
+    public static void showVersion(PreferenceActivity context){
+        Intent intent = new Intent(context, A_Version.class);
+        context.startActivity(intent);
     }
 
     /**

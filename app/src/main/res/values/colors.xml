@@ -14,4 +14,7 @@
     <!-- Menü icon farbe -->
     <color name="colorMenueIcon">#757575</color>
 
+    <!-- Linien Farbe -->
+    <color name="linie">#CCCCCC</color>
+
 </resources>
