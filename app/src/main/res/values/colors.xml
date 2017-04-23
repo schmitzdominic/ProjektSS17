@@ -8,6 +8,12 @@
     <!-- Transparenz für die Floating buttons -->
     <color name="colorTransBg">#26000000</color>
 
+    <!-- Transparenz -->
+    <color name="colorTransparent">#00000000</color>
+
+    <!-- Menü icon farbe -->
+    <color name="colorMenueIcon">#757575</color>
+
     <!-- Linien Farbe -->
     <color name="linie">#CCCCCC</color>
 
