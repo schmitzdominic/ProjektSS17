@@ -1,11 +1,21 @@
 package de.projektss17.bonpix;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.v7.app.AlertDialog;
+import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import de.projektss17.bonpix.daten.C_DatabaseHandler;
+import de.projektss17.bonpix.daten.C_Preferences;
 
 /**
  * Created by Domi on 29.03.2017.
@@ -13,6 +23,11 @@ import java.util.ArrayList;
  */
 
 public class S extends Activity {
+
+    public static C_DatabaseHandler dbHandler; // DB-Handler
+    public static SQLiteDatabase db; // DB
+    public static C_Preferences prefs; // Preferences
+
     /**
      * Ruft die Foto funktion auf
      */
@@ -33,7 +48,7 @@ public class S extends Activity {
      * Ruft die Manuell Activity auf
      */
     public static void showManuell(AppCompatActivity beforeActivity){
-        // TODO Aufruf der Manuell Funktion
+        S.startActivitiy(beforeActivity,A_OCR_Manuell.class);
     }
 
     /**
@@ -65,18 +80,35 @@ public class S extends Activity {
     }
 
     /**
-     * Ruft die Budget Activity auf
+     * Ruft die Einstellungen Activity auf
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
-
         S.startActivitiy(beforeActivity, A_Einstellungen.class);
     }
 
     /**
-     * Ruft die Version Activity auf
+     * Ruft die Backup Activity auf
      */
-    public static void showVersion(AppCompatActivity beforeActivity){
-        S.startActivitiy(beforeActivity, A_Version.class);
+    public static void showBackup(PreferenceFragment context){
+        Intent intent = new Intent(context.getActivity(), A_Backup.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Ruft die Versions Activity auf
+     */
+    public static void showVersion(PreferenceActivity context){
+        Intent intent = new Intent(context, A_Version.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Ruft die Max Bon Activity auf
+     */
+    public static void showMaxBonPic(AppCompatActivity beforeActivity, String uriPath){
+        Intent intent = new Intent(beforeActivity, A_Max_Bon_Pic.class);
+        intent.putExtra("imageUri", uriPath);
+        beforeActivity.startActivity(intent);
     }
 
     /**
@@ -87,6 +119,29 @@ public class S extends Activity {
     public static void startActivitiy(AppCompatActivity beforeActivity, Class<?> cls){
         Intent intent = new Intent(beforeActivity, cls);
         beforeActivity.startActivity(intent);
+    }
+
+    /**
+     * Öffnet ein POPUP-Fenster (Hinweis/Alert) beim Aufruf
+     * @param beforeActivity Vorherige Instanz der Activity
+     * @param afterActivity Activity Klasse die gestartet werden soll
+     * @param title Legt den Titel des PopUp-Fensters fest (wird im Fenster angezeigt)
+     * @param message Legt die Nachricht (z.B. eine Frage) des Fenster fest
+     * @param cancel Legt den Ihnalt des Cancel-Buttons fest
+     * @param confirm Legt den Inhalt des Confirm-Buttons fest
+     */
+    public static void popUpDialog(final AppCompatActivity beforeActivity, final Class<?> afterActivity,int title, int message, int cancel, int confirm){
+
+        new AlertDialog.Builder(beforeActivity)
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeButton(cancel,null)
+                .setPositiveButton(confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        S.startActivitiy(beforeActivity, afterActivity);
+                    }
+                }).create().show();
     }
 
     /**
