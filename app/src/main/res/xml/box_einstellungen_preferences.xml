@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <PreferenceCategory
+        android:title="Notifications"
+        android:key="category_notifications">
+
+        <CheckBoxPreference
+            android:key="pref_notifications"
+            android:summary="Enable or disable Notifications"
+            android:title="Enable Notifications"
+            android:defaultValue="true"/>
+
+        <CheckBoxPreference
+            android:key="pref_sound"
+            android:summary="Enable or disable Sounds"
+            android:title="Enable Sounds"
+            android:defaultValue="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Personal Informations"
+        android:key="category_info">
+
+        <EditTextPreference
+            android:key="pref_name"
+            android:title="Name"
+            android:summary="Hier kannst du deinen Namen angeben"
+            android:dialogTitle="Name"
+            android:dialogMessage="Hier kannst du deinen Namen angeben"
+            android:defaultValue="@string/einstellungen_default_name"
+            android:inputType="textCapWords"/>
+
+        <EditTextPreference
+            android:key="pref_email"
+            android:title="Email Adresse"
+            android:summary="Hier kannst du deine Email angeben"
+            android:dialogTitle="Email Adresse"
+            android:dialogMessage="Hier kannst du deine Email angeben"
+            android:defaultValue="@string/einstellungen_default_email"
+            android:inputType="textEmailAddress"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Daten"
+        android:key="category_data">
+
+        <Preference android:title="Backup"
+            android:key="pref_backup"
+            android:summary="Hier kannst du backups machen"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

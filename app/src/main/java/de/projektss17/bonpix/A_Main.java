@@ -1,8 +1,18 @@
 package de.projektss17.bonpix;
 
+import android.Manifest;
 import android.animation.Animator;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +23,22 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.support.design.widget.NavigationView;
+import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import de.projektss17.bonpix.daten.C_DatabaseHandler;
+import de.projektss17.bonpix.daten.C_Preferences;
 
 public class A_Main extends AppCompatActivity {
 
@@ -25,10 +46,14 @@ public class A_Main extends AppCompatActivity {
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private boolean isFABOpen = false;
+    private boolean isFABOpen = false, isDrawOpen = false, cameraPermissions;
     private FloatingActionButton kameraButton, fotoButton, manuellButton;
     private LinearLayout fotoLayout, manuellLayout;
     private View fabBGLayout;
+    private String fileNameTakenPhoto;
+    private Uri mCapturedImageURI;
+    public ArrayList<String> picturePathList;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
 
     /** Selbsterklärend. Wer noch nicht weiß was diese Methode bewirkt,
      * Bitte 2_layout.pdf lesen!
@@ -37,48 +62,77 @@ public class A_Main extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.box_main_screen);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close){
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                isDrawOpen = false;
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                isDrawOpen = true;
+            }
+
+        };
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
+        // DataBase Connection
+        S.dbHandler = new C_DatabaseHandler(this);
+        S.db = S.dbHandler.getWritableDatabase();
+        S.dbHandler.checkTables(S.db);
+
+        // Settings Instance
+        S.prefs = new C_Preferences(this);
+
+        // Beim ersten Start der App
+        this.onFirstStart();
+
+        // TODO remove later! Just for debugging
+        this.showLogAllDBEntries();
+
+        requestPermissions(new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE});
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.main_container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        picturePathList = new ArrayList<>();
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         // NavigationView (wird benötigt um Menü Items zu klicken)
-        NavigationView mV = (NavigationView) findViewById(R.id.nav_menu);
+        NavigationView mV = (NavigationView) findViewById(R.id.main_nav_menu);
 
         // Layout
-        this.fotoLayout = (LinearLayout) findViewById(R.id.foto_button_layout);
-        this.manuellLayout = (LinearLayout) findViewById(R.id.manuell_button_layout);
+        this.fotoLayout = (LinearLayout) findViewById(R.id.main_foto_button_layout);
+        this.manuellLayout = (LinearLayout) findViewById(R.id.main_manuell_button_layout);
 
         // Buttons
-        this.kameraButton = (FloatingActionButton) findViewById(R.id.kamera_button);
-        this.fotoButton = (FloatingActionButton) findViewById(R.id.foto_button);
-        this.manuellButton = (FloatingActionButton) findViewById(R.id.manuell_button);
-        fabBGLayout = findViewById(R.id.fabBGLayout);
+        this.kameraButton = (FloatingActionButton) findViewById(R.id.main_kamera_button);
+        this.fotoButton = (FloatingActionButton) findViewById(R.id.main_foto_button);
+        this.manuellButton = (FloatingActionButton) findViewById(R.id.main_manuell_button);
+        fabBGLayout = findViewById(R.id.main_fabBGLayout);
 
         // Klick auf den Foto Button
         fotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                S.showFoto(A_Main.this);
+                activeTakePhoto();
             }
         });
 
@@ -115,19 +169,19 @@ public class A_Main extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 int id = item.getItemId();
                 switch (id) {
-                    case R.id.nav_budget:
+                    case R.id.menu_nav_budget:
                         S.showBudget(A_Main.this);
                         return true;
-                    case R.id.nav_gruppen:
+                    case R.id.menu_nav_gruppen:
                         S.showGruppen(A_Main.this);
                         return true;
-                    case R.id.nav_favoriten:
+                    case R.id.menu_nav_favoriten:
                         S.showFavoriten(A_Main.this);
                         return true;
-                    case R.id.nav_garantie:
+                    case R.id.menu_nav_garantie:
                         S.showGarantie(A_Main.this);
                         return true;
-                    case R.id.nav_einstellungen:
+                    case R.id.menu_nav_einstellungen:
                         S.showEinstellungen(A_Main.this);
                         return true;
                     default:
@@ -138,7 +192,7 @@ public class A_Main extends AppCompatActivity {
     }
 
     /**
-     * Fügt alle optionen die in menu/menu.menu_a__main.xml angegeben wurden
+     * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
      *
      * @param menu
@@ -147,7 +201,7 @@ public class A_Main extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_a__main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -165,12 +219,13 @@ public class A_Main extends AppCompatActivity {
 
         // Wird ausgelöst wenn der NavigationDrawer aktiviert wird
         if (mToggle.onOptionsItemSelected(item)) {
+            this.isDrawOpen = true;
             return true;
         }
 
         // Wird ausgelöst wenn einer der (drei punkte) Optionen aufgerufen wird
         switch (id) {
-            case R.id.DUMMY:
+            case R.id.menu_main_DUMMY:
                 // Rufe die Activity auf
                 return true;
         }
@@ -178,14 +233,16 @@ public class A_Main extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     /**
      * Überschreibt den onBackPressed Button
      * damit sich das Floating Button Menü auch schließt.
      */
     @Override
     public void onBackPressed() {
-        if (isFABOpen) {
+
+        if (isDrawOpen) {
+            mDrawerLayout.closeDrawers();
+        }else if (isFABOpen) {
             closeFABMenu();
         } else {
             super.onBackPressed();
@@ -257,13 +314,13 @@ public class A_Main extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    Tab1Home tab1 = new Tab1Home();
+                    A_Tab1Home tab1 = new A_Tab1Home();
                     return tab1;
                 case 1:
-                    Tab2Statistik tab2 = new Tab2Statistik();
+                    A_Tab2Statistik tab2 = new A_Tab2Statistik();
                     return tab2;
                 case 2:
-                    Tab3Bons tab3 = new Tab3Bons();
+                    A_Tab3Bons tab3 = new A_Tab3Bons();
                     return tab3;
                 default:
                     return null;
@@ -293,6 +350,137 @@ public class A_Main extends AppCompatActivity {
                     return getResources().getString(R.string.title_tab3);
             }
             return null;
+        }
+    }
+
+    /**
+     * Prüft ob die benötigten Permissions vorhanden sind
+     */
+    public void requestPermissions(String[] permissionRequest){
+        ActivityCompat.requestPermissions(A_Main.this,
+                permissionRequest,
+                1);
+    }
+
+    /**
+     * Frägt nach den noch benötigten Permissions
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    cameraPermissions = true;
+                } else {
+                    Toast.makeText(A_Main.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                    cameraPermissions = false;
+                }
+                return;
+            }
+        }
+    }
+
+    /**
+     * Ruft die Standard Android Kamera Anwendung auf
+     */
+    public void activeTakePhoto() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            Date date = Calendar.getInstance().getTime();
+            DateFormat formatter = new SimpleDateFormat("ddMMyyyyHH:mm");
+            String today = formatter.format(date);
+            fileNameTakenPhoto = today + ".jpg";
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, fileNameTakenPhoto);
+            mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    /**
+     * Nachdem ein Bild geschossen wurde, wird die S.showRecognition aufgerufen und
+     * der Pfad zu dem eben geschossenen Bild übergeben.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = managedQuery(mCapturedImageURI, projection, null, null, null);
+            int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String picturePath = cursor.getString(column_index_data);
+            picturePathList.add(picturePath);
+            S.showRecognition(A_Main.this,picturePathList);
+        }
+    }
+
+    /**
+     * Wird nur beim ersten Start der App ausgeführt
+     */
+    private void onFirstStart(){
+        final String PREFS_NAME = C_Preferences.APP_SHARED_PREFS;
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        if (settings.getBoolean("my_first_time", true)) {
+            this.setDefaultSettings();
+            this.setDefaultDBValues();
+
+            // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
+            S.prefs.savePrefBoolean("my_first_time", false);
+        }
+    }
+
+    /**
+     * Setzt alle standard DB Werte
+     */
+    private void setDefaultDBValues(){
+        String laeden[] = {"EDEKA","Lidl", "REWE", "Media Markt"};
+        String bons[] = {"BON_CONTENT1", "BON_CONTENT2"};
+
+        for(String laden : laeden){
+            S.dbHandler.setLaeden(S.db, laden);
+        }
+
+        ContentValues values;
+
+        for(String bonContent : bons){
+            values = new ContentValues();
+            values.put("bons_name", bonContent);
+            S.db.insert("bons", null, values);
+        }
+
+    }
+
+    /**
+     * Setzt alle Standardwerte
+     */
+    private void setDefaultSettings(){
+        PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.box_backup_preferences, false);
+    }
+
+    /**
+     * Gibt alle Laeden und Bons im Log aus (Rot)
+     */
+    private void showLogAllDBEntries(){
+        for(String x : S.dbHandler.getAllLaeden(S.db)){
+            Log.e("######### LAEDEN: ", x);
+        }
+
+        for(String y : S.dbHandler.getAllBons(S.db)){
+            Log.e("######### BONS: ", y);
         }
     }
 }

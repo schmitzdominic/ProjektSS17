@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">BonPix</string>
+    <string name="built_nr">0.2</string>
+
 
     <!-- A_main -->
     <string name="title_a_main">BonPix</string>
@@ -19,20 +21,66 @@
     <string name="nav_einstellungen">Einstellungen</string>
 
     <!-- A_Budget-->
-    <string name="title_activity_a__budget">Budget</string>
+    <string name="title_budget_screen">Budget</string>
 
     <!-- A_Gruppen -->
-    <string name="title_activity_a__gruppen">Gruppen</string>
+    <string name="title_gruppen_screen">Gruppen</string>
 
     <!-- A_Favoriten -->
-    <string name="title_activity_a__favoriten">Favoriten</string>
+    <string name="title_favoriten_screen">Favoriten</string>
 
     <!-- A_Garantie -->
-    <string name="title_activity_a__garantie">Garantie</string>
+    <string name="title_garantie_screen">Garantie</string>
 
     <!-- A_Einstellungen -->
-    <string name="title_activity_a__einstellungen">Einstellungen</string>
+    <string name="title_einstellungen_screen">Einstellungen</string>
+    <string name="menu_einstellungen_version">Version</string>
+    <string name="einstellungen_default_name">Hubert</string>
+    <string name="einstellungen_default_email">Hubert@gmx.de</string>
+    <string name="einstellungen_action_bar_desc">Einstellungen</string>
+    <string name="einstellungen_action_bar_title">Einstellungen</string>
+
+    <!-- A_Backup -->
+    <string name="title_backup_screen">Backup</string>
+    <string name="backup_action_bar_desc">Backup</string>
+    <string name="backup_action_bar_title">Backup</string>
+
+    <!-- A_Version -->
+    <string name="title_version_screen">Version</string>
+
+    <!-- A_OCR_Manuell - ACTIVITY -->
+    <string name="title_manuell_screen">Bon hinzufügen</string>
+    <string name="a_ocr_manuell_save">SPEICHERN</string>
+
+    <string name="a_ocr_manuell_bildauswahl">Bild hinzufügen …</string>
+
+    <string name="a_ocr_manuell_pop_up_title">Kassenbon</string>
+    <string name="a_ocr_manuell_pop_up_message">Sollen Ihre Eingaben übernommen werden?</string>
+    <string name="a_ocr_manuell_pop_up_confirm">Bestätigen</string>
+    <string name="a_ocr_manuell_pop_up_cancel">Abbruch</string>
+
+    <string name="a_ocr_manuell_date_button_set">Set Date</string>
+    <string name="a_ocr_manuell_date_selected"/>
+
+    <string name="a_ocr_manuell_hint_anschrift">Anschrift (optional)</string>
+    <string name="a_ocr_manuell_hint_sonstiges">Sonstige Infos (optional)</string>
+    <string name="a_ocr_manuell_hint_sonstige_infos">Sonstige Infos</string>
+
+    <string name="button_add_new_text">Artikel hinzufügen</string>
+    <string name="button_delete_row_description">Delete</string>
+
+    <!-- A_Max_Bon_Pic -->
+    <string name="title_max_bon_pic_screen">Bon</string>
+
+    <!-- A_Show_Recognition -->
+    <string name="title_show_recognition_screen">Ausgabe</string>
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

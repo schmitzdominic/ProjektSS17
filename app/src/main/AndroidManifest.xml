@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.projektss17.bonpix">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +25,7 @@
         </activity>
         <activity
             android:name=".A_Budget"
-            android:label="@string/title_activity_a__budget"
+            android:label="@string/title_budget_screen"
             android:parentActivityName=".A_Main"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -30,7 +34,7 @@
         </activity>
         <activity
             android:name=".A_Gruppen"
-            android:label="@string/title_activity_a__gruppen"
+            android:label="@string/title_gruppen_screen"
             android:parentActivityName=".A_Main"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -39,7 +43,7 @@
         </activity>
         <activity
             android:name=".A_Favoriten"
-            android:label="@string/title_activity_a__favoriten"
+            android:label="@string/title_favoriten_screen"
             android:parentActivityName=".A_Main"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -48,7 +52,7 @@
         </activity>
         <activity
             android:name=".A_Garantie"
-            android:label="@string/title_activity_a__garantie"
+            android:label="@string/title_garantie_screen"
             android:parentActivityName=".A_Main"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -56,14 +60,65 @@
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
         <activity
+            android:name=".A_Show_Recognition"
+            android:label="@string/title_show_recognition_screen"
+            android:parentActivityName=".A_Main"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Main" />
+        </activity>
+        <activity
             android:name=".A_Einstellungen"
-            android:label="@string/title_activity_a__einstellungen"
+            android:label="@string/title_einstellungen_screen"
+            android:parentActivityName=".A_Main"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Main" />
+        </activity>
+        <activity
+            android:name=".A_Version"
+            android:label="@string/title_version_screen"
+            android:parentActivityName=".A_Einstellungen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Einstellungen" />
+        </activity>
+        <activity
+            android:name=".A_OCR_Manuell"
+            android:label="@string/title_manuell_screen"
+            android:screenOrientation="portrait"
             android:parentActivityName=".A_Main"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
+        <activity
+            android:name=".A_Max_Bon_Pic"
+            android:label="@string/title_max_bon_pic_screen"
+            android:parentActivityName=".A_OCR_Manuell"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_OCR_Manuell" />
+        </activity>
+        <activity
+            android:name=".A_Backup"
+            android:label="@string/title_backup_screen"
+            android:parentActivityName=".A_Einstellungen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Einstellungen" />
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="ocr" />
     </application>
 
 </manifest>
