@@ -60,8 +60,8 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
         C_Bons bon = bonsList.get(position);
 
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
-        holder.title.setText(bon.getId());
-        holder.content.setText(bon.getName());
+        holder.title.setText(bon.getBildpfad());
+        holder.content.setText(bon.getLadenname());
     }
 
     @Override

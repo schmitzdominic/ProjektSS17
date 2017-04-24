@@ -5,36 +5,55 @@ package de.projektss17.bonpix.daten;
  */
 
 public class C_Bons {
-    private String bon_name;
-    private String bon_id;
+    private String Bildpfad, Ladenname, Anschrift, SonstigeInfos, Datum;
+
 
     // Constructor
-    public C_Bons(String name, String id) {
-        this.bon_name = name;
-        this.bon_id = id;
+    public C_Bons(String Bildpfad, String Ladenname, String Anschrift, String SonstigeInfos, String Datum) {
+        this.Bildpfad = Bildpfad;
+        this.Ladenname = Ladenname;
+        this.Anschrift = Anschrift;
+        this.SonstigeInfos = SonstigeInfos;
+        this.Datum = Datum;
     }
 
-    /**
-     * Get Bons Name
-     * @return
-     */
-    public String getName() {
-        return bon_name;
+    public String getBildpfad() {
+        return Bildpfad;
     }
 
-    /**
-     * Get Bons Id
-     * @return
-     */
-    public String getId() {
-        return bon_id;
+    public void setBildpfad(String bildpfad) {
+        Bildpfad = bildpfad;
     }
 
-    /**
-     * Set Bons Name
-     * @param name
-     */
-    public void setName(String name){
-        this.bon_name = name;
+    public String getLadenname() {
+        return Ladenname;
+    }
+
+    public void setLadenname(String ladenname) {
+        Ladenname = ladenname;
+    }
+
+    public String getAnschrift() {
+        return Anschrift;
+    }
+
+    public void setAnschrift(String anschrift) {
+        Anschrift = anschrift;
+    }
+
+    public String getSonstigeInfos() {
+        return SonstigeInfos;
+    }
+
+    public void setSonstigeInfos(String sonstigeInfos) {
+        SonstigeInfos = sonstigeInfos;
+    }
+
+    public String getDatum() {
+        return Datum;
+    }
+
+    public void setDatum(String datum) {
+        Datum = datum;
     }
 }
