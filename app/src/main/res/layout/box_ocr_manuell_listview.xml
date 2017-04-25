@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:layout_marginRight="10dp"
+    android:id="@+id/ocr_manuell_article_line"
     android:orientation="horizontal">
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="de.projektss17.bonpix.A_OCR_Manuell"

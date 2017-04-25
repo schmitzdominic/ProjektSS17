@@ -5,9 +5,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +19,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
-import android.text.method.KeyListener;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,9 +35,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import de.projektss17.bonpix.daten.C_Article;
+import de.projektss17.bonpix.recognition.C_OCR;
 
 
 public class A_OCR_Manuell extends AppCompatActivity {
@@ -50,6 +58,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private View mExclusiveEmptyView;
     private EditText anschriftInput;
     private LinearLayout linearLayout;
+    private C_OCR ocr;
 
 
     @Override
@@ -73,6 +82,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.totalPrice = (TextView) findViewById(R.id.ocr_manuell_total_price); // Totaler Preis
         this.addArticleButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article); // Neuen Artikel hinzufügen Button
 
+        this.ocr = new C_OCR(this); // Erstellt eine OCR instanz.
+        this.doState(this.proofState()); // Überprüft den Status und befüllt ggf.
         this.createCalendar(); // Calendar wird befüllt
         this.refreshSpinner(); // Spinner Refresh
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
@@ -343,11 +354,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri imageUri = data.getData();
-            this.ocrImageView.setImageURI(null);
-            this.ocrImageView.setImageURI(imageUri);
-            this.imageOCRUriString = imageUri.toString();
-            this.ocrImageView.setClickable(true);
-            this.kameraButton.setTextColor(Color.BLACK);
+            Bitmap myBitmap = this.getBitmapFromUri(imageUri);
+            this.ocr.recognize(myBitmap);
+            this.fillMask(this.getImageUri(myBitmap), this.ocr.getLadenName(), null, null, this.ocr.getRecognizedText(), this.createArticleArray(null, this.ocr.getPreise()));
         }
     }
 
@@ -588,6 +597,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             this.ocrImageView.setImageURI(imageUri);
             this.imageOCRUriString = imageUri.toString();
             this.ocrImageView.setClickable(true);
+            this.kameraButton.setTextColor(Color.BLACK);
         }
 
         if(ladenName != null && !ladenName.isEmpty()){
@@ -604,9 +614,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         if(sonstiges != null && !sonstiges.isEmpty()){
             this.sonstigesText = sonstiges;
+            sonstigesView.setText(sonstigesText);
         }
 
         if(articles != null){
+
+            this.removeAllArticles();
+
             for(C_Article article : articles){
                 this.inflateEditRow(article.getName(), article.getPrice());
             }
@@ -668,5 +682,112 @@ public class A_OCR_Manuell extends AppCompatActivity {
         }
 
         return allRelevantFieldsFull;
+    }
+
+    /**
+     * Bekommt die Uri aus einem Bitmap zurück
+     * @param inImage Bitmap
+     * @return Uri des Bitmap
+     */
+    public Uri getImageUri(Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    /**
+     * Gibt ein Bitmap bei Angabe der Uri zurück
+     * @param uri Uri
+     * @return Bitmap aus der Uri
+     */
+    public Bitmap getBitmapFromUri(Uri uri){
+        try {
+            return MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+        } catch (IOException e) {
+            Log.e("### getBitmapFromUri", e.toString());
+        }
+        return null;
+    }
+
+    /**
+     * Prüft nochmal expliziet den Status und gibt diesen wieder
+     * @return Status der Maske
+     */
+    public String proofState(){
+
+        String state = getIntent().getStringExtra("manuellState");
+
+        switch(state){
+            case "new": return "new";
+            case "edit": return "edit";
+            case "foto": return "foto";
+            default: return "UNDEFINED";
+        }
+    }
+
+    /**
+     * Handle, jeh nach state
+     * @param state Status der Maske
+     */
+    public void doState(String state){
+
+        if (state.equals("edit")) { // Wenn die Maske den Status edit hat (z.B. ein Bon aufgerufen wird)
+            // TODO Anhand der Datenbank implementieren
+
+        } else if (state.equals("foto")) { // Wenn die Maske den Status foto hat (z.B. wenn gerade ein Foto gemacht wurde)
+            ArrayList<String> aList = getIntent().getStringArrayListExtra("ArrayList");
+
+            File imgFile = new File(aList.get(aList.size()-1));
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                this.ocr.recognize(myBitmap);
+                this.fillMask(this.getImageUri(myBitmap), null, null, null, this.ocr.getRecognizedText(), this.createArticleArray(null, this.ocr.getPreise()));
+            }
+        } else if (state.equals("new")) { // Wenn die Maske den Status new hat (z.B. bei einer neuen Maske)
+            return;
+        }
+    }
+
+    /**
+     * Erzeugt ein Articel Array
+     * @param ArticelNamen ArrayList mit allen ArtikelNamen
+     * @param preise ArrayList mit allen dazugehörigen Preisen
+     * @return C_Article Array
+     */
+    public C_Article[] createArticleArray(ArrayList<String> ArticelNamen, ArrayList<String> preise){
+
+        C_Article[] articleArray = new C_Article[preise.size()];
+
+        int count = 0;
+
+        // TODO noch für die ArticelNamen machen!
+
+        for(String price : preise){
+            articleArray[count] = new C_Article("Article "+count, price);
+            count++;
+        }
+
+        return articleArray;
+    }
+
+    /**
+     * Löscht alle Artikel aus dem Kassenzettel
+     */
+    public void removeAllArticles(){
+
+        View view;
+        ArrayList<View> foundViews = new ArrayList<>();
+
+        for(int i = 0; i < linearLayout.getChildCount(); i++){
+            view = linearLayout.getChildAt(i);
+            if(view.findViewById(R.id.ocr_manuell_article_line) != null){
+                foundViews.add(view);
+            }
+        }
+
+        for(View foundView : foundViews){
+            linearLayout.removeView(foundView);
+        }
     }
 }

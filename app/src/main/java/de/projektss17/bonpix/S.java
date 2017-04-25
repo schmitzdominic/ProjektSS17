@@ -29,26 +29,24 @@ public class S extends Activity {
     public static C_Preferences prefs; // Preferences
 
     /**
-     * Ruft die Foto funktion auf
+     * Ruft die Manuell Activity auf
      */
-    public static void showFoto(AppCompatActivity beforeActivity){
-        // TODO Kamera Klasse implementieren und die benötigten Einstellungen bauen
-    }
+    public static void showManuell(AppCompatActivity beforeActivity, ArrayList<String> path, String state){
 
-    /**
-     * Ruft die Recognition Activity auf
-     */
-    public static void showRecognition(AppCompatActivity beforeActivity, ArrayList<String> path){
-        Intent intent = new Intent(beforeActivity, A_Show_Recognition.class);
+        Intent intent = new Intent(beforeActivity, A_OCR_Manuell.class);
         intent.putExtra("ArrayList",path);
+        intent.putExtra("manuellState",state);
         beforeActivity.startActivity(intent);
     }
 
     /**
-     * Ruft die Manuell Activity auf
+     * Ruft die Manuell Activity auf (überschrieben)
      */
-    public static void showManuell(AppCompatActivity beforeActivity){
-        S.startActivitiy(beforeActivity,A_OCR_Manuell.class);
+    public static void showManuell(AppCompatActivity beforeActivity,  String state){
+
+        Intent intent = new Intent(beforeActivity, A_OCR_Manuell.class);
+        intent.putExtra("manuellState",state);
+        beforeActivity.startActivity(intent);
     }
 
     /**
