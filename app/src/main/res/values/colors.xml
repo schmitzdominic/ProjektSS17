@@ -17,4 +17,7 @@
     <!-- Linien Farbe -->
     <color name="linie">#CCCCCC</color>
 
+    <!-- star-outline.xml Farbe -->
+    <color name="star">#9E9E9E</color>
+
 </resources>
