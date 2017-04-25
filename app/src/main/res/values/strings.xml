@@ -59,6 +59,16 @@
     <string name="a_ocr_manuell_pop_up_confirm">Bestätigen</string>
     <string name="a_ocr_manuell_pop_up_cancel">Abbruch</string>
 
+    <string name="a_ocr_manuell_pop_up_title_garantie_off">Hinweis</string>
+    <string name="a_ocr_manuell_pop_up_message_garantie_off">Garantie wurde entfernt!</string>
+    <string name="a_ocr_manuell_pop_up_confirm_garantie_off"></string>
+    <string name="a_ocr_manuell_pop_up_cancel_garantie_off">Ok</string>
+
+    <string name="a_ocr_manuell_pop_up_title_garantie_on">Info</string>
+    <string name="a_ocr_manuell_pop_up_message_garantie_on">Garantie wurde hinzugefügt!</string>
+    <string name="a_ocr_manuell_pop_up_confirm_garantie_on"></string>
+    <string name="a_ocr_manuell_pop_up_cancel_garantie_on">Ok</string>
+
     <string name="a_ocr_manuell_date_button_set">Set Date</string>
     <string name="a_ocr_manuell_date_selected"/>
 
