@@ -353,10 +353,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri imageUri = data.getData();
-            Bitmap myBitmap = this.getBitmapFromUri(imageUri);
-            this.ocr.recognize(myBitmap);
-            this.fillMask(this.getImageUri(myBitmap), this.ocr.getLadenName(), null, null, this.ocr.getRecognizedText(), this.createArticleArray(null, this.ocr.getPreise()));
+            this.fillMaskOCR(this.getBitmapFromUri(data.getData()));
         }
     }
 
@@ -629,6 +626,21 @@ public class A_OCR_Manuell extends AppCompatActivity {
     }
 
     /**
+     * Versucht anhand eines Bitmaps über OCR die Maske zu befüllen!
+     * @param myBitmap Bitmap
+     */
+    private void fillMaskOCR(Bitmap myBitmap){
+        this.ocr.recognize(myBitmap);
+        this.fillMask(this.getImageUri(myBitmap),
+                this.ocr.getLadenName(),
+                null, // TODO LadenName über OCR suchen!
+                null,  // TODO Anschrift über OCR suchen!
+                this.ocr.getRecognizedText(), // TODO Später wieder ausnehmen!
+                this.createArticleArray(null, // TODO Artikel hinzufügen!
+                        this.ocr.getPreise()));
+    }
+
+    /**
      * Prüft ob alle relevanten Felder befüllt wurden
      * Zeigt über die Rote Farbe an ob das Feld befüllt wurde oder nicht
      * @return true, alles wurde befüllt. false ein wert fehlt
@@ -736,13 +748,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
             // TODO Anhand der Datenbank implementieren
 
         } else if (state.equals("foto")) { // Wenn die Maske den Status foto hat (z.B. wenn gerade ein Foto gemacht wurde)
-            ArrayList<String> aList = getIntent().getStringArrayListExtra("ArrayList");
 
+            ArrayList<String> aList = getIntent().getStringArrayListExtra("ArrayList");
             File imgFile = new File(aList.get(aList.size()-1));
+
             if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                this.ocr.recognize(myBitmap);
-                this.fillMask(this.getImageUri(myBitmap), null, null, null, this.ocr.getRecognizedText(), this.createArticleArray(null, this.ocr.getPreise()));
+                this.fillMaskOCR(BitmapFactory.decodeFile(imgFile.getAbsolutePath()));
             }
         } else if (state.equals("new")) { // Wenn die Maske den Status new hat (z.B. bei einer neuen Maske)
             return;
@@ -750,12 +761,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
     }
 
     /**
+     *
      * Erzeugt ein Articel Array
-     * @param ArticelNamen ArrayList mit allen ArtikelNamen
+     * @param ArticleNamen ArrayList mit allen ArtikelNamen
      * @param preise ArrayList mit allen dazugehörigen Preisen
      * @return C_Article Array
      */
-    public C_Article[] createArticleArray(ArrayList<String> ArticelNamen, ArrayList<String> preise){
+    public C_Article[] createArticleArray(ArrayList<String> ArticleNamen, ArrayList<String> preise){
 
         C_Article[] articleArray = new C_Article[preise.size()];
 
