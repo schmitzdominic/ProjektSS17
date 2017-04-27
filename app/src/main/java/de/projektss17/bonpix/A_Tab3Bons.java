@@ -18,13 +18,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.projektss17.bonpix.daten.C_Bons;
+import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Bons_Adapter;
 
 
 public class A_Tab3Bons extends Fragment{
 
-    private List<C_Bons> bonsList = new ArrayList<>();
+    private List<C_Bon> bonsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private C_Bons_Adapter mAdapter;
 
@@ -51,7 +51,7 @@ public class A_Tab3Bons extends Fragment{
      */
     private void prepareBonData(){
         for(int i = 0; i < 20; i++) {
-            C_Bons bons = new C_Bons("TEST"+i, "TEST"+(char)(i+65), "Test", "Test", "Test");
+            C_Bon bons = new C_Bon("TEST"+i, "TEST"+(char)(i+65), "Test", "Test", "Test");
             bonsList.add(bons);
         }
     }

@@ -22,7 +22,7 @@ import de.projektss17.bonpix.R;
 public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHolder> {
 
 
-    private List<C_Bons> bonsList;
+    private List<C_Bon> bonsList;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title, content;
@@ -48,7 +48,7 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
      * Constructor
      * @param bonsList
      */
-    public C_Bons_Adapter(List<C_Bons> bonsList){
+    public C_Bons_Adapter(List<C_Bon> bonsList){
         this.bonsList = bonsList;
     }
 
@@ -60,7 +60,7 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
-        C_Bons bon = bonsList.get(position);
+        C_Bon bon = bonsList.get(position);
 
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
         holder.title.setText(bon.getBildpfad());
