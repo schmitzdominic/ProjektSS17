@@ -162,12 +162,12 @@ public class S extends Activity {
      * @param time Legt die Zeit fest, nach welchem das PopUp automatisch geschlossen wird
      */
 
-    public static void popUpInfo(View v, int title, int message, int time){
+    public static void popUpInfo(AppCompatActivity beforeActivity, int title, int message, int time){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setCancelable(true);
+        AlertDialog.Builder builder = new AlertDialog.Builder(beforeActivity)
+            .setTitle(title)
+            .setMessage(message)
+            .setCancelable(true);
 
         final AlertDialog dialog = builder.create();
 

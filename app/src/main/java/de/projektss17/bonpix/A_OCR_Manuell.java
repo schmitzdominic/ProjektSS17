@@ -91,14 +91,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     garantieButton.setColorFilter(R.color.colorPrimary);
 
                     // PopUp Info Fenster wird geöffnet und automatisch geschlossen
-                    S.popUpInfo(view,R.string.a_ocr_manuell_pop_up_title_garantie_on,
+                    S.popUpInfo(A_OCR_Manuell.this,R.string.a_ocr_manuell_pop_up_title_garantie_on,
                             R.string.a_ocr_manuell_pop_up_message_garantie_on, 2000);
                 }else{
                     bonGarantie = false;
                     garantieButton.setColorFilter(Color.WHITE);
 
                     // PopUp Info Fenster wird geöffnet und automatisch geschlossen
-                    S.popUpInfo(view,R.string.a_ocr_manuell_pop_up_title_garantie_off,
+                    S.popUpInfo(A_OCR_Manuell.this,R.string.a_ocr_manuell_pop_up_title_garantie_off,
                             R.string.a_ocr_manuell_pop_up_message_garantie_off, 2000);
                 }
             }
