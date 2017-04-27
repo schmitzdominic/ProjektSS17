@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import de.projektss17.bonpix.daten.C_Artikel;
+import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
 import de.projektss17.bonpix.daten.C_Preferences;
 
@@ -90,6 +92,37 @@ public class A_Main extends AppCompatActivity {
         S.dbHandler = new C_DatabaseHandler(this);
         S.db = S.dbHandler.getWritableDatabase();
         S.dbHandler.checkTables(S.db);
+
+        ArrayList<C_Artikel> artikelListe = new ArrayList<>();
+
+        artikelListe.add(new C_Artikel("Bananen", "3,49"));
+        artikelListe.add(new C_Artikel("Kirschen", "1,99"));
+        artikelListe.add(new C_Artikel("Äpfel", "2,99"));
+
+        C_Bon bon1 = new C_Bon("PFAD", "Lidl", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe);
+        C_Bon bon2 = new C_Bon("PFAD", "EDEKA", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe);
+        C_Bon bon3 = new C_Bon("PFAD", "BeatheUSE", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe);
+        C_Bon bon4 = new C_Bon("PFAD", "TEST", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe);
+
+        S.dbHandler.setBon(S.db, bon1);
+        S.dbHandler.setBon(S.db, bon2);
+        S.dbHandler.setBon(S.db, bon3);
+        S.dbHandler.setBon(S.db, bon4);
+
+        for(C_Bon zettel : S.dbHandler.getAllBons(S.db)){
+            Log.e("#### Bons", zettel.getLadenname());
+        }
+
+        /*
+        for(C_Artikel a : S.dbHandler.getAllArtikelFromBon(S.db, bon)){
+            Log.e("#### Artikel", a.getName());
+        }*/
+
+        /*
+        ArrayList<C_Artikel> artikelList = S.dbHandler.getAllArtikel(S.db);
+        for(C_Artikel artikel : artikelList){
+            Log.e("#### ARTIKEL", artikel.getName() + " " + artikel.getPreis());
+        }*/
 
         // Settings Instance
         S.prefs = new C_Preferences(this);
@@ -446,7 +479,7 @@ public class A_Main extends AppCompatActivity {
      * Setzt alle standard DB Werte
      */
     private void setDefaultDBValues(){
-        String laeden[] = {"EDEKA","Lidl", "REWE", "Media Markt"};
+        /*String laeden[] = {"EDEKA","Lidl", "REWE", "Media Markt"};
         String bons[] = {"BON_CONTENT1", "BON_CONTENT2"};
 
         for(String laden : laeden){
@@ -459,7 +492,7 @@ public class A_Main extends AppCompatActivity {
             values = new ContentValues();
             values.put("bons_name", bonContent);
             S.db.insert("bons", null, values);
-        }
+        }*/
 
     }
 

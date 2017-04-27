@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import de.projektss17.bonpix.daten.C_Artikel;
+import de.projektss17.bonpix.daten.C_Bon;
 
 
 public class A_OCR_Manuell extends AppCompatActivity {
