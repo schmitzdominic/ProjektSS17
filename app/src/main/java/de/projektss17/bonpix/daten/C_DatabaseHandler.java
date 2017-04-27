@@ -89,10 +89,36 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param db
      */
     public void checkTables(SQLiteDatabase db){
-        String CREATE_TABLE_Laeden = "CREATE TABLE IF NOT EXISTS laeden (laeden_id INTEGER PRIMARY KEY AUTOINCREMENT, laeden_name VARCHAR(255))";
-        db.execSQL(CREATE_TABLE_Laeden);
-        String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS bons (bons_id INTEGER PRIMARY KEY AUTOINCREMENT, bons_name VARCHAR(255))";
-        db.execSQL(CREATE_TABLE);
+
+        String CREATE_TABLE_Laden = "CREATE TABLE IF NOT EXISTS laden (ladenid INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "name VARCHAR(255))";
+
+        String CREATE_TABLE_Bon = "CREATE TABLE IF NOT EXISTS bon (bonid INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "bildpfad VARCHAR(255), " +
+                "ladenname INTEGER, " +
+                "anschrift VARCHAR(255), " +
+                "sonstigeinfos VARCHAR(255), " +
+                "datum VARCHAR(255), " +
+                "garantieende VARCHAR(255), " +
+                "favoriten BOOLEAN, " +
+                "garantie BOOLEAN, " +
+                "FOREIGN KEY (ladenname) REFERENCES laden(ladenid))";
+
+        String CREATE_TABLE_Artikel = "CREATE TABLE IF NOT EXISTS artikel (artikelid INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "name VARCHAR(255), " +
+                "preis VARCHAR(255))";
+
+        String CREATE_TABLE_BonArtikel = "CREATE TABLE IF NOT EXISTS bonartikel (bonid INTEGER NOT NULL, " +
+                "artikelid INTEGER NOT NULL, " +
+                "PRIMARY KEY (bonid, artikelid), " +
+                "FOREIGN KEY (bonid) REFERENCES bon(bonid), " +
+                "FOREIGN KEY (artikelid) REFERENCES artikel(artikelid))";
+
+        db.execSQL(CREATE_TABLE_Laden);
+        db.execSQL(CREATE_TABLE_Bon);
+        db.execSQL(CREATE_TABLE_Artikel);
+        db.execSQL(CREATE_TABLE_BonArtikel);
+
     }
 
     /**

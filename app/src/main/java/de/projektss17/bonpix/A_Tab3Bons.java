@@ -51,7 +51,7 @@ public class A_Tab3Bons extends Fragment{
      */
     private void prepareBonData(){
         for(int i = 0; i < 20; i++) {
-            C_Bon bons = new C_Bon("TEST"+i, "TEST"+(char)(i+65), "Test", "Test", "Test");
+            C_Bon bons = new C_Bon("TEST"+i, "TEST"+(char)(i+65), "Test", "Test", "Test", false, false);
             bonsList.add(bons);
         }
     }

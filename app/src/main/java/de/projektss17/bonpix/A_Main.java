@@ -435,7 +435,7 @@ public class A_Main extends AppCompatActivity {
 
         if (settings.getBoolean("my_first_time", true)) {
             this.setDefaultSettings();
-            this.setDefaultDBValues();
+            //this.setDefaultDBValues();
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("my_first_time", false);
@@ -475,12 +475,13 @@ public class A_Main extends AppCompatActivity {
      * Gibt alle Laeden und Bons im Log aus (Rot)
      */
     private void showLogAllDBEntries(){
+        /*
         for(String x : S.dbHandler.getAllLaeden(S.db)){
             Log.e("######### LAEDEN: ", x);
         }
 
         for(String y : S.dbHandler.getAllBons(S.db)){
             Log.e("######### BONS: ", y);
-        }
+        }*/
     }
 }
