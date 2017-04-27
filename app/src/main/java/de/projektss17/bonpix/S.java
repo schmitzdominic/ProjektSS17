@@ -125,7 +125,6 @@ public class S extends Activity {
     }
 
 
-
     //Erstellt von Johanns am 03.04.2017
 
     /**
