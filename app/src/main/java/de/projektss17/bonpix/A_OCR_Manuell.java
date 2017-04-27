@@ -88,18 +88,18 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                 if(bonGarantie==false) {
                     bonGarantie = true;
-                    S.popUpDialog(A_OCR_Manuell.this, A_OCR_Manuell.class,
-                            R.string.a_ocr_manuell_pop_up_title_garantie_on,
-                            R.string.a_ocr_manuell_pop_up_message_garantie_on,
-                            R.string.a_ocr_manuell_pop_up_cancel_garantie_on,
-                            R.string.a_ocr_manuell_pop_up_confirm_garantie_on);
+                    garantieButton.setColorFilter(R.color.colorPrimary);
+
+                    // PopUp Info Fenster wird geöffnet und automatisch geschlossen
+                    S.popUpInfo(view,R.string.a_ocr_manuell_pop_up_title_garantie_on,
+                            R.string.a_ocr_manuell_pop_up_message_garantie_on, 2000);
                 }else{
                     bonGarantie = false;
-                    S.popUpDialog(A_OCR_Manuell.this, A_OCR_Manuell.class,
-                            R.string.a_ocr_manuell_pop_up_title_garantie_off,
-                            R.string.a_ocr_manuell_pop_up_message_garantie_off,
-                            R.string.a_ocr_manuell_pop_up_cancel_garantie_off,
-                            R.string.a_ocr_manuell_pop_up_confirm_garantie_off);
+                    garantieButton.setColorFilter(Color.WHITE);
+
+                    // PopUp Info Fenster wird geöffnet und automatisch geschlossen
+                    S.popUpInfo(view,R.string.a_ocr_manuell_pop_up_title_garantie_off,
+                            R.string.a_ocr_manuell_pop_up_message_garantie_off, 2000);
                 }
             }
         });
