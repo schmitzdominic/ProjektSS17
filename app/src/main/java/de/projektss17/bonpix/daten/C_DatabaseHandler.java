@@ -51,9 +51,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do {
-                Log.e("### ARSCHLOCH", cursor.getString(2)+"");
-                for(C_Laden laden : this.getAllLaeden(db)){ //laden.getId() == cursor.getInt(2)
-                    if(true){
+                for(C_Laden laden : this.getAllLaeden(db)){
+                    if(laden.getId() == cursor.getInt(2)){
                         ladenName = laden.getName();
                     }
                 }
@@ -67,7 +66,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(6),
                         cursor.getInt(7) > 0,
                         cursor.getInt(8) > 0);
-                Log.e("#### BON AUSLESEN",bon.getLadenname());
+
+                for(C_Artikel a : this.getAllArtikelFromBon(db, bon)){
+                    Log.e("#### Test",a.getName());
+                }
+
                 bon.setArtikel(this.getAllArtikelFromBon(db, bon));
                 bonsList.add(bon);
 
@@ -171,6 +174,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         int id = 0;
 
+
         for(C_Laden laden : this.getAllLaeden(db)){
             if(laden.getName().equals(bon.getLadenname())){
                 id = laden.getId();
@@ -180,6 +184,12 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         if(id == 0){
             this.setLaden(db, new C_Laden(bon.getLadenname()));
+            for(C_Laden laden : this.getAllLaeden(db)){
+                if(laden.getName().equals(bon.getLadenname())){
+                    id = laden.getId();
+                    break;
+                }
+            }
         }
 
         values.put("bildpfad", bon.getBildpfad());
