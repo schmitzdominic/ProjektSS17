@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/budget_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            app:cardBackgroundColor="?attr/colorButtonNormal"
+            app:cardElevation="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="226dp">
+
+                <TextView
+                    android:id="@+id/budget_card_view_content_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="verfügbar"
+                    android:textAlignment="center"
+                    android:layout_marginTop="16dp"
+                    android:layout_below="@+id/budget_content_gesamt"
+                    android:layout_alignRight="@+id/budget_card_view_processbar_desc"
+                    android:layout_alignEnd="@+id/budget_card_view_processbar_desc" />
+
+                <ImageButton
+                    android:id="@+id/budget_card_view_editor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    app:srcCompat="@mipmap/ic_mode_edit_black_24dp" />
+
+
+                <TextView
+                    android:id="@+id/budget_content_gesamt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="49dp"
+                    android:text="163 Euro"
+                    android:textAlignment="center"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/budget_progressBar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:progressTint="@color/colorAccent"
+                    android:layout_below="@+id/budget_card_view_content_desc"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:text="monatlich"
+                    android:textAlignment="center"
+                    android:id="@+id/budget_card_view_processbar_desc"
+                    android:layout_below="@+id/budget_progressBar"
+                    android:layout_centerHorizontal="true" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+</RelativeLayout>

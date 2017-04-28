@@ -20,14 +20,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/box_budget_content" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/box_budget_content" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/gruppen_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="top|left"
         android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|right"
         app:srcCompat="@mipmap/ic_playlist_add_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>
