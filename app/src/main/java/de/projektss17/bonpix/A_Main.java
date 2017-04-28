@@ -111,35 +111,12 @@ public class A_Main extends AppCompatActivity {
 
         C_Bon bon2 = new C_Bon("PFAD", "Aldi", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe2);
 
-        //S.dbHandler.setBon(S.db, bon1);
-        //S.dbHandler.setBon(S.db, bon2);
+        S.dbHandler.setBon(S.db, bon1);
+        S.dbHandler.setBon(S.db, bon2);
 
-        /*for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
+        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
             Log.e("##### BON", bon.toString());
-        }*/
-
-        for(C_Laden laden : S.dbHandler.getAllLaeden(S.db)){
-            Log.e("#### LADEN", laden.getName());
         }
-
-        Log.e("#### NOW DELETE LIDL", "#############################");
-
-        S.dbHandler.removeLaden(S.db, "Aldi");
-
-        for(C_Laden laden : S.dbHandler.getAllLaeden(S.db)){
-            Log.e("#### LADEN", laden.getName());
-        }
-
-
-
-
-
-
-
-
-
-
-
 
 
         // Settings Instance
