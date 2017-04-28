@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,12 +64,13 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
             } while (cursor.moveToNext());
         }
+
         cursor.close();
         return bonsList;
     }
 
     /**
-     * Gibt alle Artikel eines Bons aus
+     * Gibt alle Artikel eines Bons zurück
      * @param db Datenbank
      * @param bon Bon
      * @return ArrayList mit allen dazugehörigen Artikeln
@@ -153,6 +155,97 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Gibt einen Laden zurück falls dieser existiert
+     * @param db Datenbank
+     * @param ladenName Name des gesuchtne Ladens
+     * @return C_Laden wenn er exisitert, null wenn nicht
+     */
+    public C_Laden getLaden(SQLiteDatabase db, String ladenName){
+
+        if(checkIfLadenExist(db, ladenName)){
+            for(C_Laden laden : this.getAllLaeden(db)){
+                if(laden.getName().equals(ladenName)){
+                    return laden;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gibt einen Laden zurück falls dieser existiert
+     * @param db Datenbank
+     * @param id ID des Ladens
+     * @return C_Laden wenn er exisitert, null wenn nicht
+     */
+    public C_Laden getLaden(SQLiteDatabase db, int id){
+
+        if(checkIfLadenExist(db, id)){
+            for(C_Laden laden : this.getAllLaeden(db)){
+                if(laden.getId() == id){
+                    return laden;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gibt einen Bon zurück falls dieser existiert
+     * @param db Datenbank
+     * @param id ID des Bons
+     * @return C_Bon wenn er existiert, null wenn nicht
+     */
+    public C_Bon getBon(SQLiteDatabase db, int id){
+
+        if(checkIfBonExist(db, id)){
+            for(C_Bon bon : this.getAllBons(db)){
+                if(bon.getId() == id){
+                    return bon;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gibt einen Artikel zurück falls dieser exisitert
+     * @param db Datenbank
+     * @param artikelName Artikel Name
+     * @param artikelPreis Artikel Preis
+     * @return C_Artikel wenn er existiert, null wenn nicht
+     */
+    public C_Artikel getArtikel(SQLiteDatabase db, String artikelName, String artikelPreis){
+
+        if(checkIfArtikelExist(db, artikelName, artikelPreis)){
+            for(C_Artikel artikel : this.getAllArtikel(db)){
+                if(artikel.getName().equals(artikelName) && artikel.getPreis().equals(artikelPreis)){
+                    return artikel;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gibt einen Artikel zurück falls dieser existiert
+     * @param db Datenbank
+     * @param id ID des Artikels
+     * @return C_Artikel wenn er existiert, null wenn nicht
+     */
+    public C_Artikel getArtikel(SQLiteDatabase db, int id){
+
+        if(checkIfArtikelExist(db, id)){
+            for(C_Artikel artikel : this.getAllArtikel(db)){
+                if(artikel.getId() == id){
+                    return artikel;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Fügt einen neuen Bon hinzu
      * @param db Datenbank
      * @param bon Bon
@@ -160,7 +253,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public void setBon(SQLiteDatabase db, C_Bon bon){
 
         ContentValues values = new ContentValues();
-        int ladenId = 0;
+        int ladenId;
 
         if(this.checkIfLadenExist(db, bon.getLadenname())){
             ladenId = this.getLaden(db, bon.getLadenname()).getId();
@@ -258,10 +351,41 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Überprüft ob ein Artikel bereits existiert
+     * @param db Datenbank
+     * @param artikelName Artikel Name
+     * @param artikelPreis Artikel Preis
+     * @return true - existiert, false - existiert nicht
+     */
+    public boolean checkIfArtikelExist(SQLiteDatabase db, String artikelName, String artikelPreis){
+        for(C_Artikel artikel : this.getAllArtikel(db)){
+            if(artikel.getName().equals(artikelName) && artikel.getPreis().equals(artikelPreis)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Überprüft ob ein Artikel bereits exisitert
+     * @param db Datenbank
+     * @param id Id des Artikels
+     * @return true - existiert, false - existiert nicht
+     */
+    public boolean checkIfArtikelExist(SQLiteDatabase db, int id){
+        for(C_Artikel artikel : this.getAllArtikel(db)){
+            if(artikel.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Überprüft ob ein Laden bereits existiert.
      * @param db Datenbank
      * @param ladenName Name des gesuchten Ladens
-     * @return true - existiert, false - existiert noch nicht
+     * @return true - existiert, false - existiert nicht
      */
     public boolean checkIfLadenExist(SQLiteDatabase db, String ladenName){
         for(C_Laden laden : this.getAllLaeden(db)){
@@ -276,7 +400,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * Überprüft ob ein Laden bereits existiert.
      * @param db Datenbank
      * @param id des ladens
-     * @return true - existiert, false - existiert noch nicht
+     * @return true - existiert, false - existiert nicht
      */
     public boolean checkIfLadenExist(SQLiteDatabase db, int id){
         for(C_Laden laden : this.getAllLaeden(db)){
@@ -291,7 +415,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * Überprüft ob ein Bon bereits existiert.
      * @param db Datenbank
      * @param id des Bons
-     * @return true - existiert, false - existiert noch nicht
+     * @return true - existiert, false - existiert nicht
      */
     public boolean checkIfBonExist(SQLiteDatabase db, int id){
         for(C_Bon bon : this.getAllBons(db)){
@@ -303,58 +427,70 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * Gibt einen Laden zurück falls dieser existiert
-     * @param db Datenbank
-     * @param ladenName Name des gesuchtne Ladens
-     * @return C_Laden wenn er exisitert, null wenn nicht
-     */
-    public C_Laden getLaden(SQLiteDatabase db, String ladenName){
-
-        if(checkIfLadenExist(db, ladenName)){
-            for(C_Laden laden : this.getAllLaeden(db)){
-                if(laden.getName().equals(ladenName)){
-                    return laden;
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Gibt einen Laden zurück falls dieser existiert
+     * * * !!!!!! WICHTIG !!!!!!!!!!
+     * LÖSCHT EBENSO ALLE KASSENZETTEL DIE MIT DEM LADEN
+     * VERKNÜPFT SIND DA SONST DIE APP ABSTÜRZT!!
+     * Also bitte den User warnen!
+     *
+     * Löscht einen spezifischen Laden
      * @param db Datenbank
      * @param id ID des Ladens
-     * @return C_Laden wenn er exisitert, null wenn nicht
      */
-    public C_Laden getLaden(SQLiteDatabase db, int id){
-
-        if(checkIfLadenExist(db, id)){
-            for(C_Laden laden : this.getAllLaeden(db)){
-                if(laden.getId() == id){
-                    return laden;
+    public void removeLaden(SQLiteDatabase db, int id){
+        if(this.checkIfLadenExist(db, id)){
+            for(C_Bon bon : this.getAllBons(db)){
+                if(bon.getLadenname().equals(this.getLaden(db, id).getName())){
+                    this.removeBon(db, bon.getId());
                 }
             }
+            db.delete("laden", "ladenid="+id, null);
+        } else {
+            Log.e("#### DB-HANDLER", "LADEN " + id + " DOES NOT EXIST");
         }
-        return null;
     }
 
     /**
-     * Gibt einen Bon zurück falls dieser existiert
+     * * * !!!!!! WICHTIG !!!!!!!!!!
+     * LÖSCHT EBENSO ALLE KASSENZETTEL DIE MIT DEM LADEN
+     * VERKNÜPFT SIND DA SONST DIE APP ABSTÜRZT!!
+     * Also bitte den User warnen!
+     *
+     * Löscht einen spezifischen Laden
+     * @param db Datenbank
+     * @param ladenName Name des Ladens
+     */
+    public void removeLaden(SQLiteDatabase db, String ladenName){
+        if(this.checkIfLadenExist(db, ladenName)){
+            this.removeLaden(db, this.getLaden(db, ladenName).getId());
+        } else {
+            Log.e("#### DB-HANDLER", "LADEN " + ladenName + " DOES NOT EXIST");
+        }
+    }
+
+    /**
+     * Löscht einen spezifischen Bon
      * @param db Datenbank
      * @param id ID des Bons
-     * @return C_Bon wenn er existiert, null wenn nicht
      */
-    public C_Bon getBon(SQLiteDatabase db, int id){
-
-        if(checkIfBonExist(db, id)){
-            for(C_Bon bon : this.getAllBons(db)){
-                if(bon.getId() == id){
-                    return bon;
-                }
-            }
+    public void removeBon(SQLiteDatabase db, int id){
+        if(this.checkIfBonExist(db, id)){
+            db.delete("bon", "bonid="+id, null);
+            db.delete("bonartikel", "bonid="+id, null);
         }
-        return null;
     }
+
+    /**
+     * Löscht einen spezifischen Artikel
+     * @param db Datenbank
+     * @param id ID des Artikels
+     */
+    public void removeArtikel(SQLiteDatabase db, int id){
+        if(this.checkIfArtikelExist(db, id)){
+            db.delete("artikel", "artikelid="+id, null);
+            db.delete("bonartikel", "artikelid="+id, null);
+        }
+    }
+
 
     /**
      * Create Tables if not exists
@@ -391,15 +527,5 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_Artikel);
         db.execSQL(CREATE_TABLE_BonArtikel);
 
-    }
-
-    /**
-     * Delete specific Laden
-     * @param db
-     * @param id
-     */
-    public void deleteLaden(SQLiteDatabase db, int id){
-        String filter = "laeden_id=" + id;
-        db.delete("laeden", filter, null);
     }
 }
