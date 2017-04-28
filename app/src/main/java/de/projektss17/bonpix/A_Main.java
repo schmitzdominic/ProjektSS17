@@ -110,8 +110,8 @@ public class A_Main extends AppCompatActivity {
 
         C_Bon bon2 = new C_Bon("PFAD", "Aldi", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe2);
 
-        //S.dbHandler.setBon(S.db, bon1);
-        //S.dbHandler.setBon(S.db, bon2);
+        S.dbHandler.setBon(S.db, bon1);
+        S.dbHandler.setBon(S.db, bon2);
 
         for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
             Log.e("##### BON", bon.toString());
