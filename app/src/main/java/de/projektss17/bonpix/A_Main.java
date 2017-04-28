@@ -100,35 +100,32 @@ public class A_Main extends AppCompatActivity {
         artikelListe.add(new C_Artikel("Äpfel", "2,99"));
 
         C_Bon bon1 = new C_Bon("PFAD", "Lidl", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe);
-        /*C_Bon bon2 = new C_Bon("PFAD", "EDEKA", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe);
-        C_Bon bon3 = new C_Bon("PFAD", "BeatheUSE", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe);
-        C_Bon bon4 = new C_Bon("PFAD", "TEST", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe);*/
 
-        S.dbHandler.setBon(S.db, bon1);
-        /*S.dbHandler.setBon(S.db, bon2);
-        S.dbHandler.setBon(S.db, bon3);
-        S.dbHandler.setBon(S.db, bon4);
-        */
+        ArrayList<C_Artikel> artikelListe2 = new ArrayList<>();
 
+        artikelListe2.add(new C_Artikel("Erdbeeren", "1,99"));
+        artikelListe2.add(new C_Artikel("Döner", "4,00"));
+        artikelListe2.add(new C_Artikel("Kirschen", "1,99"));
+        artikelListe2.add(new C_Artikel("Bananen", "3,49"));
 
-        /*
-        for(C_Bon zettel : S.dbHandler.getAllBons(S.db)){
-            Log.e("#### Bons", zettel.getLadenname());
-            for(C_Artikel a : zettel.getArtikel()){
-                Log.e("###### Artikel", a.getName());
-            }
-        }*/
+        C_Bon bon2 = new C_Bon("PFAD", "Aldi", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe2);
 
+        //S.dbHandler.setBon(S.db, bon1);
+        //S.dbHandler.setBon(S.db, bon2);
 
-        for(C_Artikel a : S.dbHandler.getAllArtikelFromBon(S.db, bon1)){
-            Log.e("#### Artikel", a.getName());
+        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
+            Log.e("##### BON", bon.toString());
         }
 
-        /*
-        ArrayList<C_Artikel> artikelList = S.dbHandler.getAllArtikel(S.db);
-        for(C_Artikel artikel : artikelList){
-            Log.e("#### ARTIKEL", artikel.getName() + " " + artikel.getPreis());
-        }*/
+
+
+
+
+
+
+
+
+
 
         // Settings Instance
         S.prefs = new C_Preferences(this);

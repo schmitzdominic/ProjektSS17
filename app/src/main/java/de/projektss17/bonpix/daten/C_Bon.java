@@ -26,11 +26,12 @@ public class C_Bon {
 
     public C_Bon(int id, String Bildpfad, String Ladenname, String Anschrift, String SonstigeInfos,
                  String Datum, String garantieEnde, boolean favorite, boolean garantie) {
-        this(0, Bildpfad, Ladenname, Anschrift, SonstigeInfos, Datum, garantieEnde, favorite, garantie, null);
+        this(id, Bildpfad, Ladenname, Anschrift, SonstigeInfos, Datum, garantieEnde, favorite, garantie, null);
     }
 
     public C_Bon(int id, String Bildpfad, String Ladenname, String Anschrift, String SonstigeInfos,
                  String Datum, String garantieEnde, boolean favorite, boolean garantie, ArrayList<C_Artikel> artikel){
+        this.id = id;
         this.Bildpfad = Bildpfad;
         this.Ladenname = Ladenname;
         this.Anschrift = Anschrift;
@@ -120,5 +121,28 @@ public class C_Bon {
 
     public void setArtikel(ArrayList<C_Artikel> artikel){
         this.artikel = artikel;
+    }
+
+    @Override
+    public String toString() {
+        String out = "ID: "+ this.id + ", \n" +
+                "Bildpfad: " + this.getBildpfad() + ", \n" +
+                "Ladenname: " + this.getLadenname() + ", \n" +
+                "Anschrift: " + this.getAnschrift() + ", \n" +
+                "Sonst Infos: " + this.getSonstigeInfos() + ", \n" +
+                "Datum: " + this.getDatum() + ", \n" +
+                "Garantie Ende: " + this.getGarantieEnde() + ", \n" +
+                "Favorite: " + this.getFavorite() + ", \n" +
+                "Garantie: " +this.getGarantie();
+
+        if(this.artikel != null){
+            out += "\nArtikel:";
+            for(C_Artikel artikel : this.getArtikel()){
+                out += "\n\t" + artikel.getId() + " " + artikel.getName() + " - " + artikel.getPreis();
+            }
+        } else {
+            out += "\nKEINE ARTIKEL GEFUNDEN!";
+        }
+        return out;
     }
 }
