@@ -18,6 +18,19 @@
             android:layout_height="match_parent">
 
 
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                app:srcCompat="@mipmap/ic_selection_24dp"
+                android:layout_alignTop="@+id/imageButton2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="-5dp"/>
+
             <TextView
                 android:id="@+id/budget_progress_percentage"
                 android:layout_width="wrap_content"
@@ -29,18 +42,6 @@
                 android:text="TextView"
                 android:textAlignment="center" />
 
-            <ImageButton
-                android:id="@+id/imageButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imageButton2"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/imageButton2"
-                android:layout_marginLeft="11dp"
-                android:layout_marginStart="11dp"
-                android:background="@android:color/white"
-                app:srcCompat="@mipmap/ic_selection" />
 
             <TextView
                 android:id="@+id/budget_title"
