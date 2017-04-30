@@ -1,11 +1,14 @@
 package de.projektss17.bonpix;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,21 +21,16 @@ import de.projektss17.bonpix.daten.C_Budget_CardView_Adapter;
 
 public class A_Budget extends AppCompatActivity {
 
-
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private List<C_Budget> budgetList = new ArrayList<>();
     private RecyclerView.Adapter bAdapter;
+    private FloatingActionButton fab;
 
-    private ProgressBar progressBar;
-    private int progressStatus = 0;
-    //private Handler handler = new Handler();
 
     /**
      * @param savedInstanceState
      */
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,28 +40,29 @@ public class A_Budget extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        // PROGRESSBAR in CARD VIEW
-        //------------------------------------------------------------
-
-        //------------------------------------------------------------
-
-
-
-        // CARD VIEW in RECYCLER VIEW
+        // LAYOUT - Implementierung aller Layouts
         //------------------------------------------------------------
         recyclerView = (RecyclerView) findViewById(R.id.view_budget);
         bAdapter = new C_Budget_CardView_Adapter(budgetList);
 
-        prepareBudgetData();
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(bAdapter);
-        bAdapter.notifyDataSetChanged();
+        // FAB in Recycler View - Drücken fügt eine CARD hinzu
         //------------------------------------------------------------
+        this.fab = (FloatingActionButton) findViewById(R.id.budget_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createOneData();
+            }
+        });
+
+
+        // CARD VIEW mit 20 Testdaten
+        //------------------------------------------------------------
+        // createMoreData(20);
+        // createOneData();
+
     }
-
-
 
 
     /**
@@ -147,13 +146,34 @@ public class A_Budget extends AppCompatActivity {
     }
 
 
-    // Befüllung der RecyclerView mit den Random-Funktionen
-    private void prepareBudgetData() {
+    // Befüllung der RecyclerView mit EINER Datenmenge
+    private void createOneData(){
 
         final int budgetMax = 1000;
         int budgetCurrently = 0;
 
-        for (int i = 0; i < 20; i++) {
+        budgetCurrently = randomNumber(budgetMax,150);
+
+        C_Budget budget = new C_Budget(budgetMax,budgetCurrently,
+                percentageCalculator(budgetMax,budgetCurrently), randomMonth(randomNumber(11,0)),
+                randomTitle(randomNumber(5,0)));
+        budgetList.add(budget);
+
+        layoutManager = new LinearLayoutManager(A_Budget.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(bAdapter);
+        bAdapter.notifyDataSetChanged();
+
+    }
+
+
+    // Befüllung der RecyclerView mit mehreren Daten
+    private void createMoreData(int menge) {
+
+        final int budgetMax = 1000;
+        int budgetCurrently = 0;
+
+        for (int i = 0; i < menge; i++) {
 
             budgetCurrently = randomNumber(budgetMax,150);
 

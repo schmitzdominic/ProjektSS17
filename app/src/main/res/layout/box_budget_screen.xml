@@ -42,7 +42,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp">
+        android:layout_marginTop="55dp"
+        android:id="@+id/relativeLayout">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/view_budget"
@@ -52,11 +53,13 @@
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/budget_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="top|center_horizontal"
         android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@+id/relativeLayout"
+        app:layout_anchorGravity="bottom|center_horizontal"
         app:srcCompat="@mipmap/ic_playlist_add_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>
