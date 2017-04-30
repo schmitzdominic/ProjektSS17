@@ -55,7 +55,7 @@ public class S extends Activity {
      * Ruft die Budget Activity auf
      */
     public static void showBudget(AppCompatActivity beforeActivity){
-        S.startActivitiy(beforeActivity, A_Budget.class);
+        S.startActivitiy(beforeActivity, A_Budget .class);
     }
 
     /**
