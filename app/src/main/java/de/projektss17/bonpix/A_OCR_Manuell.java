@@ -49,6 +49,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMAGE = 1;
     private String year, month, day, imageOCRUriString, sonstigesText;
+    private boolean setFocusOnLine = true;
     private ArrayAdapter<String> spinnerAdapter;
     private Button saveButton, kameraButton, addArticleButton;
     private Spinner ladenSpinner;
@@ -83,7 +84,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.addArticleButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article); // Neuen Artikel hinzufügen Button
 
         this.ocr = new C_OCR(this); // Erstellt eine OCR instanz.
-        this.doState(this.proofState()); // Überprüft den Status und befüllt ggf.
+        this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.createCalendar(); // Calendar wird befüllt
         this.refreshSpinner(); // Spinner Refresh
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
@@ -502,7 +503,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
         });
 
         this.linearLayout.addView(rowView, this.linearLayout.getChildCount() - 1); // Erzeugt eine neue Reihe
-        articleText.requestFocus(this.linearLayout.getChildCount() - 1); // Setzt den Focus auf die Zeile
+
+        if(this.setFocusOnLine){
+            articleText.requestFocus(this.linearLayout.getChildCount() - 1); // Setzt den Focus auf die Zeile
+        } else {
+            this.setFocusOnLine = true;
+        }
+
     }
 
     /**
@@ -619,6 +626,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             this.removeAllArticles();
 
             for(C_Article article : articles){
+                this.setFocusOnLine = false;
                 this.inflateEditRow(article.getName(), article.getPrice());
             }
             this.totalPrice.setText(String.format("%s", getFinalPrice()));
@@ -726,7 +734,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * Prüft nochmal expliziet den Status und gibt diesen wieder
      * @return Status der Maske
      */
-    public String proofState(){
+    public String getState(){
 
         String state = getIntent().getStringExtra("manuellState");
 
@@ -776,7 +784,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         // TODO noch für die ArticelNamen machen!
 
         for(String price : preise){
-            articleArray[count] = new C_Article("Article "+count, price);
+            articleArray[count] = new C_Article("Article "+(count+1), price);
             count++;
         }
 
