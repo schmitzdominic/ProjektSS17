@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import de.projektss17.bonpix.daten.C_AssetHelper;
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
 import de.projektss17.bonpix.daten.C_Preferences;
 
@@ -25,7 +26,8 @@ import de.projektss17.bonpix.daten.C_Preferences;
 public class S extends Activity {
 
     public static C_DatabaseHandler dbHandler; // DB-Handler
-    public static SQLiteDatabase db; // DB
+    public static C_AssetHelper dbArtikelHandler; // DB-Artikel-Handler
+    public static SQLiteDatabase db, dbArtikel; // DB
     public static C_Preferences prefs; // Preferences
 
     /**

@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.Random;
 
 import de.projektss17.bonpix.daten.C_Artikel;
+import de.projektss17.bonpix.daten.C_AssetHelper;
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
 import de.projektss17.bonpix.daten.C_Laden;
@@ -90,25 +91,21 @@ public class A_Main extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
+        requestPermissions(new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE});
+
         // DataBase Connection
         S.dbHandler = new C_DatabaseHandler(this);
+        S.dbArtikelHandler = new C_AssetHelper(this);
         S.db = S.dbHandler.getWritableDatabase();
+        S.dbArtikel = S.dbArtikelHandler.getWritableDatabase();
         S.dbHandler.checkTables(S.db);
-
-        //this.createDBDummyData(10);
-
 
         // Settings Instance
         S.prefs = new C_Preferences(this);
 
         // Beim ersten Start der App
         this.onFirstStart();
-
-        // TODO remove later! Just for debugging
-        S.dbHandler.showLogAllDBEntries();
-
-        requestPermissions(new String[]{Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE});
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
