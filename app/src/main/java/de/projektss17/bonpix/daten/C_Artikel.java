@@ -7,18 +7,18 @@ package de.projektss17.bonpix.daten;
 public class C_Artikel {
 
     private int id;
-    private float preis;
+    private double preis;
     private String name, kategorie;
 
-    public C_Artikel(String name, float preis){
+    public C_Artikel(String name, double preis){
         this(0, name, preis, null);
     }
 
-    public C_Artikel(String name, float preis, String kategorie){
+    public C_Artikel(String name, double preis, String kategorie){
         this(0, name, preis, kategorie);
     }
 
-    public C_Artikel(int id, String name, float preis, String kategorie){
+    public C_Artikel(int id, String name, double preis, String kategorie){
         this.id = id;
         this.name = name;
         this.preis = preis;
@@ -45,7 +45,7 @@ public class C_Artikel {
      * Gibt den Preis des Artikels wieder
      * @return Preis des Artikels
      */
-    public float getPreis(){
+    public double getPreis(){
         return this.preis;
     }
 
@@ -77,7 +77,7 @@ public class C_Artikel {
      * Setzt den Preis des Artikels
      * @param preis Neuer Preis des Artikels
      */
-    public void setPreis(float preis){
+    public void setPreis(double preis){
         this.preis = preis;
     }
 

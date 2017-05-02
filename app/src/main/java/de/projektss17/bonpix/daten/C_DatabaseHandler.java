@@ -87,7 +87,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do {
-                artikelList.add(new C_Artikel(cursor.getInt(0), cursor.getString(1), (float)cursor.getDouble(2), cursor.getString(3)));
+                artikelList.add(new C_Artikel(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getString(3)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -127,7 +127,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do {
-                list.add(new C_Artikel(cursor.getInt(0), cursor.getString(1), cursor.getFloat(2), cursor.getString(3)));
+                list.add(new C_Artikel(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getString(3)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -250,7 +250,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param db Datenbank
      * @param bon Bon
      */
-    public void setBon(SQLiteDatabase db, C_Bon bon){
+    public void addBon(SQLiteDatabase db, C_Bon bon){
 
         ContentValues values = new ContentValues();
         int ladenId;
@@ -351,6 +351,84 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             values.put("artikelid", artikelId);
             db.insert("bonartikel", null, values);
         }
+    }
+
+    /**
+     * Updated einen Artikel
+     * @param db Datenbank
+     * @param artikel Artikel
+     */
+    public void updateArtikel(SQLiteDatabase db, C_Artikel artikel){
+
+        ContentValues values = new ContentValues();
+
+        values.put("artikelid", artikel.getId());
+        values.put("name", artikel.getName());
+        values.put("preis", artikel.getPreis());
+        values.put("kategorie", artikel.getKategorie());
+
+        db.update("artikel", values, "artikelid="+artikel.getId(), null);
+    }
+
+    /**
+     * Updated einen Laden
+     * @param db Datenbank
+     * @param laden Laden
+     */
+    public void updateLaden(SQLiteDatabase db, C_Laden laden){
+
+        ContentValues values = new ContentValues();
+
+        values.put("ladenid", laden.getId());
+        values.put("name", laden.getName());
+
+        db.update("laden", values, "ladenid="+laden.getId(), null);
+    }
+
+    /**
+     * Updated einen Bon
+     * @param db Datenbank
+     * @param bon Bon
+     */
+    public void updateBon(SQLiteDatabase db, C_Bon bon){
+
+        ContentValues values = new ContentValues();
+
+        int ladenId;
+
+        if(this.checkIfLadenExist(db, bon.getLadenname())){
+            ladenId = this.getLaden(db, bon.getLadenname()).getId();
+        } else {
+            this.addLaden(db, new C_Laden(bon.getLadenname()));
+            ladenId = this.getLaden(db, bon.getLadenname()).getId();
+        }
+
+        values.put("bonid", bon.getId());
+        values.put("bildpfad", bon.getBildpfad());
+        values.put("ladenname", ladenId);
+        values.put("anschrift", bon.getAnschrift());
+        values.put("sonstigeinfos", bon.getSonstigeInfos());
+        values.put("datum", bon.getDatum());
+        values.put("garantieende", bon.getGarantieEnde());
+        values.put("favoriten", bon.getFavorite());
+        values.put("garantie", bon.getGarantie());
+
+        db.update("bon", values, "bonid="+bon.getId(), null);
+
+        for(C_Artikel a : bon.getArtikel()) {
+            this.addArtikel(db, a);
+        }
+
+        db.delete("bonartikel", "bonid="+bon.getId(), null);
+
+        for(C_Artikel bonArtikel : bon.getArtikel()){
+            for(C_Artikel dbArtikel : this.getAllArtikel(db)){
+                if(bonArtikel.getName().equals(dbArtikel.getName()) && bonArtikel.getPreis() == dbArtikel.getPreis()){
+                    this.addBonArtikel(db, bon.getId(), dbArtikel.getId());
+                }
+            }
+        }
+
     }
 
     /**

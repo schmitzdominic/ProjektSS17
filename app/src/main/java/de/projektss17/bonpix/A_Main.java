@@ -104,6 +104,10 @@ public class A_Main extends AppCompatActivity {
         // Settings Instance
         S.prefs = new C_Preferences(this);
 
+        S.dbHandler.removeLaden(S.db, "Hansmarkt");
+
+        S.dbHandler.showLogAllDBEntries();
+
         // Beim ersten Start der App
         this.onFirstStart();
 
@@ -495,7 +499,7 @@ public class A_Main extends AppCompatActivity {
             }
 
             Log.e("### CEATE DUMMY DATA", " "+i+" OF "+value);
-            S.dbHandler.setBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", "21.10.2016", "21.10.2018", true, true, artikelList));
+            S.dbHandler.addBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", "21.10.2016", "21.10.2018", true, true, artikelList));
 
             artikelList.clear();
         }

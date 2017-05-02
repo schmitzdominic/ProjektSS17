@@ -138,7 +138,7 @@ public class C_Bon {
         if(this.artikel != null){
             out += "\nArtikel:";
             for(C_Artikel artikel : this.getArtikel()){
-                out += "\n\t" + artikel.getName() + " - " + artikel.getPreis();
+                out += "\n\t" + artikel.getName() + " - " + artikel.getPreis() + " - " + artikel.getKategorie();
             }
         } else {
             out += "\nKEINE ARTIKEL GEFUNDEN!";
