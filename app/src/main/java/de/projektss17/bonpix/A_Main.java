@@ -36,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_Bon;
@@ -94,29 +95,7 @@ public class A_Main extends AppCompatActivity {
         S.db = S.dbHandler.getWritableDatabase();
         S.dbHandler.checkTables(S.db);
 
-        ArrayList<C_Artikel> artikelListe = new ArrayList<>();
-
-        artikelListe.add(new C_Artikel("Bananen", "3,49"));
-        artikelListe.add(new C_Artikel("Kirschen", "1,99"));
-        artikelListe.add(new C_Artikel("Äpfel", "2,99"));
-
-        C_Bon bon1 = new C_Bon("PFAD", "Lidl", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe);
-
-        ArrayList<C_Artikel> artikelListe2 = new ArrayList<>();
-
-        artikelListe2.add(new C_Artikel("Erdbeeren", "1,99"));
-        artikelListe2.add(new C_Artikel("Döner", "4,00"));
-        artikelListe2.add(new C_Artikel("Kirschen", "1,99"));
-        artikelListe2.add(new C_Artikel("Bananen", "3,49"));
-
-        C_Bon bon2 = new C_Bon("PFAD", "Aldi", "83527 Assiheim", "Sonstige Infos", "22.04.2017", "21.04.2019", true, false, artikelListe2);
-
-        S.dbHandler.setBon(S.db, bon1);
-        S.dbHandler.setBon(S.db, bon2);
-
-        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
-            Log.e("##### BON", bon.toString());
-        }
+        this.createDBDummyData(10);
 
 
         // Settings Instance
@@ -511,5 +490,30 @@ public class A_Main extends AppCompatActivity {
         for(String y : S.dbHandler.getAllBons(S.db)){
             Log.e("######### BONS: ", y);
         }*/
+    }
+
+    private void createDBDummyData(int value){
+
+        ArrayList<C_Artikel> artikelList = new ArrayList<>();
+        ArrayList<C_Laden> ladenList = new ArrayList<>();
+        Random ran = new Random();
+        int x = 0;
+
+        for(int laden = 0; laden < value; laden++){
+            ladenList.add(new C_Laden("Laden_"+laden));
+        }
+
+        for(int i = 0; i < value; i++){
+            x = 3 + ran.nextInt((10 - 3) + 1);
+
+            for(int dummyArtikel = 0; dummyArtikel < x; dummyArtikel++){
+                artikelList.add(new C_Artikel(""+i+dummyArtikel, ""+(i*dummyArtikel)));
+            }
+
+            Log.e("### CEATE DUMMY DATA", " "+i+" OF "+value);
+            S.dbHandler.setBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", "21.10.2016", "21.10.2018", true, true, artikelList));
+
+            artikelList.clear();
+        }
     }
 }
