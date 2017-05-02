@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import de.projektss17.bonpix.R;
+
 
 /**
  * Created by Marcus on 02.05.2017.
@@ -17,11 +19,12 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<C_Statistik_Adapte
 
     private List data;
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+
         public ViewHolder(View view) {
             super(view);
-            textView = (TextView) view.findViewById(R.id.testTextview);
+            //textView = (TextView) view.findViewById(R.id.testTextview);
         }
     }
 
