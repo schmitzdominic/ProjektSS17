@@ -34,4 +34,9 @@ public class C_Laden {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "\nID: " + this.getId() +
+                "\nNAME: " + this.getName();
+    }
 }

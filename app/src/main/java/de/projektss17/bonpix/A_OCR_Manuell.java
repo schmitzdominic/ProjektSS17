@@ -169,14 +169,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
                                             S.dbHandler.addLaden(S.db, new C_Laden(input.getText().toString()));
                                         }
                                         refreshSpinner();
-                                        int index = 0, value = 0;
+                                        int index = 0;
                                         for(C_Laden laden : S.dbHandler.getAllLaeden(S.db)){
                                             if(laden.getName().equals(input.getText().toString())){
-                                                value = index;
+                                                parentView.setSelection(index+2);
+                                                break;
                                             }
                                             index++;
                                         }
-                                        parentView.setSelection(value+2);
                                     } else {
                                         parentView.setSelection(0);
                                     }
@@ -606,7 +606,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         if(articles != null){
             for(C_Artikel article : articles){
-                this.inflateEditRow(article.getName(), article.getPreis());
+                this.inflateEditRow(article.getName(), ""+article.getPreis());
             }
             this.totalPrice.setText(String.format("%s", getFinalPrice()));
         }

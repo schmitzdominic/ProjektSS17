@@ -95,7 +95,7 @@ public class A_Main extends AppCompatActivity {
         S.db = S.dbHandler.getWritableDatabase();
         S.dbHandler.checkTables(S.db);
 
-        this.createDBDummyData(10);
+        //this.createDBDummyData(10);
 
 
         // Settings Instance
@@ -105,7 +105,7 @@ public class A_Main extends AppCompatActivity {
         this.onFirstStart();
 
         // TODO remove later! Just for debugging
-        this.showLogAllDBEntries();
+        S.dbHandler.showLogAllDBEntries();
 
         requestPermissions(new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE});
@@ -441,6 +441,7 @@ public class A_Main extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
         if (settings.getBoolean("my_first_time", true)) {
+            this.createDBDummyData(20);
             this.setDefaultSettings();
             //this.setDefaultDBValues();
 
@@ -478,20 +479,6 @@ public class A_Main extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.box_backup_preferences, false);
     }
 
-    /**
-     * Gibt alle Laeden und Bons im Log aus (Rot)
-     */
-    private void showLogAllDBEntries(){
-        /*
-        for(String x : S.dbHandler.getAllLaeden(S.db)){
-            Log.e("######### LAEDEN: ", x);
-        }
-
-        for(String y : S.dbHandler.getAllBons(S.db)){
-            Log.e("######### BONS: ", y);
-        }*/
-    }
-
     private void createDBDummyData(int value){
 
         ArrayList<C_Artikel> artikelList = new ArrayList<>();
@@ -507,7 +494,7 @@ public class A_Main extends AppCompatActivity {
             x = 3 + ran.nextInt((10 - 3) + 1);
 
             for(int dummyArtikel = 0; dummyArtikel < x; dummyArtikel++){
-                artikelList.add(new C_Artikel(""+i+dummyArtikel, ""+(i*dummyArtikel)));
+                artikelList.add(new C_Artikel(""+i+dummyArtikel, i*dummyArtikel));
             }
 
             Log.e("### CEATE DUMMY DATA", " "+i+" OF "+value);

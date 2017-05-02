@@ -7,17 +7,22 @@ package de.projektss17.bonpix.daten;
 public class C_Artikel {
 
     private int id;
-    private String name,
-            preis;
+    private float preis;
+    private String name, kategorie;
 
-    public C_Artikel(String name, String price){
-        this(0, name, price);
+    public C_Artikel(String name, float preis){
+        this(0, name, preis, null);
     }
 
-    public C_Artikel(int id, String name, String price){
+    public C_Artikel(String name, float preis, String kategorie){
+        this(0, name, preis, kategorie);
+    }
+
+    public C_Artikel(int id, String name, float preis, String kategorie){
         this.id = id;
         this.name = name;
-        this.preis = price;
+        this.preis = preis;
+        this.kategorie = kategorie;
     }
 
     /**
@@ -40,8 +45,16 @@ public class C_Artikel {
      * Gibt den Preis des Artikels wieder
      * @return Preis des Artikels
      */
-    public String getPreis(){
+    public float getPreis(){
         return this.preis;
+    }
+
+    /**
+     * Gibt die Kategorie des Artikels wieder
+     * @return Kategorie des Artikels
+     */
+    public String getKategorie(){
+        return this.kategorie;
     }
 
     /**
@@ -64,7 +77,23 @@ public class C_Artikel {
      * Setzt den Preis des Artikels
      * @param preis Neuer Preis des Artikels
      */
-    public void setPreis(String preis){
+    public void setPreis(float preis){
         this.preis = preis;
+    }
+
+    /**
+     * Setzt die Kategorie des Artikels
+     * @param kategorie Neue Kategorie des Artikels
+     */
+    public void setKategorie(String kategorie){
+        this.kategorie = kategorie;
+    }
+
+    @Override
+    public String toString() {
+        return "\nID: " + this.getId() +
+                "\nNAME: " + this.getName() +
+                "\nPRICE: " + this.getPreis() +
+                "\nKATEGORIE: " + this.getKategorie();
     }
 }

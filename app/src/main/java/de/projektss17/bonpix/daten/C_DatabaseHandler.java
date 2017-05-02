@@ -79,7 +79,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         ArrayList<C_Artikel> artikelList = new ArrayList<>();
 
-        String query = "SELECT a.artikelid, a.name, a.preis FROM artikel a " +
+        String query = "SELECT a.artikelid, a.name, a.preis, a.kategorie FROM artikel a " +
                 "LEFT JOIN bonartikel ba ON ba.artikelid = a.artikelid " +
                 "WHERE ba.bonid = '" + bon.getId() + "'";
 
@@ -87,7 +87,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do {
-                artikelList.add(new C_Artikel(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
+                artikelList.add(new C_Artikel(cursor.getInt(0), cursor.getString(1), (float)cursor.getDouble(2), cursor.getString(3)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -127,7 +127,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do {
-                list.add(new C_Artikel(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
+                list.add(new C_Artikel(cursor.getInt(0), cursor.getString(1), cursor.getFloat(2), cursor.getString(3)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -215,11 +215,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param artikelPreis Artikel Preis
      * @return C_Artikel wenn er existiert, null wenn nicht
      */
-    public C_Artikel getArtikel(SQLiteDatabase db, String artikelName, String artikelPreis){
+    public C_Artikel getArtikel(SQLiteDatabase db, String artikelName, float artikelPreis){
 
         if(checkIfArtikelExist(db, artikelName, artikelPreis)){
             for(C_Artikel artikel : this.getAllArtikel(db)){
-                if(artikel.getName().equals(artikelName) && artikel.getPreis().equals(artikelPreis)){
+                if(artikel.getName().equals(artikelName) && artikel.getPreis() == artikelPreis){
                     return artikel;
                 }
             }
@@ -284,7 +284,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         if(this.checkIfBonExist(db, bonid)){
             for(C_Artikel bonArtikel : bon.getArtikel()){
                 for(C_Artikel dbArtikel : this.getAllArtikel(db)){
-                    if(bonArtikel.getName().equals(dbArtikel.getName()) && bonArtikel.getPreis().equals(dbArtikel.getPreis())){
+                    if(bonArtikel.getName().equals(dbArtikel.getName()) && bonArtikel.getPreis() == dbArtikel.getPreis()){
                         this.addBonArtikel(db, bonid, dbArtikel.getId());
                     }
                 }
@@ -322,6 +322,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put("name", artikel.getName());
             values.put("preis", artikel.getPreis());
+            if(artikel.getKategorie() != null){
+                values.put("kategorie", artikel.getKategorie());
+            }
             db.insert("artikel", null, values);
         }
     }
@@ -357,9 +360,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param artikelPreis Artikel Preis
      * @return true - existiert, false - existiert nicht
      */
-    public boolean checkIfArtikelExist(SQLiteDatabase db, String artikelName, String artikelPreis){
+    public boolean checkIfArtikelExist(SQLiteDatabase db, String artikelName, float artikelPreis){
         for(C_Artikel artikel : this.getAllArtikel(db)){
-            if(artikel.getName().equals(artikelName) && artikel.getPreis().equals(artikelPreis)) {
+            if(artikel.getName().equals(artikelName) && artikel.getPreis() == artikelPreis) {
                 return true;
             }
         }
@@ -491,6 +494,28 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Gibt alle Daten aus der DB im Log aus.
+     */
+    public void showLogAllDBEntries(){
+
+        Log.e("######### DB LAEDEN","#########################################");
+        for(C_Laden laden : S.dbHandler.getAllLaeden(S.db)){
+            Log.e("######### LADEN: ", laden.toString() + "\n---------------------");
+        }
+
+        Log.e("######### DB BONS","#########################################");
+        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
+            Log.e("######### BON: ", bon.toString() + "\n---------------------");
+        }
+
+        Log.e("######### DB ARTIKEL","#########################################");
+        for(C_Artikel artikel : S.dbHandler.getAllArtikel(S.db)){
+            Log.e("######### ARTIKEL: ", artikel.toString() + "\n---------------------");
+        }
+
+    }
+
 
     /**
      * Create Tables if not exists
@@ -513,8 +538,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 "FOREIGN KEY (ladenname) REFERENCES laden(ladenid))";
 
         String CREATE_TABLE_Artikel = "CREATE TABLE IF NOT EXISTS artikel (artikelid INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "name VARCHAR(255), " +
-                "preis VARCHAR(255))";
+                "name VARCHAR(100), " +
+                "preis DECIMAL(6,2), " +
+                "kategorie VARCHAR(50))";
 
         String CREATE_TABLE_BonArtikel = "CREATE TABLE IF NOT EXISTS bonartikel (bonid INTEGER NOT NULL, " +
                 "artikelid INTEGER NOT NULL, " +
