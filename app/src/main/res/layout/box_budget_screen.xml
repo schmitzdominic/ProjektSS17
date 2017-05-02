@@ -23,18 +23,6 @@
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-            <ImageButton
-                android:id="@+id/budget_delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="14dp"
-                android:layout_marginRight="14dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                app:srcCompat="@mipmap/ic_delete_items_24dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -56,10 +44,10 @@
         android:id="@+id/budget_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
+        android:layout_gravity="center_vertical|left"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@+id/relativeLayout"
-        app:layout_anchorGravity="bottom|center_horizontal"
+        app:layout_anchorGravity="top|right"
         app:srcCompat="@mipmap/ic_playlist_add_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>
