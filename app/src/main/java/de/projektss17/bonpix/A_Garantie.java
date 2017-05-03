@@ -29,11 +29,8 @@ public class A_Garantie extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
         //XML instaniziieren
         this.recyclerViewGarantie = (RecyclerView) findViewById(R.id.garantie_view);
-
 
         mAdapter = new C_Garantie_Adapter(bonListe);
         prepareBonData();
@@ -43,8 +40,6 @@ public class A_Garantie extends AppCompatActivity {
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerViewGarantie.setItemAnimator(new DefaultItemAnimator());
         recyclerViewGarantie.setAdapter(mAdapter);
-
-
 
     }
 
