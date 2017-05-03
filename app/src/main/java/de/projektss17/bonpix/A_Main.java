@@ -140,7 +140,7 @@ public class A_Main extends AppCompatActivity {
         manuellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                S.showManuell(A_Main.this);
+                S.showManuell(A_Main.this,"new");
             }
         });
 
@@ -422,7 +422,7 @@ public class A_Main extends AppCompatActivity {
             cursor.moveToFirst();
             String picturePath = cursor.getString(column_index_data);
             picturePathList.add(picturePath);
-            S.showRecognition(A_Main.this,picturePathList);
+            S.showManuell(A_Main.this, picturePathList, "foto");
         }
     }
 

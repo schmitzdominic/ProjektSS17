@@ -10,6 +10,8 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
+import java.util.ArrayList;
+
 import de.projektss17.bonpix.auswerter.Default;
 
 /**
@@ -21,7 +23,7 @@ public class C_OCR {
     private Context context;
     private C_Laden laden;
     private String ladenName, adresse, recognizedText;
-    private String[] produkte, preise;
+    private ArrayList<String> produkte, preise;
     private Resources res;
     private Default ladenInstanz;
 
@@ -71,7 +73,7 @@ public class C_OCR {
         // Attribute setzen
         this.ladenName = ladenName;
         this.produkte = this.ladenInstanz.getProducts(this.recognizedText);
-        this.preise = this.ladenInstanz.getProducts(this.recognizedText);
+        this.preise = this.ladenInstanz.getPrices(this.recognizedText);
         this.adresse = this.ladenInstanz.getAdresse(this.recognizedText);
     }
 
@@ -110,7 +112,7 @@ public class C_OCR {
      * Gibt alle Produkte zurück
      * @return
      */
-    public String[] getProdukte(){
+    public ArrayList<String> getProdukte(){
         return this.produkte;
     }
 
@@ -118,7 +120,7 @@ public class C_OCR {
      * Gibt alle Preise zurück
      * @return
      */
-    public String[] getPreise(){
+    public ArrayList<String> getPreise(){
         return this.preise;
     }
 
