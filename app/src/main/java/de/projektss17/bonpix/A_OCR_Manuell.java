@@ -172,7 +172,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
                                         refreshSpinner();
 
                                         for(int i = 0; i < parentView.getCount(); i++){
-
+                                            if(parentView.getAdapter().getItem(i).equals(input.getText().toString())){
+                                                parentView.setSelection(i);
+                                                break;
+                                            }
                                         }
                                     } else {
                                         parentView.setSelection(0);
