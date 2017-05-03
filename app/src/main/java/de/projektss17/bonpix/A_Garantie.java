@@ -57,6 +57,12 @@ public class A_Garantie extends AppCompatActivity {
             C_Bons bons = new C_Bons("TEST"+i, "TEST"+(char)(i+65), "Test", "Test", "Test");
             bonListe.add(bons);
         }
+        //ToDo Auskommentieren nachdem Datenbank_verbessern gemerged wurde und obiges löschen
+        /*
+        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
+            this.bonsList.add(bon);
+        }*/
+
         mAdapter.notifyDataSetChanged();
     }
 
