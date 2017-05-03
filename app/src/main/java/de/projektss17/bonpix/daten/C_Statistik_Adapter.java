@@ -42,7 +42,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<C_Statistik_Adapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.textView.setText("hallo 123 TEST");
+        //holder.textView.setText("hallo 123 TEST");
     }
 
     @Override

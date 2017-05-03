@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import de.projektss17.bonpix.R;
+
 /**
  * Created by Marcus on 15.04.2017.
  */

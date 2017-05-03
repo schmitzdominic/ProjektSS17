@@ -7,7 +7,6 @@ package de.projektss17.bonpix;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -44,5 +43,7 @@ public class A_Tab2Statistik extends Fragment{
     public void prepareStatData(){
         String test = "test";
         data.add(test);
+        String test1 = "test1";
+        data.add(test1);
     }
 }
