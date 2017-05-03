@@ -29,6 +29,7 @@ public class A_Garantie extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Im Folgenden wird die RecyclerView angelegt und die dazugehörigen Einstellungen verwaltet
         //XML instaniziieren
         this.recyclerViewGarantie = (RecyclerView) findViewById(R.id.garantie_view);
 
@@ -44,8 +45,7 @@ public class A_Garantie extends AppCompatActivity {
     }
 
     /**
-     * Nur Dummy Data für Recycleview
-     * Spätere Datenbankanbindung
+     * Daten in Array-List BonListe füllen, welche später angezeigt werden
      */
     private void prepareBonData(){
         for(int i = 0; i < 20; i++) {

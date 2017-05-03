@@ -64,8 +64,8 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
     public void onBindViewHolder(C_Garantie_Adapter.MyViewHolder holder, int position) {
         C_Bons bon = bonListe.get(position);
 
+        //ToDo später Icon dynamisch zuweisbar
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
-
         holder.garantieBegin.setText("Garantie Anfang: "+ bon.getDatum());
         holder.garantieEnde.setText("Garantie Ende: 12.03.3079"); // TODO DB IMPLEMENTIEREN!
     }
