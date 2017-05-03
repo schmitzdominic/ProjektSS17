@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Hauptfarben -->
-    <color name="colorPrimary">#FFC107</color>
-    <color name="colorPrimaryDark">#FF8F00</color>
-    <color name="colorAccent">#03A9F4</color>
+    <color name="colorPrimary">#ffc107</color>
+    <color name="colorPrimaryDark">#ff8f00</color>
+    <color name="colorAccent">#03a9f4</color>
 
     <!-- Transparenz für die Floating buttons -->
     <color name="colorTransBg">#26000000</color>
