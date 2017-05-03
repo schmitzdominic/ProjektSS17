@@ -49,7 +49,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMAGE = 1;
     private String year, month, day, imageOCRUriString, sonstigesText;
-    private boolean setFocusOnLine = true;
+    private boolean setFocusOnLine = true, negPos;
     private ArrayAdapter<String> spinnerAdapter;
     private Button saveButton, kameraButton, addArticleButton;
     private Spinner ladenSpinner;
@@ -248,6 +248,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.linearLayout.removeView((View) v.getParent());
         this.totalPrice.setText(String.format("%s", getFinalPrice()));
         this.addArticleButton.setVisibility(View.VISIBLE);
+
     }
 
     /**
@@ -361,7 +362,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     /**
      * Erzeugt eine neue Artikel Reihe
      * @param name Name des Artikels
-     * @param preis Preis des Artikels
+     * @param preis Preis des Artikels WICHTIG Preis muss ein , enthalten!
      */
     private void inflateEditRow(String name, String preis) {
 
@@ -370,14 +371,38 @@ public class A_OCR_Manuell extends AppCompatActivity {
         final View rowView = inflater.inflate(R.layout.box_ocr_manuell_listview, null);
         final ImageButton deleteAticleButton = (ImageButton) rowView
                 .findViewById(R.id.ocr_manuell_button_delete_article);
+        final ImageButton positiveNegativeButton = (ImageButton) rowView
+                .findViewById(R.id.ocr_manuell_negativ_positiv_button);
+        final EditText calculator = (EditText) rowView
+                .findViewById(R.id.ocr_negativ_positiv_calculator_text);
         final EditText articleText = (EditText) rowView
                 .findViewById(R.id.ocr_manuell_article_text);
         final EditText priceText = (EditText) rowView
                 .findViewById(R.id.ocr_manuell_price_text);
+        final EditText centText = (EditText) rowView
+                .findViewById(R.id.ocr_manuell_cent_text);
+
+        negPos = true;
+
+        if(preis != null && !preis.isEmpty()){
+            if(Double.parseDouble(preis) < 0){
+                negPos = false;
+            }
+        }
+
+        String preisArray[] = new String[2];
 
         // Wenn der Preis nicht leer ist dann setze ihn
         if (preis != null && !preis.isEmpty()){
-            priceText.setText(preis);
+
+            if(Double.parseDouble(preis.replace(",",".")) < 0){
+                positiveNegativeButton.performClick();
+            }
+
+            preisArray = preis.split(",");
+
+            priceText.setText(preisArray[0]);
+            centText.setText(preisArray[1]);
         }
 
         // Wenn der Name nicht leer ist dann setze ihn
@@ -386,6 +411,28 @@ public class A_OCR_Manuell extends AppCompatActivity {
         } else {
            this.mExclusiveEmptyView = rowView;
         }
+
+        //R.mipmap.ic_indeterminate_check_box_black_24dp
+
+        positiveNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(negPos) {
+                    positiveNegativeButton.setImageResource(R.mipmap.ic_indeterminate_check_box_black_24dp);
+                    positiveNegativeButton.setColorFilter(Color.RED);
+                    calculator.setText("-");
+                    negPos = false;
+                    totalPrice.setText(String.format("%s", getFinalPrice()));
+
+                } else {
+                    positiveNegativeButton.setImageResource(R.mipmap.ic_add_box_black_24dp);
+                    positiveNegativeButton.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.positiv));
+                    calculator.setText("");
+                    negPos = true;
+                    totalPrice.setText(String.format("%s", getFinalPrice()));
+                }
+            }
+        });
 
         // Artikel Text changeListener
         articleText.addTextChangedListener(new TextWatcher() {
@@ -402,6 +449,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         linearLayout.removeView(mExclusiveEmptyView);
                     }
                     mExclusiveEmptyView = rowView;
+                    addArticleButton.setVisibility(View.INVISIBLE);
+                    addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
 
                 // Wenn etwas eingegeben wurde
                 } else {
@@ -441,13 +490,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 // Wenn der Text leer ist
                 if (s.toString().isEmpty()) {
                     addArticleButton.setVisibility(View.GONE);
-                    deleteAticleButton.setVisibility(View.INVISIBLE);
 
                     if (mExclusiveEmptyView != null
                             && mExclusiveEmptyView != rowView) {
                         linearLayout.removeView(mExclusiveEmptyView);
                     }
-                    priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789-"));
+
                     totalPrice.setText(String.format("%s", getFinalPrice()));
                     mExclusiveEmptyView = rowView;
 
@@ -458,35 +506,62 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         mExclusiveEmptyView = null;
                     }
 
-                    // Wenn die Eingabe ein - ist, dann sperre das Komma danach.
-                    if(priceText.getText().toString().length() == 1 && priceText.getText().charAt(0) == '-'){
-                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-                    } else {
-                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
-                    }
-
-                    // Wenn der Text ein Komma enthält
-                    if(priceText.getText().toString().contains(",")){
-
-                        // Deaktiviere das Komma
-                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-
-                        // Splitte den String beim Komma
-                        String[] array = priceText.getText().toString().split(",");
-                        if(array.length == 2){ // Array muss mind 2 Werte haben (1 vor dem Komma, 1 Nach dem Komma)
-                            if(array[1].length() == 2){ // Wenn 2 Stellen nach dem Komma vorhanden sind, sperre die Tastatur
-                                priceText.setKeyListener(DigitsKeyListener.getInstance(""));
-                            } else {
-                                priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-                            }
-                        }
-                    }
-
-                    totalPrice.setText(String.format("%s", getFinalPrice()));
                     if(articleText.getText() != null && !articleText.getText().toString().isEmpty()) {
                         addArticleButton.setVisibility(View.VISIBLE);
                         addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
                     }
+
+                    totalPrice.setText(String.format("%s", getFinalPrice()));
+                    deleteAticleButton.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
+        });
+
+        // Preis Text changeListener
+        centText.addTextChangedListener(new TextWatcher() {
+
+            // Wenn der Text geändert wird
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                // Wenn der Text leer ist
+                if (s.toString().isEmpty()) {
+                    addArticleButton.setVisibility(View.GONE);
+
+                    if (mExclusiveEmptyView != null
+                            && mExclusiveEmptyView != rowView) {
+                        linearLayout.removeView(mExclusiveEmptyView);
+                    }
+                    totalPrice.setText(String.format("%s", getFinalPrice()));
+                    mExclusiveEmptyView = rowView;
+
+                    // Wenn etwas eingegeben wurde
+                } else {
+
+                    if (mExclusiveEmptyView == rowView) {
+                        mExclusiveEmptyView = null;
+                    }
+
+                    if(articleText.getText() != null && !articleText.getText().toString().isEmpty()) {
+                        addArticleButton.setVisibility(View.VISIBLE);
+                        addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
+                    }
+
+                    if(priceText.getText().toString().isEmpty()){
+                        priceText.setText("0");
+                    }
+
+                    totalPrice.setText(String.format("%s", getFinalPrice()));
                     deleteAticleButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -520,15 +595,39 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         String[] arrayPrices = new String[linearLayout.getChildCount()];
         View view;
-        EditText textField;
+        EditText calculator, priceField, centField;
 
         for(int i = 0; i < linearLayout.getChildCount(); i++){
             view = linearLayout.getChildAt(i);
-            textField = (EditText) view.findViewById(R.id.ocr_manuell_price_text);
-            if(textField != null && !textField.getText().toString().isEmpty())
-                arrayPrices[i] = textField.getText().toString();
-            else
-                arrayPrices[i] = "0.00";
+            calculator = (EditText) view.findViewById(R.id.ocr_negativ_positiv_calculator_text);
+            priceField = (EditText) view.findViewById(R.id.ocr_manuell_price_text);
+            centField = (EditText) view.findViewById(R.id.ocr_manuell_cent_text);
+
+            if(priceField != null && !priceField.getText().toString().isEmpty()) {
+
+                if(calculator != null && !calculator.getText().toString().isEmpty()){
+                    arrayPrices[i] = calculator.getText().toString() + priceField.getText().toString();
+                } else {
+                    arrayPrices[i] = priceField.getText().toString();
+                }
+
+            } else {
+                if(calculator != null && !calculator.getText().toString().isEmpty()){
+                    arrayPrices[i] = calculator.getText().toString() + "0";
+                } else {
+                    arrayPrices[i] = "0";
+                }
+            }
+
+            if(centField != null && !centField.getText().toString().isEmpty()){
+                if(arrayPrices[i] != null) {
+                    arrayPrices[i] += "." + centField.getText().toString();
+                } else {
+                    arrayPrices[i] = "." + centField.getText().toString();
+                }
+            } else {
+                arrayPrices[i] += ".0";
+            }
         }
 
         return arrayPrices;
