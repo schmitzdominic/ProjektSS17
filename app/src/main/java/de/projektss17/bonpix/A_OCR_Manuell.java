@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 
 import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_Bon;
@@ -150,7 +151,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         //laden Spinner onClickListener
         ladenSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(final AdapterView<?> parentView, View selectedItemView, int position, long id) {
+            public void onItemSelected(final AdapterView<?> parentView, final View selectedItemView, int position, long id) {
 
                 // Itemid == 1 = Benutzerdefiniert, d.h. Wenn manuell eine Marke eingegeben werden soll
                 if ((int) id == 1) {
@@ -169,13 +170,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
                                             S.dbHandler.addLaden(S.db, new C_Laden(input.getText().toString()));
                                         }
                                         refreshSpinner();
-                                        int index = 0;
-                                        for(C_Laden laden : S.dbHandler.getAllLaeden(S.db)){
-                                            if(laden.getName().equals(input.getText().toString())){
-                                                parentView.setSelection(index+2);
-                                                break;
-                                            }
-                                            index++;
+
+                                        for(int i = 0; i < parentView.getCount(); i++){
+
                                         }
                                     } else {
                                         parentView.setSelection(0);
@@ -325,8 +322,26 @@ public class A_OCR_Manuell extends AppCompatActivity {
             count++;
         }
 
+
         this.spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, array);
         this.spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.spinnerAdapter.sort(new Comparator<String>(){
+            public int compare(String laden1, String laden2){
+
+                if(laden2.equals("Bitte Laden auswählen") && laden1.equals("Hinzufügen")){
+                    return 1;
+                } else if(laden1.equals("Bitte Laden auswählen") || laden1.equals("Hinzufügen")){
+                    return -1;
+                } else if (laden2.equals("Bitte Laden auswählen") || laden2.equals("Hinzufügen")){
+                    return 1;
+                }
+
+                laden1 = laden1.toLowerCase();
+                laden2 = laden2.toLowerCase();
+
+                return laden1.compareTo(laden2);
+            }
+        });
         this.ladenSpinner.setAdapter(this.spinnerAdapter);
     }
 
