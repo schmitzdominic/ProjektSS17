@@ -55,7 +55,9 @@ public class A_Garantie extends AppCompatActivity {
         //ToDo Auskommentieren nachdem Datenbank_verbessern gemerged wurde und obiges löschen
         /*
         for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
-            this.bonsList.add(bon);
+            if(bon.getGarantie()){
+                this.bonlist.add(bon);
+            }
         }*/
 
         mAdapter.notifyDataSetChanged();

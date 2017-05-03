@@ -24,14 +24,14 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
     private List<C_Bons> bonListe;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, content;
+        public TextView garantieBegin, garantieEnde;
         public ImageView icon;
 
         public MyViewHolder(View view){
             super(view);
             icon = (ImageView) view.findViewById(R.id.garantie_view_laden_bild);
-            title = (TextView) view.findViewById(R.id.garantie_view_garantiebeginn);
-            content = (TextView) view.findViewById(R.id.garantie_view_zusatz_garantieende);
+            garantieBegin = (TextView) view.findViewById(R.id.garantie_view_garantiebeginn);
+            garantieEnde = (TextView) view.findViewById(R.id.garantie_view_zusatz_garantieende);
 
             // TODO: Derzeit ist das "REWE" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
             Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.icon_laden_rewe_24dp);
@@ -65,8 +65,9 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
         C_Bons bon = bonListe.get(position);
 
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
-        holder.title.setText(bon.getBildpfad());
-        holder.content.setText(bon.getLadenname());
+
+        holder.garantieBegin.setText("Garantie Anfang: "+ bon.getDatum());
+        holder.garantieEnde.setText("Garantie Ende: 12.03.3079"); // TODO DB IMPLEMENTIEREN!
     }
 
 
