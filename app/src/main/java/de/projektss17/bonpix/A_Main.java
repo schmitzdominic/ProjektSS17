@@ -441,13 +441,13 @@ public class A_Main extends AppCompatActivity {
         final String PREFS_NAME = C_Preferences.APP_SHARED_PREFS;
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
-        if (settings.getBoolean("my_first_time", true)) {
-            this.createDBDummyData(20);
+        if (settings.getBoolean("first_time", true)) {
             this.setDefaultSettings();
-            //this.setDefaultDBValues();
+            this.setDefaultDBValues();
+            //this.createDBDummyData(20);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
-            S.prefs.savePrefBoolean("my_first_time", false);
+            S.prefs.savePrefBoolean("first_time", false);
         }
     }
 
@@ -455,21 +455,12 @@ public class A_Main extends AppCompatActivity {
      * Setzt alle standard DB Werte
      */
     private void setDefaultDBValues(){
-        /*String laeden[] = {"EDEKA","Lidl", "REWE", "Media Markt"};
-        String bons[] = {"BON_CONTENT1", "BON_CONTENT2"};
 
-        for(String laden : laeden){
-            S.dbHandler.setLaeden(S.db, laden);
+        String [] defaultLaeden = this.getResources().getStringArray(R.array.defaultLaeden);
+
+        for(String laden : defaultLaeden){
+            S.dbHandler.addLaden(S.db, new C_Laden(laden));
         }
-
-        ContentValues values;
-
-        for(String bonContent : bons){
-            values = new ContentValues();
-            values.put("bons_name", bonContent);
-            S.db.insert("bons", null, values);
-        }*/
-
     }
 
     /**
@@ -480,6 +471,10 @@ public class A_Main extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.box_backup_preferences, false);
     }
 
+    /**
+     * Erstellt Dummy Daten
+     * @param value Wie viele Daten generiert werden
+     */
     private void createDBDummyData(int value){
 
         ArrayList<C_Artikel> artikelList = new ArrayList<>();

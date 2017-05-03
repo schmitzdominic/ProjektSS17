@@ -97,7 +97,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Gibt alle Laeden zurück
      * @param db Datenbank
-     * @return Arraylist Mit C_Laden objekten
+     * @return Arraylist Mit C_MatchLaden objekten
      */
     public ArrayList<C_Laden> getAllLaeden(SQLiteDatabase db){
 
@@ -158,7 +158,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * Gibt einen Laden zurück falls dieser existiert
      * @param db Datenbank
      * @param ladenName Name des gesuchtne Ladens
-     * @return C_Laden wenn er exisitert, null wenn nicht
+     * @return C_MatchLaden wenn er exisitert, null wenn nicht
      */
     public C_Laden getLaden(SQLiteDatabase db, String ladenName){
 
@@ -176,7 +176,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * Gibt einen Laden zurück falls dieser existiert
      * @param db Datenbank
      * @param id ID des Ladens
-     * @return C_Laden wenn er exisitert, null wenn nicht
+     * @return C_MatchLaden wenn er exisitert, null wenn nicht
      */
     public C_Laden getLaden(SQLiteDatabase db, int id){
 
