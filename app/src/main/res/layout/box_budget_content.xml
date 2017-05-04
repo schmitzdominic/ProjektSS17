@@ -1,117 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="235dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="235dp">
+        <android.support.v7.widget.CardView
+            android:layout_width="380dp"
+            android:layout_height="match_parent"
+            android:elevation="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/budget_card_view">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:elevation="15dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:id="@+id/budget_card_view">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <!--
-            <ImageButton
-                android:id="@+id/budget_selection_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                app:srcCompat="@mipmap/ic_selection_24dp"
-                android:layout_alignTop="@+id/imageButton2"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="14dp"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="-5dp"/>
-            -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
-            <TextView
-                android:id="@+id/budget_progress_percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/budget_progress_bar"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="20dp"
-                android:text="TextView"
-                android:textAlignment="center" />
+                <TextView
+                    android:id="@+id/budget_title"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Titel"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="14dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
 
+                <ProgressBar
+                    android:id="@+id/budget_progress_bar_circle"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:background="@drawable/box_budget_circle_shape"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="10"
+                    android:progressDrawable="@drawable/box_budget_circular_progressbar"
+                    android:layout_below="@+id/budget_title"
+                    android:layout_centerHorizontal="true" />
 
-            <TextView
-                android:id="@+id/budget_title"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="13dp"
-                android:text="Titel"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/budget_year"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_alignBottom="@+id/budget_content"
+                    android:layout_toRightOf="@+id/budget_progress_bar_circle"
+                    android:layout_toEndOf="@+id/budget_progress_bar_circle" />
 
-            <TextView
-                android:id="@+id/budget_available"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Verfügbar"
-                android:textAlignment="textEnd"
-                android:layout_marginTop="80dp"
-                android:layout_marginLeft="45dp"/>
+                <TextView
+                    android:id="@+id/budget_turnus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="13dp"
+                    android:layout_marginRight="13dp"
+                    android:text="Verfügbar"
+                    android:textSize="16sp"
+                    android:layout_alignBottom="@+id/budget_content"
+                    android:layout_toLeftOf="@+id/budget_progress_bar_circle"
+                    android:layout_toStartOf="@+id/budget_progress_bar_circle" />
 
-            <!--
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/budget_progress_bar"
-                android:layout_alignParentTop="true"
-                android:layout_alignRight="@+id/budget_progress_bar"
-                android:layout_marginRight="-10dp"
-                android:layout_marginTop="12dp"
-                android:background="@android:color/white"
-                app:srcCompat="@mipmap/ic_mode_edit_black_24dp" />
-            -->
+                <TextView
+                    android:id="@+id/budget_content"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Budget"
+                    android:layout_marginTop="55dp"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/budget_title"
+                    android:layout_centerHorizontal="true" />
 
-            <TextView
-                android:id="@+id/budget_content"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="Budget"
-                android:layout_marginLeft="110dp"
-                android:layout_marginTop="70dp"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/budget_progress_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:layout_below="@+id/budget_content"
+                    android:layout_centerHorizontal="true" />
 
-            <ProgressBar
-                android:id="@+id/budget_progress_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="310dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="140dp"
-                android:elevation="3dp"
-                android:backgroundTint="@color/cardview_dark_background"/>
-
-            <TextView
-                android:id="@+id/budget_turnus"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="260dp"
-                android:layout_marginTop="80dp"
-                android:text="TextView"
-                android:textAlignment="textStart" />
-
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-</RelativeLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</LinearLayout>

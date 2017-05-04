@@ -10,14 +10,16 @@ public class C_Budget {
     private int processbar, progressPercentage;
     private String turnus;
     private String title;
+    private String year;
 
 
-    public C_Budget(int budgetMax, int budgetCurrently, int processbar, String turnus, String title){
+    public C_Budget(int budgetMax, int budgetCurrently, int processbar, String turnus, String title, String year){
         this.budgetMax = budgetMax;
         this.budgetCurrently = budgetCurrently;
         this.processbar = processbar;
         this.turnus = turnus;
         this.title = title;
+        this.year = year;
     }
 
     public int getBudgetMax() {
@@ -52,5 +54,9 @@ public class C_Budget {
     public void setBudgetCurrently(int budgetCurrently) {        this.budgetCurrently = budgetCurrently;    }
 
     public int getProcessPercentage() {        return (int)(budgetCurrently*100/budgetMax);   }
+
+    public String getYear() {return year;    }
+
+    public void setYear(String year) {        this.year = year;    }
 
 }

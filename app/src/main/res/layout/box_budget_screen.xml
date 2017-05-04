@@ -44,10 +44,10 @@
         android:id="@+id/budget_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|left"
+        android:layout_gravity="top|left"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@+id/relativeLayout"
-        app:layout_anchorGravity="top|right"
+        app:layout_anchorGravity="bottom|right"
         app:srcCompat="@mipmap/ic_playlist_add_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>
