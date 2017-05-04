@@ -60,7 +60,7 @@ public class A_Budget extends AppCompatActivity {
                 LayoutInflater inflater = getLayoutInflater();
                 View alertLayout = inflater.inflate(R.layout.box_budget_alert_dialog, null);
                 final EditText titleContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_title);
-                final EditText budgetContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_betrag);
+                final EditText budgetContent = (EditText)alertLayout.findViewById(R.id.budget_alert_dialog_betrag);
                 final EditText yearContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_jahr);
                 final EditText monthContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_monat);
 
@@ -111,7 +111,8 @@ public class A_Budget extends AppCompatActivity {
                         ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
 
                     @Override
-                    public  boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                    public  boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                           RecyclerView.ViewHolder target) {
 
                         // CARD VIEW - Items können bewegt werden (oben nach unten und umgekehrt)
                         moveItem(viewHolder.getAdapterPosition(),target.getAdapterPosition());
