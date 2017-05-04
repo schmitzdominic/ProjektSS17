@@ -1,15 +1,22 @@
 package de.projektss17.bonpix;
 
 import android.app.LauncherActivity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.ListMenuItemView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +24,8 @@ import java.util.Random;
 
 import de.projektss17.bonpix.daten.C_Budget;
 import de.projektss17.bonpix.daten.C_Budget_CardView_Adapter;
+
+import static android.text.InputType.*;
 
 
 public class A_Budget extends AppCompatActivity {
@@ -49,11 +58,45 @@ public class A_Budget extends AppCompatActivity {
 
         // FAB - Drücken fügt ein Item (CardView) hinzu
         //------------------------------------------------------------
+
+         String m_Text;
+
         this.fab = (FloatingActionButton) findViewById(R.id.budget_fab);    //Floating Action Button
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItem();
+
+                LayoutInflater inflater = getLayoutInflater();
+                View alertLayout = inflater.inflate(R.layout.box_budget_alert_dialog, null);
+                final EditText titleContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_title);
+                final EditText budgetContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_betrag);
+                final EditText yearContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_jahr);
+                final EditText monthContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_monat);
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(A_Budget.this);
+                alert.setTitle("Budget");
+                // this is set the view from XML inside AlertDialog
+                alert.setView(alertLayout);
+                // disallow cancel of AlertDialog on click of back button and outside touch
+                alert.setCancelable(false);
+                alert.setNegativeButton("Abbruch", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getBaseContext(), "Cancel clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        S.outShort(A_Budget.this,"Item Hinzugefügt!");
+                    }
+                });
+                AlertDialog dialog = alert.create();
+                dialog.show();
+
             }
         });
 
