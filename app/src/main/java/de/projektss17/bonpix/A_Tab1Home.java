@@ -48,7 +48,7 @@ public class A_Tab1Home extends Fragment {
     private PieChart pieChart;
     private ArrayList<PieEntry> data = new ArrayList<>();
     private ArrayList<String> label = new ArrayList<>();;
-    private BarChart barChart;
+    private BarChart bChart;
     private ArrayList<BarEntry> BARENTRY;
     private ArrayList<IBarDataSet> BarEntryLabels;
     BarDataSet Bardataset;
@@ -69,15 +69,17 @@ public class A_Tab1Home extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+
+        // Kuchendiagramm
         pieChart = (PieChart) rootView.findViewById(R.id.chart1);
 
-        // Label initialisierung
+        // Label initialisierung Kuchendiagramm
 
         label.add("Algerie");
         label.add("Maroc");
         label.add("TUnisie");
 
-        // Data initialisierung
+        // Data initialisierung Kuchendiagramm
 
         data.add(new PieEntry(0.2f, 0));
         data.add(new PieEntry(0.2f, 1));
@@ -94,8 +96,8 @@ public class A_Tab1Home extends Fragment {
 
 
 
-
-        BarChart bchart = (BarChart) rootView.findViewById(R.id.chart2);
+        //Balkendiagramm
+        bChart = (BarChart) rootView.findViewById(R.id.chart2);
 
 
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
@@ -118,8 +120,8 @@ public class A_Tab1Home extends Fragment {
         data.setValueTextSize(10f);
         data.setBarWidth(0.9f);
 
-        bchart.setTouchEnabled(false);
-        bchart.setData(data);
+        bChart.setTouchEnabled(false);
+        bChart.setData(data);
         return rootView;
 
 
