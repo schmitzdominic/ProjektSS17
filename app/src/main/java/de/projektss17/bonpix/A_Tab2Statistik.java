@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.data.BarEntry;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ import de.projektss17.bonpix.daten.C_Statistik_Adapter;
 
 public class A_Tab2Statistik extends Fragment{
 
-    private List data = new ArrayList();
+    private List<BarEntry> data = new ArrayList<>();
     private RecyclerView recyclerView;
     private C_Statistik_Adapter mAdapter;
 
@@ -41,9 +43,12 @@ public class A_Tab2Statistik extends Fragment{
     }
 
     public void prepareStatData(){
-        String test = "test";
-        data.add(test);
-        String test1 = "test1";
-        data.add(test1);
+        data.add(new BarEntry(0f, 30f));
+        data.add(new BarEntry(1f, 80f));
+        data.add(new BarEntry(2f, 60f));
+        data.add(new BarEntry(3f, 50f));
+        // gap of 2f
+        data.add(new BarEntry(5f, 70f));
+        data.add(new BarEntry(6f, 60f));
     }
 }

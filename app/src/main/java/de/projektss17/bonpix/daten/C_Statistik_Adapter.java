@@ -6,6 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
 import java.util.List;
 
 import de.projektss17.bonpix.R;
@@ -20,11 +27,11 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<C_Statistik_Adapte
     private List data;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        BarChart chart;
 
         public ViewHolder(View view) {
             super(view);
-            //textView = (TextView) view.findViewById(R.id.testTextview);
+            chart = (BarChart) view.findViewById(R.id.chart);
         }
     }
 
@@ -42,7 +49,13 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<C_Statistik_Adapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //holder.textView.setText("hallo 123 TEST");
+        BarDataSet dataSet = new BarDataSet(data, "test");
+
+        BarData data = new BarData(dataSet);
+        data.setBarWidth(0.9f); // set custom bar width
+        holder.chart.setData(data);
+        holder.chart.setFitBars(true); // make the x-axis fit exactly all bars
+        holder.chart.invalidate(); // refresh
     }
 
     @Override
