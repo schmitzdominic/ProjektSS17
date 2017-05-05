@@ -22,7 +22,6 @@ import de.projektss17.bonpix.R;
 
 public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHolder> {
 
-
     private List<C_Bons> bonsList;
     private int row_index = -1;
 
@@ -67,6 +66,12 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
         final C_Bons bon = bonsList.get(position);
         holder.title.setText(bon.getBildpfad());
         holder.content.setText(bon.getLadenname());
+        //Loading the FavoriteList
+        if (bon.getFav()){
+            holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star));
+        } else {
+            holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star_outline));
+        }
         holder.button.setOnClickListener(new View.OnClickListener(){
 
             /**
@@ -86,10 +91,10 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
                                 if (row_index == position) {
                                     holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
                                     bon.setFav();
-                                    Log.i("CLICKEVENT STAR ICON", "### SUCCESS");
+                                    Log.i("CLICKEVENT FAV ICON", "### SUCCESS");
                                 }
                                 else {
-                                    Log.e("CLICKEVENT STAR ICON","### COULDNT MATCH POSITION");
+                                    Log.e("CLICKEVENT FAV ICON","### COULDNT MATCH POSITION");
                                 }
                             }
                         }
