@@ -6,6 +6,7 @@ package de.projektss17.bonpix.daten;
 
 public class C_Bons {
     private String Bildpfad, Ladenname, Anschrift, SonstigeInfos, Datum;
+    private boolean isFav;
 
 
     // Constructor
@@ -55,5 +56,27 @@ public class C_Bons {
 
     public void setDatum(String datum) {
         Datum = datum;
+    }
+
+    /**
+     * Set as Favorited
+     */
+    public void setFav(){
+        isFav = true;
+    }
+
+    /**
+     * Set Favorited to false - Delete Favorited
+     */
+    public void deleteFav(){
+        isFav = false;
+    }
+
+    /**
+     * Get boolean if item is favorited (true or false)
+     * @return
+     */
+    public boolean getFav(){
+        return isFav;
     }
 }
