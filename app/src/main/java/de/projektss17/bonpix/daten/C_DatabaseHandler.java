@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Marcus on 11.04.2017.
@@ -103,5 +104,35 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public void deleteLaden(SQLiteDatabase db, int id){
         String filter = "laeden_id=" + id;
         db.delete("laeden", filter, null);
+    }
+
+    /**
+     * Get the Data for BarCharts
+     * @return
+     */
+    public List getBarData(){
+        List dataList = new ArrayList();
+        //TODO: Logic part for preparing Bar Data
+        return dataList;
+    }
+
+    /**
+     * Get the Data for LineCharts
+     * @return
+     */
+    public List getLineData(){
+        List dataList = new ArrayList();
+        //TODO: Logic part for preparing Line Data
+        return dataList;
+    }
+
+    /**
+     * Get the Data for PieCharts
+     * @return
+     */
+    public List getPieData(){
+        List dataList = new ArrayList();
+        //TODO: Logic part for preparing Pie Data
+        return dataList;
     }
 }

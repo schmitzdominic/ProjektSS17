@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 
 
 /**
@@ -55,10 +56,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public C_Statistik_Adapter(List pass){
-        for (Object row : pass){
-            data.add(row);
-        }
+    public C_Statistik_Adapter(){
     }
 
     @Override
@@ -91,22 +89,22 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         switch(getItemViewType(position)){
             case 0:
                 final ViewHolderBar holderBar = (ViewHolderBar)holder;
-                BarDataSet dataSet = new BarDataSet(data, "test");
-                BarData data = new BarData(dataSet);
-                data.setBarWidth(0.9f); // set custom bar width
-                holderBar.chart.setData(data);
+                BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(), "test");
+                BarData dataBar = new BarData(dataSetBar);
+                dataBar.setBarWidth(0.9f); // set custom bar width
+                holderBar.chart.setData(dataBar);
                 holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
                 holderBar.chart.invalidate(); // refresh
                 break;
             case 1:
                 final ViewHolderLine holderLine = (ViewHolderLine)holder;
-                LineDataSet dataSet1 = new LineDataSet(this.data, "test1");
-                //LineData data = new LineData(dataSet1);
+                LineDataSet dataSetLine = new LineDataSet(S.dbHandler.getLineData(), "test1");
+                LineData dataLine = new LineData(dataSetLine);
                 holderLine.chart.invalidate();
                 break;
             case 2:
                 final ViewHolderPie holderPie = (ViewHolderPie)holder;
-                PieDataSet dataSet2 = new PieDataSet(this.data, "test2");
+                PieDataSet dataSetPie = new PieDataSet(S.dbHandler.getPieData(), "test2");
                 holderPie.chart.invalidate();
                 break;
         }

@@ -23,7 +23,6 @@ import de.projektss17.bonpix.daten.C_Statistik_Adapter;
 
 public class A_Tab2Statistik extends Fragment{
 
-    private List<BarEntry> data = new ArrayList<>();
     private RecyclerView recyclerView;
     private C_Statistik_Adapter mAdapter;
 
@@ -32,23 +31,12 @@ public class A_Tab2Statistik extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
-        prepareStatData();
-        mAdapter = new C_Statistik_Adapter(data);
+        mAdapter = new C_Statistik_Adapter();
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         return rootView;
-    }
-
-    public void prepareStatData(){
-        data.add(new BarEntry(0f, 30f));
-        data.add(new BarEntry(1f, 80f));
-        data.add(new BarEntry(2f, 60f));
-        data.add(new BarEntry(3f, 50f));
-        // gap of 2f
-        data.add(new BarEntry(5f, 70f));
-        data.add(new BarEntry(6f, 60f));
     }
 }
