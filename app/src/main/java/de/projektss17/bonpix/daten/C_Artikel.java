@@ -7,22 +7,22 @@ package de.projektss17.bonpix.daten;
 public class C_Artikel {
 
     private int id;
-    private double preis;
-    private String name, kategorie;
+    private double price;
+    private String name, categorie;
 
-    public C_Artikel(String name, double preis){
-        this(0, name, preis, null);
+    public C_Artikel(String name, double price){
+        this(0, name, price, null);
     }
 
-    public C_Artikel(String name, double preis, String kategorie){
-        this(0, name, preis, kategorie);
+    public C_Artikel(String name, double price, String categorie){
+        this(0, name, price, categorie);
     }
 
-    public C_Artikel(int id, String name, double preis, String kategorie){
+    public C_Artikel(int id, String name, double price, String categorie){
         this.id = id;
         this.name = name;
-        this.preis = preis;
-        this.kategorie = kategorie;
+        this.price = price;
+        this.categorie = categorie;
     }
 
     /**
@@ -45,16 +45,16 @@ public class C_Artikel {
      * Gibt den Preis des Artikels wieder
      * @return Preis des Artikels
      */
-    public double getPreis(){
-        return this.preis;
+    public double getPrice(){
+        return this.price;
     }
 
     /**
      * Gibt die Kategorie des Artikels wieder
      * @return Kategorie des Artikels
      */
-    public String getKategorie(){
-        return this.kategorie;
+    public String getCategorie(){
+        return this.categorie;
     }
 
     /**
@@ -75,25 +75,25 @@ public class C_Artikel {
 
     /**
      * Setzt den Preis des Artikels
-     * @param preis Neuer Preis des Artikels
+     * @param price Neuer Preis des Artikels
      */
-    public void setPreis(double preis){
-        this.preis = preis;
+    public void setPrice(double price){
+        this.price = price;
     }
 
     /**
      * Setzt die Kategorie des Artikels
-     * @param kategorie Neue Kategorie des Artikels
+     * @param categorie Neue Kategorie des Artikels
      */
-    public void setKategorie(String kategorie){
-        this.kategorie = kategorie;
+    public void setCategorie(String categorie){
+        this.categorie = categorie;
     }
 
     @Override
     public String toString() {
         return "\nID: " + this.getId() +
                 "\nNAME: " + this.getName() +
-                "\nPRICE: " + this.getPreis() +
-                "\nKATEGORIE: " + this.getKategorie();
+                "\nPRICE: " + this.getPrice() +
+                "\nKATEGORIE: " + this.getCategorie();
     }
 }

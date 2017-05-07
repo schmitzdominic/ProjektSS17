@@ -59,7 +59,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getInt(7) > 0,
                         cursor.getInt(8) > 0);
 
-                bon.setArtikel(this.getAllArtikelFromBon(db, bon));
+                bon.setArticles(this.getAllArticleFromBon(db, bon));
                 bonsList.add(bon);
 
             } while (cursor.moveToNext());
@@ -75,9 +75,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param bon Bon
      * @return ArrayList mit allen dazugehörigen Artikeln
      */
-    public ArrayList<C_Artikel> getAllArtikelFromBon(SQLiteDatabase db, C_Bon bon){
+    public ArrayList<C_Artikel> getAllArticleFromBon(SQLiteDatabase db, C_Bon bon){
 
-        ArrayList<C_Artikel> artikelList = new ArrayList<>();
+        ArrayList<C_Artikel> articleList = new ArrayList<>();
 
         String query = "SELECT a.artikelid, a.name, a.preis, a.kategorie FROM artikel a " +
                 "LEFT JOIN bonartikel ba ON ba.artikelid = a.artikelid " +
@@ -87,11 +87,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do {
-                artikelList.add(new C_Artikel(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getString(3)));
+                articleList.add(new C_Artikel(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getString(3)));
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return artikelList;
+        return articleList;
     }
 
     /**
@@ -119,7 +119,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param db Datenbank
      * @return ArrayList Mit C_Artikel objekten
      */
-    public ArrayList<C_Artikel> getAllArtikel(SQLiteDatabase db){
+    public ArrayList<C_Artikel> getAllArticle(SQLiteDatabase db){
 
         ArrayList<C_Artikel> list = new ArrayList<>();
         String query = "SELECT * FROM artikel";
@@ -139,7 +139,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param db Datenbank
      * @return HashMap mit allen Zuweißungen Integer, Integer
      */
-    public HashMap<Integer, Integer> getAllBonArtkel(SQLiteDatabase db){
+    public HashMap<Integer, Integer> getAllBonArticle(SQLiteDatabase db){
 
         HashMap<Integer, Integer> list = new HashMap<>();
         String query = "SELECT * FROM bonartikel";
@@ -211,16 +211,16 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Gibt einen Artikel zurück falls dieser exisitert
      * @param db Datenbank
-     * @param artikelName Artikel Name
-     * @param artikelPreis Artikel Preis
+     * @param articleName Artikel Name
+     * @param articlePrice Artikel Preis
      * @return C_Artikel wenn er existiert, null wenn nicht
      */
-    public C_Artikel getArtikel(SQLiteDatabase db, String artikelName, float artikelPreis){
+    public C_Artikel getArticle(SQLiteDatabase db, String articleName, float articlePrice){
 
-        if(checkIfArtikelExist(db, artikelName, artikelPreis)){
-            for(C_Artikel artikel : this.getAllArtikel(db)){
-                if(artikel.getName().equals(artikelName) && artikel.getPreis() == artikelPreis){
-                    return artikel;
+        if(checkIfArticleExist(db, articleName, articlePrice)){
+            for(C_Artikel article : this.getAllArticle(db)){
+                if(article.getName().equals(articleName) && article.getPrice() == articlePrice){
+                    return article;
                 }
             }
         }
@@ -233,12 +233,12 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param id ID des Artikels
      * @return C_Artikel wenn er existiert, null wenn nicht
      */
-    public C_Artikel getArtikel(SQLiteDatabase db, int id){
+    public C_Artikel getArticle(SQLiteDatabase db, int id){
 
-        if(checkIfArtikelExist(db, id)){
-            for(C_Artikel artikel : this.getAllArtikel(db)){
-                if(artikel.getId() == id){
-                    return artikel;
+        if(checkIfArticleExist(db, id)){
+            for(C_Artikel article : this.getAllArticle(db)){
+                if(article.getId() == id){
+                    return article;
                 }
             }
         }
@@ -255,37 +255,37 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         int ladenId;
 
-        if(this.checkIfLadenExist(db, bon.getLadenname())){
-            ladenId = this.getLaden(db, bon.getLadenname()).getId();
+        if(this.checkIfLadenExist(db, bon.getShopName())){
+            ladenId = this.getLaden(db, bon.getShopName()).getId();
         } else {
-            this.addLaden(db, new C_Laden(bon.getLadenname()));
-            ladenId = this.getLaden(db, bon.getLadenname()).getId();
+            this.addLaden(db, new C_Laden(bon.getShopName()));
+            ladenId = this.getLaden(db, bon.getShopName()).getId();
         }
 
-        values.put("bildpfad", bon.getBildpfad());
+        values.put("bildpfad", bon.getPath());
         values.put("ladenname", ladenId);
-        values.put("anschrift", bon.getAnschrift());
-        values.put("sonstigeinfos", bon.getSonstigeInfos());
-        values.put("datum", bon.getDatum());
-        values.put("garantieende", bon.getGarantieEnde());
-        values.put("favoriten", bon.getFavorite());
-        values.put("garantie", bon.getGarantie());
+        values.put("anschrift", bon.getAdress());
+        values.put("sonstigeinfos", bon.getOtherInformations());
+        values.put("datum", bon.getDate());
+        values.put("garantieende", bon.getGuaranteeEnd());
+        values.put("favoriten", bon.getFavourite());
+        values.put("garantie", bon.getGuarantee());
 
         db.insert("bon", null, values);
 
         int bonid = this.getAllBons(S.db).get(this.getAllBons(S.db).size()-1).getId();
 
         if(this.checkIfBonExist(db, bonid)){
-            for(C_Artikel a : bon.getArtikel()) {
-                this.addArtikel(db, a);
+            for(C_Artikel a : bon.getArticles()) {
+                this.addArticle(db, a);
             }
         }
 
         if(this.checkIfBonExist(db, bonid)){
-            for(C_Artikel bonArtikel : bon.getArtikel()){
-                for(C_Artikel dbArtikel : this.getAllArtikel(db)){
-                    if(bonArtikel.getName().equals(dbArtikel.getName()) && bonArtikel.getPreis() == dbArtikel.getPreis()){
-                        this.addBonArtikel(db, bonid, dbArtikel.getId());
+            for(C_Artikel bonArticle : bon.getArticles()){
+                for(C_Artikel dbArticle : this.getAllArticle(db)){
+                    if(bonArticle.getName().equals(dbArticle.getName()) && bonArticle.getPrice() == dbArticle.getPrice()){
+                        this.addBonArticle(db, bonid, dbArticle.getId());
                     }
                 }
             }
@@ -306,24 +306,24 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Fügt einen neuen Artikel hinzu
      * @param db Datenbank
-     * @param artikel Artikel
+     * @param article Artikel
      */
-    public void addArtikel(SQLiteDatabase db, C_Artikel artikel){
+    public void addArticle(SQLiteDatabase db, C_Artikel article){
 
         boolean dontmatch = true;
 
-        for(C_Artikel a : this.getAllArtikel(db)){
-            if(a.getName().equals(artikel.getName())){
+        for(C_Artikel a : this.getAllArticle(db)){
+            if(a.getName().equals(article.getName())){
                 dontmatch = false;
             }
         }
 
         if(dontmatch){
             ContentValues values = new ContentValues();
-            values.put("name", artikel.getName());
-            values.put("preis", artikel.getPreis());
-            if(artikel.getKategorie() != null){
-                values.put("kategorie", artikel.getKategorie());
+            values.put("name", article.getName());
+            values.put("preis", article.getPrice());
+            if(article.getCategorie() != null){
+                values.put("kategorie", article.getCategorie());
             }
             db.insert("artikel", null, values);
         }
@@ -333,14 +333,14 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * Fügt eine neue zuweißung Bon zu Artikel hinzu
      * @param db Datenbank
      * @param bonId BonId
-     * @param artikelId ArtikelId
+     * @param articleId ArtikelId
      */
-    public void addBonArtikel(SQLiteDatabase db, int bonId, int artikelId){
+    public void addBonArticle(SQLiteDatabase db, int bonId, int articleId){
 
         boolean dontmatch = true;
 
-        for(int a : this.getAllBonArtkel(db).keySet()){
-            if(a == bonId && this.getAllBonArtkel(db).get(a) == artikelId){
+        for(int a : this.getAllBonArticle(db).keySet()){
+            if(a == bonId && this.getAllBonArticle(db).get(a) == articleId){
                 dontmatch = false;
             }
         }
@@ -348,7 +348,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         if(dontmatch){
             ContentValues values = new ContentValues();
             values.put("bonid", bonId);
-            values.put("artikelid", artikelId);
+            values.put("artikelid", articleId);
             db.insert("bonartikel", null, values);
         }
     }
@@ -356,18 +356,18 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Updated einen Artikel
      * @param db Datenbank
-     * @param artikel Artikel
+     * @param article Artikel
      */
-    public void updateArtikel(SQLiteDatabase db, C_Artikel artikel){
+    public void updateArticle(SQLiteDatabase db, C_Artikel article){
 
         ContentValues values = new ContentValues();
 
-        values.put("artikelid", artikel.getId());
-        values.put("name", artikel.getName());
-        values.put("preis", artikel.getPreis());
-        values.put("kategorie", artikel.getKategorie());
+        values.put("artikelid", article.getId());
+        values.put("name", article.getName());
+        values.put("preis", article.getPrice());
+        values.put("kategorie", article.getCategorie());
 
-        db.update("artikel", values, "artikelid="+artikel.getId(), null);
+        db.update("artikel", values, "artikelid="+article.getId(), null);
     }
 
     /**
@@ -396,35 +396,35 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         int ladenId;
 
-        if(this.checkIfLadenExist(db, bon.getLadenname())){
-            ladenId = this.getLaden(db, bon.getLadenname()).getId();
+        if(this.checkIfLadenExist(db, bon.getShopName())){
+            ladenId = this.getLaden(db, bon.getShopName()).getId();
         } else {
-            this.addLaden(db, new C_Laden(bon.getLadenname()));
-            ladenId = this.getLaden(db, bon.getLadenname()).getId();
+            this.addLaden(db, new C_Laden(bon.getShopName()));
+            ladenId = this.getLaden(db, bon.getShopName()).getId();
         }
 
         values.put("bonid", bon.getId());
-        values.put("bildpfad", bon.getBildpfad());
+        values.put("bildpfad", bon.getPath());
         values.put("ladenname", ladenId);
-        values.put("anschrift", bon.getAnschrift());
-        values.put("sonstigeinfos", bon.getSonstigeInfos());
-        values.put("datum", bon.getDatum());
-        values.put("garantieende", bon.getGarantieEnde());
-        values.put("favoriten", bon.getFavorite());
-        values.put("garantie", bon.getGarantie());
+        values.put("anschrift", bon.getAdress());
+        values.put("sonstigeinfos", bon.getOtherInformations());
+        values.put("datum", bon.getDate());
+        values.put("garantieende", bon.getGuaranteeEnd());
+        values.put("favoriten", bon.getFavourite());
+        values.put("garantie", bon.getGuarantee());
 
         db.update("bon", values, "bonid="+bon.getId(), null);
 
-        for(C_Artikel a : bon.getArtikel()) {
-            this.addArtikel(db, a);
+        for(C_Artikel a : bon.getArticles()) {
+            this.addArticle(db, a);
         }
 
         db.delete("bonartikel", "bonid="+bon.getId(), null);
 
-        for(C_Artikel bonArtikel : bon.getArtikel()){
-            for(C_Artikel dbArtikel : this.getAllArtikel(db)){
-                if(bonArtikel.getName().equals(dbArtikel.getName()) && bonArtikel.getPreis() == dbArtikel.getPreis()){
-                    this.addBonArtikel(db, bon.getId(), dbArtikel.getId());
+        for(C_Artikel bonArticle : bon.getArticles()){
+            for(C_Artikel dbArticle : this.getAllArticle(db)){
+                if(bonArticle.getName().equals(dbArticle.getName()) && bonArticle.getPrice() == dbArticle.getPrice()){
+                    this.addBonArticle(db, bon.getId(), dbArticle.getId());
                 }
             }
         }
@@ -434,13 +434,13 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Überprüft ob ein Artikel bereits existiert
      * @param db Datenbank
-     * @param artikelName Artikel Name
-     * @param artikelPreis Artikel Preis
+     * @param articleName Artikel Name
+     * @param articlePreis Artikel Preis
      * @return true - existiert, false - existiert nicht
      */
-    public boolean checkIfArtikelExist(SQLiteDatabase db, String artikelName, float artikelPreis){
-        for(C_Artikel artikel : this.getAllArtikel(db)){
-            if(artikel.getName().equals(artikelName) && artikel.getPreis() == artikelPreis) {
+    public boolean checkIfArticleExist(SQLiteDatabase db, String articleName, float articlePreis){
+        for(C_Artikel article : this.getAllArticle(db)){
+            if(article.getName().equals(articleName) && article.getPrice() == articlePreis) {
                 return true;
             }
         }
@@ -453,9 +453,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param id Id des Artikels
      * @return true - existiert, false - existiert nicht
      */
-    public boolean checkIfArtikelExist(SQLiteDatabase db, int id){
-        for(C_Artikel artikel : this.getAllArtikel(db)){
-            if(artikel.getId() == id){
+    public boolean checkIfArticleExist(SQLiteDatabase db, int id){
+        for(C_Artikel article : this.getAllArticle(db)){
+            if(article.getId() == id){
                 return true;
             }
         }
@@ -520,7 +520,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public void removeLaden(SQLiteDatabase db, int id){
         if(this.checkIfLadenExist(db, id)){
             for(C_Bon bon : this.getAllBons(db)){
-                if(bon.getLadenname().equals(this.getLaden(db, id).getName())){
+                if(bon.getShopName().equals(this.getLaden(db, id).getName())){
                     this.removeBon(db, bon.getId());
                 }
             }
@@ -565,8 +565,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param db Datenbank
      * @param id ID des Artikels
      */
-    public void removeArtikel(SQLiteDatabase db, int id){
-        if(this.checkIfArtikelExist(db, id)){
+    public void removeArticle(SQLiteDatabase db, int id){
+        if(this.checkIfArticleExist(db, id)){
             db.delete("artikel", "artikelid="+id, null);
             db.delete("bonartikel", "artikelid="+id, null);
         }
@@ -588,7 +588,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         }
 
         Log.e("######### DB ARTIKEL","#########################################");
-        for(C_Artikel artikel : S.dbHandler.getAllArtikel(S.db)){
+        for(C_Artikel artikel : S.dbHandler.getAllArticle(S.db)){
             Log.e("######### ARTIKEL: ", artikel.toString() + "\n---------------------");
         }
 

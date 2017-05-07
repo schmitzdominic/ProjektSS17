@@ -104,8 +104,6 @@ public class A_Main extends AppCompatActivity {
         // Settings Instance
         S.prefs = new C_Preferences(this);
 
-        S.dbHandler.removeLaden(S.db, "Hansmarkt");
-
         S.dbHandler.showLogAllDBEntries();
 
         // Beim ersten Start der App

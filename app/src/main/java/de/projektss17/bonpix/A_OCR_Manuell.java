@@ -16,7 +16,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,14 +29,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 
 import de.projektss17.bonpix.daten.C_Artikel;
-import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
 
 
@@ -594,9 +591,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * @param anschrift Anschrift
      * @param datum Datum
      * @param sonstiges Sonstiges
-     * @param articles Array mit Articles
+     * @param artikel Array mit Articles
      */
-    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Artikel[] articles){
+    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Artikel[] artikel){
 
 
         if(imageUri != null) {
@@ -622,9 +619,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
             this.sonstigesText = sonstiges;
         }
 
-        if(articles != null){
-            for(C_Artikel article : articles){
-                this.inflateEditRow(article.getName(), ""+article.getPreis());
+        if(artikel != null){
+            for(C_Artikel a : artikel){
+                this.inflateEditRow(a.getName(), ""+a.getPrice());
             }
             this.totalPrice.setText(String.format("%s", getFinalPrice()));
         }

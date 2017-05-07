@@ -9,139 +9,139 @@ import java.util.ArrayList;
 public class C_Bon {
 
     private int id;
-    private String Bildpfad,
-            Ladenname,
-            Anschrift,
-            SonstigeInfos,
-            Datum,
-            garantieEnde;
-    private ArrayList<C_Artikel> artikel;
-    private boolean favorite,
-            garantie;
+    private String path,
+            shopName,
+            adress,
+            otherInformations,
+            date,
+            guaranteeEnd;
+    private ArrayList<C_Artikel> articles;
+    private boolean favourite,
+            guarantee;
 
-    public C_Bon(String Bildpfad, String Ladenname, String Anschrift, String SonstigeInfos,
-                 String Datum, String garantieEnde, boolean favorite, boolean garantie, ArrayList<C_Artikel> artikel) {
-        this(0, Bildpfad, Ladenname, Anschrift, SonstigeInfos, Datum, garantieEnde, favorite, garantie, artikel);
+    public C_Bon(String path, String shopName, String adress, String otherInformations,
+                 String date, String guaranteeEnd, boolean favourite, boolean guarantee, ArrayList<C_Artikel> articles) {
+        this(0, path, shopName, adress, otherInformations, date, guaranteeEnd, favourite, guarantee, articles);
     }
 
-    public C_Bon(int id, String Bildpfad, String Ladenname, String Anschrift, String SonstigeInfos,
-                 String Datum, String garantieEnde, boolean favorite, boolean garantie) {
-        this(id, Bildpfad, Ladenname, Anschrift, SonstigeInfos, Datum, garantieEnde, favorite, garantie, null);
+    public C_Bon(int id, String path, String shopName, String adress, String otherInformations,
+                 String date, String guaranteeEnd, boolean favourite, boolean guarantee) {
+        this(id, path, shopName, adress, otherInformations, date, guaranteeEnd, favourite, guarantee, null);
     }
 
-    public C_Bon(int id, String Bildpfad, String Ladenname, String Anschrift, String SonstigeInfos,
-                 String Datum, String garantieEnde, boolean favorite, boolean garantie, ArrayList<C_Artikel> artikel){
+    public C_Bon(int id, String path, String shopName, String adress, String otherInformations,
+                 String date, String guaranteeEnd, boolean favourite, boolean guarantee, ArrayList<C_Artikel> articles){
         this.id = id;
-        this.Bildpfad = Bildpfad;
-        this.Ladenname = Ladenname;
-        this.Anschrift = Anschrift;
-        this.SonstigeInfos = SonstigeInfos;
-        this.Datum = Datum;
-        this.garantieEnde = garantieEnde;
-        this.favorite = favorite;
-        this.garantie = garantie;
-        this.artikel = artikel;
+        this.path = path;
+        this.shopName = shopName;
+        this.adress = adress;
+        this.otherInformations = otherInformations;
+        this.date = date;
+        this.guaranteeEnd = guaranteeEnd;
+        this.favourite = favourite;
+        this.guarantee = guarantee;
+        this.articles = articles;
     }
 
     public int getId(){
         return this.id;
     }
 
-    public String getBildpfad() {
-        return Bildpfad;
+    public String getPath() {
+        return path;
     }
 
-    public String getLadenname() {
-        return Ladenname;
+    public String getShopName() {
+        return shopName;
     }
 
-    public String getAnschrift() {
-        return Anschrift;
+    public String getAdress() {
+        return adress;
     }
 
-    public String getSonstigeInfos() {
-        return SonstigeInfos;
+    public String getOtherInformations() {
+        return otherInformations;
     }
 
-    public String getDatum() {
-        return Datum;
+    public String getDate() {
+        return date;
     }
 
-    public boolean getFavorite(){
-        return this.favorite;
+    public boolean getFavourite(){
+        return this.favourite;
     }
 
-    public boolean getGarantie(){
-        return this.garantie;
+    public boolean getGuarantee(){
+        return this.guarantee;
     }
 
-    public String getGarantieEnde(){
-        return this.garantieEnde;
+    public String getGuaranteeEnd(){
+        return this.guaranteeEnd;
     }
 
-    public ArrayList<C_Artikel> getArtikel(){
-        return this.artikel;
+    public ArrayList<C_Artikel> getArticles(){
+        return this.articles;
     }
 
     public void setId(int id){
         this.id = id;
     }
 
-    public void setBildpfad(String bildpfad) {
-        Bildpfad = bildpfad;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    public void setLadenname(String ladenname) {
-        Ladenname = ladenname;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
-    public void setAnschrift(String anschrift) {
-        Anschrift = anschrift;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
-    public void setSonstigeInfos(String sonstigeInfos) {
-        SonstigeInfos = sonstigeInfos;
+    public void setOtherInformations(String otherInformations) {
+        this.otherInformations = otherInformations;
     }
 
-    public void setDatum(String datum) {
-        Datum = datum;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public void setFavorite(boolean favorite){
-        this.favorite = favorite;
+    public void setFavourite(boolean favourite){
+        this.favourite = favourite;
     }
 
-    public void setGarantie(boolean garantie){
-        this.garantie = garantie;
+    public void setGuarantee(boolean guarantee){
+        this.guarantee = guarantee;
     }
 
-    public void setGarantieEnde(String garantieEnde){
-        this.garantieEnde = garantieEnde;
+    public void setGuaranteeEnd(String guaranteeEnd){
+        this.guaranteeEnd = guaranteeEnd;
     }
 
-    public void setArtikel(ArrayList<C_Artikel> artikel){
-        this.artikel = artikel;
+    public void setArticles(ArrayList<C_Artikel> articles){
+        this.articles = articles;
     }
 
     @Override
     public String toString() {
         String out = "ID: "+ this.id + ", \n" +
-                "Bildpfad: " + this.getBildpfad() + ", \n" +
-                "Ladenname: " + this.getLadenname() + ", \n" +
-                "Anschrift: " + this.getAnschrift() + ", \n" +
-                "Sonst Infos: " + this.getSonstigeInfos() + ", \n" +
-                "Datum: " + this.getDatum() + ", \n" +
-                "Garantie Ende: " + this.getGarantieEnde() + ", \n" +
-                "Favorite: " + this.getFavorite() + ", \n" +
-                "Garantie: " +this.getGarantie();
+                "Path: " + this.getPath() + ", \n" +
+                "Shopname: " + this.getShopName() + ", \n" +
+                "Adress: " + this.getAdress() + ", \n" +
+                "Other Informations: " + this.getOtherInformations() + ", \n" +
+                "Date: " + this.getDate() + ", \n" +
+                "Guaranteeend: " + this.getGuaranteeEnd() + ", \n" +
+                "Favourite: " + this.getFavourite() + ", \n" +
+                "Guarantee: " +this.getGuarantee();
 
-        if(this.artikel != null){
-            out += "\nArtikel:";
-            for(C_Artikel artikel : this.getArtikel()){
-                out += "\n\t" + artikel.getName() + " - " + artikel.getPreis() + " - " + artikel.getKategorie();
+        if(this.articles != null){
+            out += "\nArticles:";
+            for(C_Artikel artikel : this.getArticles()){
+                out += "\n\t" + artikel.getName() + " - " + artikel.getPrice() + " - " + artikel.getCategorie();
             }
         } else {
-            out += "\nKEINE ARTIKEL GEFUNDEN!";
+            out += "\nNO ARTICLES FOUND!";
         }
         return out;
     }
