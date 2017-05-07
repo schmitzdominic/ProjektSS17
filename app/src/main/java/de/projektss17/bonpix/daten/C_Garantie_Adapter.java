@@ -37,8 +37,8 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
             deleteBtn = (ImageView) view.findViewById(R.id.garantie_view_garantie_delete_button);
 
 
-            // TODO: Derzeit ist das "REWE" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
-            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.icon_laden_rewe_24dp);
+            // TODO: Derzeit ist das "Aldi" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
+            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.icon_laden_aldi_24dp);
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(view.getResources(), imageBitmap);
             roundedBitmapDrawable.setCircular(true);
             roundedBitmapDrawable.setAntiAlias(true);
@@ -66,7 +66,7 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
     }
 
     @Override
-    public void onBindViewHolder(C_Garantie_Adapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(C_Garantie_Adapter.MyViewHolder holder, final int position) {
         C_Bons bon = bonListe.get(position);
 
         //ToDo später Icon dynamisch zuweisbar
@@ -85,8 +85,8 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
                 //ToDo Implementieren, wenn Datenbank angebunden
                 //bon.setGarantie(false);
                 //s.dbHandler.updateBon(s.db, bon);
-                //notify();
-                Log.e("Delete", "test");
+                notifyItemRemoved(position);
+                Log.i("Delete", "test");
             }
         });
 
