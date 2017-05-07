@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +25,17 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
     private List<C_Bons> bonListe;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView garantieBegin, garantieEnde;
-        public ImageView icon;
+        public TextView warrantyBegin, warrantyEnd;
+        public ImageView icon, deleteBtn;
+
 
         public MyViewHolder(View view){
             super(view);
             icon = (ImageView) view.findViewById(R.id.garantie_view_laden_bild);
-            garantieBegin = (TextView) view.findViewById(R.id.garantie_view_garantiebeginn);
-            garantieEnde = (TextView) view.findViewById(R.id.garantie_view_zusatz_garantieende);
+            warrantyBegin = (TextView) view.findViewById(R.id.garantie_view_garantiebeginn);
+            warrantyEnd = (TextView) view.findViewById(R.id.garantie_view_zusatz_garantieende);
+            deleteBtn = (ImageView) view.findViewById(R.id.garantie_view_garantie_delete_button);
+
 
             // TODO: Derzeit ist das "REWE" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
             Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.icon_laden_rewe_24dp);
@@ -57,6 +61,7 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.box_garantie_view, parent, false);
+
         return new MyViewHolder(itemView);
     }
 
@@ -66,8 +71,27 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
 
         //ToDo später Icon dynamisch zuweisbar
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
-        holder.garantieBegin.setText("Garantie Anfang: "+ bon.getDatum());
-        holder.garantieEnde.setText("Garantie Ende: 12.03.3079"); // TODO DB IMPLEMENTIEREN!
+        holder.warrantyBegin.setText("Garantie Anfang: "+ bon.getDatum());
+        holder.warrantyEnd.setText("Garantie Ende: 12.03.3079"); // TODO DB IMPLEMENTIEREN!
+
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+
+
+            /**
+             * On Click Methode für onClickListener
+             * @param v
+             */
+            public void onClick(View v) {
+                //ToDo Implementieren, wenn Datenbank angebunden
+                //bon.setGarantie(false);
+                //s.dbHandler.updateBon(s.db, bon);
+                //notify();
+                Log.e("Delete", "test");
+            }
+        });
+
+
+
     }
 
 
