@@ -322,8 +322,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put("name", article.getName());
             values.put("preis", article.getPrice());
-            if(article.getCategorie() != null){
-                values.put("kategorie", article.getCategorie());
+            if(article.getCategory() != null){
+                values.put("kategorie", article.getCategory());
             }
             db.insert("artikel", null, values);
         }
@@ -365,7 +365,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("artikelid", article.getId());
         values.put("name", article.getName());
         values.put("preis", article.getPrice());
-        values.put("kategorie", article.getCategorie());
+        values.put("kategorie", article.getCategory());
 
         db.update("artikel", values, "artikelid="+article.getId(), null);
     }

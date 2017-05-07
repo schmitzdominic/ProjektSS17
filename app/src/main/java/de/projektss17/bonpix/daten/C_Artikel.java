@@ -8,21 +8,21 @@ public class C_Artikel {
 
     private int id;
     private double price;
-    private String name, categorie;
+    private String name, category;
 
     public C_Artikel(String name, double price){
         this(0, name, price, null);
     }
 
-    public C_Artikel(String name, double price, String categorie){
-        this(0, name, price, categorie);
+    public C_Artikel(String name, double price, String category){
+        this(0, name, price, category);
     }
 
-    public C_Artikel(int id, String name, double price, String categorie){
+    public C_Artikel(int id, String name, double price, String category){
         this.id = id;
         this.name = name;
         this.price = price;
-        this.categorie = categorie;
+        this.category = category;
     }
 
     /**
@@ -53,8 +53,8 @@ public class C_Artikel {
      * Gibt die Kategorie des Artikels wieder
      * @return Kategorie des Artikels
      */
-    public String getCategorie(){
-        return this.categorie;
+    public String getCategory(){
+        return this.category;
     }
 
     /**
@@ -83,10 +83,10 @@ public class C_Artikel {
 
     /**
      * Setzt die Kategorie des Artikels
-     * @param categorie Neue Kategorie des Artikels
+     * @param category Neue Kategorie des Artikels
      */
-    public void setCategorie(String categorie){
-        this.categorie = categorie;
+    public void setCategory(String category){
+        this.category = category;
     }
 
     @Override
@@ -94,6 +94,6 @@ public class C_Artikel {
         return "\nID: " + this.getId() +
                 "\nNAME: " + this.getName() +
                 "\nPRICE: " + this.getPrice() +
-                "\nKATEGORIE: " + this.getCategorie();
+                "\nKATEGORIE: " + this.getCategory();
     }
 }
