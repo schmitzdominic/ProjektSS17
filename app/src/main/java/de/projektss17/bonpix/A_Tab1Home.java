@@ -48,7 +48,7 @@ public class A_Tab1Home extends Fragment {
     private PieChart pieChart;
     private ArrayList<PieEntry> data = new ArrayList<>();
     private ArrayList<String> label = new ArrayList<>();;
-    private BarChart bChart;
+    private BarChart bChart, bChart3;
     private ArrayList<BarEntry> BARENTRY;
     private ArrayList<IBarDataSet> BarEntryLabels;
     BarDataSet Bardataset;
@@ -122,12 +122,36 @@ public class A_Tab1Home extends Fragment {
 
         bChart.setTouchEnabled(false);
         bChart.setData(data);
+
+
+        //Balkendiagramm
+        bChart3 = (BarChart) rootView.findViewById(R.id.chart3);
+
+
+        ArrayList<BarEntry> yVals3 = new ArrayList<BarEntry>();
+
+        for (int i = (int) 0; i < 10 + 1; i++) {
+            float val = (float) (Math.random());
+            yVals3.add(new BarEntry(i, val));
+        }
+
+        BarDataSet set3;
+
+        set3 = new BarDataSet(yVals3, "The year 2018");
+        set3.setColors(ColorTemplate.MATERIAL_COLORS);
+
+        ArrayList<IBarDataSet> dataSets3 = new ArrayList<IBarDataSet>();
+        dataSets3.add(set3);
+
+        BarData data3 = new BarData(dataSets3);
+
+        data3.setValueTextSize(10f);
+        data3.setBarWidth(0.9f);
+
+        bChart3.setTouchEnabled(false);
+        bChart3.setData(data3);
+
         return rootView;
-
-
-
-
-
 
 
 
