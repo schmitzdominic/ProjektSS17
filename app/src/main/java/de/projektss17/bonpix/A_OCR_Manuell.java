@@ -384,16 +384,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         negPos = true;
 
-        if(preis != null && !preis.isEmpty()){
-            if(Double.parseDouble(preis) < 0){
-                negPos = false;
-            }
-        }
-
         String preisArray[] = new String[2];
 
         // Wenn der Preis nicht leer ist dann setze ihn
         if (preis != null && !preis.isEmpty()){
+
+            if(Double.parseDouble(preis) < 0){
+                negPos = false;
+            }
 
             if(Double.parseDouble(preis.replace(",",".")) < 0){
                 positiveNegativeButton.performClick();
