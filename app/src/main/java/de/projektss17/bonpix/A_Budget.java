@@ -30,7 +30,7 @@ public class A_Budget extends AppCompatActivity {
     private ItemTouchHelper swipper;
 
 
-    /**
+    /** Content für diese Activity wird erstellt / gebaut / vorbereitet
      * @param savedInstanceState
      */
     @Override
@@ -43,16 +43,18 @@ public class A_Budget extends AppCompatActivity {
 
 
         // LAYOUT - Implementierung aller Layouts
-        //------------------------------------------------------------
         recyclerView = (RecyclerView) findViewById(R.id.view_budget); // Recycler Liste
         bAdapter = new C_Budget_CardView_Adapter(budgetList);          // CardView
 
 
         // FAB - Drücken öffnet ein Dialog mit Eingabefeldern
-        //---------------------------------------------------
         this.fab = (FloatingActionButton) findViewById(R.id.budget_fab);    //Floating Action Button
         fab.setOnClickListener(new View.OnClickListener() {
 
+            /**
+             * Funktion die beim drücken des FAB ausgeführt wird
+             * @param v Übergabe einer view - In diesem Fall die View für die Card View
+             */
             @Override
             public void onClick(View v) {
 
@@ -76,8 +78,17 @@ public class A_Budget extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // CARD VIEW wird befüllt wenn auf OK gedrückt wird
-                        addItem(budgetContent.getText().toString(),
+                        // CARD VIEW wird befüllt wenn EditTexts alle befült wurden - ansonsten Abbruch des AlertDialog
+                        if(budgetContent.getText()== null || budgetContent.getText().toString().isEmpty())
+                            dialog.dismiss();
+                        else if(titleContent.getText()== null || titleContent.getText().toString().isEmpty())
+                            dialog.dismiss();
+                        else if(yearContent.getText()== null || yearContent.getText().toString().isEmpty())
+                            dialog.dismiss();
+                        else if(monthContent.getText()== null || monthContent.getText().toString().isEmpty())
+                            dialog.dismiss();
+                        else
+                            addItem(budgetContent.getText().toString(),
                                 budgetContent.getText().toString(),
                                 monthContent.getText().toString(),
                                 titleContent.getText().toString(),
@@ -88,27 +99,24 @@ public class A_Budget extends AppCompatActivity {
             }
         });
 
-
         // SWIPPER - Implementierung des Swipper-Funktion
-        //------------------------------------------------------------
         swipper = new ItemTouchHelper(createHelperCallBack());      // ItemTouch -> Swipper
         swipper.attachToRecyclerView(recyclerView);
 
     }
 
 
-
     /**
-     *  SWIPPER -> Created by Johanns on 02.05.2017.
+     * Created by Johanns am 30.04.2017
+     *
+     * CREATE HELPER CALLBACK - Funktion zum Swippen (bewegen od. löschen von Items durch swippen)
+     * @return ItemTouchHelper (Swipper-Funktion) wird zurückgegeben
      */
-    //-------------------------------------------------------------------------------------------
-    // ---------------------------------- ITEM SWIPPER BEGINN -----------------------------------
-
-    // CREATE HELPER CALLBACK - Funktion zum Swippen (bewegen od. löschen von Items durch swippen)
     private ItemTouchHelper.Callback createHelperCallBack(){
 
         return new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
                         ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+
 
                     @Override
                     public  boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
@@ -130,8 +138,11 @@ public class A_Budget extends AppCompatActivity {
                 };
     }
 
-
-    // MOVE ITEM - Bewegen eines Items in der RecyclerView (Swip nach Oben oder Unten)
+    /**
+     * MOVE ITEM - Bewegen eines Items in der RecyclerView (Swip nach Oben oder Unten)
+     * @param oldPos Alte Postion der View wird übergeben
+     * @param newPos Neue Postition der View wird übergeben
+     */
     private void moveItem(int oldPos, int newPos){
 
         C_Budget item = (C_Budget)budgetList.get(oldPos);
@@ -143,7 +154,10 @@ public class A_Budget extends AppCompatActivity {
     }
 
 
-    // DELETE ITEM - Löschen eines Items in der RecyclerView (Swip nach Links)
+    /**
+     * DELETE ITEM - Löschen eines Items in der RecyclerView (Swip nach Links)
+     * @param position Position der jeweiligen View wird übergeben
+     */
     private void deleteItem(int position){
 
         /*
@@ -157,7 +171,14 @@ public class A_Budget extends AppCompatActivity {
     }
 
 
-    // ADD ITEM - Befüllung der RecyclerView mit EINER Datenmenge
+    /**
+     * ADD ITEM - Befüllung der RecyclerView mit EINER Datenmenge
+     * @param budgetMax Übergabe des eingegeben Budget-Betrags
+     * @param budgetCurrently Übergabe des budgetMax -> Ändert sich wenn DB angehängt wird
+     * @param turnus Übergabe des Monats
+     * @param title Übergabe des Titels
+     * @param year Übergabe des Jahres
+     */
     private void addItem(String budgetMax, String budgetCurrently, String turnus, String title, String year){
 
         /*
@@ -181,18 +202,14 @@ public class A_Budget extends AppCompatActivity {
         bAdapter.notifyDataSetChanged();
 
     }
-    // ----------------------------------ITEM SWIPPER ENDE --------------------------------------
-    //-------------------------------------------------------------------------------------------
-
 
 
     /**
-     *  TESTDATEN -> Created by Johanns on 30.04.2017.
+     * RANDOM NUMBER - Zufällige Auswahl eines Int zwischen Max und Min
+     * @param max Übergabe der Obergrenze
+     * @param min Übergabe der Untergrenze
+     * @return Rückgabe einer Random Zahl zwischen Max & Min
      */
-    // -------------------------------------------------------------------------------------------
-    // ------------------------------------- TESTDATEN BEGINN ------------------------------------
-
-    // RANDOM NUMBER - Zufällige Auswahl eines Int zwischen Max und Min
     public int randomNumber(int max, int min){
 
         Random rand = new Random();
@@ -201,7 +218,11 @@ public class A_Budget extends AppCompatActivity {
     }
 
 
-    // RANDOM TITLE - Zufällige Auswahl eines Titels
+    /**
+     * RANDOM TITLE - Zufällige Auswahl eines Titels
+     * @param random Übergabe einer Randomzahl
+     * @return Rückgabe eines Titels je nach Randomzahl
+     */
     public String randomTitle(int random){
 
         String randomTitle = "";
@@ -225,7 +246,11 @@ public class A_Budget extends AppCompatActivity {
     }
 
 
-    // RANDOM MONTH - Zufällige Auswahl eines Monats
+    /**
+     * RANDOM MONTH - Zufällige Auswahl eines Monats
+      * @param random Übergabe einer Randomzahl
+     * @return Rückgabe eines Monats je nach Randomzahl
+     */
     public String randomMonth (int random){
 
         String randomMonth = "";
@@ -261,11 +286,14 @@ public class A_Budget extends AppCompatActivity {
     }
 
 
-    // CALCULATE PERCANTAGE - Berechnen des Prozentsatzes
+    /**
+     * CALCULATE PERCANTAGE - Berechnen des Prozentsatzes
+     * @param max Übergabe einer Obergrenze
+     * @param currently Übergabe eines gegenwärtigen Betrags
+     * @return Rückgabe des Prozentsatzes von Currently zu Max
+     */
     private int percentageCalculator(int max, int currently){
         return (int)(currently*100/max);
     }
 
-    // ------------------------------------ TESTDATEN ENDE ---------------------------------------
-    // -------------------------------------------------------------------------------------------
 }
