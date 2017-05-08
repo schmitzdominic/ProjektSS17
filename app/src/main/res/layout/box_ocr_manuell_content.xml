@@ -43,11 +43,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/ocr_manuell_spinner_laden"
-                android:layout_alignEnd="@+id/ocr_manuell_spinner_laden"
-                android:layout_alignRight="@+id/ocr_manuell_spinner_laden"
                 android:layout_alignTop="@+id/ocr_manuell_image_ocr"
                 android:layout_marginLeft="13dp"
                 android:layout_marginStart="13dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_alignEnd="@+id/ocr_manuell_spinner_laden"
+                android:layout_alignRight="@+id/ocr_manuell_spinner_laden"
                 android:layout_toRightOf="@+id/ocr_manuell_image_ocr"
                 android:background="?android:attr/colorBackground"
                 android:text="@string/a_ocr_manuell_bildauswahl" />
@@ -194,7 +196,7 @@
             android:onClick="onAddNewClicked"
             android:paddingLeft="8dp"
             android:background="?android:attr/colorBackground"
-            android:text="@string/button_add_new_text" />
+            android:text="@string/a_ocr_manuell_button_add_new" />
     </LinearLayout>
     </ScrollView>
 </RelativeLayout>

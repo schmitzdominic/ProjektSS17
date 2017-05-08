@@ -22,7 +22,8 @@ import de.projektss17.bonpix.R;
 
 public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHolder> {
 
-    private List<C_Bons> bonsList;
+
+    private List<C_Bon> bonsList;
     private int row_index = -1;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,7 +52,7 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
      * Constructor
      * @param bonsList
      */
-    public C_Bons_Adapter(List<C_Bons> bonsList){
+    public C_Bons_Adapter(List<C_Bon> bonsList){
         this.bonsList = bonsList;
     }
 
@@ -63,7 +64,7 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position){
-        final C_Bons bon = bonsList.get(position);
+        final C_Bon bon = bonsList.get(position);
         holder.title.setText(bon.getBildpfad());
         holder.content.setText(bon.getLadenname());
         //Loading the FavoriteList

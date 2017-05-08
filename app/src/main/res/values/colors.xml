@@ -15,9 +15,12 @@
     <color name="colorMenueIcon">#757575</color>
 
     <!-- Linien Farbe -->
-    <color name="linie">#CCCCCC</color>
+    <color name="linie">#cccccc</color>
 
     <!-- star-outline.xml Farbe -->
     <color name="star">#9E9E9E</color>
+
+    <!-- Standard Farben -->
+    <color name="positiv">#388e3c</color>
 
 </resources>
