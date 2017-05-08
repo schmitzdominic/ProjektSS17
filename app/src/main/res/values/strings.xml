@@ -62,7 +62,7 @@
     <string name="a_ocr_manuell_date_button_set">Set Date</string>
     <string name="a_ocr_manuell_date_selected"/>
 
-    <string name="a_ocr_manuell_hint_anschrift">Anschrift (optional)</string>
+    <string name="a_ocr_manuell_hint_anschrift">adress (optional)</string>
     <string name="a_ocr_manuell_hint_sonstiges">Sonstige Infos (optional)</string>
     <string name="a_ocr_manuell_hint_sonstige_infos">Sonstige Infos</string>
 

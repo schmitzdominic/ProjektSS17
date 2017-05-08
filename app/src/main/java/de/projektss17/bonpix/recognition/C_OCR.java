@@ -21,7 +21,7 @@ import de.projektss17.bonpix.auswerter.Default;
 public class C_OCR {
 
     private Context context;
-    private C_Laden laden;
+    private C_MatchLaden laden;
     private String ladenName, adresse, recognizedText;
     private ArrayList<String> produkte, preise;
     private Resources res;
@@ -30,7 +30,7 @@ public class C_OCR {
     public C_OCR(Context context){
         this.context = context;
         this.res = this.context.getResources();
-        this.laden = new C_Laden(this.context);
+        this.laden = new C_MatchLaden(this.context);
     }
 
     /**
