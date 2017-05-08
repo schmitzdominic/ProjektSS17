@@ -25,7 +25,6 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -61,7 +60,7 @@ public class A_Tab1Home extends Fragment {
         View rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.view_home_bons);
         mAdapter = new C_Bons_Adapter(bonsList);
-        prepareBonData();
+        prepareHomeData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(
@@ -152,62 +151,14 @@ public class A_Tab1Home extends Fragment {
         bChart3.setData(data3);
 
         return rootView;
-
-
-
-/*
-        barChart = (BarChart) rootView.findViewById(R.id.chart2);
-
-        BARENTRY = new ArrayList<>();
-        BarEntryLabels = new ArrayList<IBarDataSet>();
-
-        AddValuesToBARENTRY();
-        AddValuesToBarEntryLabels();
-
-        Bardataset = new BarDataSet(BARENTRY, "Projects");
-
-
-        Bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
-
-        barChart.setData(BarDaten);
-
-        barChart.animateY(3000);
-
-
-
-        return rootView;
-
-    }
-
-    public void AddValuesToBARENTRY(){
-
-        BARENTRY.add(new BarEntry(2f, 0));
-        BARENTRY.add(new BarEntry(4f, 1));
-        BARENTRY.add(new BarEntry(6f, 2));
-        BARENTRY.add(new BarEntry(8f, 3));
-        BARENTRY.add(new BarEntry(7f, 4));
-        BARENTRY.add(new BarEntry(3f, 5));
-
-    }
-
-    public void AddValuesToBarEntryLabels(){
-
-        BarEntryLabels.add("Januar");
-        BarEntryLabels.add("Februar");
-        BarEntryLabels.add("Maerz");
-        BarEntryLabels.add("April");
-        BarEntryLabels.add("Mai");
-        BarEntryLabels.add("Juni");
-
-    }
-    */
     }
 
 
-    private void prepareBonData(){
-        for(int i = 0; i < 3; i++) {
-            C_Bons bons = new C_Bons("TEST"+i, "TEST"+(char)(i+65), "Test", "Test", "Test");
-            bonsList.add(bons);
-        }
+    private void prepareHomeData(){
+        bonsList.clear();
+            for (int i = 0; i < 3; i++) {
+                C_Bons bons = new C_Bons("TEST" + i, "TEST" + (char) (i + 65), "Test", "Test", "Test");
+                bonsList.add(bons);
+            }
     }
 }

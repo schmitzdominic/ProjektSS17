@@ -50,7 +50,8 @@ public class A_Tab3Bons extends Fragment{
      * Set Test Data for RecyclerViewList
      */
     private void prepareBonData(){
-        for(int i = 0; i < 3; i++) {
+        bonsList.clear();
+        for(int i = 0; i < 20; i++) {
             C_Bons bons = new C_Bons("TEST"+i, "TEST"+(char)(i+65), "Test", "Test", "Test");
             bonsList.add(bons);
         }
