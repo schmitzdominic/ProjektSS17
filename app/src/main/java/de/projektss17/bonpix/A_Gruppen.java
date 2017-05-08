@@ -27,4 +27,6 @@ public class A_Gruppen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+
 }
+
