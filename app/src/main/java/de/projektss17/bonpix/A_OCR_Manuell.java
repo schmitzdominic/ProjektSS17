@@ -38,6 +38,7 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -494,7 +495,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         linearLayout.removeView(mExclusiveEmptyView);
                     }
 
-                    totalPrice.setText(String.format("%s", getFinalPrice()));
+                    totalPrice.setText(getFinalPrice());
                     mExclusiveEmptyView = rowView;
 
                 // Wenn etwas eingegeben wurde
@@ -509,7 +510,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
                     }
 
-                    totalPrice.setText(String.format("%s", getFinalPrice()));
+                    totalPrice.setText(getFinalPrice());
                     deleteAticleButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -540,7 +541,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                             && mExclusiveEmptyView != rowView) {
                         linearLayout.removeView(mExclusiveEmptyView);
                     }
-                    totalPrice.setText(String.format("%s", getFinalPrice()));
+                    totalPrice.setText(getFinalPrice());
                     mExclusiveEmptyView = rowView;
 
                     // Wenn etwas eingegeben wurde
@@ -559,7 +560,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         priceText.setText("0");
                     }
 
-                    totalPrice.setText(String.format("%s", getFinalPrice()));
+                    totalPrice.setText(getFinalPrice());
                     deleteAticleButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -656,7 +657,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * Summiert alle Preise und gibt die Summe als double zurück
      * @return Alle Preise summiert als double
      */
-    private double getFinalPrice(){
+    private String getFinalPrice(){
 
         double finalPrice = 0;
 
@@ -678,7 +679,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         finalPrice = Math.round(finalPrice * 100) / 100.00;
 
-        return finalPrice;
+        DecimalFormat df = new DecimalFormat("#0.00");
+
+        return df.format(finalPrice);
     }
 
     /**
