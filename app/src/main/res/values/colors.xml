@@ -20,4 +20,7 @@
     <!-- star-outline.xml Farbe -->
     <color name="star">#9E9E9E</color>
 
+    <!-- Standard Farben -->
+    <color name="positiv">#388e3c</color>
+
 </resources>

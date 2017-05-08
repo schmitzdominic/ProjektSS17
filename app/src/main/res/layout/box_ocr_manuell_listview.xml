@@ -7,10 +7,6 @@
     android:layout_marginRight="10dp"
     android:id="@+id/ocr_manuell_article_line"
     android:orientation="horizontal">
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="de.projektss17.bonpix.A_OCR_Manuell"
-    tools:showIn="@layout/box_ocr_manuell_screen">
-
 
     <EditText
         android:id="@+id/ocr_manuell_article_text"
@@ -19,17 +15,53 @@
         android:layout_marginLeft="8dp"
         android:layout_weight="2.27"
         android:inputType="textAutoCorrect"
-        android:hint="Artikel Name"/>
+        android:hint="@string/a_ocr_manuell_hint_artikel_name"/>
+
+    <ImageButton
+        android:id="@+id/ocr_manuell_negativ_positiv_button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:background="?android:attr/windowBackground"
+        android:src="@mipmap/ic_add_box_black_24dp"
+        android:tint="@color/positiv" />
+
+    <EditText
+        android:id="@+id/ocr_negativ_positiv_calculator_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:clickable="false"
+        android:visibility="invisible"
+        android:maxLength="1" />
 
     <EditText
         android:id="@+id/ocr_manuell_price_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1.0"
-        android:hint="Preis"
-        android:inputType="numberDecimal"
-        android:digits="0123456789-"
-        android:maxLength="10"/>
+        android:layout_weight="1.1"
+        android:digits="0123456789"
+        android:gravity="end"
+        android:hint="@string/a_ocr_manuell_hint_preis"
+        android:inputType="number"
+        android:maxLength="7" />
+
+    <TextView
+        android:id="@+id/ocr_manuell_comma_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="28dp"
+        android:text="," />
+
+    <EditText
+        android:id="@+id/ocr_manuell_cent_text"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:digits="0123456789"
+        android:inputType="number"
+        android:maxLength="2" />
 
     <ImageButton
         android:id="@+id/ocr_manuell_button_delete_article"
@@ -37,7 +69,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.19"
         android:background="?android:attr/windowBackground"
-        android:contentDescription="@string/button_delete_row_description"
+        android:contentDescription="@string/a_ocr_manuell_button_delete_row_description"
         android:onClick="onDeleteClicked"
         android:src="@mipmap/ic_delete_black_24dp"
         android:tint="@color/colorMenueIcon" />
