@@ -65,10 +65,10 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position){
         final C_Bon bon = bonsList.get(position);
-        holder.title.setText(bon.getBildpfad());
-        holder.content.setText(bon.getLadenname());
+        holder.title.setText(bon.getPath());
+        holder.content.setText(bon.getShopName());
         //Loading the FavoriteList
-        if (bon.getFav()){
+        if (bon.getFavourite()){
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star));
         } else {
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star_outline));
@@ -85,13 +85,13 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
                     // Put the onClick cases here
                     switch (v.getId()) {
                         case R.id.imageview_button: {
-                            if (bon.getFav()){
+                            if (bon.getFavourite()){
                                 holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
-                                bon.deleteFav();
+                                bon.setFavourite(false);
                             } else {
                                 if (row_index == position) {
                                     holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
-                                    bon.setFav();
+                                    bon.setFavourite(true);
                                     Log.i("CLICKEVENT FAV ICON", "### SUCCESS");
                                 }
                                 else {
