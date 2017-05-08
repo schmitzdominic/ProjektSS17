@@ -16,7 +16,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
-import android.text.method.KeyListener;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +29,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 
-import de.projektss17.bonpix.daten.C_Article;
+import de.projektss17.bonpix.daten.C_Artikel;
+import de.projektss17.bonpix.daten.C_Laden;
 
 
 public class A_OCR_Manuell extends AppCompatActivity {
@@ -147,7 +148,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         //laden Spinner onClickListener
         ladenSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(final AdapterView<?> parentView, View selectedItemView, int position, long id) {
+            public void onItemSelected(final AdapterView<?> parentView, final View selectedItemView, int position, long id) {
 
                 // Itemid == 1 = Benutzerdefiniert, d.h. Wenn manuell eine Marke eingegeben werden soll
                 if ((int) id == 1) {
@@ -161,19 +162,21 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     builder.setMessage("Bitte Laden eingeben")
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    if(input.getText() != null && !input.getText().toString().isEmpty()){
+                                        if(S.dbHandler.getLaden(S.db, input.getText().toString()) == null){
+                                            S.dbHandler.addLaden(S.db, new C_Laden(input.getText().toString()));
+                                        }
+                                        refreshSpinner();
 
-                                    /*
-                                    TODO Bitte so implementieren:
-                                    S.dbHandler.setLaeden(S.db, input.getText().toString());
-                                    ArrayList<String> x = S.dbHandler.getAllLaeden(S.db);
-                                    refreshSpinner();
-                                    parentView.setSelection(x.indexOf(input.getText().toString())+2);
-
-
-                                    */
-                                    // TODO Remove later the following 2 lines!
-                                    Toast.makeText(A_OCR_Manuell.this, input.getText().toString(), Toast.LENGTH_LONG).show();
-                                    parentView.setSelection(0);
+                                        for(int i = 0; i < parentView.getCount(); i++){
+                                            if(parentView.getAdapter().getItem(i).equals(input.getText().toString())){
+                                                parentView.setSelection(i);
+                                                break;
+                                            }
+                                        }
+                                    } else {
+                                        parentView.setSelection(0);
+                                    }
                                 }
                             })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -306,29 +309,39 @@ public class A_OCR_Manuell extends AppCompatActivity {
      */
     public void refreshSpinner() {
 
-        // 1. lese Optionen aus Datenbank
-        // Mit z.B. S.getSpinnerLaedenManuell() in eine entsprechende Liste
-        // 2. füge diese Daten zu einem String Array hinzu
-        // TODO Remove next line after database has implmented
-        String array[] = {"Bitte Laden auswählen","Hinzufügen", "EDEKA", "REWE", "MEDIA MARKT"};
+        ArrayList<C_Laden> laeden = S.dbHandler.getAllLaeden(S.db);
 
-        /* TODO mit Datenbank bitte so implementieren!
-        ArrayList<String> x = S.dbHandler.getAllLaeden(S.db);
-
-        String array[] = new String[x.size()+2];
-
-        int count = 2;
-
+        String array[] = new String[laeden.size()+2];
         array[0] = "Bitte Laden auswählen";
         array[1] = "Hinzufügen";
 
-        for(String a : x){
-            array[count] = a;
-            count ++;
-        } */
+        int count = 2;
+
+        for(C_Laden laden : laeden){
+            array[count] = laden.getName();
+            count++;
+        }
+
 
         this.spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, array);
         this.spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.spinnerAdapter.sort(new Comparator<String>(){
+            public int compare(String laden1, String laden2){
+
+                if(laden2.equals("Bitte Laden auswählen") && laden1.equals("Hinzufügen")){
+                    return 1;
+                } else if(laden1.equals("Bitte Laden auswählen") || laden1.equals("Hinzufügen")){
+                    return -1;
+                } else if (laden2.equals("Bitte Laden auswählen") || laden2.equals("Hinzufügen")){
+                    return 1;
+                }
+
+                laden1 = laden1.toLowerCase();
+                laden2 = laden2.toLowerCase();
+
+                return laden1.compareTo(laden2);
+            }
+        });
         this.ladenSpinner.setAdapter(this.spinnerAdapter);
     }
 
@@ -578,9 +591,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * @param anschrift Anschrift
      * @param datum Datum
      * @param sonstiges Sonstiges
-     * @param articles Array mit Articles
+     * @param artikel Array mit Articles
      */
-    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Article[] articles){
+    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Artikel[] artikel){
 
 
         if(imageUri != null) {
@@ -606,9 +619,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
             this.sonstigesText = sonstiges;
         }
 
-        if(articles != null){
-            for(C_Article article : articles){
-                this.inflateEditRow(article.getName(), article.getPrice());
+        if(artikel != null){
+            for(C_Artikel a : artikel){
+                this.inflateEditRow(a.getName(), ""+a.getPrice());
             }
             this.totalPrice.setText(String.format("%s", getFinalPrice()));
         }

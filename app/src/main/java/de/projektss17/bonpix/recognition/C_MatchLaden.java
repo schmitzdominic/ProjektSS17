@@ -13,12 +13,12 @@ import de.projektss17.bonpix.auswerter.*;
  * Created by Domi on 14.04.2017.
  */
 
-public class C_Laden{
+public class C_MatchLaden {
 
     Context context;
     Resources res;
 
-    public C_Laden(Context context){
+    public C_MatchLaden(Context context){
         this.context = context;
         this.res = this.context.getResources();
     }
