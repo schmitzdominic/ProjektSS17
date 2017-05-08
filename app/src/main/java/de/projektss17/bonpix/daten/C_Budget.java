@@ -22,41 +22,92 @@ public class C_Budget {
         this.year = year;
     }
 
+    /**
+     *
+     * @return Rückgabe des Budgets welches die Obergrenze ist
+     */
     public int getBudgetMax() {
         return budgetMax;
     }
 
+    /**
+     *
+     * @return Rückgabe des eingegebenen Monats
+     */
     public String getTurnus() {
         return turnus;
     }
 
+    /**
+     *
+     * @param turnus Setzten des Monats
+     */
     public void setTurnus(String turnus) {
         this.turnus = turnus;
     }
 
+    /**
+     *
+     * @return Rückgabe des Prozensatzes (von budgetCurrently)
+     */
     public int getProcessbar() {return processbar;    }
 
+    /**
+     *
+     * @param processbar Setzten des Prozensatzes (von budgetCurrently)
+     */
     public void setProcessbar(int processbar) {
         this.processbar = processbar;
     }
 
+    /**
+     *
+     * @param budget Setzten der Obergrenze für den Budget
+     */
     public void setBudget(int budget) {
         this.budgetMax = budget;
     }
 
+    /**
+     *
+     * @return Rückgabe des Titels
+     */
     public String getTitle() {        return title;    }
 
+    /**
+     *
+     * @param title Setzen des Titels
+     */
     public void setTitle(String title) {        this.title = title;    }
 
-
+    /**
+     *
+      * @return Rückgabe des gegenwärtigen Budgets
+     */
     public int getBudgetCurrently() {        return budgetCurrently;    }
 
+    /**
+     *
+     * @param budgetCurrently Setzen des gegenwärtigen Budgets
+     */
     public void setBudgetCurrently(int budgetCurrently) {        this.budgetCurrently = budgetCurrently;    }
 
+    /**
+     *
+     * @return Rückgabe der Prozentsatzen von budgetCurrently gegenüber des budgetMax
+     */
     public int getProcessPercentage() {        return (int)(budgetCurrently*100/budgetMax);   }
 
+    /**
+     *
+     * @return Rückgabe des Jahres
+     */
     public String getYear() {return year;    }
 
+    /**
+     *
+     * @param year Setzen des Jahres
+     */
     public void setYear(String year) {        this.year = year;    }
 
 }
