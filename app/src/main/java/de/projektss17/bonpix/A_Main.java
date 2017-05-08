@@ -36,8 +36,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
+import de.projektss17.bonpix.daten.C_Artikel;
+import de.projektss17.bonpix.daten.C_AssetHelper;
+import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
+import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.daten.C_Preferences;
 
 public class A_Main extends AppCompatActivity {
@@ -86,22 +91,23 @@ public class A_Main extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
+        requestPermissions(new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE});
+
         // DataBase Connection
         S.dbHandler = new C_DatabaseHandler(this);
+        S.dbArtikelHandler = new C_AssetHelper(this);
         S.db = S.dbHandler.getWritableDatabase();
+        S.dbArtikel = S.dbArtikelHandler.getWritableDatabase();
         S.dbHandler.checkTables(S.db);
 
         // Settings Instance
         S.prefs = new C_Preferences(this);
 
+        S.dbHandler.showLogAllDBEntries();
+
         // Beim ersten Start der App
         this.onFirstStart();
-
-        // TODO remove later! Just for debugging
-        this.showLogAllDBEntries();
-
-        requestPermissions(new String[]{Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE});
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -140,7 +146,7 @@ public class A_Main extends AppCompatActivity {
         manuellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                S.showManuell(A_Main.this);
+                S.showManuell(A_Main.this,"new");
             }
         });
 
@@ -422,7 +428,7 @@ public class A_Main extends AppCompatActivity {
             cursor.moveToFirst();
             String picturePath = cursor.getString(column_index_data);
             picturePathList.add(picturePath);
-            S.showRecognition(A_Main.this,picturePathList);
+            S.showManuell(A_Main.this, picturePathList, "foto");
         }
     }
 
@@ -433,12 +439,13 @@ public class A_Main extends AppCompatActivity {
         final String PREFS_NAME = C_Preferences.APP_SHARED_PREFS;
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
-        if (settings.getBoolean("my_first_time", true)) {
+        if (settings.getBoolean("first_time", true)) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
+            this.createDBDummyData(20);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
-            S.prefs.savePrefBoolean("my_first_time", false);
+            S.prefs.savePrefBoolean("first_time", false);
         }
     }
 
@@ -446,21 +453,12 @@ public class A_Main extends AppCompatActivity {
      * Setzt alle standard DB Werte
      */
     private void setDefaultDBValues(){
-        String laeden[] = {"EDEKA","Lidl", "REWE", "Media Markt"};
-        String bons[] = {"BON_CONTENT1", "BON_CONTENT2"};
 
-        for(String laden : laeden){
-            S.dbHandler.setLaeden(S.db, laden);
+        String [] defaultLaeden = this.getResources().getStringArray(R.array.defaultLaeden);
+
+        for(String laden : defaultLaeden){
+            S.dbHandler.addLaden(S.db, new C_Laden(laden));
         }
-
-        ContentValues values;
-
-        for(String bonContent : bons){
-            values = new ContentValues();
-            values.put("bons_name", bonContent);
-            S.db.insert("bons", null, values);
-        }
-
     }
 
     /**
@@ -472,15 +470,31 @@ public class A_Main extends AppCompatActivity {
     }
 
     /**
-     * Gibt alle Laeden und Bons im Log aus (Rot)
+     * Erstellt Dummy Daten
+     * @param value Wie viele Daten generiert werden
      */
-    private void showLogAllDBEntries(){
-        for(String x : S.dbHandler.getAllLaeden(S.db)){
-            Log.e("######### LAEDEN: ", x);
+    private void createDBDummyData(int value){
+
+        ArrayList<C_Artikel> artikelList = new ArrayList<>();
+        ArrayList<C_Laden> ladenList = new ArrayList<>();
+        Random ran = new Random();
+        int x = 0;
+
+        for(int laden = 0; laden < value; laden++){
+            ladenList.add(new C_Laden("Laden_"+laden));
         }
 
-        for(String y : S.dbHandler.getAllBons(S.db)){
-            Log.e("######### BONS: ", y);
+        for(int i = 0; i < value; i++){
+            x = 3 + ran.nextInt((10 - 3) + 1);
+
+            for(int dummyArtikel = 0; dummyArtikel < x; dummyArtikel++){
+                artikelList.add(new C_Artikel(""+i+dummyArtikel, i*dummyArtikel));
+            }
+
+            Log.e("### CEATE DUMMY DATA", " "+i+" OF "+value);
+            S.dbHandler.addBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", "21.10.2016", "21.10.2018", true, true, artikelList));
+
+            artikelList.clear();
         }
     }
 }
