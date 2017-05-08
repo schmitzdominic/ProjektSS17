@@ -390,11 +390,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
         // Wenn der Preis nicht leer ist dann setze ihn
         if (preis != null && !preis.isEmpty()){
 
-            if(Double.parseDouble(preis) < 0){
-                negPos = false;
-            }
-
             if(Double.parseDouble(preis.replace(",",".")) < 0){
+                negPos = false;
                 positiveNegativeButton.performClick();
             }
 
@@ -695,7 +692,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
      */
     private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Article[] articles){
 
-
         if(imageUri != null) {
             this.ocrImageView.setImageURI(null);
             this.ocrImageView.setImageURI(imageUri);
@@ -729,7 +725,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 this.setFocusOnLine = false;
                 this.inflateEditRow(article.getName(), article.getPrice());
             }
-            this.totalPrice.setText(String.format("%s", getFinalPrice()));
+            this.totalPrice.setText(getFinalPrice());
         }
     }
 
