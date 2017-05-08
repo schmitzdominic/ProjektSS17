@@ -64,11 +64,11 @@ public class A_Tab1Home extends Fragment {
 
         // Kuchendiagramm
         pieChart1 = (PieChart) rootView.findViewById(R.id.chart1);
-        createPieChart(pieChart1);
+        createPieChart(pieChart1, "Test");
 
         //Balkendiagramm 1
         bChart = (BarChart) rootView.findViewById(R.id.chart2);
-        ArrayList<IBarDataSet> dataSets1 = new ArrayList<IBarDataSet>();
+        ArrayList<IBarDataSet> dataSets1 = new ArrayList<>();
         createBarChart(bChart, dataSets1, "The year 2017");
 
         //Balkendiagramm 2
@@ -88,7 +88,7 @@ public class A_Tab1Home extends Fragment {
             }
     }
 
-    /*
+    /**
      * Erstellt ein Balkendiagramm
      * Zuerst werden die Werte gefüllt und dann in das Diagramm eingelesen
      */
@@ -96,13 +96,10 @@ public class A_Tab1Home extends Fragment {
         ArrayList<BarEntry> val = new ArrayList<BarEntry>();
         prepareBarData(val);   // Daten werden gefüllt
 
-        BarDataSet set;
-
-        set = new BarDataSet(val, name);
+        BarDataSet set = new BarDataSet(val, name);
         set.setColors(ColorTemplate.MATERIAL_COLORS);
 
         daten.add(set);
-
         BarData data = new BarData(daten);
 
         data.setValueTextSize(10f);
@@ -112,25 +109,25 @@ public class A_Tab1Home extends Fragment {
         bar.setData(data);
     }
 
-    /*
+    /**
      * Füllt die Values eines Balkendiagramms mit random Werten
      */
     private void prepareBarData(ArrayList<BarEntry> values){
-        for (int i = (int) 0; i < 10 + 1; i++) {
+        for (int i = 0; i < 10 + 1; i++) {
             float val = (float) (Math.random());
             values.add(new BarEntry(i, val));
         }
     }
 
-    /*
+    /**
      * Erstellt ein Kreisdiagramm
      * Zuerst werden die Werte gefüllt und dann in das Diagramm eingelesen
      */
-    private void createPieChart(PieChart bar){
+    private void createPieChart(PieChart bar, String name){
         ArrayList<PieEntry> val = new ArrayList<>();
         preparePieData(val);    // Daten werden gefüllt
 
-        final PieDataSet dataSet = new PieDataSet(val, "Test");
+        final PieDataSet dataSet = new PieDataSet(val, name);
         final PieData pieData = new PieData(dataSet);
 
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -141,7 +138,7 @@ public class A_Tab1Home extends Fragment {
         pieData.setDrawValues(true);
     }
 
-    /*
+    /**
      * Füllt die Values eines Kreisdiagramms mit Werten
      */
     private void preparePieData(ArrayList<PieEntry> values){
