@@ -31,14 +31,14 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import de.projektss17.bonpix.daten.C_Bons;
+import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Bons_Adapter;
 
 public class A_Tab1Home extends Fragment {
 
     // RECYCLERVIEW VARIABLEN
 
-    private List<C_Bons> bonsList = new ArrayList<>();
+    private List<C_Bon> bonsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private C_Bons_Adapter mAdapter;
 
@@ -82,9 +82,13 @@ public class A_Tab1Home extends Fragment {
 
     private void prepareHomeData(){
         bonsList.clear();
-            for (int i = 0; i < 3; i++) {
-                C_Bons bons = new C_Bons("TEST" + i, "TEST" + (char) (i + 65), "Test", "Test", "Test");
-                bonsList.add(bons);
+        int count = 0;
+            for (C_Bon bon : S.dbHandler.getAllBons(S.db)) {
+                if(count == 3){
+                    break;
+                }
+                bonsList.add(bon);
+                count++;
             }
     }
 

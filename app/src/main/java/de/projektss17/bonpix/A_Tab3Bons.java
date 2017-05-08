@@ -43,6 +43,7 @@ public class A_Tab3Bons extends Fragment{
      * Set Data for RecyclerView Bons
      */
     private void prepareBonData(){
+        bonsList.clear();
         for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
             this.bonsList.add(bon);
         }
