@@ -45,7 +45,6 @@ import java.util.Comparator;
 
 import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_Laden;
-import de.projektss17.bonpix.daten.C_Article;
 import de.projektss17.bonpix.recognition.C_OCR;
 
 
@@ -705,7 +704,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * @param sonstiges Sonstiges
      * @param articles Array mit Articles
      */
-    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Article[] articles){
+    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Artikel[] articles){
 
         if(imageUri != null) {
             this.ocrImageView.setImageURI(null);
@@ -736,9 +735,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
             this.removeAllArticles();
 
-            for(C_Article article : articles){
+            for(C_Artikel article : articles){
                 this.setFocusOnLine = false;
-                this.inflateEditRow(article.getName(), article.getPrice());
+                this.inflateEditRow(article.getName(), ""+article.getPrice());
             }
             this.totalPrice.setText(getFinalPrice());
         }
@@ -886,16 +885,16 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * @param preise ArrayList mit allen dazugehörigen Preisen
      * @return C_Article Array
      */
-    public C_Article[] createArticleArray(ArrayList<String> ArticleNamen, ArrayList<String> preise){
+    public C_Artikel[] createArticleArray(ArrayList<String> ArticleNamen, ArrayList<String> preise){
 
-        C_Article[] articleArray = new C_Article[preise.size()];
+        C_Artikel[] articleArray = new C_Artikel[preise.size()];
 
         int count = 0;
 
         // TODO noch für die ArticelNamen machen!
 
         for(String price : preise){
-            articleArray[count] = new C_Article("Article "+(count+1), price);
+            articleArray[count] = new C_Artikel("Article "+(count+1), Double.parseDouble(price.replace(",",".")));
             count++;
         }
 

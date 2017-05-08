@@ -22,7 +22,7 @@ import de.projektss17.bonpix.R;
 
 public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.MyViewHolder> {
 
-    private List<C_Bons> bonListe;
+    private List<C_Bon> bonListe;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView warrantyBegin, warrantyEnd;
@@ -51,7 +51,7 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
      * returned Liste
      * @param bonListe
      */
-    public C_Garantie_Adapter(List<C_Bons> bonListe){
+    public C_Garantie_Adapter(List<C_Bon> bonListe){
 
         this.bonListe = bonListe;
     }
@@ -67,11 +67,11 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
 
     @Override
     public void onBindViewHolder(C_Garantie_Adapter.MyViewHolder holder, final int position) {
-        C_Bons bon = bonListe.get(position);
+        C_Bon bon = bonListe.get(position);
 
         //ToDo später Icon dynamisch zuweisbar
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
-        holder.warrantyBegin.setText("Garantie Anfang: "+ bon.getDatum());
+        holder.warrantyBegin.setText("Garantie Anfang: "+ bon.getDate());
         holder.warrantyEnd.setText("Garantie Ende: 12.03.3079"); // TODO DB IMPLEMENTIEREN!
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
