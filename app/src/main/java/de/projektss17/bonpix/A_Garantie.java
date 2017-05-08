@@ -48,18 +48,12 @@ public class A_Garantie extends AppCompatActivity {
      * Daten in Array-List BonListe füllen, welche später angezeigt werden
      */
     private void prepareBonData(){
-        /*for(int i = 0; i < 20; i++) {
-            C_Bon bons = new C_Bon("TEST"+i, "TEST"+(char)(i+65), "Test", "Test", "Test");
-            bonListe.add(bons);
-        }*/
-        //ToDo Auskommentieren nachdem Datenbank_verbessern gemerged wurde und obiges löschen
-        /*
-        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
-            if(bon.getGarantie()){
-                this.bonlist.add(bon);
-            }
-        }*/
 
+        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
+            if(bon.getGuarantee()){
+                this.bonListe.add(bon);
+            }
+        }
         mAdapter.notifyDataSetChanged();
     }
 

@@ -21,11 +21,12 @@
         android:id="@+id/garantie_view_garantiebeginn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/garantie_view_garantie_delete_button"
+        android:layout_toRightOf="@+id/garantie_view_laden_bild"
         android:paddingTop="20dp"
         android:text="Beginn der Garantie"
-        android:textSize="14sp"
-        android:layout_toLeftOf="@+id/garantie_view_garantie_delete_button"
-        android:layout_toRightOf="@+id/garantie_view_laden_bild"/>
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/garantie_view_zusatz_garantieende"

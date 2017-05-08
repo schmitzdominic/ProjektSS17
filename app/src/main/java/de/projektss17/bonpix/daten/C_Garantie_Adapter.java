@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 
 /**
  * Created by Fabian on 25.04.2017.
@@ -23,6 +24,7 @@ import de.projektss17.bonpix.R;
 public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.MyViewHolder> {
 
     private List<C_Bon> bonListe;
+    private C_Bon bon;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView warrantyBegin, warrantyEnd;
@@ -44,6 +46,8 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
             roundedBitmapDrawable.setAntiAlias(true);
             icon.setImageDrawable(roundedBitmapDrawable);
             // --- END TO DO ---
+
+
         }
     }
 
@@ -66,13 +70,13 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
     }
 
     @Override
-    public void onBindViewHolder(C_Garantie_Adapter.MyViewHolder holder, final int position) {
-        C_Bon bon = bonListe.get(position);
+    public void onBindViewHolder(final C_Garantie_Adapter.MyViewHolder holder, final int position) {
+        this.bon = bonListe.get(position);
 
         //ToDo später Icon dynamisch zuweisbar
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
-        holder.warrantyBegin.setText("Garantie Anfang: "+ bon.getDate());
-        holder.warrantyEnd.setText("Garantie Ende: 12.03.3079"); // TODO DB IMPLEMENTIEREN!
+        holder.warrantyBegin.setText(bon.getShopName());
+        holder.warrantyEnd.setText("Garantie von " + bon.getDate() + " - " + bon.getGuaranteeEnd());
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -82,11 +86,14 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
              * @param v
              */
             public void onClick(View v) {
-                //ToDo Implementieren, wenn Datenbank angebunden
-                //bon.setGarantie(false);
-                //s.dbHandler.updateBon(s.db, bon);
+
+                bonListe.get(position).setGuarantee(false);
+                S.dbHandler.updateBon(S.db, bonListe.get(position));
+                bonListe.remove(position);
+
                 notifyItemRemoved(position);
-                Log.i("Delete", "test");
+                notifyItemRangeChanged(position, getItemCount());
+
             }
         });
 
@@ -94,11 +101,10 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
 
     }
 
-
-
-
     @Override
     public int getItemCount() {
-        return bonListe.size();
+
+        return this.bonListe.size();
+
     }
 }
