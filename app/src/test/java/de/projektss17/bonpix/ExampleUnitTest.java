@@ -1,8 +1,8 @@
 package de.projektss17.bonpix;
 
-import org.junit.Test;
+        import org.junit.Test;
 
-import static org.junit.Assert.*;
+        import static org.junit.Assert.*;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
