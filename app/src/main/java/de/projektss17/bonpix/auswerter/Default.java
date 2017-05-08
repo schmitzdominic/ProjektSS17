@@ -3,6 +3,8 @@ package de.projektss17.bonpix.auswerter;
 import android.content.Context;
 import android.content.res.Resources;
 
+import java.util.ArrayList;
+
 /**
  * Created by Domi on 15.04.2017.
  */
@@ -18,13 +20,63 @@ public class Default implements I_Auswerter{
     }
 
     @Override
-    public String[] getProducts(String txt) {
-        return new String[0];
+    public ArrayList<String> getProducts(String txt) {
+        return null;
     }
 
     @Override
-    public String[] getPrices(String txt) {
-        return new String[0];
+    public ArrayList<String> getPrices(String txt) {
+
+        String dumString = "";
+        ArrayList<String> retString = new ArrayList<>();
+        int count = 0;
+
+        for(int i = 0; i < txt.length(); i++){
+
+            if(this.isDigit(txt.charAt(i))){
+                if(count == 0){
+                    dumString += txt.charAt(i);
+                    continue;
+                } else if(count > 0 && count < 3){
+                    dumString += txt.charAt(i);
+                    count++;
+                    continue;
+                } else if(count >= 3){
+                    count++;
+                    dumString = "";
+                    continue;
+                } else {
+                    dumString = "";
+                    count = 0;
+                    continue;
+                }
+
+            } else if(this.isSeparate(txt.charAt(i))){
+
+                if(count == 0){
+                    if(txt.charAt(i) == '.'){
+                        dumString += ',';
+                    } else {
+                        dumString += txt.charAt(i);
+                    }
+                    count++;
+                    continue;
+                } else {
+                    count = 0;
+                    dumString = "";
+                    continue;
+                }
+            } else {
+                if(count == 3){
+                    retString.add(dumString);
+                }
+                dumString = "";
+                count = 0;
+                continue;
+            }
+        }
+
+        return retString;
     }
 
     public String getAdresse(String txt){

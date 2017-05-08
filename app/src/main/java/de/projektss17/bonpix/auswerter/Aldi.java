@@ -2,6 +2,8 @@ package de.projektss17.bonpix.auswerter;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 /**
  * Created by Domi on 15.04.2017.
  */
@@ -15,12 +17,12 @@ public class Aldi extends Default {
     }
 
     @Override
-    public String[] getProducts(String txt) {
+    public ArrayList<String> getProducts(String txt) {
         return super.getProducts(txt);
     }
 
     @Override
-    public String[] getPrices(String txt) {
+    public ArrayList<String> getPrices(String txt) {
         return super.getPrices(txt);
     }
 

@@ -5,9 +5,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,18 +34,26 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 
 import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_Laden;
+import de.projektss17.bonpix.daten.C_Article;
+import de.projektss17.bonpix.recognition.C_OCR;
 
 
 public class A_OCR_Manuell extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMAGE = 1;
     private String year, month, day, imageOCRUriString, sonstigesText;
+    private boolean setFocusOnLine = true, negPos;
     private ArrayAdapter<String> spinnerAdapter;
     private Button saveButton, kameraButton, addArticleButton;
     private Spinner ladenSpinner;
@@ -51,6 +63,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private View mExclusiveEmptyView;
     private EditText anschriftInput;
     private LinearLayout linearLayout;
+    private C_OCR ocr;
 
 
     @Override
@@ -74,6 +87,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.totalPrice = (TextView) findViewById(R.id.ocr_manuell_total_price); // Totaler Preis
         this.addArticleButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article); // Neuen Artikel hinzufügen Button
 
+        this.ocr = new C_OCR(this); // Erstellt eine OCR instanz.
+        this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.createCalendar(); // Calendar wird befüllt
         this.refreshSpinner(); // Spinner Refresh
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
@@ -239,6 +254,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.linearLayout.removeView((View) v.getParent());
         this.totalPrice.setText(String.format("%s", getFinalPrice()));
         this.addArticleButton.setVisibility(View.VISIBLE);
+
     }
 
     /**
@@ -355,19 +371,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri imageUri = data.getData();
-            this.ocrImageView.setImageURI(null);
-            this.ocrImageView.setImageURI(imageUri);
-            this.imageOCRUriString = imageUri.toString();
-            this.ocrImageView.setClickable(true);
-            this.kameraButton.setTextColor(Color.BLACK);
+            this.fillMaskOCR(this.getBitmapFromUri(data.getData()));
         }
     }
 
     /**
      * Erzeugt eine neue Artikel Reihe
      * @param name Name des Artikels
-     * @param preis Preis des Artikels
+     * @param preis Preis des Artikels WICHTIG Preis muss ein , enthalten!
      */
     private void inflateEditRow(String name, String preis) {
 
@@ -376,14 +387,33 @@ public class A_OCR_Manuell extends AppCompatActivity {
         final View rowView = inflater.inflate(R.layout.box_ocr_manuell_listview, null);
         final ImageButton deleteAticleButton = (ImageButton) rowView
                 .findViewById(R.id.ocr_manuell_button_delete_article);
+        final ImageButton positiveNegativeButton = (ImageButton) rowView
+                .findViewById(R.id.ocr_manuell_negativ_positiv_button);
+        final EditText calculator = (EditText) rowView
+                .findViewById(R.id.ocr_negativ_positiv_calculator_text);
         final EditText articleText = (EditText) rowView
                 .findViewById(R.id.ocr_manuell_article_text);
         final EditText priceText = (EditText) rowView
                 .findViewById(R.id.ocr_manuell_price_text);
+        final EditText centText = (EditText) rowView
+                .findViewById(R.id.ocr_manuell_cent_text);
+
+        negPos = true;
+
+        String preisArray[] = new String[2];
 
         // Wenn der Preis nicht leer ist dann setze ihn
         if (preis != null && !preis.isEmpty()){
-            priceText.setText(preis);
+
+            if(Double.parseDouble(preis.replace(",",".")) < 0){
+                negPos = false;
+                positiveNegativeButton.performClick();
+            }
+
+            preisArray = preis.split(",");
+
+            priceText.setText(preisArray[0]);
+            centText.setText(preisArray[1]);
         }
 
         // Wenn der Name nicht leer ist dann setze ihn
@@ -392,6 +422,28 @@ public class A_OCR_Manuell extends AppCompatActivity {
         } else {
            this.mExclusiveEmptyView = rowView;
         }
+
+        //R.mipmap.ic_indeterminate_check_box_black_24dp
+
+        positiveNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(negPos) {
+                    positiveNegativeButton.setImageResource(R.mipmap.ic_indeterminate_check_box_black_24dp);
+                    positiveNegativeButton.setColorFilter(Color.RED);
+                    calculator.setText("-");
+                    negPos = false;
+                    totalPrice.setText(String.format("%s", getFinalPrice()));
+
+                } else {
+                    positiveNegativeButton.setImageResource(R.mipmap.ic_add_box_black_24dp);
+                    positiveNegativeButton.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.positiv));
+                    calculator.setText("");
+                    negPos = true;
+                    totalPrice.setText(String.format("%s", getFinalPrice()));
+                }
+            }
+        });
 
         // Artikel Text changeListener
         articleText.addTextChangedListener(new TextWatcher() {
@@ -408,6 +460,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         linearLayout.removeView(mExclusiveEmptyView);
                     }
                     mExclusiveEmptyView = rowView;
+                    addArticleButton.setVisibility(View.INVISIBLE);
+                    addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
 
                 // Wenn etwas eingegeben wurde
                 } else {
@@ -447,14 +501,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 // Wenn der Text leer ist
                 if (s.toString().isEmpty()) {
                     addArticleButton.setVisibility(View.GONE);
-                    deleteAticleButton.setVisibility(View.INVISIBLE);
 
                     if (mExclusiveEmptyView != null
                             && mExclusiveEmptyView != rowView) {
                         linearLayout.removeView(mExclusiveEmptyView);
                     }
-                    priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789-"));
-                    totalPrice.setText(String.format("%s", getFinalPrice()));
+
+                    totalPrice.setText(getFinalPrice());
                     mExclusiveEmptyView = rowView;
 
                 // Wenn etwas eingegeben wurde
@@ -464,35 +517,62 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         mExclusiveEmptyView = null;
                     }
 
-                    // Wenn die Eingabe ein - ist, dann sperre das Komma danach.
-                    if(priceText.getText().toString().length() == 1 && priceText.getText().charAt(0) == '-'){
-                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-                    } else {
-                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789,"));
-                    }
-
-                    // Wenn der Text ein Komma enthält
-                    if(priceText.getText().toString().contains(",")){
-
-                        // Deaktiviere das Komma
-                        priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-
-                        // Splitte den String beim Komma
-                        String[] array = priceText.getText().toString().split(",");
-                        if(array.length == 2){ // Array muss mind 2 Werte haben (1 vor dem Komma, 1 Nach dem Komma)
-                            if(array[1].length() == 2){ // Wenn 2 Stellen nach dem Komma vorhanden sind, sperre die Tastatur
-                                priceText.setKeyListener(DigitsKeyListener.getInstance(""));
-                            } else {
-                                priceText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-                            }
-                        }
-                    }
-
-                    totalPrice.setText(String.format("%s", getFinalPrice()));
                     if(articleText.getText() != null && !articleText.getText().toString().isEmpty()) {
                         addArticleButton.setVisibility(View.VISIBLE);
                         addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
                     }
+
+                    totalPrice.setText(getFinalPrice());
+                    deleteAticleButton.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
+        });
+
+        // Preis Text changeListener
+        centText.addTextChangedListener(new TextWatcher() {
+
+            // Wenn der Text geändert wird
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                // Wenn der Text leer ist
+                if (s.toString().isEmpty()) {
+                    addArticleButton.setVisibility(View.GONE);
+
+                    if (mExclusiveEmptyView != null
+                            && mExclusiveEmptyView != rowView) {
+                        linearLayout.removeView(mExclusiveEmptyView);
+                    }
+                    totalPrice.setText(getFinalPrice());
+                    mExclusiveEmptyView = rowView;
+
+                    // Wenn etwas eingegeben wurde
+                } else {
+
+                    if (mExclusiveEmptyView == rowView) {
+                        mExclusiveEmptyView = null;
+                    }
+
+                    if(articleText.getText() != null && !articleText.getText().toString().isEmpty()) {
+                        addArticleButton.setVisibility(View.VISIBLE);
+                        addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
+                    }
+
+                    if(priceText.getText().toString().isEmpty()){
+                        priceText.setText("0");
+                    }
+
+                    totalPrice.setText(getFinalPrice());
                     deleteAticleButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -509,7 +589,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
         });
 
         this.linearLayout.addView(rowView, this.linearLayout.getChildCount() - 1); // Erzeugt eine neue Reihe
-        articleText.requestFocus(this.linearLayout.getChildCount() - 1); // Setzt den Focus auf die Zeile
+
+        if(this.setFocusOnLine){
+            articleText.requestFocus(this.linearLayout.getChildCount() - 1); // Setzt den Focus auf die Zeile
+        } else {
+            this.setFocusOnLine = true;
+        }
+
     }
 
     /**
@@ -520,15 +606,39 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         String[] arrayPrices = new String[linearLayout.getChildCount()];
         View view;
-        EditText textField;
+        EditText calculator, priceField, centField;
 
         for(int i = 0; i < linearLayout.getChildCount(); i++){
             view = linearLayout.getChildAt(i);
-            textField = (EditText) view.findViewById(R.id.ocr_manuell_price_text);
-            if(textField != null && !textField.getText().toString().isEmpty())
-                arrayPrices[i] = textField.getText().toString();
-            else
-                arrayPrices[i] = "0.00";
+            calculator = (EditText) view.findViewById(R.id.ocr_negativ_positiv_calculator_text);
+            priceField = (EditText) view.findViewById(R.id.ocr_manuell_price_text);
+            centField = (EditText) view.findViewById(R.id.ocr_manuell_cent_text);
+
+            if(priceField != null && !priceField.getText().toString().isEmpty()) {
+
+                if(calculator != null && !calculator.getText().toString().isEmpty()){
+                    arrayPrices[i] = calculator.getText().toString() + priceField.getText().toString();
+                } else {
+                    arrayPrices[i] = priceField.getText().toString();
+                }
+
+            } else {
+                if(calculator != null && !calculator.getText().toString().isEmpty()){
+                    arrayPrices[i] = calculator.getText().toString() + "0";
+                } else {
+                    arrayPrices[i] = "0";
+                }
+            }
+
+            if(centField != null && !centField.getText().toString().isEmpty()){
+                if(arrayPrices[i] != null) {
+                    arrayPrices[i] += "." + centField.getText().toString();
+                } else {
+                    arrayPrices[i] = "." + centField.getText().toString();
+                }
+            } else {
+                arrayPrices[i] += ".0";
+            }
         }
 
         return arrayPrices;
@@ -559,7 +669,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * Summiert alle Preise und gibt die Summe als double zurück
      * @return Alle Preise summiert als double
      */
-    private double getFinalPrice(){
+    private String getFinalPrice(){
 
         double finalPrice = 0;
 
@@ -581,7 +691,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         finalPrice = Math.round(finalPrice * 100) / 100.00;
 
-        return finalPrice;
+        DecimalFormat df = new DecimalFormat("#0.00");
+
+        return df.format(finalPrice);
     }
 
     /**
@@ -591,16 +703,16 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * @param anschrift Anschrift
      * @param datum Datum
      * @param sonstiges Sonstiges
-     * @param artikel Array mit Articles
+     * @param articles Array mit Articles
      */
-    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Artikel[] artikel){
-
+    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Article[] articles){
 
         if(imageUri != null) {
             this.ocrImageView.setImageURI(null);
             this.ocrImageView.setImageURI(imageUri);
             this.imageOCRUriString = imageUri.toString();
             this.ocrImageView.setClickable(true);
+            this.kameraButton.setTextColor(Color.BLACK);
         }
 
         if(ladenName != null && !ladenName.isEmpty()){
@@ -617,14 +729,34 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         if(sonstiges != null && !sonstiges.isEmpty()){
             this.sonstigesText = sonstiges;
+            sonstigesView.setText(sonstigesText);
         }
 
-        if(artikel != null){
-            for(C_Artikel a : artikel){
-                this.inflateEditRow(a.getName(), ""+a.getPrice());
+        if(articles != null){
+
+            this.removeAllArticles();
+
+            for(C_Article article : articles){
+                this.setFocusOnLine = false;
+                this.inflateEditRow(article.getName(), article.getPrice());
             }
-            this.totalPrice.setText(String.format("%s", getFinalPrice()));
+            this.totalPrice.setText(getFinalPrice());
         }
+    }
+
+    /**
+     * Versucht anhand eines Bitmaps über OCR die Maske zu befüllen!
+     * @param myBitmap Bitmap
+     */
+    private void fillMaskOCR(Bitmap myBitmap){
+        this.ocr.recognize(myBitmap);
+        this.fillMask(this.getImageUri(myBitmap),
+                this.ocr.getLadenName(),
+                null, // TODO LadenName über OCR suchen!
+                null,  // TODO Anschrift über OCR suchen!
+                this.ocr.getRecognizedText(), // TODO Später wieder ausnehmen!
+                this.createArticleArray(null, // TODO Artikel hinzufügen!
+                        this.ocr.getPreise()));
     }
 
     /**
@@ -681,5 +813,112 @@ public class A_OCR_Manuell extends AppCompatActivity {
         }
 
         return allRelevantFieldsFull;
+    }
+
+    /**
+     * Bekommt die Uri aus einem Bitmap zurück
+     * @param inImage Bitmap
+     * @return Uri des Bitmap
+     */
+    public Uri getImageUri(Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    /**
+     * Gibt ein Bitmap bei Angabe der Uri zurück
+     * @param uri Uri
+     * @return Bitmap aus der Uri
+     */
+    public Bitmap getBitmapFromUri(Uri uri){
+        try {
+            return MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+        } catch (IOException e) {
+            Log.e("### getBitmapFromUri", e.toString());
+        }
+        return null;
+    }
+
+    /**
+     * Prüft nochmal expliziet den Status und gibt diesen wieder
+     * @return Status der Maske
+     */
+    public String getState(){
+
+        String state = getIntent().getStringExtra("manuellState");
+
+        switch(state){
+            case "new": return "new";
+            case "edit": return "edit";
+            case "foto": return "foto";
+            default: return "UNDEFINED";
+        }
+    }
+
+    /**
+     * Handle, jeh nach state
+     * @param state Status der Maske
+     */
+    public void doState(String state){
+
+        if (state.equals("edit")) { // Wenn die Maske den Status edit hat (z.B. ein Bon aufgerufen wird)
+            // TODO Anhand der Datenbank implementieren
+
+        } else if (state.equals("foto")) { // Wenn die Maske den Status foto hat (z.B. wenn gerade ein Foto gemacht wurde)
+
+            ArrayList<String> aList = getIntent().getStringArrayListExtra("ArrayList");
+            File imgFile = new File(aList.get(aList.size()-1));
+
+            if (imgFile.exists()) {
+                this.fillMaskOCR(BitmapFactory.decodeFile(imgFile.getAbsolutePath()));
+            }
+        } else if (state.equals("new")) { // Wenn die Maske den Status new hat (z.B. bei einer neuen Maske)
+            return;
+        }
+    }
+
+    /**
+     *
+     * Erzeugt ein Articel Array
+     * @param ArticleNamen ArrayList mit allen ArtikelNamen
+     * @param preise ArrayList mit allen dazugehörigen Preisen
+     * @return C_Article Array
+     */
+    public C_Article[] createArticleArray(ArrayList<String> ArticleNamen, ArrayList<String> preise){
+
+        C_Article[] articleArray = new C_Article[preise.size()];
+
+        int count = 0;
+
+        // TODO noch für die ArticelNamen machen!
+
+        for(String price : preise){
+            articleArray[count] = new C_Article("Article "+(count+1), price);
+            count++;
+        }
+
+        return articleArray;
+    }
+
+    /**
+     * Löscht alle Artikel aus dem Kassenzettel
+     */
+    public void removeAllArticles(){
+
+        View view;
+        ArrayList<View> foundViews = new ArrayList<>();
+
+        for(int i = 0; i < linearLayout.getChildCount(); i++){
+            view = linearLayout.getChildAt(i);
+            if(view.findViewById(R.id.ocr_manuell_article_line) != null){
+                foundViews.add(view);
+            }
+        }
+
+        for(View foundView : foundViews){
+            linearLayout.removeView(foundView);
+        }
     }
 }
