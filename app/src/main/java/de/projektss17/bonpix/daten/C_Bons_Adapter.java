@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 
 /**
  * Created by Marcus on 15.04.2017.
@@ -65,8 +66,8 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position){
         final C_Bon bon = bonsList.get(position);
-        holder.title.setText(bon.getPath());
-        holder.content.setText(bon.getShopName());
+        holder.title.setText(bon.getShopName());
+        holder.content.setText(bon.getDate());
         //Loading the FavoriteList
         if (bon.getFavourite()){
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star));
@@ -88,14 +89,12 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
                             if (bon.getFavourite()){
                                 holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
                                 bon.setFavourite(false);
+                                S.dbHandler.updateBon(S.db, bon);
                             } else {
                                 if (row_index == position) {
                                     holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
                                     bon.setFavourite(true);
-                                    Log.i("CLICKEVENT FAV ICON", "### SUCCESS");
-                                }
-                                else {
-                                    Log.e("CLICKEVENT FAV ICON","### COULDNT MATCH POSITION");
+                                    S.dbHandler.updateBon(S.db, bon);
                                 }
                             }
                         }
