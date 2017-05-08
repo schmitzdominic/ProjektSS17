@@ -54,7 +54,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private String year, month, day, imageOCRUriString, sonstigesText;
     private boolean setFocusOnLine = true, negPos;
     private ArrayAdapter<String> spinnerAdapter;
-    private Button saveButton, kameraButton, addArticleButton;
+    private Button  kameraButton, addArticleButton;
     private Spinner ladenSpinner;
     private Calendar calendar;
     private TextView dateTextView, totalPrice, sonstigesView;
@@ -62,6 +62,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private View mExclusiveEmptyView;
     private EditText anschriftInput;
     private LinearLayout linearLayout;
+    private ImageButton garantieButton, saveButton;
+    private boolean bonGarantie = false;
     private C_OCR ocr;
 
 
@@ -75,7 +77,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // XML Instanziieren
-        this.saveButton = (Button) findViewById(R.id.ocr_manuell_save_button); // Speichern Button
+        this.garantieButton = (ImageButton) findViewById(R.id.ocr_manuell_garantie_button); // Garantie Button
+        this.saveButton = (ImageButton) findViewById(R.id.ocr_manuell_save_button); // Speichern Button
         this.linearLayout = (LinearLayout) findViewById(R.id.ocr_manuell_linear_layout); // Linear Layout
         this.ocrImageView = (ImageView) findViewById(R.id.ocr_manuell_image_ocr); // Image OCR Element
         this.kameraButton = (Button) findViewById(R.id.ocr_manuell_image_button_auswahl); // Image auswahl Button
@@ -91,6 +94,29 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.createCalendar(); // Calendar wird befüllt
         this.refreshSpinner(); // Spinner Refresh
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
+
+
+        // Garantie Button onClickListener
+        this.garantieButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(bonGarantie==false) {
+                    bonGarantie = true;
+                    garantieButton.setColorFilter(R.color.colorPrimary);
+
+                    // PopUp Info Fenster wird geöffnet und automatisch geschlossen
+                    S.outShort(A_OCR_Manuell.this, "Garantie wurde hinzugefügt!");
+                }else{
+                    bonGarantie = false;
+                    garantieButton.setColorFilter(Color.WHITE);
+
+                    // PopUp Info Fenster wird geöffnet und automatisch geschlossen
+                    S.outShort(A_OCR_Manuell.this, "Garantie wurde entfernt!");
+                }
+            }
+        });
+
 
         // Save Button onClickListener
         this.saveButton.setOnClickListener(new View.OnClickListener() {

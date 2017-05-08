@@ -10,9 +10,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.projektss17.bonpix.daten.C_AssetHelper;
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
@@ -121,6 +124,9 @@ public class S extends Activity {
         beforeActivity.startActivity(intent);
     }
 
+
+    //Erstellt von Johanns am 03.04.2017
+
     /**
      * Öffnet ein POPUP-Fenster (Hinweis/Alert) beim Aufruf
      * @param beforeActivity Vorherige Instanz der Activity
@@ -130,12 +136,12 @@ public class S extends Activity {
      * @param cancel Legt den Ihnalt des Cancel-Buttons fest
      * @param confirm Legt den Inhalt des Confirm-Buttons fest
      */
-    public static void popUpDialog(final AppCompatActivity beforeActivity, final Class<?> afterActivity,int title, int message, int cancel, int confirm){
+    public static void popUpDialog(final AppCompatActivity beforeActivity, final Class<?> afterActivity, int title, int message, int cancel, int confirm) {
 
         new AlertDialog.Builder(beforeActivity)
                 .setTitle(title)
                 .setMessage(message)
-                .setNegativeButton(cancel,null)
+                .setNegativeButton(cancel, null)
                 .setPositiveButton(confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -143,6 +149,41 @@ public class S extends Activity {
                     }
                 }).create().show();
     }
+
+
+
+    // Erstellt von Johanns am 27.04.2017
+
+    /**
+     * Öffnet ein POPUP-Fenster (INFO) welches nach dem Aufruf automatisch geschlossen wird
+     * @param v Mitgabe der View (z.B. onClickListener -> View) für den Context
+     * @param title Legt den Titel des PopUp-Fensters fest (wird im Fenster als Überschrift angezeigt)
+     * @param message Legt die Nachricht (z.B. eine Frage) des Fenster fest
+     * @param time Legt die Zeit fest, nach welchem das PopUp automatisch geschlossen wird
+     */
+
+    public static void popUpInfo(AppCompatActivity beforeActivity, int title, int message, int time){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(beforeActivity)
+            .setTitle(title)
+            .setMessage(message)
+            .setCancelable(true);
+
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        final Timer zeitpunkt = new Timer();
+        zeitpunkt.schedule(new TimerTask() {
+            public void run() {
+                dialog.dismiss();
+                zeitpunkt.cancel();
+            }
+        }, time); // nach der TIME wird das PopUp automatisch geschlossen bzw. beendet
+
+    }
+
+
 
     /**
      * Ausgabe eines Strings (kurz)
