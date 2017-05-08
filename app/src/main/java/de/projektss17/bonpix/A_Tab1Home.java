@@ -44,15 +44,8 @@ public class A_Tab1Home extends Fragment {
 
     // CHART VARIABLEN
 
-    private PieChart pieChart;
-    private ArrayList<PieEntry> data = new ArrayList<>();
-    private ArrayList<String> label = new ArrayList<>();;
+    private PieChart pieChart1, pieChart2;
     private BarChart bChart, bChart3;
-    private ArrayList<BarEntry> BARENTRY;
-    private ArrayList<IBarDataSet> BarEntryLabels;
-    BarDataSet Bardataset;
-    BarData BarDaten;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,85 +63,18 @@ public class A_Tab1Home extends Fragment {
         mAdapter.notifyDataSetChanged();
 
         // Kuchendiagramm
-        pieChart = (PieChart) rootView.findViewById(R.id.chart1);
+        pieChart1 = (PieChart) rootView.findViewById(R.id.chart1);
+        createPieChart(pieChart1);
 
-        // Label initialisierung Kuchendiagramm
-
-        label.add("Algerie");
-        label.add("Maroc");
-        label.add("TUnisie");
-
-        // Data initialisierung Kuchendiagramm
-
-        data.add(new PieEntry(0.2f, 0));
-        data.add(new PieEntry(0.2f, 1));
-        data.add(new PieEntry(0.50f, 2));
-        final PieDataSet dataSet = new PieDataSet(data, "Test");
-        final PieData pieData = new PieData(dataSet);
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        pieChart.setCenterText("Pie Chart");
-        pieChart.setData(pieData);
-        pieChart.animateY(1000);
-        pieChart.setBackgroundColor(5);
-        pieData.setDrawValues(true);
-
-
-
-
-        //Balkendiagramm
+        //Balkendiagramm 1
         bChart = (BarChart) rootView.findViewById(R.id.chart2);
+        ArrayList<IBarDataSet> dataSets1 = new ArrayList<IBarDataSet>();
+        createBarChart(bChart, dataSets1, "The year 2017");
 
-
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-
-        for (int i = (int) 0; i < 10 + 1; i++) {
-            float val = (float) (Math.random());
-            yVals1.add(new BarEntry(i, val));
-        }
-
-        BarDataSet set1;
-
-        set1 = new BarDataSet(yVals1, "The year 2017");
-        set1.setColors(ColorTemplate.MATERIAL_COLORS);
-
-        ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-        dataSets.add(set1);
-
-        BarData data = new BarData(dataSets);
-
-        data.setValueTextSize(10f);
-        data.setBarWidth(0.9f);
-
-        bChart.setTouchEnabled(false);
-        bChart.setData(data);
-
-
-        //Balkendiagramm
+        //Balkendiagramm 2
         bChart3 = (BarChart) rootView.findViewById(R.id.chart3);
-
-
-        ArrayList<BarEntry> yVals3 = new ArrayList<BarEntry>();
-
-        for (int i = (int) 0; i < 10 + 1; i++) {
-            float val = (float) (Math.random());
-            yVals3.add(new BarEntry(i, val));
-        }
-
-        BarDataSet set3;
-
-        set3 = new BarDataSet(yVals3, "The year 2018");
-        set3.setColors(ColorTemplate.MATERIAL_COLORS);
-
-        ArrayList<IBarDataSet> dataSets3 = new ArrayList<IBarDataSet>();
-        dataSets3.add(set3);
-
-        BarData data3 = new BarData(dataSets3);
-
-        data3.setValueTextSize(10f);
-        data3.setBarWidth(0.9f);
-
-        bChart3.setTouchEnabled(false);
-        bChart3.setData(data3);
+        ArrayList<IBarDataSet> dataSets3 = new ArrayList<>();
+        createBarChart(bChart3, dataSets3, "The year 2018");
 
         return rootView;
     }
@@ -160,5 +86,67 @@ public class A_Tab1Home extends Fragment {
                 C_Bons bons = new C_Bons("TEST" + i, "TEST" + (char) (i + 65), "Test", "Test", "Test");
                 bonsList.add(bons);
             }
+    }
+
+    /*
+     * Erstellt ein Balkendiagramm
+     * Zuerst werden die Werte gefüllt und dann in das Diagramm eingelesen
+     */
+    private void createBarChart(BarChart bar, ArrayList<IBarDataSet> daten, String name){
+        ArrayList<BarEntry> val = new ArrayList<BarEntry>();
+        prepareBarData(val);   // Daten werden gefüllt
+
+        BarDataSet set;
+
+        set = new BarDataSet(val, name);
+        set.setColors(ColorTemplate.MATERIAL_COLORS);
+
+        daten.add(set);
+
+        BarData data = new BarData(daten);
+
+        data.setValueTextSize(10f);
+        data.setBarWidth(0.9f);
+
+        bar.setTouchEnabled(false);
+        bar.setData(data);
+    }
+
+    /*
+     * Füllt die Values eines Balkendiagramms mit random Werten
+     */
+    private void prepareBarData(ArrayList<BarEntry> values){
+        for (int i = (int) 0; i < 10 + 1; i++) {
+            float val = (float) (Math.random());
+            values.add(new BarEntry(i, val));
+        }
+    }
+
+    /*
+     * Erstellt ein Kreisdiagramm
+     * Zuerst werden die Werte gefüllt und dann in das Diagramm eingelesen
+     */
+    private void createPieChart(PieChart bar){
+        ArrayList<PieEntry> val = new ArrayList<>();
+        preparePieData(val);    // Daten werden gefüllt
+
+        final PieDataSet dataSet = new PieDataSet(val, "Test");
+        final PieData pieData = new PieData(dataSet);
+
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        bar.setCenterText("Pie Chart");
+        bar.setData(pieData);
+        bar.animateY(1000);
+        bar.setBackgroundColor(5);
+        pieData.setDrawValues(true);
+    }
+
+    /*
+     * Füllt die Values eines Kreisdiagramms mit Werten
+     */
+    private void preparePieData(ArrayList<PieEntry> values){
+        values.add(new PieEntry(0.2f, 0));
+        values.add(new PieEntry(0.2f, 1));
+        values.add(new PieEntry(0.50f, 2));
     }
 }
