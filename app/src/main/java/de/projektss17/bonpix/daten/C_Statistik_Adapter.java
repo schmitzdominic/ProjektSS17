@@ -8,11 +8,14 @@ import android.view.ViewGroup;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,7 @@ import de.projektss17.bonpix.S;
 public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List data = new ArrayList();
+    private int counter = 0;
 
     public class ViewHolderBar extends RecyclerView.ViewHolder {
         BarChart chart;
@@ -62,7 +66,13 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemViewType(int position) {
         // Just as an example, return 0 or 2 depending on position
-        return position % 2 * 2;
+        if(counter == 1){
+            return counter;
+        }
+        else{
+            counter++;
+            return position % 2 * 2;
+        }
     }
 
     @Override
@@ -80,7 +90,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 return new ViewHolderPie(itemView);
             default:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_bar_layout, parent, false);
-                return new ViewHolderPie(itemView);
+                return new ViewHolderBar(itemView);
         }
     }
 
@@ -89,7 +99,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         switch(getItemViewType(position)){
             case 0:
                 final ViewHolderBar holderBar = (ViewHolderBar)holder;
-                BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(), "test");
+                BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
                 BarData dataBar = new BarData(dataSetBar);
                 dataBar.setBarWidth(0.9f); // set custom bar width
                 holderBar.chart.setData(dataBar);
@@ -98,13 +108,22 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
             case 1:
                 final ViewHolderLine holderLine = (ViewHolderLine)holder;
-                LineDataSet dataSetLine = new LineDataSet(S.dbHandler.getLineData(), "test1");
-                LineData dataLine = new LineData(dataSetLine);
+                LineDataSet setComp1 = new LineDataSet(S.dbHandler.getLineData(1).get("lineOne"), "Company 1");
+                setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+                LineDataSet setComp2 = new LineDataSet(S.dbHandler.getLineData(1).get("lineTwo"), "Company 2");
+                setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
+                List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+                dataSets.add(setComp1);
+                dataSets.add(setComp2);
+                LineData data = new LineData(dataSets);
+                holderLine.chart.setData(data);
                 holderLine.chart.invalidate();
                 break;
             case 2:
                 final ViewHolderPie holderPie = (ViewHolderPie)holder;
-                PieDataSet dataSetPie = new PieDataSet(S.dbHandler.getPieData(), "test2");
+                PieDataSet set = new PieDataSet(S.dbHandler.getPieData(1), "Election Results");
+                PieData pieData = new PieData(set);
+                holderPie.chart.setData(pieData);
                 holderPie.chart.invalidate();
                 break;
         }
