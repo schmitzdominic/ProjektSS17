@@ -7,6 +7,9 @@ package de.projektss17.bonpix;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -31,10 +34,11 @@ public class A_Tab2Statistik extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
-        mAdapter = new C_Statistik_Adapter(testList);
+        mAdapter = new C_Statistik_Adapter();
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         Log.e("### Tab2Statistik","Check Check");
