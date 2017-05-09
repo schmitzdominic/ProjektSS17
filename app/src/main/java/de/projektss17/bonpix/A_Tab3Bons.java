@@ -1,10 +1,5 @@
 package de.projektss17.bonpix;
 
-/**
- * Created by Domi on 28.03.2017.
- * Hier bitte die Logik des dritten Tabs
- */
-
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,23 +13,21 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.projektss17.bonpix.daten.C_Bons;
+import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Bons_Adapter;
 
 
 public class A_Tab3Bons extends Fragment{
 
-    private List<C_Bons> bonsList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private C_Bons_Adapter mAdapter;
+    private List<C_Bon> bonsList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.box_bons_content, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.view_bons);
-        mAdapter = new C_Bons_Adapter(bonsList);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.view_bons);
+        C_Bons_Adapter mAdapter = new C_Bons_Adapter(bonsList);
         prepareBonData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -48,12 +41,12 @@ public class A_Tab3Bons extends Fragment{
 
 
     /**
-     * Set Test Data for RecyclerViewList
+     * Set Data for RecyclerView Bons
      */
     private void prepareBonData(){
-        for(int i = 0; i < 20; i++) {
-            C_Bons bons = new C_Bons("TEST"+i, "TEST"+(char)(i+65), "Test", "Test", "Test");
-            bonsList.add(bons);
+        bonsList.clear();
+        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
+            this.bonsList.add(bon);
         }
     }
 }
