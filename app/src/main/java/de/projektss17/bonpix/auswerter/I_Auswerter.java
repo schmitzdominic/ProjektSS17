@@ -1,5 +1,7 @@
 package de.projektss17.bonpix.auswerter;
 
+import java.util.ArrayList;
+
 /**
  * Created by Domi on 15.04.2017.
  */
@@ -10,12 +12,12 @@ public interface I_Auswerter {
      * @param txt Text der nach Produkten durchsucht werden soll
      * @return Array mit allen Produkten
      */
-    String[] getProducts(String txt);
+    ArrayList<String> getProducts(String txt);
 
     /**
      * Gibt alle Preise als String Array zurück
      * @param txt Text der nach Preisen durchsucht werden soll
      * @return Array mit allen Preisen
      */
-    String[] getPrices(String txt);
+    ArrayList<String> getPrices(String txt);
 }

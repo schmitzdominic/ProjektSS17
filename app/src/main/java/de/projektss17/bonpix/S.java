@@ -10,10 +10,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import de.projektss17.bonpix.daten.C_AssetHelper;
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
 import de.projektss17.bonpix.daten.C_Preferences;
 
@@ -25,30 +29,29 @@ import de.projektss17.bonpix.daten.C_Preferences;
 public class S extends Activity {
 
     public static C_DatabaseHandler dbHandler; // DB-Handler
-    public static SQLiteDatabase db; // DB
+    public static C_AssetHelper dbArtikelHandler; // DB-Artikel-Handler
+    public static SQLiteDatabase db, dbArtikel; // DB
     public static C_Preferences prefs; // Preferences
-
-    /**
-     * Ruft die Foto funktion auf
-     */
-    public static void showFoto(AppCompatActivity beforeActivity){
-        // TODO Kamera Klasse implementieren und die benötigten Einstellungen bauen
-    }
-
-    /**
-     * Ruft die Recognition Activity auf
-     */
-    public static void showRecognition(AppCompatActivity beforeActivity, ArrayList<String> path){
-        Intent intent = new Intent(beforeActivity, A_Show_Recognition.class);
-        intent.putExtra("ArrayList",path);
-        beforeActivity.startActivity(intent);
-    }
 
     /**
      * Ruft die Manuell Activity auf
      */
-    public static void showManuell(AppCompatActivity beforeActivity){
-        S.startActivitiy(beforeActivity,A_OCR_Manuell.class);
+    public static void showManuell(AppCompatActivity beforeActivity, ArrayList<String> path, String state){
+
+        Intent intent = new Intent(beforeActivity, A_OCR_Manuell.class);
+        intent.putExtra("ArrayList",path);
+        intent.putExtra("manuellState",state);
+        beforeActivity.startActivity(intent);
+    }
+
+    /**
+     * Ruft die Manuell Activity auf (überschrieben)
+     */
+    public static void showManuell(AppCompatActivity beforeActivity,  String state){
+
+        Intent intent = new Intent(beforeActivity, A_OCR_Manuell.class);
+        intent.putExtra("manuellState",state);
+        beforeActivity.startActivity(intent);
     }
 
     /**
@@ -121,6 +124,9 @@ public class S extends Activity {
         beforeActivity.startActivity(intent);
     }
 
+
+    //Erstellt von Johanns am 03.04.2017
+
     /**
      * Öffnet ein POPUP-Fenster (Hinweis/Alert) beim Aufruf
      * @param beforeActivity Vorherige Instanz der Activity
@@ -130,12 +136,12 @@ public class S extends Activity {
      * @param cancel Legt den Ihnalt des Cancel-Buttons fest
      * @param confirm Legt den Inhalt des Confirm-Buttons fest
      */
-    public static void popUpDialog(final AppCompatActivity beforeActivity, final Class<?> afterActivity,int title, int message, int cancel, int confirm){
+    public static void popUpDialog(final AppCompatActivity beforeActivity, final Class<?> afterActivity, int title, int message, int cancel, int confirm) {
 
         new AlertDialog.Builder(beforeActivity)
                 .setTitle(title)
                 .setMessage(message)
-                .setNegativeButton(cancel,null)
+                .setNegativeButton(cancel, null)
                 .setPositiveButton(confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -143,6 +149,41 @@ public class S extends Activity {
                     }
                 }).create().show();
     }
+
+
+
+    // Erstellt von Johanns am 27.04.2017
+
+    /**
+     * Öffnet ein POPUP-Fenster (INFO) welches nach dem Aufruf automatisch geschlossen wird
+     * @param v Mitgabe der View (z.B. onClickListener -> View) für den Context
+     * @param title Legt den Titel des PopUp-Fensters fest (wird im Fenster als Überschrift angezeigt)
+     * @param message Legt die Nachricht (z.B. eine Frage) des Fenster fest
+     * @param time Legt die Zeit fest, nach welchem das PopUp automatisch geschlossen wird
+     */
+
+    public static void popUpInfo(AppCompatActivity beforeActivity, int title, int message, int time){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(beforeActivity)
+            .setTitle(title)
+            .setMessage(message)
+            .setCancelable(true);
+
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        final Timer zeitpunkt = new Timer();
+        zeitpunkt.schedule(new TimerTask() {
+            public void run() {
+                dialog.dismiss();
+                zeitpunkt.cancel();
+            }
+        }, time); // nach der TIME wird das PopUp automatisch geschlossen bzw. beendet
+
+    }
+
+
 
     /**
      * Ausgabe eines Strings (kurz)
