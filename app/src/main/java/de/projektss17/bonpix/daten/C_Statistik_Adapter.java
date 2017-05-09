@@ -32,6 +32,7 @@ import de.projektss17.bonpix.S;
 public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int count = 8;
+    private int counter = 0;
 
     public class ViewHolderBar extends RecyclerView.ViewHolder {
         BarChart chart;
@@ -68,8 +69,13 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        Log.e("### STATISTIK ADAPTER","getItemViewType" + position % 2 * 2);
-        return position % 2 * 2;
+        if (counter == 3){
+            counter = 0;
+            return counter;
+        }
+        else {
+            return counter;
+        }
     }
 
     @Override
@@ -105,6 +111,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderBar.chart.setData(dataBar);
                 holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
                 holderBar.chart.invalidate(); // refresh
+                counter++;
                 break;
             case 1:
                 Log.e("### DATABASEHANDLER","## onBind 1 LINE");
@@ -120,6 +127,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 LineData data = new LineData(dataSets);
                 holderLine.chart1.setData(data);
                 holderLine.chart1.invalidate();
+                counter++;
                 break;
             case 2:
 
@@ -129,6 +137,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 PieData pieData = new PieData(set);
                 holderPie.chart2.setData(pieData);
                 holderPie.chart2.invalidate();
+                counter++;
                 break;
         }
     }
