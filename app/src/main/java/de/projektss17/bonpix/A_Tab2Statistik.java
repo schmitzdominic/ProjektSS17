@@ -8,17 +8,11 @@ package de.projektss17.bonpix;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Statistik_Adapter;
 
@@ -27,7 +21,6 @@ public class A_Tab2Statistik extends Fragment{
 
     private RecyclerView recyclerView;
     private C_Statistik_Adapter mAdapter;
-    private List testList = new ArrayList();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,11 +34,6 @@ public class A_Tab2Statistik extends Fragment{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-        Log.e("### Tab2Statistik","Check Check");
         return rootView;
-    }
-
-    public void prepareTestList(){
-        testList.add("test1");
     }
 }
