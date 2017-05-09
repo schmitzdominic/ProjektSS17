@@ -399,7 +399,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         negPos = true;
 
-        String preisArray[] = new String[2];
+        String preisArray[];
 
         // Wenn der Preis nicht leer ist dann setze ihn
         if (preis != null && !preis.isEmpty()){
@@ -409,7 +409,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 positiveNegativeButton.performClick();
             }
 
-            preisArray = preis.split(",");
+            if(preis.contains(",")){
+                preisArray = preis.split(",");
+            } else if(preis.contains(".")){
+                preisArray = preis.split("\\.");
+            } else {
+                preisArray = new String[2];
+            }
 
             priceText.setText(preisArray[0]);
             centText.setText(preisArray[1]);
