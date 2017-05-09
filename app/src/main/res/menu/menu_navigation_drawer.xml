@@ -22,8 +22,14 @@
         android:title="@string/nav_garantie" />
 
     <item
+        android:id="@+id/menu_nav_laeden"
+        android:icon="@mipmap/ic_settings_black_24dp"
+        android:title="@string/nav_laeden" />
+
+    <item
         android:id="@+id/menu_nav_einstellungen"
         android:icon="@mipmap/ic_settings_black_24dp"
         android:title="@string/nav_einstellungen" />
+
 
 </menu>

@@ -19,6 +19,7 @@
     <string name="nav_favoriten">Favoriten</string>
     <string name="nav_garantie">Garantie</string>
     <string name="nav_einstellungen">Einstellungen</string>
+    <string name="nav_laeden">Läden</string>
 
     <!-- A_Budget-->
     <string name="title_budget_screen">Budget</string>
@@ -77,6 +78,10 @@
     <!-- A_Show_Recognition -->
     <string name="title_show_recognition_screen">Ausgabe</string>
 
+    <!-- A_Laeden -->
+    <string name="title_activity_a__laeden">Läden</string>
+
+
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
     <string name="appwidget_text">EXAMPLE</string>
@@ -84,6 +89,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_a__laeden">Läden</string>
 
 </resources>
