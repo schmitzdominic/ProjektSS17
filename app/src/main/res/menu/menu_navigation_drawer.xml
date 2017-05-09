@@ -23,7 +23,7 @@
 
     <item
         android:id="@+id/menu_nav_laeden"
-        android:icon="@mipmap/ic_settings_black_24dp"
+        android:icon="@mipmap/ic_shopping_cart_black_24dp"
         android:title="@string/nav_laeden" />
 
     <item
