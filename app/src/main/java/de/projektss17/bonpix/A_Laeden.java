@@ -22,19 +22,13 @@ public class A_Laeden extends AppCompatActivity {
 
         setContentView(R.layout.box_laeden_screen);
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new F_Laeden()).commit();
+               .replace(android.R.id.content, new F_Laeden()).commit();
 
-       // FragmentManager fragmentManager = getFragmentManager();
-        //FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        //Fragment fLaeden = new F_Laeden();
-        //fragmentTransaction.add(R.id.laeden_container, fLaeden);
-        // fragmentTransaction.commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.laeden_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,7 +37,6 @@ public class A_Laeden extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
     }
 

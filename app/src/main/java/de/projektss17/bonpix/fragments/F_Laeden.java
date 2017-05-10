@@ -37,7 +37,7 @@ public class F_Laeden extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.box_laeden_content, container, false);
+        View rootView = inflater.inflate(R.layout.box_laeden_screen, container, false);
 
         RecyclerView recyclerViewLaeden = (RecyclerView) rootView.findViewById(R.id.laeden_view);
         C_Laeden_Adapter mAdapter = new C_Laeden_Adapter(shopList);
