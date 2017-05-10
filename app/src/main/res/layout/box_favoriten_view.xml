@@ -18,7 +18,7 @@
         android:src="@drawable/common_google_signin_btn_icon_dark_focused" />
 
     <TextView
-        android:id="@+id/favoriten_view_favoritenbeginn"
+        android:id="@+id/favoriten_view_favoriteShopName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/favoriten_view_favoriten_delete_button"
@@ -29,7 +29,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/favoriten_view_zusatz_favoritenende"
+        android:id="@+id/favoriten_view_zusatz_favoriteDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="20dp"
@@ -37,7 +37,7 @@
         android:textSize="14sp"
         android:layout_toLeftOf="@id/favoriten_view_favoriten_delete_button"
         android:layout_toRightOf="@+id/favoriten_view_laden_bild"
-        android:layout_below="@+id/favoriten_view_favoritenbeginn"/>
+        android:layout_below="@+id/favoriten_view_favoriteShopName"/>
 
 
     <ImageView

@@ -13,7 +13,6 @@ import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Favoriten_Adapter;
-import de.projektss17.bonpix.daten.C_Garantie_Adapter;
 
 public class A_Favoriten extends AppCompatActivity {
     private List<C_Bon> bonListe = new ArrayList<>();

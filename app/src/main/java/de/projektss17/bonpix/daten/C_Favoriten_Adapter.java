@@ -32,8 +32,8 @@ public class C_Favoriten_Adapter extends RecyclerView.Adapter<C_Favoriten_Adapte
         public MyViewHolder(View view){
             super(view);
             icon = (ImageView) view.findViewById(R.id.favoriten_view_laden_bild);
-            favoriteShopName = (TextView) view.findViewById(R.id.favoriten_view_favoritenbeginn);
-            favoriteDate = (TextView) view.findViewById(R.id.favoriten_view_zusatz_favoritenende);
+            favoriteShopName = (TextView) view.findViewById(R.id.favoriten_view_favoriteShopName);
+            favoriteDate = (TextView) view.findViewById(R.id.favoriten_view_zusatz_favoriteDate);
             deleteBtn = (ImageView) view.findViewById(R.id.favoriten_view_favoriten_delete_button);
 
 
