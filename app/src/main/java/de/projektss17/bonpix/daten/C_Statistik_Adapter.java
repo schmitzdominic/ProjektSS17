@@ -115,7 +115,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
             case 1:
                 Log.e("### DATABASEHANDLER","## onBind 1 LINE");
-
                 ViewHolderLine holderLine = (ViewHolderLine)holder;
                 LineDataSet setComp1 = new LineDataSet(S.dbHandler.getLineData(1).get("lineOne"), "Company 1");
                 setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -130,7 +129,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 counter++;
                 break;
             case 2:
-
                 Log.e("### DATABASEHANDLER","## onBind 2 PIE");
                 ViewHolderPie holderPie = (ViewHolderPie)holder;
                 PieDataSet set = new PieDataSet(S.dbHandler.getPieData(1), "Election Results");
