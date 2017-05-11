@@ -2,16 +2,21 @@ package de.projektss17.bonpix;
 
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +42,47 @@ public class A_Laeden extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Floating Button instanziieren
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.laeden_fap);
         fab.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             *
+             * @param v
+             */
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                LayoutInflater inflater = getLayoutInflater();
+                View alertLayoutLaeden = inflater.inflate(R.layout.box_laeden_alert_dialog, null);
+                final EditText shopTitle = (EditText) alertLayoutLaeden.findViewById(R.id.laeden_alert_dialog_title);
+
+
+                // DIALOG Fenster
+                new AlertDialog.Builder(A_Laeden.this)
+                        .setTitle("Laden hinzufügen")
+                        .setView(alertLayoutLaeden)
+                        .setCancelable(false)
+                        .setNegativeButton("Abbruch", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                if(shopTitle.getText()== null || shopTitle.getText().toString().isEmpty())
+                                    dialog.dismiss();
+                                else
+                                    Log.e("testausgabe", shopTitle.getText().toString());
+                                    //Todo Datenbankanbindung => setLaden
+
+
+                            }
+
+                        }).create().show();
             }
+
         });
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
