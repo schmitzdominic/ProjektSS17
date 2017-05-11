@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
     private F_Laeden_Detail trigger;
     private Context context;
     private FragmentManager fm;
+    private Bundle args;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -71,6 +73,8 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
 
         fm = ((Activity) context).getFragmentManager();
 
+
+
         return new C_Laeden_Adapter.MyViewHolder(itemView);
     }
 
@@ -93,6 +97,9 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
                 Log.e("test", "test");
                 //S.dbHandler.updateBon(S.db, bonListe.get(position));
                 //bonList.remove(position);
+                args = new Bundle();
+                args.putString("ShopName", shop.getName());
+                trigger.setArguments(args);
                 trigger.show(fm , "BlaBla");
             }
         });

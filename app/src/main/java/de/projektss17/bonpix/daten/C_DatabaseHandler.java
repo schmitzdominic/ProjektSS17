@@ -573,6 +573,25 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Get all Bons with specific Store
+     * @param db
+     * @param name
+     * @return
+     */
+    public ArrayList<C_Bon> getBonsOfStore(SQLiteDatabase db, String name){
+        ArrayList<C_Bon> list = new ArrayList<>();
+        for (C_Bon bon : S.dbHandler.getAllBons(db)){
+            if (bon.getShopName() == name){
+                list.add(bon);
+            }
+            else {
+                continue;
+            }
+        }
+        return list;
+    }
+
+    /**
      * Gibt alle Daten aus der DB im Log aus.
      */
     public void showLogAllDBEntries(){

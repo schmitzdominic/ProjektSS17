@@ -2,7 +2,6 @@ package de.projektss17.bonpix.fragments;
 
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -20,6 +19,8 @@ import de.projektss17.bonpix.S;
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laeden_Detail_Adapter;
 
+import static de.projektss17.bonpix.S.db;
+
 public class F_Laeden_Detail extends DialogFragment {
     private List<C_Bon> bonsList = new ArrayList<>();
 
@@ -30,8 +31,8 @@ public class F_Laeden_Detail extends DialogFragment {
         View rootView = inflater.inflate(R.layout.box_laeden_detail_content, container, false);
         RecyclerView recyclerViewDetailLaeden = (RecyclerView) rootView.findViewById(R.id.laeden_detail_view);
         C_Laeden_Detail_Adapter mAdapter = new C_Laeden_Detail_Adapter(bonsList);
-        prepareBonData();
-
+        String name = getArguments().getString("ShopName");
+        prepareBonData(name);
         recyclerViewDetailLaeden.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDetailLaeden.addItemDecoration(
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
@@ -44,9 +45,9 @@ public class F_Laeden_Detail extends DialogFragment {
     /**
      * Set Data for RecyclerView Bons
      */
-    private void prepareBonData(){
+    private void prepareBonData(String name){
         bonsList.clear();
-        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
+        for(C_Bon bon : S.dbHandler.getBonsOfStore(db, name)){
             this.bonsList.add(bon);
         }
     }
