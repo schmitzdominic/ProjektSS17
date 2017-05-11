@@ -226,8 +226,8 @@ public class C_PicChanger {
 
         height = yMax - yMin;
 
-        if((yMin+height) <= (bitmap.getHeight()-20)){
-            height = height+20;
+        if((yMin+height) <= (bitmap.getHeight()-40)){
+            height = height+40;
         }
 
         Log.e("##### ORIGINAL BITMAP", "x=" + bitmap.getWidth() + " y=" + bitmap.getHeight());

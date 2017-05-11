@@ -4,17 +4,21 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.os.Environment;
 import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.text.Line;
-import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.googlecode.tesseract.android.TessBaseAPI;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import de.projektss17.bonpix.auswerter.Default;
 import de.projektss17.bonpix.daten.C_Artikel;
@@ -34,6 +38,8 @@ public class C_OCR {
     private ArrayList<Point> pointList;
     private ArrayList<C_Artikel> articles;
     private C_PicChanger picChanger;
+    public static final String TESS_DATA = "/tessdata";
+    private static final String DATA_PATH = Environment.getExternalStorageDirectory() + "/BonPix/";
 
 
     public C_OCR(Context context){
@@ -117,17 +123,68 @@ public class C_OCR {
         return "";
     }
 
+    private String recognizerTesseract(Bitmap bitmap){
+
+        prepareTessDAta();
+
+        TessBaseAPI tessBaseAPI = new TessBaseAPI();
+        tessBaseAPI.init(DATA_PATH,"deu");
+        tessBaseAPI.setImage(bitmap);
+        tessBaseAPI.setVariable("load_system_dawg","0");
+        tessBaseAPI.setVariable("language_model_penalty_non_dict_word", "0");
+        tessBaseAPI.setVariable("language_model_penalty_non_freq_dict_word", "0");
+        String result = "No Result";
+        result = tessBaseAPI.getUTF8Text();
+        tessBaseAPI.end();
+
+        return result;
+    }
+
+    private void prepareTessDAta(){
+
+        try{
+            File dir = new File(DATA_PATH + TESS_DATA);
+            if(!dir.exists()){
+                dir.mkdirs();
+            }
+            String fileList[] = new String[0];
+            try {
+                fileList = res.getAssets().list("");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            for(String fileName : fileList){
+                String pathToDataFile = DATA_PATH+TESS_DATA+"/"+fileName;
+                if(!(new File(pathToDataFile)).exists()){
+                    InputStream in = res.getAssets().open(fileName);
+                    OutputStream out = new FileOutputStream(pathToDataFile);
+                    byte [] buff = new byte[1024];
+                    int len ;
+                    while((len = in.read(buff)) > 0){
+                        out.write(buff,0,len);
+                    }
+                    in.close();
+                    out.close();
+                }
+            }
+
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+
+    }
+
     private void setArticles(Bitmap bitmap){
 
         Log.e("### SET ARTICLES", "Converting to Grayscale and get only price section...");
-        Bitmap cropedBitmap = this.picChanger.getOnlyPrices(bitmap, this.getPointList());
-        //bitmap = this.picChanger.getOnlyPrices(this.picChanger.convertBitmapGrayscale(bitmap), this.getPointList());
+        //Bitmap cropedBitmap = this.picChanger.getOnlyPrices(bitmap, this.getPointList());
+        bitmap = this.picChanger.getOnlyPrices(this.picChanger.convertBitmapGrayscale(bitmap), this.getPointList());
 
-        Log.e("### SET ARTICLES", "Cut the Picture on " + (cropedBitmap.getWidth()/3)*2 + "...");
-        Bitmap halfLeft = this.picChanger.cutBitmapHorizontal(cropedBitmap, (cropedBitmap.getWidth()/3)*2)[0];
+        Log.e("### SET ARTICLES", "Cut the Picture on " + (bitmap.getWidth()/3)*2 + "...");
+        Bitmap halfLeft = this.picChanger.cutBitmapHorizontal(bitmap, (bitmap.getWidth()/3)*2)[0];
         Log.e("######## NEW SIZE","x=" + halfLeft.getWidth() + " y=" + halfLeft.getHeight());
 
-        Bitmap halfRight = this.picChanger.cutBitmapHorizontal(cropedBitmap, (cropedBitmap.getWidth()/3)*2)[1];
+        Bitmap halfRight = this.picChanger.cutBitmapHorizontal(bitmap, (bitmap.getWidth()/3)*2)[1];
 
         ArrayList<String> articleList = new ArrayList<>();
         ArrayList<String> priceList = new ArrayList<>();
@@ -137,7 +194,7 @@ public class C_OCR {
         priceList = this.ladenInstanz.getPrices(this.recognizedText);
 
         Log.e("### SET ARTICLES", "Now get all the articles...");
-        this.recognizedText = this.recognizer(halfLeft);
+        this.recognizedText = this.recognizerTesseract(halfLeft);
         articleList = this.ladenInstanz.getProducts(this.recognizedText);
 
         Log.e("##### ERGEBNIS", "Artikel=" + articleList.size() + " Preise="+ priceList.size());
