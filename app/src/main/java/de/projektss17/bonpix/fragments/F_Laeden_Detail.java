@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +29,12 @@ public class F_Laeden_Detail extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         View rootView = inflater.inflate(R.layout.box_laeden_detail_content, container, false);
         RecyclerView recyclerViewDetailLaeden = (RecyclerView) rootView.findViewById(R.id.laeden_detail_view);
         C_Laeden_Detail_Adapter mAdapter = new C_Laeden_Detail_Adapter(bonsList);
         String name = getArguments().getString("ShopName");
+        Log.e("### PASSED SHOPNAME", "" + name);
         prepareBonData(name);
         recyclerViewDetailLaeden.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDetailLaeden.addItemDecoration(
@@ -46,9 +49,9 @@ public class F_Laeden_Detail extends DialogFragment {
      * Set Data for RecyclerView Bons
      */
     private void prepareBonData(String name){
-        bonsList.clear();
         for(C_Bon bon : S.dbHandler.getBonsOfStore(db, name)){
             this.bonsList.add(bon);
+            Log.e("### prepareDATA","" + bon.getShopName());
         }
     }
 

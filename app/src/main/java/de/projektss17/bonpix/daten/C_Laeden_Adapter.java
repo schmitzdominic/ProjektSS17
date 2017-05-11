@@ -20,11 +20,12 @@ import android.widget.TextView;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.fragments.F_Laeden_Detail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyViewHolder> {
 
-    private List<C_Laden> shopList;
+    private ArrayList<C_Laden> shopList = new ArrayList<>();
     private C_Laden shop;
     private F_Laeden_Detail trigger;
     private Context context;
@@ -58,7 +59,7 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
     /**
      * @param shopList
      */
-    public C_Laeden_Adapter(Context context, List<C_Laden> shopList) {
+    public C_Laeden_Adapter(Context context, ArrayList<C_Laden> shopList) {
         this.context = context;
         this.shopList = shopList;
     }
@@ -85,7 +86,9 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
         //ToDo später Icon dynamisch zuweisbar
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
         holder.shopName.setText(shop.getName());
-
+        for (C_Laden laden : shopList){
+            Log.e("### SHOPLIST IN ADAPTER", "" + laden.getName());
+        }
         holder.editShopBtn.setOnClickListener(new View.OnClickListener() {
 
 
@@ -94,7 +97,7 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
              * @param v
              */
             public void onClick(View v) {
-                Log.e("test", "test");
+                Log.e("test", shop.getName());
                 //S.dbHandler.updateBon(S.db, bonListe.get(position));
                 //bonList.remove(position);
                 args = new Bundle();
@@ -107,7 +110,6 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
 
     @Override
     public int getItemCount() {
-
         return this.shopList.size();
     }
 

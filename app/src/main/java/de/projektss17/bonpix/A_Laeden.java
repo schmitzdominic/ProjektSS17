@@ -29,7 +29,7 @@ import de.projektss17.bonpix.daten.C_Laeden_Adapter;
 
 public class A_Laeden extends AppCompatActivity {
 
-    private List<C_Bon> bonsList = new ArrayList<>();
+    private ArrayList<C_Bon> bonsList = new ArrayList<>();
     private ArrayList<C_Laden> shopList = new ArrayList<>();
     private RecyclerView recyclerViewLaeden;
     private C_Laeden_Adapter mAdapter;
@@ -72,7 +72,7 @@ public class A_Laeden extends AppCompatActivity {
                                     if(shopTitle.getText() != null && !shopTitle.getText().toString().isEmpty() ){
                                         if(!S.dbHandler.checkIfLadenExist(S.db, shopTitle.getText().toString())){
                                             S.dbHandler.addLaden(S.db, new C_Laden(shopTitle.getText().toString()));
-                                            prepareBonData();
+                                            prepareShopData();
                                         } else {
                                             S.outLong(A_Laeden.this, "Laden bereits vorhanden! Bitte geben Sie einen anderen Wert ein.");
                                         }
@@ -96,7 +96,7 @@ public class A_Laeden extends AppCompatActivity {
         this.recyclerViewLaeden = (RecyclerView) findViewById(R.id.view_laeden);
 
         mAdapter = new C_Laeden_Adapter(this, shopList);
-        prepareBonData();
+        prepareShopData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewLaeden.setLayoutManager(mLayoutManager);
         recyclerViewLaeden.addItemDecoration(
@@ -109,12 +109,13 @@ public class A_Laeden extends AppCompatActivity {
     /**
      * Set Data for RecyclerView Shops
      */
-    private void prepareBonData(){
+    private void prepareShopData(){
         shopList.clear();
         for(C_Laden shop : S.dbHandler.getAllLaeden(S.db)){
             this.shopList.add(shop);
+            Log.e("### SHOPLIST IN LAEDEN", "" + shop.getName());
         }
-        Collections.sort(shopList);
+        //Collections.sort(shopList);
         mAdapter.notifyDataSetChanged();
     }
 }
