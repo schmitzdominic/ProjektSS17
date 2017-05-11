@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -31,6 +34,12 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".A_Gruppen"
@@ -80,8 +89,8 @@
         <activity
             android:name=".A_OCR_Manuell"
             android:label="@string/title_manuell_screen"
-            android:screenOrientation="portrait"
             android:parentActivityName=".A_Main"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -109,6 +118,22 @@
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="ocr" />
+
+        <activity
+            android:name=".A_Budget_Edit"
+            android:label="@string/title_activity_a__budget__edit"
+            android:parentActivityName=".A_Budget"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Budget" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

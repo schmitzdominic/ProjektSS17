@@ -8,106 +8,93 @@ public class C_Budget {
 
     private int budgetMax, budgetCurrently;
     private int processbar, progressPercentage;
-    private String turnus;
+    private String monatVon, monatBis;
+    private String jahrVon, jahrBis;
     private String title;
-    private String year;
 
 
-    public C_Budget(int budgetMax, int budgetCurrently, int processbar, String turnus, String title, String year){
+
+    public C_Budget(int budgetMax, int budgetCurrently, int processbar, String monatVon, String jahrVon, String monatBis, String jahrBis, String title){
         this.budgetMax = budgetMax;
         this.budgetCurrently = budgetCurrently;
         this.processbar = processbar;
-        this.turnus = turnus;
+        this.monatVon = monatVon;
+        this.jahrVon = jahrVon;
+        this.monatBis = monatBis;
+        this.jahrBis = jahrBis;
         this.title = title;
-        this.year = year;
+
     }
 
-    /**
-     *
-     * @return Rückgabe des Budgets welches die Obergrenze ist
-     */
     public int getBudgetMax() {
         return budgetMax;
     }
 
-    /**
-     *
-     * @return Rückgabe des eingegebenen Monats
-     */
-    public String getTurnus() {
-        return turnus;
+    public void setBudgetMax(int budgetMax) {
+        this.budgetMax = budgetMax;
     }
 
-    /**
-     *
-     * @param turnus Setzten des Monats
-     */
-    public void setTurnus(String turnus) {
-        this.turnus = turnus;
+    public int getBudgetCurrently() {
+        return budgetCurrently;
     }
 
-    /**
-     *
-     * @return Rückgabe des Prozensatzes (von budgetCurrently)
-     */
-    public int getProcessbar() {return processbar;    }
+    public void setBudgetCurrently(int budgetCurrently) {
+        this.budgetCurrently = budgetCurrently;
+    }
 
-    /**
-     *
-     * @param processbar Setzten des Prozensatzes (von budgetCurrently)
-     */
+    public int getProcessbar() {
+        return processbar;
+    }
+
     public void setProcessbar(int processbar) {
         this.processbar = processbar;
     }
 
-    /**
-     *
-     * @param budget Setzten der Obergrenze für den Budget
-     */
-    public void setBudget(int budget) {
-        this.budgetMax = budget;
+    public int getProgressPercentage() {
+        return budgetCurrently*100/budgetMax;
     }
 
-    /**
-     *
-     * @return Rückgabe des Titels
-     */
-    public String getTitle() {        return title;    }
+    public void setProgressPercentage(int progressPercentage) {
+        this.progressPercentage = progressPercentage;
+    }
 
-    /**
-     *
-     * @param title Setzen des Titels
-     */
-    public void setTitle(String title) {        this.title = title;    }
+    public String getMonatVon() {
+        return monatVon;
+    }
 
-    /**
-     *
-      * @return Rückgabe des gegenwärtigen Budgets
-     */
-    public int getBudgetCurrently() {        return budgetCurrently;    }
+    public void setMonatVon(String monatVon) {
+        this.monatVon = monatVon;
+    }
 
-    /**
-     *
-     * @param budgetCurrently Setzen des gegenwärtigen Budgets
-     */
-    public void setBudgetCurrently(int budgetCurrently) {        this.budgetCurrently = budgetCurrently;    }
+    public String getMonatBis() {
+        return monatBis;
+    }
 
-    /**
-     *
-     * @return Rückgabe der Prozentsatzen von budgetCurrently gegenüber des budgetMax
-     */
-    public int getProcessPercentage() {        return (int)(budgetCurrently*100/budgetMax);   }
+    public void setMonatBis(String monatBis) {
+        this.monatBis = monatBis;
+    }
 
-    /**
-     *
-     * @return Rückgabe des Jahres
-     */
-    public String getYear() {return year;    }
+    public String getJahrVon() {
+        return jahrVon;
+    }
 
-    /**
-     *
-     * @param year Setzen des Jahres
-     */
-    public void setYear(String year) {        this.year = year;    }
+    public void setJahrVon(String jahrVon) {
+        this.jahrVon = jahrVon;
+    }
 
+    public String getJahrBis() {
+        return jahrBis;
+    }
+
+    public void setJahrBis(String jahrBis) {
+        this.jahrBis = jahrBis;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

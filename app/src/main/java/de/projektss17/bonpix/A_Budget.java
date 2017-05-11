@@ -1,6 +1,8 @@
+
 package de.projektss17.bonpix;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -58,6 +60,10 @@ public class A_Budget extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+                Intent intent = new Intent(A_Budget.this, A_Budget_Edit.class);
+                startActivity(intent);
+                /*
                 // Implementierung des Layouts für den Dialog-Fenster
                 LayoutInflater inflater = getLayoutInflater();
                 View alertLayout = inflater.inflate(R.layout.box_budget_alert_dialog, null);
@@ -95,7 +101,7 @@ public class A_Budget extends AppCompatActivity {
                                 yearContent.getText().toString());
                     }
 
-                }).create().show();
+                }).create().show(); */
             }
         });
 
@@ -115,27 +121,27 @@ public class A_Budget extends AppCompatActivity {
     private ItemTouchHelper.Callback createHelperCallBack(){
 
         return new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+                ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
 
 
-                    @Override
-                    public  boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
-                                           RecyclerView.ViewHolder target) {
+            @Override
+            public  boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                   RecyclerView.ViewHolder target) {
 
-                        // CARD VIEW - Items können bewegt werden (oben nach unten und umgekehrt)
-                        moveItem(viewHolder.getAdapterPosition(),target.getAdapterPosition());
-                        return true;    // true wenn geswipped wird, ansonsten false
-                    }
+                // CARD VIEW - Items können bewegt werden (oben nach unten und umgekehrt)
+                moveItem(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+                return true;    // true wenn geswipped wird, ansonsten false
+            }
 
-                    @Override
-                    public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
 
-                        // CARD VIEW - Items werden gelöscht (nach Rechts oder Links)
-                        deleteItem(viewHolder.getAdapterPosition());
-                        S.outShort(A_Budget.this,"Item wurde gelöscht!");
+                // CARD VIEW - Items werden gelöscht (nach Rechts oder Links)
+                deleteItem(viewHolder.getAdapterPosition());
+                S.outShort(A_Budget.this,"Item wurde gelöscht!");
 
-                    }
-                };
+            }
+        };
     }
 
     /**
@@ -175,11 +181,13 @@ public class A_Budget extends AppCompatActivity {
      * ADD ITEM - Befüllung der RecyclerView mit EINER Datenmenge
      * @param budgetMax Übergabe des eingegeben Budget-Betrags
      * @param budgetCurrently Übergabe des budgetMax -> Ändert sich wenn DB angehängt wird
-     * @param turnus Übergabe des Monats
+     * @param monatVon Übergabe des Monat
+     * @param jahrVon Übergabe des Jahres
+     * @param monatBis Übergabe des Monat
+     * @param jahrBis Übergabe des Jahres
      * @param title Übergabe des Titels
-     * @param year Übergabe des Jahres
      */
-    private void addItem(String budgetMax, String budgetCurrently, String turnus, String title, String year){
+    private void addItem(String budgetMax, String budgetCurrently, String monatVon, String jahrVon, String monatBis, String jahrBis, String title){
 
         /*
         *  >>>> Hier INSERT-Verbindung zur DB herstellen (wenn DB fertig)
@@ -192,7 +200,7 @@ public class A_Budget extends AppCompatActivity {
         int testcurrentBudget = randomNumber(budgetMaxParse,150); // Betrag zum Testen -> wird später gelöscht!!!!!!
 
         C_Budget budget = new C_Budget(budgetMaxParse,testcurrentBudget,
-                percentageCalculator(budgetMaxParse,testcurrentBudget), turnus, title,year);
+                percentageCalculator(budgetMaxParse,testcurrentBudget), monatVon,jahrVon,monatBis,jahrBis,title);
 
         budgetList.add(budget);
 
@@ -248,7 +256,7 @@ public class A_Budget extends AppCompatActivity {
 
     /**
      * RANDOM MONTH - Zufällige Auswahl eines Monats
-      * @param random Übergabe einer Randomzahl
+     * @param random Übergabe einer Randomzahl
      * @return Rückgabe eines Monats je nach Randomzahl
      */
     public String randomMonth (int random){
