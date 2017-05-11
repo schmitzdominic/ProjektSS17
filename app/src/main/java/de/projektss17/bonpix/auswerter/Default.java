@@ -2,6 +2,7 @@ package de.projektss17.bonpix.auswerter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,36 @@ public class Default implements I_Auswerter{
 
     @Override
     public ArrayList<String> getProducts(String txt) {
-        return null;
+
+        String dumString = "";
+        ArrayList<String> retString = new ArrayList<>();
+
+        txt = txt.replaceAll(" +","");
+        txt = txt.replaceAll("\\d","");
+        txt = txt.toLowerCase();
+
+        for(int i = 0; i < txt.length(); i++){
+            if(txt.charAt(i) == '\n'){
+                if(dumString.length() > 4 && !dumString.contains("storno")){
+                    if(dumString.contains("pfand")){
+                        dumString = "pfand";
+                    }
+                    retString.add(dumString.toUpperCase());
+                }
+                dumString = "";
+            } else {
+                if(this.isLetter(txt.charAt(i)) || txt.charAt(i) == '.' || txt.charAt(i) == '&'){
+                    dumString += txt.charAt(i);
+                }
+            }
+        }
+
+        for(String artikel : retString){
+            Log.e("ARTIKEL", artikel);
+        }
+
+        return retString;
+
     }
 
     @Override

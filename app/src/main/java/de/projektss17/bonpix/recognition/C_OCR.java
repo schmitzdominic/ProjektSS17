@@ -3,16 +3,21 @@ package de.projektss17.bonpix.recognition;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.Line;
+import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.projektss17.bonpix.auswerter.Default;
+import de.projektss17.bonpix.daten.C_Artikel;
 
 /**
  * Created by Domi on 14.04.2017.
@@ -26,11 +31,18 @@ public class C_OCR {
     private ArrayList<String> produkte, preise;
     private Resources res;
     private Default ladenInstanz;
+    private ArrayList<Point> pointList;
+    private ArrayList<C_Artikel> articles;
+    private C_PicChanger picChanger;
+
 
     public C_OCR(Context context){
         this.context = context;
         this.res = this.context.getResources();
         this.laden = new C_MatchLaden(this.context);
+        this.pointList = new ArrayList<>();
+        this.articles = new ArrayList<>();
+        this.picChanger = new C_PicChanger();
     }
 
     /**
@@ -72,9 +84,9 @@ public class C_OCR {
 
         // Attribute setzen
         this.ladenName = ladenName;
-        this.produkte = this.ladenInstanz.getProducts(this.recognizedText);
-        this.preise = this.ladenInstanz.getPrices(this.recognizedText);
         this.adresse = this.ladenInstanz.getAdresse(this.recognizedText);
+        this.setArticles(bitmap);
+
     }
 
     /**
@@ -90,8 +102,13 @@ public class C_OCR {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
             SparseArray<TextBlock> items = textRecognizer.detect(frame);
             StringBuilder stringBuilder = new StringBuilder();
+
             for (int i = 0; i < items.size(); ++i) {
                 TextBlock item = items.valueAt(i);
+                for(Point point : item.getCornerPoints()){
+                    //Log.e("## POINT", ""+point.toString());
+                    this.pointList.add(point);
+                }
                 stringBuilder.append(item.getValue());
                 stringBuilder.append("\n");
             }
@@ -99,6 +116,52 @@ public class C_OCR {
         }
         return "";
     }
+
+    private void setArticles(Bitmap bitmap){
+
+        Log.e("### SET ARTICLES", "Converting to Grayscale and get only price section...");
+        Bitmap cropedBitmap = this.picChanger.getOnlyPrices(bitmap, this.getPointList());
+        //bitmap = this.picChanger.getOnlyPrices(this.picChanger.convertBitmapGrayscale(bitmap), this.getPointList());
+
+        Log.e("### SET ARTICLES", "Cut the Picture on " + (cropedBitmap.getWidth()/3)*2 + "...");
+        Bitmap halfLeft = this.picChanger.cutBitmapHorizontal(cropedBitmap, (cropedBitmap.getWidth()/3)*2)[0];
+        Log.e("######## NEW SIZE","x=" + halfLeft.getWidth() + " y=" + halfLeft.getHeight());
+
+        Bitmap halfRight = this.picChanger.cutBitmapHorizontal(cropedBitmap, (cropedBitmap.getWidth()/3)*2)[1];
+
+        ArrayList<String> articleList = new ArrayList<>();
+        ArrayList<String> priceList = new ArrayList<>();
+
+        Log.e("### SET ARTICLES", "Now get all the prices...");
+        this.recognizedText = this.recognizer(halfRight);
+        priceList = this.ladenInstanz.getPrices(this.recognizedText);
+
+        Log.e("### SET ARTICLES", "Now get all the articles...");
+        this.recognizedText = this.recognizer(halfLeft);
+        articleList = this.ladenInstanz.getProducts(this.recognizedText);
+
+        Log.e("##### ERGEBNIS", "Artikel=" + articleList.size() + " Preise="+ priceList.size());
+
+        if(articleList.size() == priceList.size()){
+            int count = 0;
+            for(String article : articleList){
+                this.articles.add(new C_Artikel(article, Double.parseDouble(priceList.get(count).replace(",","."))));
+                count++;
+            }
+        }
+
+
+    }
+
+
+    /**
+     * Gibt alle gefunden Artikel zurück
+     * @return
+     */
+    public ArrayList<C_Artikel> getArticles(){
+        return this.articles;
+    }
+
 
     /**
      * Gibt den aktuell verwendeten Ladennamen zurück
@@ -138,5 +201,12 @@ public class C_OCR {
      */
     public String getRecognizedText(){
         return this.recognizedText;
+    }
+
+    /**
+     * Gibt eine Liste mit allen Block Koordinaten (Uhrzeigersinn) zurück
+     */
+    public ArrayList<Point> getPointList(){
+        return this.pointList;
     }
 }

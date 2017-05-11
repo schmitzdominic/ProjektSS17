@@ -18,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,13 +38,13 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 
 import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.recognition.C_OCR;
+import de.projektss17.bonpix.recognition.C_PicChanger;
 
 
 public class A_OCR_Manuell extends AppCompatActivity {
@@ -736,7 +735,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * @param sonstiges Sonstiges
      * @param articles Array mit Articles
      */
-    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Artikel[] articles){
+    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, ArrayList<C_Artikel> articles){
 
         if(imageUri != null) {
             this.ocrImageView.setImageURI(null);
@@ -780,14 +779,70 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * @param myBitmap Bitmap
      */
     private void fillMaskOCR(Bitmap myBitmap){
+
         this.ocr.recognize(myBitmap);
+
+        //myBitmap = picChanger.convertBitmapBlackAndWhite(myBitmap);
+
+        //Bitmap changedBitmap = picChanger.convertBitmapGrayscale(picChanger.getOnlyPrices(myBitmap, this.ocr.getPointList()));
+
+        //changedBitmap = picChanger.cutBitmapHorizontal(changedBitmap, (changedBitmap.getWidth()/3)*2)[0];
+
+        /*
+        this.ocr.recognize(changedBitmap);
+        Log.e("######## ARTIKEL-ZEILEN", ocr.getPreise().size() + "");
+        int preisCount = ocr.getPreise().size();
+
+        ArrayList<Integer> x,y = new ArrayList<>();
+
+        x = picChanger.countBlackPixels(picChanger.getColumArray(changedBitmap,1).get(changedBitmap.getWidth()/3));
+        if(x.size() == 0){
+            x = picChanger.countBlackPixels(picChanger.getColumArray(changedBitmap,1).get(changedBitmap.getWidth()/6));
+        }
+
+        /*y = picChanger.countBlackPixels(picChanger.getColumArray(changedBitmap,1).get((changedBitmap.getWidth()/3)+10));
+        if(y.size() == 0){
+            y = picChanger.countBlackPixels(picChanger.getColumArray(changedBitmap,1).get((changedBitmap.getWidth()/4)+10));
+        }*/
+        /*
+
+        int min = (int)(double)(preisCount*0.8);
+        int max = (int)(double)(preisCount*1.2);
+
+        int schnitt = 0;
+
+        int count = 0;
+        for(int black : x){
+            count += black;
+        }
+
+        if(x.size() >= min && x.size() <= max){
+            schnitt = count / preisCount;
+        } else {
+            schnitt = count / x.size();
+        }
+
+        Log.e("###### SCHNITT ENDE", schnitt + "");
+        */
+        //myBitmap = picChanger.getLines(changedBitmap, x).get(3);
+
+
+
+
+        //ArrayList<Integer> y = picChanger.countBlackPixels(picChanger.getColumArray(changedBitmap,1).get((changedBitmap.getWidth()/5)));
+
+        //changedBitmap = picChanger.getLines(changedBitmap, x).get(3);
+
+        //myBitmap = changedBitmap;
+
+        //myBitmap = picChanger.getOnlyPrices(myBitmap, this.ocr.getPointList());
+
         this.fillMask(this.getImageUri(myBitmap),
                 this.ocr.getLadenName(),
                 null, // TODO LadenName über OCR suchen!
                 null,  // TODO Anschrift über OCR suchen!
                 this.ocr.getRecognizedText(), // TODO Später wieder ausnehmen!
-                this.createArticleArray(null, // TODO Artikel hinzufügen!
-                        this.ocr.getPreise()));
+                this.ocr.getArticles());
     }
 
     /**
@@ -908,29 +963,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
         } else if (state.equals("new")) { // Wenn die Maske den Status new hat (z.B. bei einer neuen Maske)
             return;
         }
-    }
-
-    /**
-     *
-     * Erzeugt ein Articel Array
-     * @param ArticleNamen ArrayList mit allen ArtikelNamen
-     * @param preise ArrayList mit allen dazugehörigen Preisen
-     * @return C_Article Array
-     */
-    public C_Artikel[] createArticleArray(ArrayList<String> ArticleNamen, ArrayList<String> preise){
-
-        C_Artikel[] articleArray = new C_Artikel[preise.size()];
-
-        int count = 0;
-
-        // TODO noch für die ArticelNamen machen!
-
-        for(String price : preise){
-            articleArray[count] = new C_Artikel("Article "+(count+1), Double.parseDouble(price.replace(",",".")));
-            count++;
-        }
-
-        return articleArray;
     }
 
     /**
