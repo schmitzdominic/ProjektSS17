@@ -69,9 +69,6 @@ public class A_Laeden extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                               // if(shopTitle.getText()== null || shopTitle.getText().toString().isEmpty())
-                                 //   dialog.dismiss();
-                                //else
                                     if(shopTitle.getText() != null && !shopTitle.getText().toString().isEmpty() ){
                                         if(!S.dbHandler.checkIfLadenExist(S.db, shopTitle.getText().toString())){
                                             S.dbHandler.addLaden(S.db, new C_Laden(shopTitle.getText().toString()));
@@ -98,7 +95,7 @@ public class A_Laeden extends AppCompatActivity {
         //XML instaniziieren
         this.recyclerViewLaeden = (RecyclerView) findViewById(R.id.view_laeden);
 
-        mAdapter = new C_Laeden_Adapter(shopList);
+        mAdapter = new C_Laeden_Adapter(this, shopList);
         prepareBonData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewLaeden.setLayoutManager(mLayoutManager);

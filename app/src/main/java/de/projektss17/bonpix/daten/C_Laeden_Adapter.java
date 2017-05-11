@@ -1,7 +1,11 @@
 package de.projektss17.bonpix.daten;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import android.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.fragments.F_Laeden_Detail;
 
 import java.util.List;
 
@@ -20,6 +25,10 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
 
     private List<C_Laden> shopList;
     private C_Laden shop;
+    private F_Laeden_Detail trigger;
+    private Context context;
+    private FragmentManager fm;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView shopName;
@@ -39,8 +48,7 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
             roundedBitmapDrawable.setCircular(true);
             roundedBitmapDrawable.setAntiAlias(true);
             iconShop.setImageDrawable(roundedBitmapDrawable);
-            // --- END TO DO ---
-
+            // --- END TO DO --
 
         }
     }
@@ -48,8 +56,8 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
     /**
      * @param shopList
      */
-    public C_Laeden_Adapter(List<C_Laden> shopList) {
-
+    public C_Laeden_Adapter(Context context, List<C_Laden> shopList) {
+        this.context = context;
         this.shopList = shopList;
     }
 
@@ -58,6 +66,10 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
     public C_Laeden_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.box_laeden_view, parent, false);
+
+        trigger = new F_Laeden_Detail();
+
+        fm = ((Activity) context).getFragmentManager();
 
         return new C_Laeden_Adapter.MyViewHolder(itemView);
     }
@@ -79,17 +91,11 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
              */
             public void onClick(View v) {
                 Log.e("test", "test");
-                //bonListe.get(position).setGuarantee(false);
                 //S.dbHandler.updateBon(S.db, bonListe.get(position));
-                //bonListe.remove(position);
-
-                //notifyItemRemoved(position);
-                //notifyItemRangeChanged(position, getItemCount());
-
+                //bonList.remove(position);
+                trigger.show(fm , "BlaBla");
             }
         });
-
-
     }
 
     @Override
@@ -97,4 +103,6 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
 
         return this.shopList.size();
     }
+
+
 }
