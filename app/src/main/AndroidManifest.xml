@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -80,8 +83,8 @@
         <activity
             android:name=".A_OCR_Manuell"
             android:label="@string/title_manuell_screen"
-            android:screenOrientation="portrait"
             android:parentActivityName=".A_Main"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -109,6 +112,16 @@
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="ocr" />
+
+        <activity
+            android:name=".A_Bon_Anzeigen"
+            android:label="@string/title_activity_a__bon__anzeigen"
+            android:parentActivityName=".A_Main"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Main" />
+        </activity>
     </application>
 
 </manifest>
