@@ -14,7 +14,7 @@
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
      android:layout_width="match_parent"
      android:layout_height="match_parent"
-     android:layout_marginBottom="60dp">
+     >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,12 +27,18 @@
         android:orientation="vertical"
         android:layout_below="@+id/home_bon_container" >
 
+        <TextView
+            android:id="@+id/home_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold|italic"/>
+
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/home_card_view1"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         card_view:cardCornerRadius="4dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
@@ -48,44 +54,7 @@
     </android.support.v7.widget.CardView>
 
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/home_card_view2"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        card_view:cardCornerRadius="4dp"
-        android:layout_below="@+id/home_card_view1"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp">
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/home_card_view3"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        card_view:cardCornerRadius="4dp"
-        android:layout_below="@+id/home_card_view2"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp">
-
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
-    </android.support.v7.widget.CardView>
     </LinearLayout>
 
    <LinearLayout
@@ -94,12 +63,18 @@
        android:id="@+id/home_bon_container"
        android:orientation="vertical">
 
+       <TextView
+           android:id="@+id/home_title1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textStyle="bold|italic"/>
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/view_home_bons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/home_card_view3"/>
+                android:layout_below="@+id/home_card_view1"/>
     </LinearLayout>
     </RelativeLayout>
 

@@ -13,9 +13,12 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +65,23 @@ public class A_Tab1Home extends Fragment {
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
+        // Unterstreichen der Textviews
+
+        TextView textView = (TextView) rootView.findViewById(R.id.home_title1);
+        SpannableString content = new SpannableString("Ihre letzten Bons:");
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        textView.setText(content);
+
+        TextView textView1 = (TextView) rootView.findViewById(R.id.home_title2);
+        SpannableString content1 = new SpannableString("Ihre Statistik:");
+        content1.setSpan(new UnderlineSpan(), 0, content1.length(), 0);
+        textView1.setText(content1);
+
         // Kuchendiagramm
         pieChart1 = (PieChart) rootView.findViewById(R.id.chart1);
         createPieChart(pieChart1, "Test");
 
-        //Balkendiagramm 1
+        /*//Balkendiagramm 1
         bChart = (BarChart) rootView.findViewById(R.id.chart2);
         ArrayList<IBarDataSet> dataSets1 = new ArrayList<>();
         createBarChart(bChart, dataSets1, "The year 2017");
@@ -74,7 +89,7 @@ public class A_Tab1Home extends Fragment {
         //Balkendiagramm 2
         bChart3 = (BarChart) rootView.findViewById(R.id.chart3);
         ArrayList<IBarDataSet> dataSets3 = new ArrayList<>();
-        createBarChart(bChart3, dataSets3, "The year 2018");
+        createBarChart(bChart3, dataSets3, "The year 2018");*/
 
         return rootView;
     }
