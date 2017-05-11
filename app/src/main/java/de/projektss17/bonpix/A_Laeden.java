@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
@@ -29,7 +30,7 @@ import de.projektss17.bonpix.daten.C_Laeden_Adapter;
 public class A_Laeden extends AppCompatActivity {
 
     private List<C_Bon> bonsList = new ArrayList<>();
-    private List<C_Laden> shopList = new ArrayList<>();
+    private ArrayList<C_Laden> shopList = new ArrayList<>();
     private RecyclerView recyclerViewLaeden;
     private C_Laeden_Adapter mAdapter;
 
@@ -68,12 +69,19 @@ public class A_Laeden extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                if(shopTitle.getText()== null || shopTitle.getText().toString().isEmpty())
-                                    dialog.dismiss();
-                                else
-                                    Log.e("testausgabe", shopTitle.getText().toString());
-                                    //Todo Datenbankanbindung => setLaden
-
+                               // if(shopTitle.getText()== null || shopTitle.getText().toString().isEmpty())
+                                 //   dialog.dismiss();
+                                //else
+                                    if(shopTitle.getText() != null && !shopTitle.getText().toString().isEmpty() ){
+                                        if(!S.dbHandler.checkIfLadenExist(S.db, shopTitle.getText().toString())){
+                                            S.dbHandler.addLaden(S.db, new C_Laden(shopTitle.getText().toString()));
+                                            prepareBonData();
+                                        } else {
+                                            S.outLong(A_Laeden.this, "Laden bereits vorhanden! Bitte geben Sie einen anderen Wert ein.");
+                                        }
+                                    } else {
+                                        S.outLong(A_Laeden.this, "Leere Eingabe! Bitte erneut versuchen.");
+                                    }
 
                             }
 
@@ -109,6 +117,7 @@ public class A_Laeden extends AppCompatActivity {
         for(C_Laden shop : S.dbHandler.getAllLaeden(S.db)){
             this.shopList.add(shop);
         }
+        Collections.sort(shopList);
         mAdapter.notifyDataSetChanged();
     }
 }
