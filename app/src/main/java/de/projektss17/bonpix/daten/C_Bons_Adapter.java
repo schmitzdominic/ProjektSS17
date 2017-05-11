@@ -71,8 +71,10 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
         //Loading the FavoriteList
         if (bon.getFavourite()){
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star));
+            holder.button.setColorFilter(holder.button.getContext().getResources().getColor(R.color.colorPrimary));
         } else {
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star_outline));
+            holder.button.setColorFilter(holder.button.getContext().getResources().getColor(R.color.colorPrimary));
         }
         holder.button.setOnClickListener(new View.OnClickListener(){
 
@@ -88,11 +90,13 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
                         case R.id.imageview_button: {
                             if (bon.getFavourite()){
                                 holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
+                                holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
                                 bon.setFavourite(false);
                                 S.dbHandler.updateBon(S.db, bon);
                             } else {
                                 if (row_index == position) {
                                     holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
+                                    holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
                                     bon.setFavourite(true);
                                     S.dbHandler.updateBon(S.db, bon);
                                 }
