@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import de.projektss17.bonpix.R;
 
@@ -21,7 +21,7 @@ import de.projektss17.bonpix.R;
 
 public class C_Laeden_Detail_Adapter extends RecyclerView.Adapter<C_Laeden_Detail_Adapter.MyViewHolder>{
 
-    private List<C_Bon> bonListe;
+    private ArrayList<C_Bon> bonListe;
     private C_Bon bon;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -51,31 +51,23 @@ public class C_Laeden_Detail_Adapter extends RecyclerView.Adapter<C_Laeden_Detai
      * returned Liste
      * @param bonListe
      */
-    public C_Laeden_Detail_Adapter(List<C_Bon> bonListe){
-
+    public C_Laeden_Detail_Adapter(ArrayList<C_Bon> bonListe){
         this.bonListe = bonListe;
     }
-
-
     @Override
     public C_Laeden_Detail_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.box_laeden_detail_view, parent, false);
-
         return new C_Laeden_Detail_Adapter.MyViewHolder(itemView);
     }
-
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         this.bon = bonListe.get(position);
         holder.shopName.setText(bon.getShopName());
         holder.bonDate.setText(bon.getDate());
     }
-
-
     @Override
     public int getItemCount() {
         return this.bonListe.size();
     }
-
 }

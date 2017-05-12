@@ -11,9 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
@@ -23,19 +23,22 @@ import de.projektss17.bonpix.daten.C_Laeden_Detail_Adapter;
 import static de.projektss17.bonpix.S.db;
 
 public class F_Laeden_Detail extends DialogFragment {
-    private List<C_Bon> bonsList = new ArrayList<>();
+    private ArrayList<C_Bon> bonsList = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View rootView = inflater.inflate(R.layout.box_laeden_detail_content, container, false);
         RecyclerView recyclerViewDetailLaeden = (RecyclerView) rootView.findViewById(R.id.laeden_detail_view);
         C_Laeden_Detail_Adapter mAdapter = new C_Laeden_Detail_Adapter(bonsList);
+
+        //Erhalt des shopnamen von C_Laeden_Adapter
         String name = getArguments().getString("ShopName");
         Log.e("### PASSED SHOPNAME", "" + name);
         prepareBonData(name);
+
         recyclerViewDetailLaeden.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDetailLaeden.addItemDecoration(
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
@@ -44,15 +47,15 @@ public class F_Laeden_Detail extends DialogFragment {
         mAdapter.notifyDataSetChanged();
         return rootView;
     }
-
     /**
      * Set Data for RecyclerView Bons
      */
     private void prepareBonData(String name){
+        bonsList.clear();
         for(C_Bon bon : S.dbHandler.getBonsOfStore(db, name)){
             this.bonsList.add(bon);
             Log.e("### prepareDATA","" + bon.getShopName());
         }
-    }
 
+    }
 }

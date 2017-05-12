@@ -21,7 +21,7 @@ import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.fragments.F_Laeden_Detail;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyViewHolder> {
 
@@ -32,11 +32,9 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
     private FragmentManager fm;
     private Bundle args;
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView shopName;
         public ImageView iconShop, editShopBtn;
-
 
         public MyViewHolder(View view) {
             super(view);
@@ -55,7 +53,6 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
 
         }
     }
-
     /**
      * @param shopList
      */
@@ -63,22 +60,17 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
         this.context = context;
         this.shopList = shopList;
     }
-
-
     @Override
     public C_Laeden_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.box_laeden_view, parent, false);
 
+        //Instanz des Fragments
         trigger = new F_Laeden_Detail();
-
         fm = ((Activity) context).getFragmentManager();
-
-
 
         return new C_Laeden_Adapter.MyViewHolder(itemView);
     }
-
     @Override
     public void onBindViewHolder(final C_Laeden_Adapter.MyViewHolder holder, final int position) {
         this.shop = shopList.get(position);
@@ -86,9 +78,7 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
         //ToDo später Icon dynamisch zuweisbar
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
         holder.shopName.setText(shop.getName());
-        for (C_Laden laden : shopList){
-            Log.e("### SHOPLIST IN ADAPTER", "" + laden.getName());
-        }
+
         holder.editShopBtn.setOnClickListener(new View.OnClickListener() {
 
 
@@ -97,21 +87,23 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
              * @param v
              */
             public void onClick(View v) {
-                Log.e("test", shop.getName());
+
+                C_Laden shopA;
+                shopA = shopList.get(position);
+                Log.e("test", shopA.getName());
                 //S.dbHandler.updateBon(S.db, bonListe.get(position));
                 //bonList.remove(position);
+
+                //Übergabe Name des angeklickten Shops => an F_Laeden_Detail
                 args = new Bundle();
-                args.putString("ShopName", shop.getName());
+                args.putString("ShopName", shopA.getName());
                 trigger.setArguments(args);
                 trigger.show(fm , "BlaBla");
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return this.shopList.size();
     }
-
-
 }

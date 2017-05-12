@@ -579,10 +579,13 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @return
      */
     public ArrayList<C_Bon> getBonsOfStore(SQLiteDatabase db, String name){
+        Log.e("Databasehandler", " " + name);
         ArrayList<C_Bon> list = new ArrayList<>();
         for (C_Bon bon : S.dbHandler.getAllBons(db)){
-            if (bon.getShopName() == name){
+            //ToDo checken ob Richtige Values gematched werden, sobald richtige Daten vorhanden
+            if (bon.getShopName().equals(name)){
                 list.add(bon);
+                Log.e("Database2 ", " " + name);
             }
             else {
                 continue;

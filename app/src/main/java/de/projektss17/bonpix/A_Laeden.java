@@ -20,7 +20,6 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
@@ -71,6 +70,7 @@ public class A_Laeden extends AppCompatActivity {
 
                                     if(shopTitle.getText() != null && !shopTitle.getText().toString().isEmpty() ){
                                         if(!S.dbHandler.checkIfLadenExist(S.db, shopTitle.getText().toString())){
+                                            //Hinzufügen Laden zur Datenbank
                                             S.dbHandler.addLaden(S.db, new C_Laden(shopTitle.getText().toString()));
                                             prepareShopData();
                                         } else {
@@ -86,10 +86,7 @@ public class A_Laeden extends AppCompatActivity {
             }
 
         });
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         //Im Folgenden wird die RecyclerView angelegt und die dazugehörigen Einstellungen verwaltet
         //XML instaniziieren
@@ -103,9 +100,8 @@ public class A_Laeden extends AppCompatActivity {
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerViewLaeden.setItemAnimator(new DefaultItemAnimator());
         recyclerViewLaeden.setAdapter(mAdapter);
-
+        mAdapter.notifyDataSetChanged();
     }
-
     /**
      * Set Data for RecyclerView Shops
      */
@@ -113,9 +109,8 @@ public class A_Laeden extends AppCompatActivity {
         shopList.clear();
         for(C_Laden shop : S.dbHandler.getAllLaeden(S.db)){
             this.shopList.add(shop);
-            Log.e("### SHOPLIST IN LAEDEN", "" + shop.getName());
         }
-        //Collections.sort(shopList);
-        mAdapter.notifyDataSetChanged();
+        //Sortierung der Recycler View
+        Collections.sort(shopList);
     }
 }
