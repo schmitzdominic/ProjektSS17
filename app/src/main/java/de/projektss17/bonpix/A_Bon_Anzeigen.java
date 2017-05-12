@@ -1,20 +1,48 @@
 package de.projektss17.bonpix;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
+import de.projektss17.bonpix.daten.C_Bon;
+
+import static de.projektss17.bonpix.S.db;
 
 public class A_Bon_Anzeigen extends AppCompatActivity {
+
+    private int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.box_bon__anzeigen_acreen);
+        setContentView(R.layout.box_bon_anzeigen_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Intent mIntent = getIntent();
+        this.pos = mIntent.getIntExtra("BonPos", pos);
+        C_Bon bon = S.dbHandler.getBon(db, pos);
+
+
+        TextView textView_ladenname = (TextView) findViewById(R.id.ladenname);
+        textView_ladenname.setText("Ladenname: " + bon.getShopName());
+
+        TextView textView_adresse = (TextView) findViewById(R.id.adresse);
+        textView_adresse.setText("Adresse: " + bon.getAdress());
+
+        TextView textView_datum = (TextView) findViewById(R.id.datum);
+        textView_datum.setText("Datum: " + bon.getDate());
+
+        TextView textView_gesamtbetrag = (TextView) findViewById(R.id.gesamtbetrag);
+        textView_gesamtbetrag.setText("Adresse: " + bon.getArticles());
+
+        Log.e("### BonAnzeigen","BonPosition: " + pos);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
