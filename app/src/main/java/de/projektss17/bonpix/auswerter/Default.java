@@ -6,10 +6,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/**
- * Created by Domi on 15.04.2017.
- */
-
 public class Default implements I_Auswerter{
 
     protected Context context;
@@ -44,10 +40,6 @@ public class Default implements I_Auswerter{
                     dumString += txt.charAt(i);
                 }
             }
-        }
-
-        for(String artikel : retString){
-            Log.e("ARTIKEL", artikel);
         }
 
         return retString;
@@ -98,7 +90,17 @@ public class Default implements I_Auswerter{
                 }
             } else {
                 if(count == 3){
-                    retString.add(dumString);
+                    if((i - dumString.length() - 1) >= 0){
+                        if(txt.charAt(i - dumString.length() - 1) == '-'){
+                            retString.add("-" + dumString);
+                        } else {
+                            retString.add(dumString);
+                        }
+                    } else {
+                        retString.add(dumString);
+                    }
+
+
                 }
                 dumString = "";
                 count = 0;
@@ -123,66 +125,6 @@ public class Default implements I_Auswerter{
     public String formater(String txt){
         txt = txt.replaceAll(" +", " ");
         return txt;
-    }
-
-    /**
-     * Versucht nur die Preise auszulesen.
-     * TODO noch nicht fertig!
-     * @param txt Kompletter String
-     * @return nur die Preise
-     */
-    public String getPreise(String txt){
-
-        String retString = "",
-                dumString = "";
-        int count = 0;
-
-        for(int i = 0; i < txt.length(); i++){
-
-            if(this.isDigit(txt.charAt(i))){
-                if(count == 0){
-                    dumString += txt.charAt(i);
-                    continue;
-                } else if(count > 0 && count < 3){
-                    dumString += txt.charAt(i);
-                    count++;
-                    continue;
-                } else if(count >= 3){
-                    count++;
-                    dumString = "";
-                    continue;
-                } else {
-                    dumString = "";
-                    count = 0;
-                    continue;
-                }
-
-            } else if(this.isSeparate(txt.charAt(i))){
-
-                if(count == 0){
-                    if(txt.charAt(i) == '.'){
-                        dumString += ',';
-                    } else {
-                        dumString += txt.charAt(i);
-                    }
-                    count++;
-                    continue;
-                } else {
-                    count = 0;
-                    dumString = "";
-                    continue;
-                }
-            } else {
-                if(count == 3){
-                    retString += dumString + "\n";
-                }
-                dumString = "";
-                count = 0;
-                continue;
-            }
-        }
-
-        return retString;
     }
 
     /**

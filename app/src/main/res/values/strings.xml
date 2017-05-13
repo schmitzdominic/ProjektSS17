@@ -62,7 +62,7 @@
     <string name="a_ocr_manuell_date_button_set">Set Date</string>
     <string name="a_ocr_manuell_date_selected"/>
 
-    <string name="a_ocr_manuell_hint_anschrift">adress (optional)</string>
+    <string name="a_ocr_manuell_hint_anschrift">Adresse (optional)</string>
     <string name="a_ocr_manuell_hint_sonstiges">Sonstige Infos (optional)</string>
     <string name="a_ocr_manuell_hint_sonstige_infos">Sonstige Infos</string>
 
@@ -70,6 +70,8 @@
     <string name="a_ocr_manuell_hint_preis">Preis</string>
     <string name="a_ocr_manuell_button_add_new">Artikel hinzufügen</string>
     <string name="a_ocr_manuell_button_delete_row_description">Delete</string>
+
+    <string name="c_ocr_kassenzettel_nicht_erkannt">Der Kassenzettel wurde leider nicht erkannt</string>
 
     <!-- A_Max_Bon_Pic -->
     <string name="title_max_bon_pic_screen">Bon</string>

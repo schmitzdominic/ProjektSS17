@@ -11,12 +11,13 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/**
- * Created by Domi on 10.05.2017.
- */
-
 public class C_PicChanger {
 
+    /**
+     * Konvertiert ein Bitmap zu einem Grayscale Bild
+     * @param bitmap Original Bitmap
+     * @return Grayscale Bitmap
+     */
     public Bitmap convertBitmapGrayscale(Bitmap bitmap){
 
         int width, height;
@@ -35,6 +36,12 @@ public class C_PicChanger {
 
     }
 
+    /**
+     * Konvertiert ein Bitmap in ein Schwarz-Weiß spektrum
+     * WARING! Sehr langsam!!!
+     * @param bitmap Original Bitmap
+     * @return Schwarz-Weiß Bitmap
+     */
     public Bitmap convertBitmapBlackAndWhite(Bitmap bitmap){
         Bitmap bwBitmap = Bitmap.createBitmap( bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.RGB_565 );
         float[] hsv = new float[ 3 ];
@@ -52,6 +59,12 @@ public class C_PicChanger {
 
     }
 
+    /**
+     * Schneidet ein Bitmap Horizontal an einer bestimmten Koordinate
+     * @param bitmap Original Bitmap
+     * @param coordinate Koordinate
+     * @return Array mit 2 Bitmaps, [0] links, [1] rechts
+     */
     public Bitmap[] cutBitmapHorizontal(Bitmap bitmap, int coordinate){
 
         Bitmap[] bitmaps = new Bitmap[2];
@@ -62,51 +75,28 @@ public class C_PicChanger {
         return bitmaps;
     }
 
-    public ArrayList<Bitmap> getLineArray(Bitmap bitmap, int height){
+    /**
+     * Gibt eine Liste mit Linien (Bitmaps) zurück
+     * @param bitmap Original Bitmap
+     * @param height Höhe der Linien
+     * @return Liste mit Bitmaps (Linien)
+     */
+    public ArrayList<Bitmap> getLineList(final Bitmap bitmap, int height){
 
-        final int     bitHeight = bitmap.getHeight(),
-                        bitWidth = bitmap.getWidth();
+        final int     bitHeight = bitmap.getHeight();
 
         ArrayList<Bitmap> list = new ArrayList<>();
 
         int iterations = bitHeight / height;
 
         for(int i = 0; i < iterations; i++){
-            int y = (int)(double)(i*height);
-            int h = (int)(double)((bitHeight - (bitHeight-height)));
 
-            if(!((y+h) >= bitHeight)){
-                list.add(Bitmap.createBitmap(bitmap, 0, y, bitWidth, h));
-            }
-
-        }
-
-        return list;
-
-    }
-
-    public ArrayList<Bitmap> getLines(Bitmap bitmap, ArrayList<Integer> linesList){
-
-        final int     bitHeight = bitmap.getHeight(),
-                bitWidth = bitmap.getWidth();
-
-        ArrayList<Bitmap> list = new ArrayList<>();
-
-        int pixLeft = bitHeight;
-        int count = 1;
-
-        for(int x : linesList){
-
-            int y = (int)(double)((bitHeight-pixLeft)*0.5);
-            int h = (int)(double)((( bitHeight - (bitHeight-x))*3));
-
-            if(pixLeft == bitHeight){
-                list.add(Bitmap.createBitmap(bitmap, 0, 0, bitWidth, h));
-                pixLeft -= list.get(0).getHeight();
+            if(i == 0){
+                list.add(this.cropBitmap(bitmap, 0, i*height, bitmap.getWidth(), bitHeight - (bitHeight-height)));
+            } else if (i == iterations - 1){
+                list.add(this.cropBitmap(bitmap, 0, (int)(double)(i*height*0.95), bitmap.getWidth(), (int)(double)((bitHeight - (bitHeight-height))*1.05)));
             } else {
-                list.add(Bitmap.createBitmap(bitmap, 0, y, bitWidth, h));
-                pixLeft -= list.get(count).getHeight();
-                count++;
+                list.add(this.cropBitmap(bitmap, 0, (int)(double)(i*height*0.9), bitmap.getWidth(), (int)(double)((bitHeight - (bitHeight-height))*1.3)));
             }
         }
 
@@ -114,13 +104,17 @@ public class C_PicChanger {
 
     }
 
-
-    public ArrayList<Bitmap> getColumArray(Bitmap bitmap, int width){
-
-        final int     bitHeight = bitmap.getHeight(),
-                bitWidth = bitmap.getWidth();
+    /**
+     * Gibt eine Liste mit Streifen in der angegebenen Breite zurück
+     * @param bitmap Bitmap
+     * @param width Breite eines Streifens
+     * @return ArrayList mit Streifen
+     */
+    public ArrayList<Bitmap> getColumList(Bitmap bitmap, int width){
 
         ArrayList<Bitmap> list = new ArrayList<>();
+        final int bitHeight = bitmap.getHeight(),
+                  bitWidth = bitmap.getWidth();
 
         int iterations = bitWidth / width;
 
@@ -129,9 +123,14 @@ public class C_PicChanger {
         }
 
         return list;
-
     }
 
+    /**
+     * Zählt die Schwarzen Pixel in einem Streifen
+     * WICHTIG! Bitte nur 1px breite Streifen verwenden!
+     * @param bitmap Bitmap
+     * @return Liste mit der Breite jeder Zeile
+     */
     public ArrayList<Integer> countBlackPixels(Bitmap bitmap){
         final int width = bitmap.getWidth(),
                 height = bitmap.getHeight();
@@ -186,17 +185,18 @@ public class C_PicChanger {
         return lineHeight;
     }
 
-    public Bitmap getRect(Bitmap bitmap){
-        Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, 10, 100, bitmap.getWidth() - 10, bitmap.getHeight() - (bitmap.getHeight()-100));
+    /**
+     * Gibt ein Bitmap das nur den Bereich der Artikel enthält zurück
+     * Um ein PointArray zu bekommen, bitte vorher den Recognizer in der C_OCR ausführen!
+     * @param bitmap Bitmap
+     * @param pointArray Liste mit Bildpunkten
+     * @return Bitmap des Artikelbereichs
+     */
+    public Bitmap getOnlyArticleArea(Bitmap bitmap, ArrayList<Point> pointArray){
 
-        return croppedBitmap;
-    }
-
-    public Bitmap getOnlyPrices(Bitmap bitmap, ArrayList<Point> pointArray){
-
-        Log.e("BITMAP SIZE", "" + bitmap.getWidth() + " " + bitmap.getHeight());
-
-        int x = 0, yMin = 0, yMax = 0,
+        int x = 0,
+                yMin = 0,
+                yMax = 0,
                 height = 0;
 
         Point oRight = null;
@@ -230,13 +230,19 @@ public class C_PicChanger {
             height = height+20;
         }
 
-        Log.e("##### ORIGINAL BITMAP", "x=" + bitmap.getWidth() + " y=" + bitmap.getHeight());
-        Log.e("##### CONVERTED BITMAP", "x=" + 0 + " y=" + yMin + " width=" + bitmap.getWidth() + " height=" + height);
-
         return cropBitmap(bitmap, 0, yMin, bitmap.getWidth(), height);
 
     }
 
+    /**
+     * Schneidet ein Bitmap entsprechend der übergebenen Werte zurecht
+     * @param bitmap Original Bitmap
+     * @param x Wo auf der x Koordinate soll das Bild anfangen
+     * @param y Wo auf der y Koordinate soll das Bild anfangen
+     * @param width Wie breit soll das Bild werden
+     * @param height Wie hoch soll das Bild werden
+     * @return Zugeschnittenes Bild
+     */
     public Bitmap cropBitmap(Bitmap bitmap, int x, int y, int width, int height){
 
         return Bitmap.createBitmap(bitmap, x, y, width, height);

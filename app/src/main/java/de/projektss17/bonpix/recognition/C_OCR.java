@@ -4,24 +4,21 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.text.Line;
-import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 import de.projektss17.bonpix.auswerter.Default;
 import de.projektss17.bonpix.daten.C_Artikel;
-
-/**
- * Created by Domi on 14.04.2017.
- */
+import de.projektss17.bonpix.exceptions.E_NoBonFoundException;
 
 public class C_OCR {
 
@@ -50,10 +47,10 @@ public class C_OCR {
      * in die Instanzvariablen.
      * @param bitmap Bild das ausgewertet werden soll
      */
-    public void recognize(Bitmap bitmap){
+    public boolean recognize(Bitmap bitmap){
 
         this.recognizedText = this.recognizer(bitmap);
-        this.recognize(bitmap, this.laden.getLaden(this.recognizedText));
+        return this.recognize(bitmap, this.laden.getLaden(this.recognizedText));
 
     }
 
@@ -63,7 +60,7 @@ public class C_OCR {
      * @param bitmap Bild das ausgewertet werden soll
      * @param ladenName Der Laden um den es sich handelt (Bitte auswerter.xml beachten!)
      */
-    public void recognize(Bitmap bitmap, String ladenName){
+    public boolean recognize(Bitmap bitmap, String ladenName){
 
         // Wenn der Text noch nicht ausgelesen wurde
         if(this.recognizedText == null){
@@ -84,9 +81,13 @@ public class C_OCR {
 
         // Attribute setzen
         this.ladenName = ladenName;
-        this.adresse = this.ladenInstanz.getAdresse(this.recognizedText);
-        this.setArticles(bitmap);
-
+        if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
+            this.adresse = this.ladenInstanz.getAdresse(this.recognizedText);
+            return this.setArticles(bitmap);
+        } else {
+            S.outLong((AppCompatActivity)(this.context), this.res.getString(R.string.c_ocr_kassenzettel_nicht_erkannt));
+            return false;
+        }
     }
 
     /**
@@ -95,68 +96,123 @@ public class C_OCR {
      * @return String mit Informationen
      */
     private String recognizer(Bitmap bitmap) {
+        this.pointList.clear();
         TextRecognizer textRecognizer = new TextRecognizer.Builder(this.context).build();
         if (!textRecognizer.isOperational()) {
             Log.e("ERROR", "Detector dependencies are not yet available");
         } else {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-            SparseArray<TextBlock> items = textRecognizer.detect(frame);
+            SparseArray<TextBlock> items = textRecognizer.detect(frame); // TODO Absturz wenn Frame kein Text enthält.
+
             StringBuilder stringBuilder = new StringBuilder();
 
-            for (int i = 0; i < items.size(); ++i) {
-                TextBlock item = items.valueAt(i);
-                for(Point point : item.getCornerPoints()){
-                    //Log.e("## POINT", ""+point.toString());
-                    this.pointList.add(point);
+            if(items.size() != 0){
+                for (int i = 0; i < items.size(); ++i) {
+                    TextBlock item = items.valueAt(i);
+                    if(item.getCornerPoints() != null){
+                        for(Point point : item.getCornerPoints()){
+                            if(point != null){
+                                //Log.e("## POINT", ""+point.toString());
+                                this.pointList.add(point);
+                            }
+
+                        }
+                    }
+                    stringBuilder.append(item.getValue());
+                    stringBuilder.append("\n");
                 }
-                stringBuilder.append(item.getValue());
-                stringBuilder.append("\n");
             }
-            return stringBuilder.toString();
+
+            Log.e("STRINGBUILDER", stringBuilder.length() + "");
+            if(stringBuilder.length() != 0){
+                return stringBuilder.toString();
+            } else {
+                return "";
+            }
+
         }
         return "";
     }
 
-    private void setArticles(Bitmap bitmap){
+    /**
+     * Setzt die Artikel, sofern das Möglich ist
+     * @param bitmap Original Bitmap
+     * @return möglich - true, Nicht möglich - false
+     */
+    private boolean setArticles(Bitmap bitmap){
 
-        Log.e("### SET ARTICLES", "Converting to Grayscale and get only price section...");
-        Bitmap cropedBitmap = this.picChanger.getOnlyPrices(bitmap, this.getPointList());
-        //bitmap = this.picChanger.getOnlyPrices(this.picChanger.convertBitmapGrayscale(bitmap), this.getPointList());
+        try{
+            ArrayList<String> articleList = new ArrayList<>(), priceList = new ArrayList<>();
+            ArrayList<Bitmap> articleStripes = new ArrayList<>();
+            Bitmap cropedBitmap, halfLeft, halfRight;
 
-        Log.e("### SET ARTICLES", "Cut the Picture on " + (cropedBitmap.getWidth()/3)*2 + "...");
-        Bitmap halfLeft = this.picChanger.cutBitmapHorizontal(cropedBitmap, (cropedBitmap.getWidth()/3)*2)[0];
-        Log.e("######## NEW SIZE","x=" + halfLeft.getWidth() + " y=" + halfLeft.getHeight());
-
-        Bitmap halfRight = this.picChanger.cutBitmapHorizontal(cropedBitmap, (cropedBitmap.getWidth()/3)*2)[1];
-
-        ArrayList<String> articleList = new ArrayList<>();
-        ArrayList<String> priceList = new ArrayList<>();
-
-        Log.e("### SET ARTICLES", "Now get all the prices...");
-        this.recognizedText = this.recognizer(halfRight);
-        priceList = this.ladenInstanz.getPrices(this.recognizedText);
-
-        Log.e("### SET ARTICLES", "Now get all the articles...");
-        this.recognizedText = this.recognizer(halfLeft);
-        articleList = this.ladenInstanz.getProducts(this.recognizedText);
-
-        Log.e("##### ERGEBNIS", "Artikel=" + articleList.size() + " Preise="+ priceList.size());
-
-        if(articleList.size() == priceList.size()){
-            int count = 0;
-            for(String article : articleList){
-                this.articles.add(new C_Artikel(article, Double.parseDouble(priceList.get(count).replace(",","."))));
-                count++;
+            // Es wird nur die Artikel/Preisregion herausgeschnitten
+            if(this.getPointList().size() != 0){
+                cropedBitmap = this.picChanger.getOnlyArticleArea(bitmap, this.getPointList());
+            } else {
+                throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: POINTLIST=" + this.getPointList().size());
             }
+
+            // Bitmap wird in 2 hälften 2/3 geschitten
+            if(cropedBitmap != null){
+                halfLeft = this.picChanger.cutBitmapHorizontal(cropedBitmap, (cropedBitmap.getWidth()/3)*2)[0];
+                halfRight = this.picChanger.cutBitmapHorizontal(cropedBitmap, (cropedBitmap.getWidth()/3)*2)[1];
+            } else {
+                throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: CROPETBITMAP=NULL");
+            }
+
+            // Artikelseite
+            this.recognizedText = this.recognizer(halfLeft);
+            if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
+                articleList = this.ladenInstanz.getProducts(this.recognizedText);
+                if(articleList.size() != 0){
+                    articleStripes = this.picChanger.getLineList(halfLeft, halfLeft.getHeight()/articleList.size());
+                } else {
+                    throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: ARTICLESTRIPES=" + articleStripes.size());
+                }
+            } else {
+                throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: RECOGNIZEDTEXT=NULL OR \"\"");
+            }
+
+            // Preisseite
+            this.recognizedText = this.recognizer(halfRight);
+            if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
+                priceList = this.ladenInstanz.getPrices(this.recognizedText);
+            } else {
+                throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: RECOGNIZEDTEXT=NULL OR \"\"");
+            }
+
+            Log.e("##### ERGEBNIS", "Artikel=" + articleList.size() + " Preise="+ priceList.size());
+
+            // Wenn die Anzahl gleich ist, dann trag alle Artikel ein / Sonst nicht
+            if(articleList.size() == priceList.size()){
+                int count = 0;
+                for(Bitmap article : articleStripes){
+
+                    this.recognizedText = this.recognizer(article);
+                    this.produkte = this.ladenInstanz.getProducts(this.recognizedText);
+
+                    if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty() && this.produkte.size() != 0){
+                        this.articles.add(new C_Artikel(this.ladenInstanz.getProducts(this.recognizedText).get(0), Double.parseDouble(priceList.get(count).replace(",","."))));
+                    } else {
+                        this.articles.add(new C_Artikel(articleList.get(count), Double.parseDouble(priceList.get(count).replace(",","."))));
+                    }
+                    count++;
+                }
+                return true;
+            } else {
+                throw new E_NoBonFoundException(this.context,  "## C_OCR - SET ARTICLES", "ARTICLE SIZE DON´T MATCH PRICE SIZE");
+            }
+
+        } catch (E_NoBonFoundException e){
+            return false;
         }
-
-
     }
 
 
     /**
      * Gibt alle gefunden Artikel zurück
-     * @return
+     * @return Alle Artikel
      */
     public ArrayList<C_Artikel> getArticles(){
         return this.articles;
@@ -165,7 +221,7 @@ public class C_OCR {
 
     /**
      * Gibt den aktuell verwendeten Ladennamen zurück
-     * @return
+     * @return Ladenname
      */
     public String getLadenName(){
         return this.ladenName;
@@ -173,7 +229,7 @@ public class C_OCR {
 
     /**
      * Gibt alle Produkte zurück
-     * @return
+     * @return Alle Produkte
      */
     public ArrayList<String> getProdukte(){
         return this.produkte;
@@ -181,7 +237,7 @@ public class C_OCR {
 
     /**
      * Gibt alle Preise zurück
-     * @return
+     * @return Alle Preise
      */
     public ArrayList<String> getPreise(){
         return this.preise;
@@ -189,7 +245,7 @@ public class C_OCR {
 
     /**
      * Gibt die Adresse des Bons zurück
-     * @return
+     * @return Adresse
      */
     public String getAdresse(){
         return this.adresse;
@@ -197,7 +253,7 @@ public class C_OCR {
 
     /**
      * Gibt den komplett erkannten Text zurück
-     * @return
+     * @return Der zuletzt erkannte Text
      */
     public String getRecognizedText(){
         return this.recognizedText;
