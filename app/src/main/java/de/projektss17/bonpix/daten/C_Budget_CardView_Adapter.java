@@ -74,6 +74,9 @@ public class C_Budget_CardView_Adapter extends RecyclerView.Adapter<C_Budget_Car
     }
 
 
+
+
+
     @Override
     public int getItemCount() {
         return budgetList.size();

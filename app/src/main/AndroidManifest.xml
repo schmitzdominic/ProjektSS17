@@ -35,11 +35,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".A_Gruppen"
@@ -123,16 +118,12 @@
             android:name=".A_Budget_Edit"
             android:label="@string/title_activity_a__budget__edit"
             android:parentActivityName=".A_Budget"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Budget" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
