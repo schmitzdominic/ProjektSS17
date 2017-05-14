@@ -960,6 +960,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gibt alle Artikel zurück die in die Maske eingetragen wurden
+     * @return ArrayList mit allen Artikeln aus der Maske
+     */
     public ArrayList<C_Artikel> getAllArticle(){
 
         EditText articleField, priceField, centField, calculator;
@@ -994,6 +998,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
         return articles;
     }
 
+    /**
+     * Baut einen Bon der abgespeichert werden kann
+     * @return Bon mit allen werten aus der Maske
+     */
     public C_Bon saveBon(){
 
         C_Bon saveBon = new C_Bon(this.imageOCRUriString,

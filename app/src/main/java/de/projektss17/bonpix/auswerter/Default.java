@@ -99,8 +99,6 @@ public class Default implements I_Auswerter{
                     } else {
                         retString.add(dumString);
                     }
-
-
                 }
                 dumString = "";
                 count = 0;

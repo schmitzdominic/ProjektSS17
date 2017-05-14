@@ -123,7 +123,6 @@ public class C_OCR {
                 }
             }
 
-            Log.e("STRINGBUILDER", stringBuilder.length() + "");
             if(stringBuilder.length() != 0){
                 return stringBuilder.toString();
             } else {
