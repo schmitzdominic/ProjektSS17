@@ -44,8 +44,11 @@ import java.util.Calendar;
 import java.util.Comparator;
 
 import de.projektss17.bonpix.daten.C_Artikel;
+import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.recognition.C_OCR;
+
+import static de.projektss17.bonpix.S.db;
 
 
 public class A_OCR_Manuell extends AppCompatActivity {
@@ -736,7 +739,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * @param sonstiges Sonstiges
      * @param articles Array mit Articles
      */
-    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, C_Artikel[] articles){
+    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, ArrayList<C_Artikel> articles){
 
         if(imageUri != null) {
             this.ocrImageView.setImageURI(null);
@@ -785,9 +788,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 this.ocr.getLadenName(),
                 null, // TODO LadenName über OCR suchen!
                 null,  // TODO Anschrift über OCR suchen!
-                this.ocr.getRecognizedText(), // TODO Später wieder ausnehmen!
-                this.createArticleArray(null, // TODO Artikel hinzufügen!
-                        this.ocr.getPreise()));
+                this.ocr.getRecognizedText(), null);
     }
 
     /**
@@ -895,6 +896,16 @@ public class A_OCR_Manuell extends AppCompatActivity {
     public void doState(String state){
 
         if (state.equals("edit")) { // Wenn die Maske den Status edit hat (z.B. ein Bon aufgerufen wird)
+            int bonId = 0;
+            Intent mIntent = getIntent();
+            bonId = mIntent.getIntExtra("bonId", bonId);
+            C_Bon bon = S.dbHandler.getBon(db, bonId);
+
+            if(!bon.getPath().equals("PFAD")) {
+                this.fillMask(Uri.parse(getIntent().getStringExtra(bon.getPath())), bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());
+            } else {
+                this.fillMask(null, bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());
+            }
             // TODO Anhand der Datenbank implementieren
 
         } else if (state.equals("foto")) { // Wenn die Maske den Status foto hat (z.B. wenn gerade ein Foto gemacht wurde)

@@ -46,7 +46,8 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
             view.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            int pos = getAdapterPosition();
+                                            final C_Bon bon = bonsList.get(getAdapterPosition());
+                                            int pos = bon.getId();
                                             intent = new Intent(v.getContext(), A_Bon_Anzeigen.class);
                                             intent.putExtra("BonPos", pos);
                                             v.getContext().startActivity(intent);

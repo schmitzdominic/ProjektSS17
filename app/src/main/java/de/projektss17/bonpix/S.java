@@ -55,6 +55,17 @@ public class S extends Activity {
     }
 
     /**
+     * Ruft die Manuell Activity auf (überschrieben)
+     */
+    public static void showManuell(AppCompatActivity beforeActivity, int bonId, String state){
+
+        Intent intent = new Intent(beforeActivity, A_OCR_Manuell.class);
+        intent.putExtra("bonId",bonId);
+        intent.putExtra("manuellState",state);
+        beforeActivity.startActivity(intent);
+    }
+
+    /**
      * Ruft die Budget Activity auf
      */
     public static void showBudget(AppCompatActivity beforeActivity){
