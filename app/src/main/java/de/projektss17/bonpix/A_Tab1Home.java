@@ -9,20 +9,21 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
+
 import android.support.v7.widget.RecyclerView;
 
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import java.util.ArrayList;
 import java.util.List;
-
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -36,10 +37,42 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Bons_Adapter;
+import de.projektss17.bonpix.daten.C_Home_Adapter;
 
 public class A_Tab1Home extends Fragment {
 
-    // RECYCLERVIEW VARIABLEN
+    private RecyclerView recyclerView;
+    private C_Home_Adapter mAdapter;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.home_recyclerview);
+        mAdapter = new C_Home_Adapter();
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+        return rootView;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+    // ALTER CODE:
+
+
+/*    // RECYCLERVIEW VARIABLEN
 
     private List<C_Bon> bonsList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -80,8 +113,8 @@ public class A_Tab1Home extends Fragment {
         // Kuchendiagramm
         pieChart1 = (PieChart) rootView.findViewById(R.id.chart1);
         createPieChart(pieChart1, "Test");
-
-        /*//Balkendiagramm 1
+/*
+        *//**//*//**//*//*Balkendiagramm 1
         bChart = (BarChart) rootView.findViewById(R.id.chart2);
         ArrayList<IBarDataSet> dataSets1 = new ArrayList<>();
         createBarChart(bChart, dataSets1, "The year 2017");
@@ -89,7 +122,7 @@ public class A_Tab1Home extends Fragment {
         //Balkendiagramm 2
         bChart3 = (BarChart) rootView.findViewById(R.id.chart3);
         ArrayList<IBarDataSet> dataSets3 = new ArrayList<>();
-        createBarChart(bChart3, dataSets3, "The year 2018");*/
+        createBarChart(bChart3, dataSets3, "The year 2018");*//**//*
 
         return rootView;
     }
@@ -107,10 +140,10 @@ public class A_Tab1Home extends Fragment {
             }
     }
 
-    /**
+    *//**//**
      * Erstellt ein Balkendiagramm
      * Zuerst werden die Werte gefüllt und dann in das Diagramm eingelesen
-     */
+     *//**//*
     private void createBarChart(BarChart bar, ArrayList<IBarDataSet> daten, String name){
         ArrayList<BarEntry> val = new ArrayList<BarEntry>();
         prepareBarData(val);   // Daten werden gefüllt
@@ -128,9 +161,9 @@ public class A_Tab1Home extends Fragment {
         bar.setData(data);
     }
 
-    /**
+    *//**//**
      * Füllt die Values eines Balkendiagramms mit random Werten
-     */
+     *//**//*
     private void prepareBarData(ArrayList<BarEntry> values){
         for (int i = 0; i < 10 + 1; i++) {
             float val = (float) (Math.random());
@@ -138,10 +171,10 @@ public class A_Tab1Home extends Fragment {
         }
     }
 
-    /**
+    *//**//**
      * Erstellt ein Kreisdiagramm
      * Zuerst werden die Werte gefüllt und dann in das Diagramm eingelesen
-     */
+     *//**//*
     private void createPieChart(PieChart bar, String name){
         ArrayList<PieEntry> val = new ArrayList<>();
         preparePieData(val);    // Daten werden gefüllt
@@ -157,12 +190,12 @@ public class A_Tab1Home extends Fragment {
         pieData.setDrawValues(true);
     }
 
-    /**
+    *//**//**
      * Füllt die Values eines Kreisdiagramms mit Werten
-     */
+     *//**//*
     private void preparePieData(ArrayList<PieEntry> values){
         values.add(new PieEntry(0.2f, 0));
         values.add(new PieEntry(0.2f, 1));
         values.add(new PieEntry(0.50f, 2));
     }
-}
+}*/
