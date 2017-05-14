@@ -16,7 +16,7 @@ tools:showIn="@layout/box_bon_anzeigen_screen">
 
 
         <LinearLayout
-            android:id="@+id/budget_alert_dialog_title_layout"
+            android:id="@+id/linear_layout_kassenzettel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -34,24 +34,24 @@ tools:showIn="@layout/box_bon_anzeigen_screen">
                 app:srcCompat="@mipmap/icon_laden_rewe_24dp" />-->
 
             <TextView
-                android:id="@+id/ladenname"
+                android:id="@+id/kassenzettel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
                 android:ems="10"
-                android:hint="default"
+                android:hint="Kassenzettel Pic"
                 android:inputType="textAutoComplete"
                 android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/budget_alert_dialog_budget_layout"
+            android:id="@+id/linear_layout_ladenname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/budget_alert_dialog_title_layout"
+            android:layout_below="@+id/linear_layout_kassenzettel"
             android:layout_marginTop="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -64,24 +64,24 @@ tools:showIn="@layout/box_bon_anzeigen_screen">
                 app:srcCompat="@mipmap/ic_cash_24dp" />-->
 
             <TextView
-                android:id="@+id/adresse"
+                android:id="@+id/ladenname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
                 android:ems="10"
-                android:hint="Betrag eingeben ..."
+                android:hint="Ladenname"
                 android:inputType="numberDecimal"
                 android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/budget_alert_dialog_jahr_layout"
+            android:id="@+id/linear_layout_adresse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/budget_alert_dialog_budget_layout"
+            android:layout_below="@+id/linear_layout_ladenname"
             android:layout_marginTop="31dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -94,24 +94,24 @@ tools:showIn="@layout/box_bon_anzeigen_screen">
                 app:srcCompat="@mipmap/ic_calender_24dp" />-->
 
             <TextView
-                android:id="@+id/datum"
+                android:id="@+id/adresse"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
-                android:hint="Datum Anzeigen"
+                android:hint="Adresse"
                 android:inputType="number"
                 android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/budget_alert_dialog_monat_layout"
+            android:id="@+id/linear_layout_datum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:layout_marginTop="31dp"
-            android:layout_below="@+id/budget_alert_dialog_jahr_layout"
+            android:layout_below="@+id/linear_layout_adresse"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
@@ -123,12 +123,100 @@ tools:showIn="@layout/box_bon_anzeigen_screen">
                 app:srcCompat="@mipmap/ic_time_24dp" />-->
 
             <TextView
+                android:id="@+id/datum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight=".7"
+                android:hint="Datum"
+                android:inputType="textAutoComplete"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_sonstigeinfos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="31dp"
+            android:layout_below="@+id/linear_layout_datum"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <!--            <ImageView
+                            android:id="@+id/budget_alert_dialog_monat_symbol"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".21"
+                            app:srcCompat="@mipmap/ic_time_24dp" />-->
+
+            <TextView
+                android:id="@+id/sonstigeinfos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight=".7"
+                android:hint="Sonstige Infos"
+                android:inputType="textAutoComplete"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_gesamtbetrag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="31dp"
+            android:layout_below="@+id/linear_layout_sonstigeinfos"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <!--            <ImageView
+                            android:id="@+id/budget_alert_dialog_monat_symbol"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".21"
+                            app:srcCompat="@mipmap/ic_time_24dp" />-->
+
+            <TextView
                 android:id="@+id/gesamtbetrag"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
-                android:hint="Default"
+                android:hint="Gesamtbetrag"
+                android:inputType="textAutoComplete"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_artikel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="31dp"
+            android:layout_below="@+id/linear_layout_gesamtbetrag"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <!--            <ImageView
+                            android:id="@+id/budget_alert_dialog_monat_symbol"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".21"
+                            app:srcCompat="@mipmap/ic_time_24dp" />-->
+
+            <TextView
+                android:id="@+id/artikel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight=".7"
+
+                android:hint="Artikel"
                 android:inputType="textAutoComplete"
                 android:textSize="18sp" />
         </LinearLayout>
