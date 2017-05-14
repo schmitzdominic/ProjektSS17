@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -18,12 +20,11 @@ import de.projektss17.bonpix.S;
  */
 
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private int count = 1;
+    private int count = 2;
     private int counter = 0;
 
     public class ViewHolderBar extends RecyclerView.ViewHolder {
         BarChart chart;
-
 
         public ViewHolderBar(View view) {
             super(view);
@@ -33,10 +34,26 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public class ViewHolderBudget extends  RecyclerView.ViewHolder {
+        TextView title;
+        TextView budgetCurrently;
+        TextView month;
+        TextView year;
+        TextView progressPercentage;
+        ProgressBar progressBar;
 
         public ViewHolderBudget(View view){
             super(view);
-            //C_Budget_CardView_Adapter budgetcard = (C_Budget) view.findViewById(R.id.chart);
+
+            title = (TextView) view.findViewById(R.id.budget_title);
+            budgetCurrently = (TextView) view.findViewById(R.id.budget_content);
+            month = (TextView) view.findViewById(R.id.budget_turnus);
+            year = (TextView) view.findViewById(R.id.budget_year);
+            progressBar = (ProgressBar)view.findViewById(R.id.budget_progress_bar_circle);
+            progressPercentage = (TextView) view.findViewById(R.id.budget_progress_percentage);
+
+            //TODO Getter und Setter schreiben?!?
+
+
         }
 
     }
@@ -51,6 +68,9 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case 0:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_bar_layout, parent, false);
                 return new ViewHolderBar(itemView);
+            case 1:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_budget_content, parent, false);
+                return new ViewHolderBudget(itemView);
         }
         return null;
 
@@ -79,7 +99,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (counter == 3) {
+        if (counter == 2) {
             counter = 0;
             return counter;
         }

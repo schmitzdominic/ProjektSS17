@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import android.support.v7.widget.DefaultItemAnimator;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -43,22 +44,48 @@ public class A_Tab1Home extends Fragment {
 
     private RecyclerView recyclerView;
     private C_Home_Adapter mAdapter;
+    private List<C_Bon> bonsList = new ArrayList<>();
+    private RecyclerView recyclerView1;
+    private C_Bons_Adapter mAdapter1;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.home_recyclerview);
         mAdapter = new C_Home_Adapter();
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        GridLayoutManager layoutManager = new GridLayoutManager(container.getContext(), 2, GridLayoutManager.VERTICAL, false);
+        //layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+        /*recyclerView1 = (RecyclerView) rootView.findViewById(R.id.home_recyclerview1);
+        mAdapter1 = new C_Bons_Adapter(bonsList);
+        prepareHomeData();
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
+        recyclerView1.setLayoutManager(mLayoutManager);
+        recyclerView1.addItemDecoration(
+                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        recyclerView1.setItemAnimator(new DefaultItemAnimator());
+        recyclerView1.setAdapter(mAdapter1);
+        mAdapter1.notifyDataSetChanged();*/
         return rootView;
     }
+
+
+    private void prepareHomeData() {
+        bonsList.clear();
+        int count = 0;
+        for (C_Bon bon : S.dbHandler.getAllBons(S.db)) {
+            if (count == 3) {
+                break;
+            }
+            bonsList.add(bon);
+            count++;
+        }
+
+    }
+
 }
-
-
 
 
 
