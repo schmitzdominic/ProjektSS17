@@ -1,15 +1,31 @@
 package de.projektss17.bonpix.daten;
 
+import java.util.ArrayList;
+
 /**
  * Created by JOhanns on 30.04.2017.
  */
 
 public class C_Budget {
 
-    private int budgetMax, budgetCurrently;
+    private int budgetMax, budgetCurrently,id;
     private int processbar, progressPercentage; // NICHT RELEVANT FÜR DIE DB
     private String zeitraumVon, zeitraumBis, title, sonstiges;
+    private ArrayList<C_Bon> bons;       // Array-List für alle Kassenbons zu diesem Budget
 
+
+    public C_Budget(int id, int budgetMax, int budgetCurrently, int processbar, String zeitraumVon, String zeitraumBis, String title, String sonstiges, ArrayList<C_Bon> bons){
+        this.id = id;
+        this.budgetMax = budgetMax;
+        this.budgetCurrently = budgetCurrently;
+        this.processbar = processbar;
+        this.zeitraumVon = zeitraumVon;
+        this.zeitraumBis = zeitraumBis;
+        this.title = title;
+        this.sonstiges = sonstiges;
+        this.bons = bons;
+
+    }
 
 
     public C_Budget(int budgetMax, int budgetCurrently, int processbar, String zeitraumVon, String zeitraumBis, String title, String sonstiges){
@@ -19,7 +35,16 @@ public class C_Budget {
         this.zeitraumVon = zeitraumVon;
         this.zeitraumBis = zeitraumBis;
         this.title = title;
+        this.sonstiges = sonstiges;
+    }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getBudgetMax() {
@@ -42,9 +67,6 @@ public class C_Budget {
         return processbar;
     }
 
-    public void setProcessbar(int processbar) {
-        this.processbar = processbar;
-    }
 
     public int getProgressPercentage() {
         return budgetCurrently*100/budgetMax;
@@ -52,14 +74,6 @@ public class C_Budget {
 
     public void setProgressPercentage(int progressPercentage) {
         this.progressPercentage = progressPercentage;
-    }
-
-    public String getZeitraumVon() {
-        return zeitraumVon;
-    }
-
-    public void setZeitraumVon(String zeitraumVon) {
-        this.zeitraumVon = zeitraumVon;
     }
 
     public String getTitle() {
@@ -78,34 +92,29 @@ public class C_Budget {
         this.sonstiges = sonstiges;
     }
 
+    public ArrayList<C_Bon> getBonBons() {
+        return bons;
+    }
+
+    public void setBonBons(ArrayList<C_Bon> bonBons) {
+        this.bons = bonBons;
+    }
+
     public String getMonthVon(){
-        return getMonthName(seperateMonth(zeitraumVon));
+        return getMonthName(zeitraumVon.split("\\.")[1]);
     }
 
     public String getMonthBis(){
-        return getMonthName(seperateMonth(zeitraumBis));
+        return getMonthName(zeitraumBis.split("\\.")[1]);
     }
 
     public String getYearVon(){
-        return seperateYear(zeitraumVon);
+        return zeitraumVon.split("\\.")[2];
     }
 
     public String getYearBis(){
-        return seperateYear(zeitraumBis);
+        return zeitraumBis.split("\\.")[2];
     }
-
-
-    public String seperateMonth(String date){
-
-        return date.split("\\.")[1];
-
-    }
-
-    public String seperateYear(String date){
-
-        return date.split("\\.")[2];
-    }
-
 
     public String getMonthName(String month){
 

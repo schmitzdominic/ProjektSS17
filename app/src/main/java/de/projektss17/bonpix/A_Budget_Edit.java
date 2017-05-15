@@ -72,29 +72,27 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
      * Wechseln auf die Haupt-Activity (A_Budget) nach dem speichern
      */
     public void prepareAndSave(){
-        if(proofContent())
-            if(proofAmount(Integer.parseInt(betrag.getText().toString()))) {
-                S.outShort(A_Budget_Edit.this, "Daten korrekt!");
+        if(proofContent()) {
 
-                //*****************************************************************************************************
-                //**** HIER Anbindung zur DB herstellen - Befüllung dieser mit den Inhalten wenn alles korrekt ist ****
-                //*****************************************************************************************************
+            S.outShort(A_Budget_Edit.this, "Daten korrekt!");
 
-                //CARD VIEW - Übergabe der Inhalte an A_Budget -> Lediglich ein Test (wird entfernt wenn Anbindung zur DB besteht)
-                contents = new String[5];
-                contents[0]=title.getText().toString();
-                contents[1]=betrag.getText().toString();
-                contents[2]=zeitraumVon.getText().toString();
-                contents[3]=zeitraumBis.getText().toString();
-                contents[4]=info.getText().toString();
+            //*****************************************************************************************************
+            //**** HIER Anbindung zur DB herstellen - Befüllung dieser mit den Inhalten wenn alles korrekt ist ****
+            //*****************************************************************************************************
 
-                Intent intent = new Intent(A_Budget_Edit.this, A_Budget.class);
-                intent.putExtra("content",contents);
-                startActivity(intent);
+            //CARD VIEW - Übergabe der Inhalte an A_Budget -> Lediglich ein Test (wird entfernt wenn Anbindung zur DB besteht)
+            contents = new String[5];
+            contents[0] = title.getText().toString();
+            contents[1] = betrag.getText().toString();
+            contents[2] = zeitraumVon.getText().toString();
+            contents[3] = zeitraumBis.getText().toString();
+            contents[4] = info.getText().toString();
 
-            }else
-                S.outShort(A_Budget_Edit.this,"Betrag zu hoch!");
-        else
+            Intent intent = new Intent(A_Budget_Edit.this, A_Budget.class);
+            intent.putExtra("content", contents);
+            startActivity(intent);
+
+        }else
             S.outShort(A_Budget_Edit.this,"Einige Daten unvollständig!");
     }
 
@@ -139,27 +137,6 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
             return "0"+Integer.toString(content);
 
         return Integer.toString(content);
-    }
-
-
-    /**
-     * Created by Johanns am 14.05.2017
-     *
-     * Überprüft ob der eingegebene Betrag nicht zu hoch ist
-     * (wird ausgeführt, sofern gespeichert werden soll)
-     * @param content Übergabe der Höhe des Betrags
-     * @return Rückgabe des Booleanwertes
-     */
-    public boolean proofAmount(int content){
-
-        betrag.setTextColor(Color.BLACK);
-
-        if(content<10000)
-            return true;
-        else
-            betrag.setTextColor(Color.RED);
-
-        return false;
     }
 
 
