@@ -62,6 +62,14 @@ public class C_OCR {
      */
     public boolean recognize(Bitmap bitmap, String ladenName){
 
+        if(articles != null){
+            this.articles.clear();
+        }
+
+        if(preise != null){
+            this.preise.clear();
+        }
+
         // Wenn der Text noch nicht ausgelesen wurde
         if(this.recognizedText == null){
             this.recognizedText = this.recognizer(bitmap);

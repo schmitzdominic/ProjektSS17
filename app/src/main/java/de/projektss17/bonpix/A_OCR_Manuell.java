@@ -46,7 +46,6 @@ import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.recognition.C_OCR;
-import de.projektss17.bonpix.recognition.C_PicChanger;
 
 
 public class A_OCR_Manuell extends AppCompatActivity {
@@ -130,13 +129,18 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                     Intent upIntent = NavUtils.getParentActivityIntent(A_OCR_Manuell.this);
 
-                    // Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet
-                    S.popUpDialogSaveBon(A_OCR_Manuell.this, upIntent,
-                            R.string.a_ocr_manuell_pop_up_title,
-                            R.string.a_ocr_manuell_pop_up_message,
-                            R.string.a_ocr_manuell_pop_up_cancel,
-                            R.string.a_ocr_manuell_pop_up_confirm,
-                            saveBon());
+                    if(getState().equals("edit")){
+                        S.dbHandler.updateBon(S.db, saveBon());
+
+                    } else {
+                        // Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet
+                        S.popUpDialogSaveBon(A_OCR_Manuell.this, upIntent,
+                                R.string.a_ocr_manuell_pop_up_title,
+                                R.string.a_ocr_manuell_pop_up_message,
+                                R.string.a_ocr_manuell_pop_up_cancel,
+                                R.string.a_ocr_manuell_pop_up_confirm,
+                                saveBon());
+                    }
                 }
             }
         });
@@ -375,7 +379,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
             count++;
         }
 
-
         this.spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, array);
         this.spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.spinnerAdapter.sort(new Comparator<String>(){
@@ -470,8 +473,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
         } else {
            this.mExclusiveEmptyView = rowView;
         }
-
-        //R.mipmap.ic_indeterminate_check_box_black_24dp
 
         positiveNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -803,6 +804,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         boolean status = this.ocr.recognize(myBitmap);
 
         if(status){
+            this.removeAllArticles();
             this.fillMask(this.getImageUri(myBitmap),
                     this.ocr.getLadenName(),
                     null, // TODO Anschrift über OCR suchen!
@@ -810,6 +812,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     null,
                     this.ocr.getArticles());
         } else {
+            this.removeAllArticles();
             this.fillMask(this.getImageUri(myBitmap),
                     null,
                     null, // TODO Anschrift über OCR suchen!
