@@ -107,7 +107,8 @@
                 android:layout_weight=".7"
                 android:ems="10"
                 android:hint="Betrag eingeben ..."
-                android:inputType="numberDecimal"
+                android:inputType="number"
+                android:digits="0123456789"
                 android:maxLength="6"/>
         </LinearLayout>
 
