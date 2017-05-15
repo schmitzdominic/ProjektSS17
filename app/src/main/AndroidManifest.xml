@@ -30,10 +30,12 @@
             android:name=".A_Budget"
             android:label="@string/title_budget_screen"
             android:parentActivityName=".A_Main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.projektss17.bonpix.A_Main" />
+                android:value="de.projektss17.bonpix.A_Main"
+                />
 
         </activity>
         <activity
@@ -122,7 +124,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.projektss17.bonpix.A_Budget" />
+                android:value="de.projektss17.bonpix.A_Budget"/>
 
         </activity>
     </application>

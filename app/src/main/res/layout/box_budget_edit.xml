@@ -29,15 +29,14 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorPrimary"
                 android:text="Speichern"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:textSize="18sp" />
 
         </RelativeLayout>
 
@@ -130,14 +129,16 @@
                 android:layout_weight="0.21"
                 app:srcCompat="@mipmap/ic_calender_24dp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/budget_alert_dialog_zeitraum_von"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
                 android:hint="Zeitraum (Beginn) ..."
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="18sp"
+                android:paddingLeft="5dp"/>
         </LinearLayout>
 
 
@@ -159,14 +160,16 @@
                 android:layout_weight=".21"
                 app:srcCompat="@mipmap/ic_calender_24dp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/budget_alert_dialog_zeitraum_bis"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
                 android:hint="Zeitraum (Ende) ..."
-                android:inputType="textAutoComplete" />
+                android:inputType="textAutoComplete"
+                android:textSize="18sp"
+                android:paddingLeft="5dp"/>
         </LinearLayout>
 
         <LinearLayout

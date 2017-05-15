@@ -3,6 +3,7 @@ package de.projektss17.bonpix;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import java.util.Calendar;
 
 
@@ -20,7 +23,8 @@ import java.util.Calendar;
 public class A_Budget_Edit extends AppCompatActivity implements View.OnClickListener{
 
     Button saveButton;
-    EditText title, betrag, zeitraumVon, zeitraumBis, info;
+    EditText title, betrag, info;
+    TextView zeitraumVon, zeitraumBis;
     int year, month, day;
     String [] contents;
 
@@ -37,8 +41,8 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
         this.saveButton = (Button) findViewById(R.id.budget_save_button);
         this.betrag = (EditText) findViewById(R.id.budget_alert_dialog_betrag);
         this.title = (EditText) findViewById(R.id.budget_alert_dialog_title);
-        this.zeitraumVon = (EditText) findViewById(R.id.budget_alert_dialog_zeitraum_von);
-        this.zeitraumBis = (EditText) findViewById(R.id.budget_alert_dialog_zeitraum_bis);
+        this.zeitraumVon = (TextView) findViewById(R.id.budget_alert_dialog_zeitraum_von);
+        this.zeitraumBis = (TextView) findViewById(R.id.budget_alert_dialog_zeitraum_bis);
         this.info = (EditText) findViewById(R.id.budget_alert_dialog_info);
 
         // Setzen des Befehls zum klicken der Edit Text
@@ -100,7 +104,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
      * (Sobald Datum ausgewählt ist, werden die Inhalte in die EditText befüllt)
      * @param content Übergabe einer Edit Text View
      */
-    public void createDatePicker(final EditText content){
+    public void createDatePicker(final TextView content){
 
         final Calendar c = Calendar.getInstance();
         c.get(Calendar.DAY_OF_MONTH);
@@ -146,10 +150,12 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
      */
     public boolean proofAmount(int content){
 
+        betrag.setTextColor(Color.BLACK);
+
         if(content<10000)
             return true;
         else
-            betrag.setHintTextColor(Color.RED);
+            betrag.setTextColor(Color.RED);
 
         return false;
     }
@@ -163,21 +169,29 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
      */
     public boolean proofContent(){
 
+        boolean noError = true;
+
         if(title.getText()== null || title.getText().toString().isEmpty()){
             title.setHintTextColor(Color.RED);
-            return false;
-        } else if(betrag.getText()== null || betrag.getText().toString().isEmpty()){
-            betrag.setHintTextColor(Color.RED);
-            return false;
-        }else if(zeitraumVon.getText()== null || zeitraumVon.getText().toString().isEmpty()) {
-            zeitraumVon.setHintTextColor(Color.RED);
-            return false;
-        }else if(zeitraumBis.getText()== null || zeitraumBis.getText().toString().isEmpty()) {
-            betrag.setHintTextColor(Color.RED);
-            return false;
+            noError = false;
         }
 
-        return true;
+        if(betrag.getText()== null || betrag.getText().toString().isEmpty()){
+            betrag.setHintTextColor(Color.RED);
+            noError = false;
+        }
+
+        if(zeitraumBis.getText()== null || zeitraumBis.getText().toString().isEmpty()) {
+            zeitraumBis.setHintTextColor(Color.RED);
+            noError = false;
+        }
+
+        if(zeitraumVon.getText()== null || zeitraumVon.getText().toString().isEmpty()) {
+            zeitraumVon.setHintTextColor(Color.RED);
+            noError = false;
+        }
+
+        return noError;
     }
 }
 
