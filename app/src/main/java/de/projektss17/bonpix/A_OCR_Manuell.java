@@ -154,6 +154,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
+
         // Sonstiges Eingabe onClickListener
         this.sonstigesView.setOnClickListener(new View.OnClickListener() {
             @Override
