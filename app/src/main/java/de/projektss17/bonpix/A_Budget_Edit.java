@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -80,11 +81,12 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
                 //*****************************************************************************************************
 
                 //CARD VIEW - Übergabe der Inhalte an A_Budget -> Lediglich ein Test (wird entfernt wenn Anbindung zur DB besteht)
-                contents = new String[4];
+                contents = new String[5];
                 contents[0]=title.getText().toString();
                 contents[1]=betrag.getText().toString();
                 contents[2]=zeitraumVon.getText().toString();
                 contents[3]=zeitraumBis.getText().toString();
+                contents[4]=info.getText().toString();
 
                 Intent intent = new Intent(A_Budget_Edit.this, A_Budget.class);
                 intent.putExtra("content",contents);
@@ -107,18 +109,18 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
     public void createDatePicker(final TextView content){
 
         final Calendar c = Calendar.getInstance();
-        c.get(Calendar.DAY_OF_MONTH);
-        c.get(Calendar.MONTH);
-        c.get(Calendar.YEAR);
+        this.day = c.get(Calendar.DAY_OF_MONTH);
+        this.month = c.get(Calendar.MONTH);
+        this.year = c.get(Calendar.YEAR);
 
         DatePickerDialog datePicker = new DatePickerDialog(A_Budget_Edit.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                content.setText(proofNumber(dayOfMonth)+"/"+proofNumber(month)+"/"+year);
+                content.setText(proofNumber(dayOfMonth)+"."+proofNumber(month+1)+"."+year);
 
             }
-        },day, month,year);
+        },this.year, this.month, this.day);
 
         datePicker.show();
     }

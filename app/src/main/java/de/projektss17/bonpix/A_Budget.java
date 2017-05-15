@@ -84,7 +84,7 @@ public class A_Budget extends AppCompatActivity implements View.OnClickListener 
         if(b!=null) {
             content = (String[]) b.get("content");
             S.outShort(A_Budget.this, content[0]);
-            addItem(content[1],content[1],"Mai","2015","Juni","2016",content[0]); // Monat & Jahr sind feste Testdaten!
+            addItem(content[1],content[1],content[2], content[3],content[0],content[4]); // Monat & Jahr sind feste Testdaten!
             bAdapter.notifyDataSetChanged();
         }
     }
@@ -180,20 +180,18 @@ public class A_Budget extends AppCompatActivity implements View.OnClickListener 
      * ADD ITEM - Befüllung der RecyclerView mit EINER Datenmenge
      * @param budgetMax Übergabe des eingegeben Budget-Betrags
      * @param budgetCurrently Übergabe des budgetMax -> Ändert sich wenn DB angehängt wird
-     * @param monatVon Übergabe des Monat
-     * @param jahrVon Übergabe des Jahres
-     * @param monatBis Übergabe des Monat
-     * @param jahrBis Übergabe des Jahres
+     * @param zeitraumVon Übergabe des ersten Zeitraumes
+     * @param zeitraumBis Übergabe des zweiten Zeitraumes
      * @param title Übergabe des Titels
      */
-    public void addItem(String budgetMax, String budgetCurrently, String monatVon, String jahrVon, String monatBis, String jahrBis, String title){
+    public void addItem(String budgetMax, String budgetCurrently, String zeitraumVon, String zeitraumBis, String title, String sonstiges){
 
         int budgetMaxParse = Integer.parseInt(budgetMax);
         int budgetCurrentlyParse = Integer.parseInt(budgetCurrently); // Betrag wird beim ersten mal das selbe wie budgetMaxParse sein
         int testcurrentBudget = randomNumber(budgetMaxParse,150); // Betrag zum Testen -> wird später gelöscht!!!!!!
 
         C_Budget budget = new C_Budget(budgetMaxParse,testcurrentBudget,
-                percentageCalculator(budgetMaxParse,testcurrentBudget), monatVon,jahrVon,monatBis,jahrBis,title);
+                percentageCalculator(budgetMaxParse,testcurrentBudget),zeitraumVon, zeitraumBis,title,sonstiges);
 
         budgetList.add(budget);
 

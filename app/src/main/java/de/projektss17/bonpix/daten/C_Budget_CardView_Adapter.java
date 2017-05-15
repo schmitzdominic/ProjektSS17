@@ -65,10 +65,10 @@ public class C_Budget_CardView_Adapter extends RecyclerView.Adapter<C_Budget_Car
         C_Budget budget = budgetList.get(position);
         holder.title.setText(budget.getTitle());
         holder.budgetCurrently.setText(budget.getBudgetCurrently()+ " €");
-        holder.monthBefore.setText(budget.getMonatVon());
-        holder.yearBefore.setText(budget.getJahrVon());
-        holder.monthAfter.setText(budget.getMonatBis());
-        holder.yearAfter.setText(budget.getJahrBis());
+        holder.monthBefore.setText(budget.getMonthVon());
+        holder.yearBefore.setText(budget.getYearVon());
+        holder.monthAfter.setText(budget.getMonthBis());
+        holder.yearAfter.setText(budget.getYearBis());
         holder.progressBar.setProgress(budget.getProcessbar());
         holder.progressPercentage.setText(budget.getProgressPercentage()+" %");
     }
