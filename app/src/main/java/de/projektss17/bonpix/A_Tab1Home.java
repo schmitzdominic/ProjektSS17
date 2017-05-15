@@ -52,8 +52,8 @@ public class A_Tab1Home extends Fragment {
         View rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.home_recyclerview);
         mAdapter = new C_Home_Adapter();
-        GridLayoutManager layoutManager = new GridLayoutManager(container.getContext(), 2, GridLayoutManager.VERTICAL, false);
-        //layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);

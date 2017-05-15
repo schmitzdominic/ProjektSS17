@@ -1,5 +1,6 @@
 package de.projektss17.bonpix.daten;
 
+import android.icu.text.SimpleDateFormat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,8 +20,8 @@ import de.projektss17.bonpix.S;
  * Created by Sascha on 14.05.2017.
  */
 
-public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private int count = 2;
+public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private int count = 3;
     private int counter = 0;
 
     public class ViewHolderBar extends RecyclerView.ViewHolder {
@@ -33,7 +34,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    public class ViewHolderBudget extends  RecyclerView.ViewHolder {
+    public class ViewHolderBudget extends RecyclerView.ViewHolder {
         TextView title;
         TextView budgetCurrently;
         TextView month;
@@ -41,14 +42,14 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView progressPercentage;
         ProgressBar progressBar;
 
-        public ViewHolderBudget(View view){
+        public ViewHolderBudget(View view) {
             super(view);
 
             title = (TextView) view.findViewById(R.id.budget_title);
             budgetCurrently = (TextView) view.findViewById(R.id.budget_content);
             month = (TextView) view.findViewById(R.id.budget_turnus);
             year = (TextView) view.findViewById(R.id.budget_year);
-            progressBar = (ProgressBar)view.findViewById(R.id.budget_progress_bar_circle);
+            progressBar = (ProgressBar) view.findViewById(R.id.budget_progress_bar_circle);
             progressPercentage = (TextView) view.findViewById(R.id.budget_progress_percentage);
 
             //TODO Getter und Setter schreiben?!?
@@ -58,7 +59,24 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
 
-    public C_Home_Adapter(){
+    public class ViewHolderTime extends RecyclerView.ViewHolder {
+        TextView time;
+
+
+
+
+
+        public ViewHolderTime(View view) {
+            super(view);
+            Log.e("### Home Adapter", "ViewHolderTime Scoping time");
+            time = (TextView) view.findViewById(R.id.time);
+
+
+        }
+
+    }
+
+    public C_Home_Adapter() {
     }
 
     @Override
@@ -66,11 +84,14 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         View itemView;
         switch(viewType){
             case 0:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_bar_layout, parent, false);
-                return new ViewHolderBar(itemView);
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_card_time, parent, false);
+                return new ViewHolderTime(itemView);
             case 1:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_budget_content, parent, false);
                 return new ViewHolderBudget(itemView);
+            case 2:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_bar_layout, parent, false);
+                return new ViewHolderBar(itemView);
         }
         return null;
 
@@ -82,6 +103,27 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         switch(getItemViewType(position)) {
             case 0:
+                ViewHolderTime holderTime = (ViewHolderTime)holder;
+                long date = System.currentTimeMillis();
+                SimpleDateFormat sdf = new SimpleDateFormat("MMM MM dd, yyyy h:mm a");
+                String dateString = sdf.format(date);
+                holderTime.time.setText(dateString);
+                counter++;
+                break;
+                /*ViewHolderBar holderBar = (ViewHolderBar)holder;
+                BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
+                BarData dataBar = new BarData(dataSetBar);
+                dataBar.setBarWidth(0.9f); // set custom bar width
+                holderBar.chart.setData(dataBar);
+                holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
+                holderBar.chart.invalidate(); // refresh
+                counter++;
+                break;*/
+            case 1:
+                ViewHolderBudget holderBudget = (ViewHolderBudget)holder;
+                counter++;
+                break;
+            case 2:
                 ViewHolderBar holderBar = (ViewHolderBar)holder;
                 BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
                 BarData dataBar = new BarData(dataSetBar);
@@ -91,15 +133,13 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holderBar.chart.invalidate(); // refresh
                 counter++;
                 break;
-            case 1:
-                ViewHolderBudget holderBudget = (ViewHolderBudget) holder;
         }
 
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (counter == 2) {
+        if (counter == 3) {
             counter = 0;
             return counter;
         }
