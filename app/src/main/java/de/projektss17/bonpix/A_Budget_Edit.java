@@ -3,11 +3,9 @@ package de.projektss17.bonpix;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -15,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Calendar;
+
+import de.projektss17.bonpix.daten.C_Budget;
 
 
 /**
@@ -27,7 +27,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
     EditText title, betrag, info;
     TextView zeitraumVon, zeitraumBis;
     int year, month, day;
-    String [] contents;
+    C_Budget budget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,6 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         // Implementierung der Objekte in dieser Activity
         this.saveButton = (Button) findViewById(R.id.budget_save_button);
@@ -50,6 +49,17 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
         saveButton.setOnClickListener(this);
         zeitraumVon.setOnClickListener(this);
         zeitraumBis.setOnClickListener(this);
+
+
+        if("edit".equals(getIntent().getStringExtra("state"))){
+
+            this.budget = S.dbHandler.getBudget(S.db, Integer.parseInt(getIntent().getStringExtra("budget")));
+            this.betrag.setText(this.budget.getBudgetMax() + "");
+            this.title.setText(this.budget.getTitle());
+            this.zeitraumVon.setText(this.budget.getZeitraumVon());
+            this.zeitraumBis.setText(this.budget.getZeitraumBis());
+            this.info.setText(this.budget.getSonstiges());
+        }
     }
 
 
@@ -74,26 +84,33 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
     public void prepareAndSave(){
         if(proofContent()) {
 
-            S.outShort(A_Budget_Edit.this, "Daten korrekt!");
+            if("edit".equals(getIntent().getStringExtra("state"))){
+                this.budget.setBudgetMax(Integer.parseInt(betrag.getText().toString()));
+                this.budget.setBudgetLost((int) S.dbHandler.getTotalPriceFromBonsSumup(S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString())));
+                this.budget.setZeitraumVon(zeitraumVon.getText().toString());
+                this.budget.setZeitraumBis(zeitraumBis.getText().toString());
+                this.budget.setTitle(title.getText().toString());
+                this.budget.setSonstiges(info.getText().toString());
+                this.budget.setBons(S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString()));
 
-            //*****************************************************************************************************
-            //**** HIER Anbindung zur DB herstellen - Befüllung dieser mit den Inhalten wenn alles korrekt ist ****
-            //*****************************************************************************************************
+                S.dbHandler.updateBudget(S.db, this.budget);
 
-            //CARD VIEW - Übergabe der Inhalte an A_Budget -> Lediglich ein Test (wird entfernt wenn Anbindung zur DB besteht)
-            contents = new String[5];
-            contents[0] = title.getText().toString();
-            contents[1] = betrag.getText().toString();
-            contents[2] = zeitraumVon.getText().toString();
-            contents[3] = zeitraumBis.getText().toString();
-            contents[4] = info.getText().toString();
+            } else {
+                S.dbHandler.addBudget(S.db, new C_Budget(
+                        Integer.parseInt(betrag.getText().toString()),
+                        (int) S.dbHandler.getTotalPriceFromBonsSumup(S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString())),
+                        zeitraumVon.getText().toString(),
+                        zeitraumBis.getText().toString(),
+                        title.getText().toString(),
+                        info.getText().toString(),
+                        S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString())));
+            }
+
 
             Intent intent = new Intent(A_Budget_Edit.this, A_Budget.class);
-            intent.putExtra("content", contents);
             startActivity(intent);
 
-        }else
-            S.outShort(A_Budget_Edit.this,"Einige Daten unvollständig!");
+        }
     }
 
 
@@ -111,16 +128,33 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
         this.month = c.get(Calendar.MONTH);
         this.year = c.get(Calendar.YEAR);
 
-        DatePickerDialog datePicker = new DatePickerDialog(A_Budget_Edit.this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        if(content.getText().toString().contains(".")){
+            DatePickerDialog datePicker = new DatePickerDialog(A_Budget_Edit.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                content.setText(proofNumber(dayOfMonth)+"."+proofNumber(month+1)+"."+year);
+                    content.setText(proofNumber(dayOfMonth)+"."+proofNumber(month+1)+"."+year);
 
-            }
-        },this.year, this.month, this.day);
+                }
+            },Integer.parseInt(content.getText().toString().split("\\.")[2]),
+                    Integer.parseInt(content.getText().toString().split("\\.")[1])-1,
+                    Integer.parseInt(content.getText().toString().split("\\.")[0]));
+            datePicker.show();
 
-        datePicker.show();
+        } else {
+            DatePickerDialog datePicker = new DatePickerDialog(A_Budget_Edit.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                    content.setText(proofNumber(dayOfMonth)+"."+proofNumber(month+1)+"."+year);
+
+                }
+            },this.year, this.month, this.day);
+            datePicker.show();
+        }
+
+
+
     }
 
 
@@ -172,6 +206,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
 
         return noError;
     }
+
 }
 
 

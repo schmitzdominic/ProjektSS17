@@ -85,8 +85,8 @@ public class A_Tab1Home extends Fragment {
 
         ArrayList<C_Bon> bonList = S.dbHandler.getAllBons(S.db);
 
-        for(int i = bonList.size()-1; i >= bonList.size()-3; i--){
-            this.bonsList.add(bonList.get(i));
+        for(C_Bon bon : S.dbHandler.getNumberOfNewestBons(S.db, 3)){
+            this.bonsList.add(bon);
         }
         mAdapter.notifyDataSetChanged();
     }

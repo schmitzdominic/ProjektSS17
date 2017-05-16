@@ -118,7 +118,7 @@
 
         <activity
             android:name=".A_Budget_Edit"
-            android:label="@string/title_activity_a__budget__edit"
+            android:label="@string/title_budget_edit"
             android:parentActivityName=".A_Budget"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
