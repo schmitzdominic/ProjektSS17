@@ -2,12 +2,9 @@ package de.projektss17.bonpix.auswerter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
 import java.util.ArrayList;
-
-/**
- * Created by Domi on 15.04.2017.
- */
 
 public class Default implements I_Auswerter{
 
@@ -21,7 +18,32 @@ public class Default implements I_Auswerter{
 
     @Override
     public ArrayList<String> getProducts(String txt) {
-        return null;
+
+        String dumString = "";
+        ArrayList<String> retString = new ArrayList<>();
+
+        txt = txt.replaceAll(" +","");
+        txt = txt.replaceAll("\\d","");
+        txt = txt.toLowerCase();
+
+        for(int i = 0; i < txt.length(); i++){
+            if(txt.charAt(i) == '\n'){
+                if(dumString.length() > 4 && !dumString.contains("storno")){
+                    if(dumString.contains("pfand")){
+                        dumString = "pfand";
+                    }
+                    retString.add(dumString.toUpperCase());
+                }
+                dumString = "";
+            } else {
+                if(this.isLetter(txt.charAt(i)) || txt.charAt(i) == '.' || txt.charAt(i) == '&'){
+                    dumString += txt.charAt(i);
+                }
+            }
+        }
+
+        return retString;
+
     }
 
     @Override
@@ -68,7 +90,15 @@ public class Default implements I_Auswerter{
                 }
             } else {
                 if(count == 3){
-                    retString.add(dumString);
+                    if((i - dumString.length() - 1) >= 0){
+                        if(txt.charAt(i - dumString.length() - 1) == '-'){
+                            retString.add("-" + dumString);
+                        } else {
+                            retString.add(dumString);
+                        }
+                    } else {
+                        retString.add(dumString);
+                    }
                 }
                 dumString = "";
                 count = 0;
@@ -93,66 +123,6 @@ public class Default implements I_Auswerter{
     public String formater(String txt){
         txt = txt.replaceAll(" +", " ");
         return txt;
-    }
-
-    /**
-     * Versucht nur die Preise auszulesen.
-     * TODO noch nicht fertig!
-     * @param txt Kompletter String
-     * @return nur die Preise
-     */
-    public String getPreise(String txt){
-
-        String retString = "",
-                dumString = "";
-        int count = 0;
-
-        for(int i = 0; i < txt.length(); i++){
-
-            if(this.isDigit(txt.charAt(i))){
-                if(count == 0){
-                    dumString += txt.charAt(i);
-                    continue;
-                } else if(count > 0 && count < 3){
-                    dumString += txt.charAt(i);
-                    count++;
-                    continue;
-                } else if(count >= 3){
-                    count++;
-                    dumString = "";
-                    continue;
-                } else {
-                    dumString = "";
-                    count = 0;
-                    continue;
-                }
-
-            } else if(this.isSeparate(txt.charAt(i))){
-
-                if(count == 0){
-                    if(txt.charAt(i) == '.'){
-                        dumString += ',';
-                    } else {
-                        dumString += txt.charAt(i);
-                    }
-                    count++;
-                    continue;
-                } else {
-                    count = 0;
-                    dumString = "";
-                    continue;
-                }
-            } else {
-                if(count == 3){
-                    retString += dumString + "\n";
-                }
-                dumString = "";
-                count = 0;
-                continue;
-            }
-        }
-
-        return retString;
     }
 
     /**
