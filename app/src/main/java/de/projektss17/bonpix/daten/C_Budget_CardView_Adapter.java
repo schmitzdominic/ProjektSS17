@@ -28,7 +28,7 @@ public class C_Budget_CardView_Adapter extends RecyclerView.Adapter<C_Budget_Car
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView budgetCurrently, year,month, title, progressPercentage;
+        public TextView budgetCurrently, yearBefore,monthBefore, yearAfter, monthAfter, title, progressPercentage;
         public ProgressBar progressBar;
 
 
@@ -38,8 +38,10 @@ public class C_Budget_CardView_Adapter extends RecyclerView.Adapter<C_Budget_Car
             // Implementierung des Layouts der einzelnen Objekte in der View
             this.title = (TextView) view.findViewById(R.id.budget_title);
             this.budgetCurrently = (TextView) view.findViewById(R.id.budget_content);
-            this.month = (TextView) view.findViewById(R.id.budget_turnus);
-            this.year = (TextView) view.findViewById(R.id.budget_year);
+            this.monthBefore = (TextView) view.findViewById(R.id.budget_monat_von);
+            this.yearBefore = (TextView) view.findViewById(R.id.budget_jahr_von);
+            this.monthAfter = (TextView) view.findViewById(R.id.budget_monat_bis);
+            this.yearAfter = (TextView) view.findViewById(R.id.budget_jahr_bis);
             this.progressBar = (ProgressBar)view.findViewById(R.id.budget_progress_bar_circle);
             this.progressPercentage = (TextView) view.findViewById(R.id.budget_progress_percentage);
 
@@ -63,11 +65,16 @@ public class C_Budget_CardView_Adapter extends RecyclerView.Adapter<C_Budget_Car
         C_Budget budget = budgetList.get(position);
         holder.title.setText(budget.getTitle());
         holder.budgetCurrently.setText(budget.getBudgetCurrently()+ " €");
-        holder.month.setText(budget.getTurnus());
-        holder.year.setText(budget.getYear());
+        holder.monthBefore.setText(budget.getMonthVon());
+        holder.yearBefore.setText(budget.getYearVon());
+        holder.monthAfter.setText(budget.getMonthBis());
+        holder.yearAfter.setText(budget.getYearBis());
         holder.progressBar.setProgress(budget.getProcessbar());
-        holder.progressPercentage.setText(budget.getProcessPercentage()+" %");
+        holder.progressPercentage.setText(budget.getProgressPercentage()+" %");
     }
+
+
+
 
 
     @Override

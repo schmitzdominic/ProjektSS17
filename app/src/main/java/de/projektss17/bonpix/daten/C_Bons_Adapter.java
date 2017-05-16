@@ -17,10 +17,6 @@ import java.util.List;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
-/**
- * Created by Marcus on 15.04.2017.
- */
-
 public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHolder> {
 
 
@@ -40,7 +36,7 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
             button = (ImageView) view.findViewById(R.id.imageview_button);
 
             // TODO: Derzeit ist das "REWE" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
-            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.icon_laden_rewe_24dp);
+            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.ic_aldisuedlogo);
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(view.getResources(), imageBitmap);
             roundedBitmapDrawable.setCircular(true);
             roundedBitmapDrawable.setAntiAlias(true);
@@ -71,8 +67,10 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
         //Loading the FavoriteList
         if (bon.getFavourite()){
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star));
+            holder.button.setColorFilter(holder.button.getContext().getResources().getColor(R.color.colorPrimary));
         } else {
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star_outline));
+            holder.button.setColorFilter(holder.button.getContext().getResources().getColor(R.color.colorPrimary));
         }
         holder.button.setOnClickListener(new View.OnClickListener(){
 
@@ -88,11 +86,13 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
                         case R.id.imageview_button: {
                             if (bon.getFavourite()){
                                 holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
+                                holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
                                 bon.setFavourite(false);
                                 S.dbHandler.updateBon(S.db, bon);
                             } else {
                                 if (row_index == position) {
                                     holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
+                                    holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
                                     bon.setFavourite(true);
                                     S.dbHandler.updateBon(S.db, bon);
                                 }
