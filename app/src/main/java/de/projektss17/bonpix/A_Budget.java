@@ -1,17 +1,16 @@
+
 package de.projektss17.bonpix;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +19,7 @@ import de.projektss17.bonpix.daten.C_Budget;
 import de.projektss17.bonpix.daten.C_Budget_CardView_Adapter;
 
 
-public class A_Budget extends AppCompatActivity {
+public class A_Budget extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -28,6 +27,8 @@ public class A_Budget extends AppCompatActivity {
     private RecyclerView.Adapter bAdapter;
     private FloatingActionButton fab;
     private ItemTouchHelper swipper;
+    private CardView card;
+    private String [] content; // Zwischenspeicher für die Inhalte der CardView
 
 
     /** Content für diese Activity wird erstellt / gebaut / vorbereitet
@@ -44,7 +45,8 @@ public class A_Budget extends AppCompatActivity {
 
         // LAYOUT - Implementierung aller Layouts
         recyclerView = (RecyclerView) findViewById(R.id.view_budget); // Recycler Liste
-        bAdapter = new C_Budget_CardView_Adapter(budgetList);          // CardView
+        bAdapter = new C_Budget_CardView_Adapter(budgetList);          // CardView Adapter
+        card = (CardView) findViewById(R.id.budget_card_view);
 
 
         // FAB - Drücken öffnet ein Dialog mit Eingabefeldern
@@ -58,50 +60,54 @@ public class A_Budget extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Implementierung des Layouts für den Dialog-Fenster
-                LayoutInflater inflater = getLayoutInflater();
-                View alertLayout = inflater.inflate(R.layout.box_budget_alert_dialog, null);
-                final EditText titleContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_title);
-                final EditText budgetContent = (EditText)alertLayout.findViewById(R.id.budget_alert_dialog_betrag);
-                final EditText yearContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_jahr);
-                final EditText monthContent = (EditText) alertLayout.findViewById(R.id.budget_alert_dialog_monat);
+                Intent intent = new Intent(A_Budget.this, A_Budget_Edit.class);
+                startActivity(intent);
 
-
-                // DIALOG POPUP - Dialog Fenstern mit 4 Eingabefeldern wird erstellt
-                new AlertDialog.Builder(A_Budget.this)
-                    .setTitle("Budget")     // Layout für PopUp-Fenster wird gesetzt (siehe layout-XML)
-                    .setView(alertLayout)
-                    .setCancelable(false)
-                    .setNegativeButton("Abbruch", null)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        // CARD VIEW wird befüllt wenn EditTexts alle befült wurden - ansonsten Abbruch des AlertDialog
-                        if(budgetContent.getText()== null || budgetContent.getText().toString().isEmpty())
-                            dialog.dismiss();
-                        else if(titleContent.getText()== null || titleContent.getText().toString().isEmpty())
-                            dialog.dismiss();
-                        else if(yearContent.getText()== null || yearContent.getText().toString().isEmpty())
-                            dialog.dismiss();
-                        else if(monthContent.getText()== null || monthContent.getText().toString().isEmpty())
-                            dialog.dismiss();
-                        else
-                            addItem(budgetContent.getText().toString(),
-                                budgetContent.getText().toString(),
-                                monthContent.getText().toString(),
-                                titleContent.getText().toString(),
-                                yearContent.getText().toString());
-                    }
-
-                }).create().show();
             }
         });
+
 
         // SWIPPER - Implementierung des Swipper-Funktion
         swipper = new ItemTouchHelper(createHelperCallBack());      // ItemTouch -> Swipper
         swipper.attachToRecyclerView(recyclerView);
+
+
+        // CARD VIEW - hier wir später die RecyclerView befüllt mit DB-Inhalten
+        onStartProofAndCreate();
+
+
+        // TEST -> CARD VIEWs - Inhalte die in A_Budget_Edit eingegeben wurden, werden in die CardView geschrieben
+        // WIRD SPÄTER ENTFERNT!!!!
+        Intent intent= getIntent();
+        Bundle b = intent.getExtras();
+
+        if(b!=null) {
+            content = (String[]) b.get("content");
+            S.outShort(A_Budget.this, content[0]);
+            addItem(content[1],content[1],content[2], content[3],content[0],content[4]); // Monat & Jahr sind feste Testdaten!
+            bAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+        // Sobald die Anbindung zur DB steht, soll hier die einzelnen CardViews klickbar sein
+        // Beim klick soll die Activity A_Budget_Edit aufgerufen werden und die Inhalte der CardView an diese weitergegeben und aut. befüllt
+
+    }
+
+
+    /**
+     * Methode soll die Daten aus der DB lesen und die RecyclerView damit befüllen
+     * (sobald DB vorhanden ist wird hier weiter programmiert)
+      */
+    public void onStartProofAndCreate(){
+
+        //*****************************************************************************************************
+        //**** HIER Anbindung zur DB herstellen - Befüllung dieser mit den Inhalten wenn alles korrekt ist ****
+        //*****************************************************************************************************
 
     }
 
@@ -115,27 +121,26 @@ public class A_Budget extends AppCompatActivity {
     private ItemTouchHelper.Callback createHelperCallBack(){
 
         return new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+                ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
 
+            @Override
+            public  boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                   RecyclerView.ViewHolder target) {
 
-                    @Override
-                    public  boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
-                                           RecyclerView.ViewHolder target) {
+                // CARD VIEW - Items können bewegt werden (oben nach unten und umgekehrt)
+                moveItem(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+                return true;    // true wenn geswipped wird, ansonsten false
+            }
 
-                        // CARD VIEW - Items können bewegt werden (oben nach unten und umgekehrt)
-                        moveItem(viewHolder.getAdapterPosition(),target.getAdapterPosition());
-                        return true;    // true wenn geswipped wird, ansonsten false
-                    }
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
 
-                    @Override
-                    public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                // CARD VIEW - Items werden gelöscht (nach Rechts oder Links)
+                deleteItem(viewHolder.getAdapterPosition());
+                S.outShort(A_Budget.this,"Item wurde gelöscht!");
 
-                        // CARD VIEW - Items werden gelöscht (nach Rechts oder Links)
-                        deleteItem(viewHolder.getAdapterPosition());
-                        S.outShort(A_Budget.this,"Item wurde gelöscht!");
-
-                    }
-                };
+            }
+        };
     }
 
     /**
@@ -175,24 +180,18 @@ public class A_Budget extends AppCompatActivity {
      * ADD ITEM - Befüllung der RecyclerView mit EINER Datenmenge
      * @param budgetMax Übergabe des eingegeben Budget-Betrags
      * @param budgetCurrently Übergabe des budgetMax -> Ändert sich wenn DB angehängt wird
-     * @param turnus Übergabe des Monats
+     * @param zeitraumVon Übergabe des ersten Zeitraumes
+     * @param zeitraumBis Übergabe des zweiten Zeitraumes
      * @param title Übergabe des Titels
-     * @param year Übergabe des Jahres
      */
-    private void addItem(String budgetMax, String budgetCurrently, String turnus, String title, String year){
-
-        /*
-        *  >>>> Hier INSERT-Verbindung zur DB herstellen (wenn DB fertig)
-        *  >>>> Für's erste dient der untere Code
-        *
-        * */
+    public void addItem(String budgetMax, String budgetCurrently, String zeitraumVon, String zeitraumBis, String title, String sonstiges){
 
         int budgetMaxParse = Integer.parseInt(budgetMax);
         int budgetCurrentlyParse = Integer.parseInt(budgetCurrently); // Betrag wird beim ersten mal das selbe wie budgetMaxParse sein
         int testcurrentBudget = randomNumber(budgetMaxParse,150); // Betrag zum Testen -> wird später gelöscht!!!!!!
 
         C_Budget budget = new C_Budget(budgetMaxParse,testcurrentBudget,
-                percentageCalculator(budgetMaxParse,testcurrentBudget), turnus, title,year);
+                percentageCalculator(budgetMaxParse,testcurrentBudget),zeitraumVon, zeitraumBis,title,sonstiges);
 
         budgetList.add(budget);
 
@@ -248,7 +247,7 @@ public class A_Budget extends AppCompatActivity {
 
     /**
      * RANDOM MONTH - Zufällige Auswahl eines Monats
-      * @param random Übergabe einer Randomzahl
+     * @param random Übergabe einer Randomzahl
      * @return Rückgabe eines Monats je nach Randomzahl
      */
     public String randomMonth (int random){

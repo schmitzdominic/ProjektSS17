@@ -60,7 +60,7 @@
     <string name="a_ocr_manuell_pop_up_cancel">Abbruch</string>
 
     <string name="a_ocr_manuell_date_button_set">Set Date</string>
-    <string name="a_ocr_manuell_date_selected"/>
+    <string name="a_ocr_manuell_date_selected" />
 
     <string name="a_ocr_manuell_hint_anschrift">Adresse (optional)</string>
     <string name="a_ocr_manuell_hint_sonstiges">Sonstige Infos (optional)</string>
@@ -84,7 +84,7 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- A_Budget_Edit -->
+    <string name="title_activity_a__budget__edit">Budget Planung</string>
 
 </resources>
