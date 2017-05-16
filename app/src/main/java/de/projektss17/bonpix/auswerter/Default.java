@@ -2,10 +2,9 @@ package de.projektss17.bonpix.auswerter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
-/**
- * Created by Domi on 15.04.2017.
- */
+import java.util.ArrayList;
 
 public class Default implements I_Auswerter{
 
@@ -18,41 +17,40 @@ public class Default implements I_Auswerter{
     }
 
     @Override
-    public String[] getProducts(String txt) {
-        return new String[0];
+    public ArrayList<String> getProducts(String txt) {
+
+        String dumString = "";
+        ArrayList<String> retString = new ArrayList<>();
+
+        txt = txt.replaceAll(" +","");
+        txt = txt.replaceAll("\\d","");
+        txt = txt.toLowerCase();
+
+        for(int i = 0; i < txt.length(); i++){
+            if(txt.charAt(i) == '\n'){
+                if(dumString.length() > 4 && !dumString.contains("storno")){
+                    if(dumString.contains("pfand")){
+                        dumString = "pfand";
+                    }
+                    retString.add(dumString.toUpperCase());
+                }
+                dumString = "";
+            } else {
+                if(this.isLetter(txt.charAt(i)) || txt.charAt(i) == '.' || txt.charAt(i) == '&'){
+                    dumString += txt.charAt(i);
+                }
+            }
+        }
+
+        return retString;
+
     }
 
     @Override
-    public String[] getPrices(String txt) {
-        return new String[0];
-    }
+    public ArrayList<String> getPrices(String txt) {
 
-    public String getAdresse(String txt){
-        return "";
-    }
-
-    //############################### deprecated Section!
-
-    /**
-     * Setzt ein gewisses Standardformat
-     * @param txt
-     * @return String
-     */
-    public String formater(String txt){
-        txt = txt.replaceAll(" +", " ");
-        return txt;
-    }
-
-    /**
-     * Versucht nur die Preise auszulesen.
-     * TODO noch nicht fertig!
-     * @param txt Kompletter String
-     * @return nur die Preise
-     */
-    public String getPreise(String txt){
-
-        String retString = "",
-                dumString = "";
+        String dumString = "";
+        ArrayList<String> retString = new ArrayList<>();
         int count = 0;
 
         for(int i = 0; i < txt.length(); i++){
@@ -92,7 +90,15 @@ public class Default implements I_Auswerter{
                 }
             } else {
                 if(count == 3){
-                    retString += dumString + "\n";
+                    if((i - dumString.length() - 1) >= 0){
+                        if(txt.charAt(i - dumString.length() - 1) == '-'){
+                            retString.add("-" + dumString);
+                        } else {
+                            retString.add(dumString);
+                        }
+                    } else {
+                        retString.add(dumString);
+                    }
                 }
                 dumString = "";
                 count = 0;
@@ -101,6 +107,22 @@ public class Default implements I_Auswerter{
         }
 
         return retString;
+    }
+
+    public String getAdresse(String txt){
+        return "";
+    }
+
+    //############################### deprecated Section!
+
+    /**
+     * Setzt ein gewisses Standardformat
+     * @param txt
+     * @return String
+     */
+    public String formater(String txt){
+        txt = txt.replaceAll(" +", " ");
+        return txt;
     }
 
     /**

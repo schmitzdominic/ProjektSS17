@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/favoriten_view_laden_bild"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/common_google_signin_btn_icon_dark_focused" />
+
+    <TextView
+        android:id="@+id/favoriten_view_favoriteShopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/favoriten_view_favoriten_delete_button"
+        android:layout_toRightOf="@+id/favoriten_view_laden_bild"
+        android:paddingTop="20dp"
+        android:text="Beginn der Garantie"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/favoriten_view_zusatz_favoriteDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:text="Ende der Favoriten"
+        android:textSize="14sp"
+        android:layout_toLeftOf="@id/favoriten_view_favoriten_delete_button"
+        android:layout_toRightOf="@+id/favoriten_view_laden_bild"
+        android:layout_below="@+id/favoriten_view_favoriteShopName"/>
+
+
+    <ImageView
+        android:id="@+id/favoriten_view_favoriten_delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_delete_black_24dp"
+        android:tint="@color/colorMenueIcon" />
+
+</RelativeLayout>
