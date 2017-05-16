@@ -82,14 +82,13 @@ public class A_Tab1Home extends Fragment {
 
     private void prepareHomeData(){
         bonsList.clear();
-        int count = 0;
-            for (C_Bon bon : S.dbHandler.getAllBons(S.db)) {
-                if(count == 3){
-                    break;
-                }
-                bonsList.add(bon);
-                count++;
-            }
+
+        ArrayList<C_Bon> bonList = S.dbHandler.getAllBons(S.db);
+
+        for(int i = bonList.size()-1; i >= bonList.size()-3; i--){
+            this.bonsList.add(bonList.get(i));
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
