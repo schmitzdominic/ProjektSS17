@@ -65,7 +65,7 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
         roundedBitmapDrawable.setAntiAlias(true);
         holder.icon.setImageDrawable(roundedBitmapDrawable);
 
-        holder.title.setText(bon.getShopName());
+        holder.title.setText(bon.getShopName() + " " + bon.getTotalPrice());
         holder.content.setText(bon.getDate());
         //Loading the FavoriteList
         if (bon.getFavourite()){

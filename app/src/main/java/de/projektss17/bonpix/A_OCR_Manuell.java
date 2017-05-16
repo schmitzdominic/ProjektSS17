@@ -95,7 +95,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.createCalendar(); // Calendar wird befüllt
         this.refreshSpinner(); // Spinner Refresh
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
-        this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", false, false, null); // Erstellt einen Leeren Bon
+        this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", "0", false, false, null); // Erstellt einen Leeren Bon
 
 
         // Garantie Button onClickListener
@@ -1014,6 +1014,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 this.sonstigesText,
                 this.dateTextView.getText().toString(),
                 bon.getGuaranteeEnd(),
+                this.totalPrice.getText().toString(),
                 false,
                 this.bonGarantie,
                 this.getAllArticle());

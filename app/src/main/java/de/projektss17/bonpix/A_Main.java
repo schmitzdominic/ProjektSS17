@@ -492,7 +492,7 @@ public class A_Main extends AppCompatActivity {
             }
 
             Log.e("### CEATE DUMMY DATA", " "+i+" OF "+value);
-            S.dbHandler.addBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", "21.10.2016", "21.10.2018", true, true, artikelList));
+            S.dbHandler.addBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", "21.10.2016", "21.10.2018", "1337", true, true, artikelList));
 
             artikelList.clear();
         }

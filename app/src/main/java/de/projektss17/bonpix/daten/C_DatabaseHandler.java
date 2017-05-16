@@ -56,8 +56,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(4),
                         cursor.getString(5),
                         cursor.getString(6),
-                        cursor.getInt(7) > 0,
-                        cursor.getInt(8) > 0);
+                        cursor.getString(7),
+                        cursor.getInt(8) > 0,
+                        cursor.getInt(9) > 0);
 
                 bon.setArticles(this.getAllArticleFromBon(db, bon));
                 bonsList.add(bon);
@@ -268,6 +269,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("sonstigeinfos", bon.getOtherInformations());
         values.put("datum", bon.getDate());
         values.put("garantieende", bon.getGuaranteeEnd());
+        values.put("gesamtpreis", bon.getTotalPrice());
         values.put("favoriten", bon.getFavourite());
         values.put("garantie", bon.getGuarantee());
 
@@ -410,6 +412,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("sonstigeinfos", bon.getOtherInformations());
         values.put("datum", bon.getDate());
         values.put("garantieende", bon.getGuaranteeEnd());
+        values.put("gesamtpreis", bon.getTotalPrice());
         values.put("favoriten", bon.getFavourite());
         values.put("garantie", bon.getGuarantee());
 
@@ -611,6 +614,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 "sonstigeinfos VARCHAR(255), " +
                 "datum VARCHAR(255), " +
                 "garantieende VARCHAR(255), " +
+                "gesamtpreis VARCHAR(255), " +
                 "favoriten BOOLEAN, " +
                 "garantie BOOLEAN, " +
                 "FOREIGN KEY (ladenname) REFERENCES laden(ladenid))";
