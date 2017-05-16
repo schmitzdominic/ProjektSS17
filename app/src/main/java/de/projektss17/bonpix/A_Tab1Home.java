@@ -88,6 +88,7 @@ public class A_Tab1Home extends Fragment {
         for(int i = bonList.size()-1; i >= bonList.size()-3; i--){
             this.bonsList.add(bonList.get(i));
         }
+        mAdapter.notifyDataSetChanged();
     }
 
     /**

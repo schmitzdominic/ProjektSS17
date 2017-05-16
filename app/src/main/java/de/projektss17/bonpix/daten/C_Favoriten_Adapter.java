@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,25 +17,24 @@ import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
 /**
- * Created by Fabian on 25.04.2017.
+ * Created by Daniel on 09.05.2017.
  */
 
-public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.MyViewHolder> {
-
+public class C_Favoriten_Adapter extends RecyclerView.Adapter<C_Favoriten_Adapter.MyViewHolder> {
     private List<C_Bon> bonListe;
     private C_Bon bon;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView warrantyBegin, warrantyEnd;
+        public TextView favoriteShopName, favoriteDate;
         public ImageView icon, deleteBtn;
 
 
         public MyViewHolder(View view){
             super(view);
-            icon = (ImageView) view.findViewById(R.id.garantie_view_laden_bild);
-            warrantyBegin = (TextView) view.findViewById(R.id.garantie_view_garantiebeginn);
-            warrantyEnd = (TextView) view.findViewById(R.id.garantie_view_zusatz_garantieende);
-            deleteBtn = (ImageView) view.findViewById(R.id.garantie_view_garantie_delete_button);
+            icon = (ImageView) view.findViewById(R.id.favoriten_view_laden_bild);
+            favoriteShopName = (TextView) view.findViewById(R.id.favoriten_view_favoriteShopName);
+            favoriteDate = (TextView) view.findViewById(R.id.favoriten_view_zusatz_favoriteDate);
+            deleteBtn = (ImageView) view.findViewById(R.id.favoriten_view_favoriten_delete_button);
 
 
             // TODO: Derzeit ist das "Aldi" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
@@ -55,28 +53,28 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
      * returned Liste
      * @param bonListe
      */
-    public C_Garantie_Adapter(List<C_Bon> bonListe){
+    public C_Favoriten_Adapter(List<C_Bon> bonListe){
 
         this.bonListe = bonListe;
     }
 
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public C_Favoriten_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.box_garantie_view, parent, false);
+                .inflate(R.layout.box_favoriten_view, parent, false);
 
-        return new MyViewHolder(itemView);
+        return new C_Favoriten_Adapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final C_Garantie_Adapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final C_Favoriten_Adapter.MyViewHolder holder, final int position) {
         this.bon = bonListe.get(position);
 
         //ToDo später Icon dynamisch zuweisbar
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
-        holder.warrantyBegin.setText(bon.getShopName());
-        holder.warrantyEnd.setText("Garantie von " + bon.getDate() + " - " + bon.getGuaranteeEnd());
+        holder.favoriteShopName.setText(bon.getShopName());
+        holder.favoriteDate.setText(bon.getDate());
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -87,7 +85,7 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
              */
             public void onClick(View v) {
 
-                bonListe.get(position).setGuarantee(false);
+                bonListe.get(position).setFavourite(false);
                 S.dbHandler.updateBon(S.db, bonListe.get(position));
                 bonListe.remove(position);
 
