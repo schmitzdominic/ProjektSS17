@@ -22,6 +22,16 @@ public class A_Tab2Statistik extends Fragment{
     private RecyclerView recyclerView;
     private C_Statistik_Adapter mAdapter;
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
+        return rootView;
+    }
+
+    /* ALTER CODE
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,5 +45,5 @@ public class A_Tab2Statistik extends Fragment{
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         return rootView;
-    }
+    } */
 }
