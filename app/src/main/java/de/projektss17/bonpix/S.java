@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AlertDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceActivity;
@@ -228,6 +230,24 @@ public class S extends Activity {
      */
     public static void outLong(AppCompatActivity context, String msg){
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+    }
+
+    public static Bitmap getShopIcon(Resources res, String name){
+
+        switch(name){
+            case "ALDI NORD": return BitmapFactory.decodeResource(res,  R.mipmap.ic_aldinordlogo);
+            case "ALDI SÜD": return BitmapFactory.decodeResource(res,  R.mipmap.ic_aldisuedlogo);
+            case "Aral": return BitmapFactory.decodeResource(res,  R.mipmap.ic_arallogo);
+            case "Edeka": return BitmapFactory.decodeResource(res,  R.mipmap.ic_edekalogo);
+            case "Media Markt": return BitmapFactory.decodeResource(res,  R.mipmap.ic_mediamarktlogo);
+            case "Müller": return BitmapFactory.decodeResource(res,  R.mipmap.ic_muellerlogo);
+            case "Netto": return BitmapFactory.decodeResource(res,  R.mipmap.ic_nettologo);
+            case "REWE": return BitmapFactory.decodeResource(res,  R.mipmap.ic_rewelogo);
+            case "Saturn": return BitmapFactory.decodeResource(res,  R.mipmap.ic_saturnlogo);
+            case "Shell": return BitmapFactory.decodeResource(res,  R.mipmap.ic_shelllogo);
+            default: return BitmapFactory.decodeResource(res,  R.mipmap.ic_shopping_cart_black_24dp);
+        }
+
     }
 
 }

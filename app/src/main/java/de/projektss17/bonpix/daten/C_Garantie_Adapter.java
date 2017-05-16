@@ -1,5 +1,6 @@
 package de.projektss17.bonpix.daten;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -29,6 +30,7 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView warrantyBegin, warrantyEnd;
         public ImageView icon, deleteBtn;
+        public Resources res;
 
 
         public MyViewHolder(View view){
@@ -37,16 +39,7 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
             warrantyBegin = (TextView) view.findViewById(R.id.garantie_view_garantiebeginn);
             warrantyEnd = (TextView) view.findViewById(R.id.garantie_view_zusatz_garantieende);
             deleteBtn = (ImageView) view.findViewById(R.id.garantie_view_garantie_delete_button);
-
-
-            // TODO: Derzeit ist das "Aldi" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
-            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.ic_aldisuedlogo);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(view.getResources(), imageBitmap);
-            roundedBitmapDrawable.setCircular(true);
-            roundedBitmapDrawable.setAntiAlias(true);
-            icon.setImageDrawable(roundedBitmapDrawable);
-            // --- END TO DO ---
-
+            res = view.getResources();
 
         }
     }
@@ -73,8 +66,12 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
     public void onBindViewHolder(final C_Garantie_Adapter.MyViewHolder holder, final int position) {
         this.bon = bonListe.get(position);
 
-        //ToDo später Icon dynamisch zuweisbar
-        //holder.icon.setImageDrawable(rounderBitmapDrawable);
+        Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
+        roundedBitmapDrawable.setCircular(true);
+        roundedBitmapDrawable.setAntiAlias(true);
+        holder.icon.setImageDrawable(roundedBitmapDrawable);
+
         holder.warrantyBegin.setText(bon.getShopName());
         holder.warrantyEnd.setText("Garantie von " + bon.getDate() + " - " + bon.getGuaranteeEnd());
 

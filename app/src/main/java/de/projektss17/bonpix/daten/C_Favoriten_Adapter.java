@@ -1,5 +1,6 @@
 package de.projektss17.bonpix.daten;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -27,6 +28,7 @@ public class C_Favoriten_Adapter extends RecyclerView.Adapter<C_Favoriten_Adapte
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView favoriteShopName, favoriteDate;
         public ImageView icon, deleteBtn;
+        public Resources res;
 
 
         public MyViewHolder(View view){
@@ -35,15 +37,7 @@ public class C_Favoriten_Adapter extends RecyclerView.Adapter<C_Favoriten_Adapte
             favoriteShopName = (TextView) view.findViewById(R.id.favoriten_view_favoriteShopName);
             favoriteDate = (TextView) view.findViewById(R.id.favoriten_view_zusatz_favoriteDate);
             deleteBtn = (ImageView) view.findViewById(R.id.favoriten_view_favoriten_delete_button);
-
-
-            // TODO: Derzeit ist das "Aldi" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
-            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.ic_aldisuedlogo);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(view.getResources(), imageBitmap);
-            roundedBitmapDrawable.setCircular(true);
-            roundedBitmapDrawable.setAntiAlias(true);
-            icon.setImageDrawable(roundedBitmapDrawable);
-            // --- END TO DO ---
+            res = view.getResources();
 
 
         }
@@ -71,8 +65,12 @@ public class C_Favoriten_Adapter extends RecyclerView.Adapter<C_Favoriten_Adapte
     public void onBindViewHolder(final C_Favoriten_Adapter.MyViewHolder holder, final int position) {
         this.bon = bonListe.get(position);
 
-        //ToDo später Icon dynamisch zuweisbar
-        //holder.icon.setImageDrawable(rounderBitmapDrawable);
+        Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
+        roundedBitmapDrawable.setCircular(true);
+        roundedBitmapDrawable.setAntiAlias(true);
+        holder.icon.setImageDrawable(roundedBitmapDrawable);
+
         holder.favoriteShopName.setText(bon.getShopName());
         holder.favoriteDate.setText(bon.getDate());
 
