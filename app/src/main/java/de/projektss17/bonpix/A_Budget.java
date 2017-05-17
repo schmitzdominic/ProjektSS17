@@ -27,7 +27,6 @@ public class A_Budget extends AppCompatActivity implements View.OnClickListener 
     private FloatingActionButton fab;
     private ItemTouchHelper swipper;
     private CardView card;
-    private String[] content; // Zwischenspeicher für die Inhalte der CardView
 
 
     /**

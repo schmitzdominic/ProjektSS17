@@ -5,7 +5,6 @@ package de.projektss17.bonpix;
  * Hier bitte die Logik des ersten Tabs
  */
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
