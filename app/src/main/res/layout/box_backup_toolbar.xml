@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
     app:navigationContentDescription="@string/backup_action_bar_desc"
-    app:popupTheme="@style/AppTheme.PopupOverlay"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:background="?attr/colorPrimary"
     app:navigationIcon="?attr/homeAsUpIndicator"
     app:title="@string/backup_action_bar_title"
