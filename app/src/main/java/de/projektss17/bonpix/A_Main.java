@@ -198,6 +198,22 @@ public class A_Main extends AppCompatActivity {
         });
     }
 
+    public boolean getFabState(){
+        return this.isFABOpen;
+    }
+
+    public FloatingActionButton getFloatingActionButtonPlus(){
+        return this.kameraButton;
+    }
+
+    public FloatingActionButton getFloatingActionButtonCamera(){
+        return this.fotoButton;
+    }
+
+    public FloatingActionButton getFloatingActionButtonManuell(){
+        return this.manuellButton;
+    }
+
     /**
      * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
@@ -259,7 +275,7 @@ public class A_Main extends AppCompatActivity {
     /**
      * Zeigt das Floating Button Menü an
      */
-    private void showFABMenu() {
+    public void showFABMenu() {
         isFABOpen = true;
         this.fotoLayout.setVisibility(View.VISIBLE);
         this.manuellLayout.setVisibility(View.VISIBLE);
@@ -272,7 +288,7 @@ public class A_Main extends AppCompatActivity {
     /**
      * Schließt das Floating Button Menü
      */
-    private void closeFABMenu() {
+    public void closeFABMenu() {
         isFABOpen = false;
         fabBGLayout.setVisibility(View.GONE);
         this.kameraButton.animate().rotationBy(-90);

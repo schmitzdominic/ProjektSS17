@@ -75,6 +75,27 @@ public class A_Budget extends AppCompatActivity implements View.OnClickListener 
 
         onStartProofAndCreate();
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx,int dy){
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy >0) {
+                    // Scroll Down
+                    if (fab.isShown()) {
+                        fab.hide();
+
+                    }
+                }
+                else if (dy <0) {
+                    // Scroll Up
+                    if (!fab.isShown()) {
+                        fab.show();
+                    }
+                }
+            }
+        });
+
     }
 
 

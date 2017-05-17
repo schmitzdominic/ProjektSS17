@@ -1,5 +1,6 @@
 package de.projektss17.bonpix;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,6 +21,7 @@ import de.projektss17.bonpix.daten.C_Bons_Adapter;
 public class A_Tab3Bons extends Fragment{
 
     private List<C_Bon> bonsList = new ArrayList<>();
+    public FloatingActionButton fabPlus;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,6 +31,7 @@ public class A_Tab3Bons extends Fragment{
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.view_bons);
         C_Bons_Adapter mAdapter = new C_Bons_Adapter(bonsList);
         prepareBonData();
+        fabPlus = ((A_Main) getActivity()).getFloatingActionButtonPlus();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(
@@ -36,6 +39,32 @@ public class A_Tab3Bons extends Fragment{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx,int dy){
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy >0) {
+                    // Scroll Down
+                    if (fabPlus.isShown()) {
+
+                        if (((A_Main) getActivity()).getFabState()) {
+                            ((A_Main) getActivity()).closeFABMenu();
+                        }
+                        fabPlus.hide();
+
+                    }
+                }
+                else if (dy <0) {
+                    // Scroll Up
+                    if (!fabPlus.isShown()) {
+                        fabPlus.show();
+                    }
+                }
+            }
+        });
+
         return rootView;
     }
 
