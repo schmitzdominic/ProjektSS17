@@ -1,12 +1,14 @@
 package de.projektss17.bonpix;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -109,6 +111,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
 
             Intent intent = new Intent(A_Budget_Edit.this, A_Budget.class);
             startActivity(intent);
+            finish();
 
         }
     }
@@ -127,6 +130,12 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
         this.day = c.get(Calendar.DAY_OF_MONTH);
         this.month = c.get(Calendar.MONTH);
         this.year = c.get(Calendar.YEAR);
+
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
 
         if(content.getText().toString().contains(".")){
             DatePickerDialog datePicker = new DatePickerDialog(A_Budget_Edit.this, new DatePickerDialog.OnDateSetListener() {
