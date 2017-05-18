@@ -88,14 +88,13 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
              */
             public void onClick(View v) {
 
-                C_Laden shopA;
-                shopA = shopList.get(position);
-                Log.e("test", shopA.getName());
+                C_Laden shopA = shopList.get(position);
                 //S.dbHandler.updateBon(S.db, bonListe.get(position));
                 //bonList.remove(position);
 
                 //Übergabe Name des angeklickten Shops => an F_Laeden_Detail
                 args = new Bundle();
+                args.clear();
                 args.putString("ShopName", shopA.getName());
                 trigger.setArguments(args);
                 trigger.show(fm , "BlaBla");

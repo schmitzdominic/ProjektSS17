@@ -24,6 +24,8 @@ import static de.projektss17.bonpix.S.db;
 
 public class F_Laeden_Detail extends DialogFragment {
     private ArrayList<C_Bon> bonsList = new ArrayList<>();
+    private EditText shopName;
+    private String name;
 
 
     @Override
@@ -35,9 +37,11 @@ public class F_Laeden_Detail extends DialogFragment {
         C_Laeden_Detail_Adapter mAdapter = new C_Laeden_Detail_Adapter(bonsList);
 
         //Erhalt des shopnamen von C_Laeden_Adapter
-        String name = getArguments().getString("ShopName");
-        Log.e("### PASSED SHOPNAME", "" + name);
+        this.name = getArguments().getString("ShopName");
         prepareBonData(name);
+
+        shopName = (EditText)rootView.findViewById(R.id.laeden_detail_shop_name);
+
 
         recyclerViewDetailLaeden.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDetailLaeden.addItemDecoration(
@@ -47,6 +51,13 @@ public class F_Laeden_Detail extends DialogFragment {
         mAdapter.notifyDataSetChanged();
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        shopName.setText(this.name);
+        super.onResume();
+    }
+
     /**
      * Set Data for RecyclerView Bons
      */

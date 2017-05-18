@@ -34,12 +34,35 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
                 android:ems="10"
-                android:hint="Laden eingeben ..."
-                android:inputType="textAutoComplete" />
+                android:hint="@string/f_laden_detail_titel_hint" />
 
         </LinearLayout>
 
     </RelativeLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/laeden_detail_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Löschen" />
+
+        <Button
+            android:id="@+id/laeden_detail_speichern"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Speichern"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -60,25 +83,4 @@
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/laeden_detail_delete"
-            android:layout_width="178dp"
-            android:layout_height="wrap_content"
-            android:text="Löschen" />
-
-        <Button
-            android:id="@+id/laeden_detail_speichern"
-            android:layout_width="176dp"
-            android:layout_height="wrap_content"
-            android:text="Speichern"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-    </RelativeLayout>
 </LinearLayout>

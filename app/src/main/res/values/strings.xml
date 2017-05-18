@@ -81,6 +81,9 @@
     <!-- A_Laeden -->
     <string name="title_activity_a__laeden">Läden</string>
 
+    <!-- Laeden Detail -->
+    <string name ="f_laden_detail_titel_hint">Laden eingeben ...</string>
+
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
