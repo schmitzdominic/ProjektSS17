@@ -44,7 +44,7 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
 
 
             // TODO: Derzeit ist das "Aldi" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
-            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(), R.mipmap.icon_laden_aldi_24dp);
+            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(), R.mipmap.ic_shopping_cart_black_24dp);
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(view.getResources(), imageBitmap);
             roundedBitmapDrawable.setCircular(true);
             roundedBitmapDrawable.setAntiAlias(true);

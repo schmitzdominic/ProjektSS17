@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="235dp">
+    android:layout_height="270dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="235dp">
+        android:layout_height="265dp">
         <android.support.v7.widget.CardView
             android:layout_width="380dp"
             android:layout_height="match_parent"
@@ -13,87 +13,184 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
-            android:id="@+id/budget_card_view">
+            android:id="@+id/budget_card_view"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
                 <TextView
                     android:id="@+id/budget_title"
-                    android:layout_width="250dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Titel"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:text="Budget Titel"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="14dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" />
-
-                <ProgressBar
-                    android:id="@+id/budget_progress_bar_circle"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
-                    android:background="@drawable/box_budget_circle_shape"
-                    android:indeterminate="false"
-                    android:max="100"
-                    android:progress="10"
-                    android:progressDrawable="@drawable/box_budget_circular_progressbar"
-                    android:layout_below="@+id/budget_title"
-                    android:layout_centerHorizontal="true" />
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/budget_year"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textAlignment="textStart"
-                    android:textSize="16sp"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginStart="13dp"
-                    android:layout_alignBottom="@+id/budget_content"
-                    android:layout_toRightOf="@+id/budget_progress_bar_circle"
-                    android:layout_toEndOf="@+id/budget_progress_bar_circle" />
-
-                <TextView
-                    android:id="@+id/budget_turnus"
+                    android:id="@+id/budget_monat_von"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="13dp"
-                    android:layout_marginRight="13dp"
-                    android:text="Verfügbar"
-                    android:textSize="16sp"
-                    android:layout_alignBottom="@+id/budget_content"
-                    android:layout_toLeftOf="@+id/budget_progress_bar_circle"
-                    android:layout_toStartOf="@+id/budget_progress_bar_circle" />
-
-                <TextView
-                    android:id="@+id/budget_content"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:text="Budget"
-                    android:layout_marginTop="55dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/relativeLayout2"
+                    android:layout_marginTop="38dp"
+                    android:layout_toLeftOf="@+id/relativeLayout2"
+                    android:layout_toStartOf="@+id/relativeLayout2"
+                    android:text="MonatVon"
                     android:textAlignment="center"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:layout_below="@+id/budget_title"
-                    android:layout_centerHorizontal="true" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/budget_progress_percentage"
+                    android:id="@+id/budget_von"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:text="TextView"
+                    android:text="von"
                     android:textAlignment="center"
-                    android:layout_below="@+id/budget_content"
-                    android:layout_centerHorizontal="true" />
+                    android:textSize="14sp"
+                    android:layout_above="@+id/budget_jahr_von"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="32dp"
+                    android:layout_toLeftOf="@+id/relativeLayout2"
+                    android:layout_toStartOf="@+id/relativeLayout2" />
+
+                <TextView
+                    android:id="@+id/budget_jahr_von"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/relativeLayout2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="25dp"
+                    android:layout_toLeftOf="@+id/relativeLayout2"
+                    android:layout_toStartOf="@+id/relativeLayout2"
+                    android:text="Jahrvon"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/budget_monat_bis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/budget_monat_von"
+                    android:layout_alignBottom="@+id/budget_monat_von"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/relativeLayout2"
+                    android:text="MonatBis "
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/budget_bis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/budget_von"
+                    android:layout_alignBottom="@+id/budget_von"
+                    android:layout_alignEnd="@+id/budget_monat_bis"
+                    android:layout_alignRight="@+id/budget_monat_bis"
+                    android:layout_toRightOf="@+id/relativeLayout2"
+                    android:text="bis"
+                    android:textAlignment="center"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/budget_jahr_bis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/budget_jahr_von"
+                    android:layout_alignBottom="@+id/budget_jahr_von"
+                    android:layout_alignEnd="@+id/budget_bis"
+                    android:layout_alignRight="@+id/budget_bis"
+                    android:layout_toRightOf="@+id/relativeLayout2"
+                    android:text="JahrBis "
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout2"
+                    android:layout_width="190dp"
+                    android:layout_height="190dp"
+                    android:layout_below="@+id/budget_title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="41dp"
+                        android:text="Verfügbar"
+                        android:textAlignment="center"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/budget_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView2"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="7dp"
+                        android:text="Budget"
+                        android:textAlignment="center"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/budget_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="7dp"
+                        android:text="Es verbleiben"
+                        android:textAlignment="center"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/budget_progress_percentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="139dp"
+                        android:text="Prozent"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/budget_progress_bar_circle"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="190dp"
+                        android:layout_height="190dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/box_budget_circle_shape"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="10"
+                        android:progressDrawable="@drawable/box_budget_circular_progressbar" />
+                </RelativeLayout>
+
 
             </RelativeLayout>
+
         </android.support.v7.widget.CardView>
+
     </RelativeLayout>
 </LinearLayout>
