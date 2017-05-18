@@ -32,6 +32,7 @@ public class A_Laeden extends AppCompatActivity {
     private ArrayList<C_Laden> shopList = new ArrayList<>();
     private RecyclerView recyclerViewLaeden;
     private C_Laeden_Adapter mAdapter;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class A_Laeden extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //Floating Button instanziieren
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.laeden_fap);
+        fab = (FloatingActionButton) findViewById(R.id.laeden_fap);
         fab.setOnClickListener(new View.OnClickListener() {
 
             /**
@@ -101,6 +102,27 @@ public class A_Laeden extends AppCompatActivity {
         recyclerViewLaeden.setItemAnimator(new DefaultItemAnimator());
         recyclerViewLaeden.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+
+        recyclerViewLaeden.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx,int dy){
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy >0) {
+                    // Scroll Down
+                    if (fab.isShown()) {
+                        fab.hide();
+
+                    }
+                }
+                else if (dy <0) {
+                    // Scroll Up
+                    if (!fab.isShown()) {
+                        fab.show();
+                    }
+                }
+            }
+        });
     }
     /**
      * Set Data for RecyclerView Shops
