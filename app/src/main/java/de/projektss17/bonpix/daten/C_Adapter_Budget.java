@@ -19,7 +19,6 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
 
 
     private List<C_Budget> budgetList;      // Gespeicherte Objekte für die View (CardView)
-
     public C_Adapter_Budget(List<C_Budget> budgetList) {
         this.budgetList = budgetList;
     }
@@ -27,7 +26,7 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView budgetCurrently, yearBefore,monthBefore, yearAfter, monthAfter, title, progressPercentage;
+        public TextView budgetCurrently, yearBefore,monthBefore, yearAfter, monthAfter, title, progressPercentage, tagVon, tagBis;
         public ProgressBar progressBar;
         public CardView cardView;
 
@@ -43,6 +42,8 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
             this.yearBefore = (TextView) view.findViewById(R.id.budget_jahr_von);
             this.monthAfter = (TextView) view.findViewById(R.id.budget_monat_bis);
             this.yearAfter = (TextView) view.findViewById(R.id.budget_jahr_bis);
+            this.tagVon = (TextView) view.findViewById(R.id.budget_tag_von);
+            this.tagBis = (TextView) view.findViewById(R.id.budget_tag_bis);
             this.progressBar = (ProgressBar)view.findViewById(R.id.budget_progress_bar_circle);
             this.progressPercentage = (TextView) view.findViewById(R.id.budget_progress_percentage);
 
@@ -63,12 +64,14 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
 
         // VIEW - Inhalte werden auf die jeweilige Position des Layouts gesetzt
         C_Budget budget = budgetList.get(position);
-        holder.title.setText(budget.getTitle());
+        holder.title.setText(budget.getTitle() + " " + budget.getBudgetMax() + "€");
         holder.budgetCurrently.setText(this.getRestBudget(budget)+ " €");
         holder.monthBefore.setText(budget.getMonthVon());
         holder.yearBefore.setText(budget.getYearVon());
         holder.monthAfter.setText(budget.getMonthBis());
         holder.yearAfter.setText(budget.getYearBis());
+        holder.tagVon.setText(budget.getZeitraumVon().split("\\.")[0]);
+        holder.tagBis.setText(budget.getZeitraumBis().split("\\.")[0]);
         holder.progressBar.setProgress((int) (100 - Double.parseDouble(this.getRestPercentage(budget))));
         holder.progressPercentage.setText(this.getRestPercentage(budget)+" %");
 
@@ -89,7 +92,7 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
     }
 
     private String getRestPercentage(C_Budget budget){
-        return ""+((Double.parseDouble(this.getRestBudget(budget)) / budget.getBudgetMax())*100);
+        return ""+(Math.round(((Double.parseDouble(this.getRestBudget(budget)) / budget.getBudgetMax())*100) * 100) / 100.00);
     }
 
     @Override

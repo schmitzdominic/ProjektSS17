@@ -92,5 +92,6 @@
     <string name="a_budget_edit_vondatum">Zeitraum (Beginn)…</string>
     <string name="a_budget_edit_bisdatum">Zeitraum (Ende)…</string>
     <string name="a_budget_edit_sonstiges">Sonstiges (optional)…</string>
+    <string name="a_budget_edit_vonbis_error">Von-Datum liegt hinter Bis-Datum</string>
 
 </resources>

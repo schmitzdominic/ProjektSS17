@@ -14,7 +14,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import de.projektss17.bonpix.daten.C_Budget;
 
@@ -212,6 +216,31 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
             zeitraumVon.setHintTextColor(Color.RED);
             noError = false;
         }
+
+        if(zeitraumVon.getText() != null && !zeitraumVon.getText().toString().isEmpty()
+                && zeitraumBis.getText() != null || !zeitraumBis.getText().toString().isEmpty()){
+
+            DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+
+            try {
+
+                Date date1 = df.parse(zeitraumVon.getText().toString());
+                Date date2 = df.parse(zeitraumBis.getText().toString());
+
+                if(date1.after(date2)){
+                    zeitraumBis.setTextColor(Color.RED);
+                    zeitraumVon.setTextColor(Color.RED);
+                    if(noError){
+                        S.outLong(A_Budget_Edit.this, getApplicationContext().getResources().getString(R.string.a_budget_edit_vonbis_error));
+                        noError = false;
+                    }
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         return noError;
     }
