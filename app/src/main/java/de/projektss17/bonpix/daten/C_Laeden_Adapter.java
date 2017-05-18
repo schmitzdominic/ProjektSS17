@@ -35,12 +35,20 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView shopName;
         public ImageView iconShop, editShopBtn;
+        public ArrayList<String> supShops;
 
         public MyViewHolder(View view) {
             super(view);
             iconShop = (ImageView) view.findViewById(R.id.laeden_view_laden_bild);
             shopName = (TextView) view.findViewById(R.id.laeden_view_laden_name);
             editShopBtn = (ImageView) view.findViewById(R.id.laeden_view_edit_button);
+            String[] shops = view.getResources().getStringArray(R.array.defaultLaeden);
+
+            supShops = new ArrayList<>();
+
+            for(String x : shops){
+                supShops.add(x);
+            }
 
 
             // TODO: Derzeit ist das "Aldi" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
@@ -78,6 +86,12 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
         //ToDo später Icon dynamisch zuweisbar
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
         holder.shopName.setText(shop.getName());
+
+        if(holder.supShops.contains(shop.getName())){
+            holder.editShopBtn.setVisibility(View.INVISIBLE);
+        } else {
+            holder.editShopBtn.setVisibility(View.VISIBLE);
+        }
 
         holder.editShopBtn.setOnClickListener(new View.OnClickListener() {
 
