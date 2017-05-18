@@ -25,24 +25,14 @@ public class C_Laeden_Detail_Adapter extends RecyclerView.Adapter<C_Laeden_Detai
     private C_Bon bon;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView shopName, bonDate;
+        public TextView bonDate, bonPrice;
         public ImageView shopIcon;
 
 
         public MyViewHolder(View view){
             super(view);
-            shopIcon = (ImageView) view.findViewById(R.id.laeden_detail_view_shop_icon);
-            shopName = (TextView) view.findViewById(R.id.laeden_detail_view_shop_name);
             bonDate = (TextView) view.findViewById(R.id.laeden_detail_view_bon_date);
-
-            // TODO: Derzeit ist das "Aldi" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
-            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.ic_shopping_cart_black_24dp);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(view.getResources(), imageBitmap);
-            roundedBitmapDrawable.setCircular(true);
-            roundedBitmapDrawable.setAntiAlias(true);
-            shopIcon.setImageDrawable(roundedBitmapDrawable);
-            // --- END TO DO ---
-
+            bonPrice = (TextView) view.findViewById(R.id.laeden_detail_view_bon_price);
 
         }
     }
@@ -63,8 +53,8 @@ public class C_Laeden_Detail_Adapter extends RecyclerView.Adapter<C_Laeden_Detai
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         this.bon = bonListe.get(position);
-        holder.shopName.setText(bon.getShopName());
         holder.bonDate.setText(bon.getDate());
+        holder.bonPrice.setText("300€");
     }
     @Override
     public int getItemCount() {
