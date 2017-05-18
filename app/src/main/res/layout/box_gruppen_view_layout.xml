@@ -20,7 +20,7 @@
         android:id="@+id/recyclergruppen_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/recyclergruppen_button"
+        android:layout_toLeftOf="@+id/recyclergruppen_button_del"
         android:layout_toRightOf="@+id/recyclergruppen_picture"
         android:paddingTop="20dp"
         android:text="Default"
@@ -31,20 +31,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/recyclergruppen_name"
-        android:layout_toLeftOf="@id/recyclergruppen_button"
+        android:layout_toLeftOf="@id/recyclergruppen_button_del"
         android:layout_toRightOf="@+id/recyclergruppen_picture"
         android:paddingBottom="20dp"
         android:text="default"
         android:textSize="14sp"/>
 
     <ImageView
-        android:id="@+id/recyclergruppen_button"
+        android:id="@+id/recyclergruppen_button_del"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/star_outline"
-        android:tint="@color/colorPrimary"/>
+        android:src="@mipmap/ic_delete_black_24dp"
+        android:tint="@color/colorMenueIcon"/>
 
 </RelativeLayout>
