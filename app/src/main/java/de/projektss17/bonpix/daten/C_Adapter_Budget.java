@@ -15,12 +15,12 @@ import de.projektss17.bonpix.A_Budget_Edit;
 import de.projektss17.bonpix.R;
 
 
-public class C_Budget_CardView_Adapter extends RecyclerView.Adapter<C_Budget_CardView_Adapter.ViewHolder> {
+public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.ViewHolder> {
 
 
     private List<C_Budget> budgetList;      // Gespeicherte Objekte für die View (CardView)
 
-    public C_Budget_CardView_Adapter(List<C_Budget> budgetList) {
+    public C_Adapter_Budget(List<C_Budget> budgetList) {
         this.budgetList = budgetList;
     }
 
@@ -51,11 +51,11 @@ public class C_Budget_CardView_Adapter extends RecyclerView.Adapter<C_Budget_Car
 
 
     @Override
-    public C_Budget_CardView_Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public C_Adapter_Budget.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         // VIEW - Implementierung einer View und Rückgabe des fertig gebaueten Objekts
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_budget_content, parent, false);
-        return new C_Budget_CardView_Adapter.ViewHolder(itemView);
+        return new C_Adapter_Budget.ViewHolder(itemView);
     }
 
     @Override

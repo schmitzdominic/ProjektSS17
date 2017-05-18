@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
-import de.projektss17.bonpix.daten.C_Bons_Adapter;
+import de.projektss17.bonpix.daten.C_Adapter_Bons;
 
 
 public class A_Tab3Bons extends Fragment{
@@ -29,7 +29,7 @@ public class A_Tab3Bons extends Fragment{
 
         View rootView = inflater.inflate(R.layout.box_bons_content, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.view_bons);
-        C_Bons_Adapter mAdapter = new C_Bons_Adapter(bonsList);
+        C_Adapter_Bons mAdapter = new C_Adapter_Bons(bonsList);
         prepareBonData();
         fabPlus = ((A_Main) getActivity()).getFloatingActionButtonPlus();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());

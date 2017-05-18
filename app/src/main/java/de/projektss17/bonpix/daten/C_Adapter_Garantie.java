@@ -2,11 +2,9 @@ package de.projektss17.bonpix.daten;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,7 @@ import de.projektss17.bonpix.S;
  * Created by Fabian on 25.04.2017.
  */
 
-public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.MyViewHolder> {
+public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.MyViewHolder> {
 
     private List<C_Bon> bonListe;
     private C_Bon bon;
@@ -48,7 +46,7 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
      * returned Liste
      * @param bonListe
      */
-    public C_Garantie_Adapter(List<C_Bon> bonListe){
+    public C_Adapter_Garantie(List<C_Bon> bonListe){
 
         this.bonListe = bonListe;
     }
@@ -63,12 +61,11 @@ public class C_Garantie_Adapter extends RecyclerView.Adapter<C_Garantie_Adapter.
     }
 
     @Override
-    public void onBindViewHolder(final C_Garantie_Adapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final C_Adapter_Garantie.MyViewHolder holder, final int position) {
         this.bon = bonListe.get(position);
 
         Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
-        roundedBitmapDrawable.setCircular(true);
         roundedBitmapDrawable.setAntiAlias(true);
         holder.icon.setImageDrawable(roundedBitmapDrawable);
 

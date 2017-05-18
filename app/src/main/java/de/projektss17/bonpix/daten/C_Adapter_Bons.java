@@ -2,12 +2,9 @@ package de.projektss17.bonpix.daten;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +16,7 @@ import java.util.List;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
-public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHolder> {
+public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHolder> {
 
 
     private List<C_Bon> bonsList;
@@ -46,7 +43,7 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
      * Constructor
      * @param bonsList
      */
-    public C_Bons_Adapter(List<C_Bon> bonsList){
+    public C_Adapter_Bons(List<C_Bon> bonsList){
         this.bonsList = bonsList;
     }
 
@@ -62,7 +59,6 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
 
         Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
-        roundedBitmapDrawable.setCircular(true);
         roundedBitmapDrawable.setAntiAlias(true);
         holder.icon.setImageDrawable(roundedBitmapDrawable);
 

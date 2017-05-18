@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Budget;
-import de.projektss17.bonpix.daten.C_Budget_CardView_Adapter;
+import de.projektss17.bonpix.daten.C_Adapter_Budget;
 
 
 public class A_Budget extends AppCompatActivity implements View.OnClickListener {
@@ -45,7 +45,7 @@ public class A_Budget extends AppCompatActivity implements View.OnClickListener 
 
         // LAYOUT - Implementierung aller Layouts
         recyclerView = (RecyclerView) findViewById(R.id.view_budget); // Recycler Liste
-        bAdapter = new C_Budget_CardView_Adapter(budgetList);          // CardView Adapter
+        bAdapter = new C_Adapter_Budget(budgetList);          // CardView Adapter
         card = (CardView) findViewById(R.id.budget_card_view);
 
 

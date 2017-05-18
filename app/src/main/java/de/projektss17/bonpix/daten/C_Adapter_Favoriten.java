@@ -2,7 +2,6 @@ package de.projektss17.bonpix.daten;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,7 @@ import de.projektss17.bonpix.S;
  * Created by Daniel on 09.05.2017.
  */
 
-public class C_Favoriten_Adapter extends RecyclerView.Adapter<C_Favoriten_Adapter.MyViewHolder> {
+public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favoriten.MyViewHolder> {
     private List<C_Bon> bonListe;
     private C_Bon bon;
 
@@ -47,27 +46,26 @@ public class C_Favoriten_Adapter extends RecyclerView.Adapter<C_Favoriten_Adapte
      * returned Liste
      * @param bonListe
      */
-    public C_Favoriten_Adapter(List<C_Bon> bonListe){
+    public C_Adapter_Favoriten(List<C_Bon> bonListe){
 
         this.bonListe = bonListe;
     }
 
 
     @Override
-    public C_Favoriten_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public C_Adapter_Favoriten.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.box_favoriten_view, parent, false);
 
-        return new C_Favoriten_Adapter.MyViewHolder(itemView);
+        return new C_Adapter_Favoriten.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final C_Favoriten_Adapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final C_Adapter_Favoriten.MyViewHolder holder, final int position) {
         this.bon = bonListe.get(position);
 
         Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
-        roundedBitmapDrawable.setCircular(true);
         roundedBitmapDrawable.setAntiAlias(true);
         holder.icon.setImageDrawable(roundedBitmapDrawable);
 

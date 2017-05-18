@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
-import de.projektss17.bonpix.daten.C_Favoriten_Adapter;
+import de.projektss17.bonpix.daten.C_Adapter_Favoriten;
 
 public class A_Favoriten extends AppCompatActivity {
     private List<C_Bon> bonListe = new ArrayList<>();
     private RecyclerView recyclerViewFavoriten;
-    private C_Favoriten_Adapter mAdapter;
+    private C_Adapter_Favoriten mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class A_Favoriten extends AppCompatActivity {
         //XML instaniziieren
         this.recyclerViewFavoriten = (RecyclerView) findViewById(R.id.favoriten_view);
 
-        mAdapter = new C_Favoriten_Adapter(bonListe);
+        mAdapter = new C_Adapter_Favoriten(bonListe);
         prepareBonData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewFavoriten.setLayoutManager(mLayoutManager);

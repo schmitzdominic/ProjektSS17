@@ -32,7 +32,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import de.projektss17.bonpix.daten.C_Bon;
-import de.projektss17.bonpix.daten.C_Bons_Adapter;
+import de.projektss17.bonpix.daten.C_Adapter_Bons;
 
 public class A_Tab1Home extends Fragment {
 
@@ -40,7 +40,7 @@ public class A_Tab1Home extends Fragment {
 
     private List<C_Bon> bonsList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private C_Bons_Adapter mAdapter;
+    private C_Adapter_Bons mAdapter;
 
     // CHART VARIABLEN
 
@@ -52,7 +52,7 @@ public class A_Tab1Home extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.view_home_bons);
-        mAdapter = new C_Bons_Adapter(bonsList);
+        mAdapter = new C_Adapter_Bons(bonsList);
         prepareHomeData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
