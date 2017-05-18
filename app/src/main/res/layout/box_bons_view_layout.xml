@@ -20,7 +20,7 @@
         android:id="@+id/view_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/imageview_button"
+        android:layout_toLeftOf="@+id/view_total_price"
         android:layout_toRightOf="@+id/imageview_picture"
         android:paddingTop="20dp"
         android:text="Default"
@@ -31,11 +31,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view_name"
-        android:layout_toLeftOf="@id/imageview_button"
+        android:layout_toLeftOf="@+id/view_total_price"
         android:layout_toRightOf="@+id/imageview_picture"
         android:paddingBottom="20dp"
         android:text="default"
         android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/view_total_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/imageview_button"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingRight="20dp"
+        android:text="default"
+        android:textSize="24sp"/>
 
     <ImageView
         android:id="@+id/imageview_button"
