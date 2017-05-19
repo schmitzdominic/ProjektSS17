@@ -68,7 +68,7 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
 
         holder.title.setText(bon.getShopName());
         holder.content.setText(bon.getDate());
-        holder.price.setText(bon.getTotalPrice().replace(".",",") + " €");
+        holder.price.setText(String.format("%s €", bon.getTotalPrice().replace(".", ",")));
         //Loading the FavoriteList
         if (bon.getFavourite()){
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star));
