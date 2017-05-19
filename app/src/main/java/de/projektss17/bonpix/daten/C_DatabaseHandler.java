@@ -127,7 +127,14 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         List<Entry> dataList = new ArrayList<>();
         int counter = 0;
 
-        for(C_Bon bon : this.getAllBons(db)){
+        ArrayList<C_Bon> revertedBonList = new ArrayList<>();
+        ArrayList<C_Bon> bonList = this.getAllBons(db);
+
+        for(int i = bonList.size()-1; i >= 0; i--){
+            revertedBonList.add(bonList.get(i));
+        }
+
+        for(C_Bon bon : revertedBonList){
 
             float totalPrice = 0;
 

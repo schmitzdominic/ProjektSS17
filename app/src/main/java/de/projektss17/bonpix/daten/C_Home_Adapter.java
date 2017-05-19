@@ -29,15 +29,40 @@ import de.projektss17.bonpix.S;
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private int count = 2;
     private int counter = 0;
-    private ArrayList xAchse = new ArrayList();
 
     public class ViewHolderLine extends RecyclerView.ViewHolder {
         LineChart chart;
+        LineDataSet dataSet;
+        ArrayList<ILineDataSet> lineDataSet;
+        LineData lineData;
+        View v;
 
         public ViewHolderLine(View view) {
             super(view);
-            Log.e("### Home Adapter", "ViewHolderBar Scoping Chart");
-            chart = (LineChart) view.findViewById(R.id.chart);
+            Log.e("ADAPTER","VIEWHOLDERLINE START");
+            v = view;
+            chart = (LineChart) v.findViewById(R.id.chart);
+
+            this.setLineData();
+            Log.e("ADAPTER","VIEWHOLDERLINE END");
+
+        }
+
+        public void setLineData(){
+            this.lineDataSet = new ArrayList<>();
+
+            // Liste xAchse wird mit Monaten befüllt
+            this.dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, 3), "test");
+            this.lineDataSet.add(this.dataSet);
+            this.lineData = new LineData(this.lineDataSet);
+
+            this.lineData.setValueTextSize(10f);
+
+            if(chart != null){
+                this.chart.setTouchEnabled(false);
+                this.chart.setData(this.lineData);
+                this.chart.invalidate();
+            }
         }
     }
 
@@ -48,9 +73,12 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView year;
         TextView progressPercentage;
         ProgressBar progressBar;
+        View v;
 
         public ViewHolderBudget(View view) {
             super(view);
+            Log.e("ADAPTER","VIEWHOLDERBUDGET START");
+            v = view;
 
             title = (TextView) view.findViewById(R.id.budget_title);
             budgetCurrently = (TextView) view.findViewById(R.id.budget_content);
@@ -60,23 +88,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             progressPercentage = (TextView) view.findViewById(R.id.budget_progress_percentage);
 
             //TODO Getter und Setter schreiben?!?
-
-
-        }
-
-    }
-
-    public class ViewHolderTime extends RecyclerView.ViewHolder {
-        TextView time;
-
-
-
-
-
-        public ViewHolderTime(View view) {
-            super(view);
-            Log.e("### Home Adapter", "ViewHolderTime Scoping time");
-            time = (TextView) view.findViewById(R.id.time);
+            Log.e("ADAPTER","VIEWHOLDERLINE END");
 
 
         }
@@ -89,51 +101,37 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
+        Log.e("ADAPTER","ONCREATEVIEWHOLDER: ViewType:" + viewType);
+
         switch(viewType){
             case 0:
+                Log.e("ADAPTER","ONCREATEVIEWHOLDER: CASE 0 ");
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_card_linechart_layout, parent, false);
                 return new ViewHolderLine(itemView);
             case 1:
+                Log.e("ADAPTER","ONCREATEVIEWHOLDER: CASE 1 ");
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_budget_content, parent, false);
                 return new ViewHolderBudget(itemView);
 
-        }
-        return null;
-
+            }
+            return null;
         // muss bearbeitet werden
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        switch (getItemViewType(position)) {
+        Log.e("ADAPTER","ONBINDVIEWHOLDER: position:" + position);
+
+        switch (position) {
             case 0:
-                ViewHolderLine holderLine = (ViewHolderLine) holder;
-                ArrayList<ILineDataSet> daten = new ArrayList<>();
-
-                // Liste xAchse wird mit Monaten befüllt
-                LineDataSet dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, 3), "test");
-                daten.add(dataSet);
-                LineData data = new LineData(daten);
-
-                data.setValueTextSize(10f);
-
-                holderLine.chart.setTouchEnabled(false);
-                holderLine.chart.setData(data);
-
-                holderLine.chart.invalidate();
-
-                //LineData dataLine = new LineData(data);
-                /*dataLine.setLineWidth(0.9f); // set custom bar width
-                holderLine.chart.setData(dataLine);
-                holderLine.chart.setFitBars(true); // make the x-axis fit exactly all bars
-                holderLine.chart.invalidate(); // refresh*/
                 counter++;
+                Log.e("ADAPTER","ONBINDVIEWHOLDER: CASE0 Counter++: = " + counter);
                 break;
 
             case 1:
-                ViewHolderBudget holderBudget = (ViewHolderBudget) holder;
                 counter++;
+                Log.e("ADAPTER","ONBINDVIEWHOLDER: CASE1 Counter++: = " + counter);
                 break;
         }
 
@@ -141,17 +139,23 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
+
+        Log.e("ADAPTER","GETITEMVIEWTYPE: position: " + position);
+
         if (counter == 2) {
             counter = 0;
+            Log.e("ADAPTER","GETITEMVIEWTYPE: counter == 2: - RETURN: " + counter);
             return counter;
         }
         else {
+            Log.e("ADAPTER","GETITEMVIEWTYPE: counter != 2: - RETURN: " + counter);
             return counter;
         }
     }
 
     @Override
     public int getItemCount() {
+        Log.e("ADAPTER","GETITEMCOUNT: " + count);
         return count;
     }
 
