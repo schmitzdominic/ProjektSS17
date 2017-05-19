@@ -48,6 +48,7 @@ public class F_Laeden_Detail extends DialogFragment {
         this.name = getArguments().getString("ShopName");
         prepareBonData(name);
 
+        //Instanziieren EditText für Ladenname und Lösch sowie Speicher Button
         shopName = (EditText)rootView.findViewById(R.id.laeden_detail_shop_name);
         deleteButton = (Button)rootView.findViewById(R.id.laeden_detail_delete);
         saveButton = (Button)rootView.findViewById(R.id.laeden_detail_speichern);
@@ -58,17 +59,16 @@ public class F_Laeden_Detail extends DialogFragment {
             public void onClick(View v) {
                 // DIALOG Fenster
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-                        alert.setTitle("Achtung ");
-                        alert.setMessage(name + " Wird GELÖSCHT! \n\nWenn Sie Bestätigen werden alle zugeordneten Bons entfernt.");
-                        alert.setNegativeButton(v.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_cancel), null);
-                        alert.setPositiveButton(v.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_confirm), new DialogInterface.OnClickListener() {
+                        alert.setTitle(R.string.f_laeden_detail_delete_titel);
+                        alert.setMessage(name + " " + v.getContext().getResources().getString(R.string.f_laeden_detail_delete_message));
+                        alert.setNegativeButton(v.getContext().getResources().getString(R.string.f_laeden_detail_cancel), null);
+                        alert.setPositiveButton(v.getContext().getResources().getString(R.string.f_laeden_detail_ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 S.dbHandler.removeLaden(S.db, name);
-                                Toast.makeText(getDialog().getContext(), "Laden " + name + " wurde gelöscht!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getDialog().getContext(), getDialog().getContext().getResources().getString(R.string.f_laeden_detail_delete_toast1) + " " + name + " " + getDialog().getContext().getResources().getString(R.string.f_laeden_detail_delete_toast2), Toast.LENGTH_LONG).show();
                                 ((A_Laeden) getActivity()).prepareShopData();
                                 getDialog().dismiss();
-
                             };
                         });alert.show();
             }
@@ -81,32 +81,31 @@ public class F_Laeden_Detail extends DialogFragment {
             public void onClick(View v) {
                 // DIALOG Fenster
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-                alert.setTitle("Ladenname ändern");
-                alert.setMessage("Sollen Ihre Eingaben übernommen werden");
-                alert.setNegativeButton(v.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_cancel), null);
-                alert.setPositiveButton(v.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_confirm), new DialogInterface.OnClickListener() {
+                alert.setTitle(R.string.f_laeden_detail_save_titel);
+                alert.setMessage(R.string.f_laeden_detail_save_message);
+                alert.setNegativeButton(v.getContext().getResources().getString(R.string.f_laeden_detail_cancel), null);
+                alert.setPositiveButton(v.getContext().getResources().getString(R.string.f_laeden_detail_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if(!S.dbHandler.checkIfLadenExist(S.db, name)){
+                        if(!S.dbHandler.checkIfLadenExist(S.db, shopName.getText().toString())){
                             C_Laden ladenInst = S.dbHandler.getLaden(S.db, name);
                             ladenInst.setName(shopName.getText().toString());
                             S.dbHandler.updateLaden(S.db, ladenInst);
+                            Toast.makeText(getDialog().getContext(), getDialog().getContext().getResources().getString(R.string.f_laeden_detail_save_save_toast), Toast.LENGTH_LONG).show();
                             ((A_Laeden) getActivity()).prepareShopData();
                             getDialog().dismiss();
                         } else if(shopName.getText().toString().equals(name)){
                             getDialog().dismiss();
                         } else {
-                            Toast.makeText(getDialog().getContext(), "Laden bereits vorhanden! Bitte geben Sie einen anderen Wert ein.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getDialog().getContext(), getDialog().getContext().getResources().getString(R.string.f_laeden_detail_save_toast), Toast.LENGTH_LONG).show();
                         }
-
-
                     };
                 });alert.show();
             }
         });
 
-
+        //Recycler View in C_Laeden_Detail_Adapter
         recyclerViewDetailLaeden.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDetailLaeden.addItemDecoration(
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
@@ -129,7 +128,6 @@ public class F_Laeden_Detail extends DialogFragment {
         bonsList.clear();
         for(C_Bon bon : S.dbHandler.getBonsOfStore(db, name)){
             this.bonsList.add(bon);
-            Log.e("### prepareDATA","" + bon.getShopName());
         }
 
     }

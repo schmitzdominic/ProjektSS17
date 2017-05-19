@@ -54,6 +54,7 @@ public class C_Laeden_Detail_Adapter extends RecyclerView.Adapter<C_Laeden_Detai
     public void onBindViewHolder(MyViewHolder holder, int position) {
         this.bon = bonListe.get(position);
         holder.bonDate.setText(bon.getDate());
+        //ToDo Hier momentan noch ein Dummy-Wert, muss später ausgetauscht werden
         holder.bonPrice.setText("300€");
     }
     @Override

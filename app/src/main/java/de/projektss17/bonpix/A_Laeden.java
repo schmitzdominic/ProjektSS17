@@ -3,6 +3,7 @@ package de.projektss17.bonpix;
 
 
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -33,12 +34,14 @@ public class A_Laeden extends AppCompatActivity {
     private RecyclerView recyclerViewLaeden;
     private C_Laeden_Adapter mAdapter;
     private FloatingActionButton fab;
+    private Resources res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.box_laeden_screen);
+        res = getResources();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,11 +63,11 @@ public class A_Laeden extends AppCompatActivity {
 
                 // DIALOG Fenster
                 new AlertDialog.Builder(A_Laeden.this)
-                        .setTitle("Laden hinzufügen")
+                        .setTitle(R.string.a_laeden_alert_dialog_title)
                         .setView(alertLayoutLaeden)
                         .setCancelable(false)
-                        .setNegativeButton("Abbruch", null)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.a_laeden_alert_dialog_cancel, null)
+                        .setPositiveButton(R.string.a_laeden_alert_dialog_ok, new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -75,10 +78,10 @@ public class A_Laeden extends AppCompatActivity {
                                             S.dbHandler.addLaden(S.db, new C_Laden(shopTitle.getText().toString()));
                                             prepareShopData();
                                         } else {
-                                            S.outLong(A_Laeden.this, "Laden bereits vorhanden! Bitte geben Sie einen anderen Wert ein.");
+                                            S.outLong(A_Laeden.this, res.getString(R.string.a_laeden_alert_dialog_toast1));
                                         }
                                     } else {
-                                        S.outLong(A_Laeden.this, "Leere Eingabe! Bitte erneut versuchen.");
+                                        S.outLong(A_Laeden.this, res.getString(R.string.a_laeden_alert_dialog_toast2));
                                     }
 
                             }
@@ -93,6 +96,8 @@ public class A_Laeden extends AppCompatActivity {
         //XML instaniziieren
         this.recyclerViewLaeden = (RecyclerView) findViewById(R.id.view_laeden);
 
+
+        //RecyclerView in C_Laeden_Adapter
         mAdapter = new C_Laeden_Adapter(this, shopList);
         prepareShopData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -103,6 +108,7 @@ public class A_Laeden extends AppCompatActivity {
         recyclerViewLaeden.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
+        //Damit der Floating Button beim Scrollen verschwindet
         recyclerViewLaeden.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx,int dy){
