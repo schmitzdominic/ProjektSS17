@@ -7,8 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.github.mikephil.charting.data.Entry;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.projektss17.bonpix.S;
 
@@ -138,6 +141,24 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         cursor.close();
         return bonsList;
+    }
+
+    /**
+     * Get the Data for LineCharts
+     * @return Last
+     */
+    public List<Entry> getLineData(SQLiteDatabase db, int count){
+
+        List<Entry> dataList = new ArrayList<>();
+        int counter = 0;
+
+        for(C_Bon bon : (ArrayList<C_Bon>) this.rotateList(this.getAllBons(db))){
+            dataList.add(new Entry((float) counter, Float.parseFloat(bon.getTotalPrice())));
+            counter++;
+            if(counter == count) break;
+        }
+
+        return dataList;
     }
 
     /**
