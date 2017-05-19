@@ -112,7 +112,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ArrayList<ILineDataSet> daten = new ArrayList<>();
 
                 // Liste xAchse wird mit Monaten befüllt
-                LineDataSet dataSet = new LineDataSet(S.dbHandler.getLineData(1), "test");
+                LineDataSet dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, 3), "test");
                 daten.add(dataSet);
                 LineData data = new LineData(daten);
 

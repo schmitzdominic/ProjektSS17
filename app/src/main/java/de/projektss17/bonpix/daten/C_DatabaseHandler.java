@@ -119,31 +119,30 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * Get the Data for BarCharts
-     * @param time
-     * @return
+     * Get the Data for LineCharts
+     * @return Last
      */
-    public List<Entry> getLineData(int time){
-        //TODO: Logic part for preparing Bar Data
+    public List<Entry> getLineData(SQLiteDatabase db, int count){
+
         List<Entry> dataList = new ArrayList<>();
-        switch(time) {
-            case 1:
-                dataList.add(new Entry(0f, 30f));
-                dataList.add(new Entry(1f, 80f));
-                dataList.add(new Entry(2f, 60f));
-                /*dataList.add(new Entry(3f, 50f));
-                dataList.add(new Entry(5f, 70f));
-                dataList.add(new Entry(6f, 60f));*/
-                return dataList;
-            default:
-                dataList.add(new Entry(0f, 30f));
-                dataList.add(new Entry(0f, 30f));
-                dataList.add(new Entry(0f, 30f));
-                /*dataList.add(new Entry(0f, 30f));
-                dataList.add(new Entry(0f, 30f));
-                dataList.add(new Entry(0f, 30f));*/
-                return dataList;
+        int counter = 0;
+
+        for(C_Bon bon : this.getAllBons(db)){
+
+            float totalPrice = 0;
+
+            for(C_Artikel artikel : bon.getArticles()){
+                totalPrice += artikel.getPrice();
+            }
+
+            String sTotalPrice = "" + totalPrice;
+
+            dataList.add(new Entry((float) counter, Float.parseFloat(sTotalPrice)));
+            counter++;
+            if(counter == count) break;
         }
+
+        return dataList;
     }
 
 
