@@ -26,7 +26,7 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
     private C_Bon bon;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView warrantyBegin, warrantyEnd;
+        public TextView warrantyBegin, warrantyEnd, warrantyPrice;
         public ImageView icon, deleteBtn;
         public Resources res;
 
@@ -36,6 +36,7 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
             icon = (ImageView) view.findViewById(R.id.garantie_view_laden_bild);
             warrantyBegin = (TextView) view.findViewById(R.id.garantie_view_garantiebeginn);
             warrantyEnd = (TextView) view.findViewById(R.id.garantie_view_zusatz_garantieende);
+            warrantyPrice = (TextView) view.findViewById(R.id.garantie_view_zusatz_favorite_price);
             deleteBtn = (ImageView) view.findViewById(R.id.garantie_view_garantie_delete_button);
             res = view.getResources();
 
@@ -70,7 +71,8 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
         holder.icon.setImageDrawable(roundedBitmapDrawable);
 
         holder.warrantyBegin.setText(bon.getShopName());
-        holder.warrantyEnd.setText("Garantie von " + bon.getDate() + " - " + bon.getGuaranteeEnd());
+        holder.warrantyEnd.setText(holder.res.getString(R.string.a_garantie_garantie_bis) + " " + bon.getGuaranteeEnd());
+        holder.warrantyPrice.setText(bon.getTotalPrice() + " €");
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
 

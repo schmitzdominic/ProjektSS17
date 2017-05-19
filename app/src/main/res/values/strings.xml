@@ -31,6 +31,8 @@
 
     <!-- A_Garantie -->
     <string name="title_garantie_screen">Garantie</string>
+    <string name="a_garantie_garantie_bis">Garantie bis</string>
+
 
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>

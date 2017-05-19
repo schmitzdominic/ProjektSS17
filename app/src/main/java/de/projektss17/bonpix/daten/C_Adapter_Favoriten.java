@@ -77,28 +77,9 @@ public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favorite
         roundedBitmapDrawable.setAntiAlias(true);
         holder.icon.setImageDrawable(roundedBitmapDrawable);
 
-        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        Date date = null;
-
-        try {
-            date = df.parse(bon.getDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if(date != null){
-            Calendar c = Calendar.getInstance();
-            c.setTime(date);
-            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-
-            holder.favoriteDate.setText(S.getWeekday(holder.res, dayOfWeek) + "\n" + bon.getDate());
-        } else {
-            holder.favoriteDate.setText(bon.getDate());
-        }
-
-
         holder.favoriteShopName.setText(bon.getShopName());
-        holder.favouritePrice.setText(bon.getTotalPrice());
+        holder.favouritePrice.setText(bon.getTotalPrice() + " €");
+        holder.favoriteDate.setText(S.getWeekday(holder.res, S.getWeekdayNumber(bon.getDate())) + "\n" + bon.getDate());
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
 

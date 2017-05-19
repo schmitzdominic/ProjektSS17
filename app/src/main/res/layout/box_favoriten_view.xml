@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/favoriten_view_laden_bild"
@@ -21,7 +19,7 @@
         android:id="@+id/favoriten_view_favorite_shopname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/view_total_price"
+        android:layout_toLeftOf="@+id/favoriten_view_zusatz_favorite_price"
         android:layout_toRightOf="@+id/favoriten_view_laden_bild"
         android:paddingTop="20dp"
         android:text="Laden Name"
@@ -44,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/favoriten_view_favoriten_delete_button"
-        android:paddingTop="20dp"
+        android:paddingTop="30dp"
         android:paddingBottom="20dp"
         android:paddingRight="20dp"
         android:gravity="center_vertical"

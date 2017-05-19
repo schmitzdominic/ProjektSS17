@@ -15,7 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -260,6 +265,26 @@ public class S extends Activity {
             case 6: return res.getString(R.string.wochentag_6);
             case 7: return res.getString(R.string.wochentag_7);
             default: return " ";
+        }
+    }
+
+    public static int getWeekdayNumber(String dateString){
+
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = null;
+
+        try {
+            date = df.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(date != null){
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            return c.get(Calendar.DAY_OF_WEEK);
+        } else {
+            return 0;
         }
     }
 

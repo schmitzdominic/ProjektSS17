@@ -46,7 +46,7 @@ public class A_Favoriten extends AppCompatActivity {
      */
     private void prepareBonData(){
 
-        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
+        for(C_Bon bon : (ArrayList<C_Bon>) S.dbHandler.rotateList(S.dbHandler.getAllBons(S.db))){
             if(bon.getFavourite()){
                 this.bonListe.add(bon);
             }
