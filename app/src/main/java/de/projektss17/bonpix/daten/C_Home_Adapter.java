@@ -9,9 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
@@ -23,14 +29,15 @@ import de.projektss17.bonpix.S;
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private int count = 3;
     private int counter = 0;
+    private ArrayList xAchse = new ArrayList();
 
-    public class ViewHolderBar extends RecyclerView.ViewHolder {
-        BarChart chart;
+    public class ViewHolderLine extends RecyclerView.ViewHolder {
+        LineChart chart;
 
-        public ViewHolderBar(View view) {
+        public ViewHolderLine(View view) {
             super(view);
             Log.e("### Home Adapter", "ViewHolderBar Scoping Chart");
-            chart = (BarChart) view.findViewById(R.id.chart);
+            chart = (LineChart) view.findViewById(R.id.chart);
         }
     }
 
@@ -84,14 +91,12 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         View itemView;
         switch(viewType){
             case 0:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_card_time, parent, false);
-                return new ViewHolderTime(itemView);
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_card_linechart_layout, parent, false);
+                return new ViewHolderLine(itemView);
             case 1:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_budget_content, parent, false);
                 return new ViewHolderBudget(itemView);
-            case 2:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_bar_layout, parent, false);
-                return new ViewHolderBar(itemView);
+
         }
         return null;
 
@@ -124,13 +129,28 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 counter++;
                 break;
             case 2:
-                ViewHolderBar holderBar = (ViewHolderBar)holder;
-                BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
-                BarData dataBar = new BarData(dataSetBar);
-                dataBar.setBarWidth(0.9f); // set custom bar width
-                holderBar.chart.setData(dataBar);
-                holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
-                holderBar.chart.invalidate(); // refresh
+                ViewHolderLine holderLine = (ViewHolderLine)holder;
+                ArrayList <ILineDataSet> daten = new ArrayList<>();
+
+                // Liste xAchse wird mit Monaten befüllt
+                befuelleListe();
+
+                LineDataSet dataSet = new LineDataSet( S.dbHandler.getLineData(1), "test");
+                daten.add(dataSet);
+                LineData data = new LineData(daten);
+
+                data.setValueTextSize(10f);
+
+                holderLine.chart.setTouchEnabled(false);
+                holderLine.chart.setData(data);
+
+                holderLine.chart.invalidate();
+
+                //LineData dataLine = new LineData(data);
+                /*dataLine.setLineWidth(0.9f); // set custom bar width
+                holderLine.chart.setData(dataLine);
+                holderLine.chart.setFitBars(true); // make the x-axis fit exactly all bars
+                holderLine.chart.invalidate(); // refresh*/
                 counter++;
                 break;
         }
@@ -151,5 +171,20 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemCount() {
         return count;
+    }
+
+    public void befuelleListe(){
+        xAchse.add("Januar");
+        xAchse.add("Februar");
+        xAchse.add("März");
+        xAchse.add("April");
+        xAchse.add("Mai");
+        xAchse.add("Juni");
+        xAchse.add("Juli");
+        xAchse.add("August");
+        xAchse.add("September");
+        xAchse.add("Oktober");
+        xAchse.add("November");
+        xAchse.add("Dezember");
     }
 }

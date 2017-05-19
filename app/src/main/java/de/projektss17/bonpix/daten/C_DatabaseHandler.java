@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -122,25 +123,25 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * @param time
      * @return
      */
-    public List<BarEntry> getBarData(int time){
+    public List<Entry> getLineData(int time){
         //TODO: Logic part for preparing Bar Data
-        List<BarEntry> dataList = new ArrayList<>();
+        List<Entry> dataList = new ArrayList<>();
         switch(time) {
             case 1:
-                dataList.add(new BarEntry(0f, 30f));
-                dataList.add(new BarEntry(1f, 80f));
-                dataList.add(new BarEntry(2f, 60f));
-                dataList.add(new BarEntry(3f, 50f));
-                dataList.add(new BarEntry(5f, 70f));
-                dataList.add(new BarEntry(6f, 60f));
+                dataList.add(new Entry(0f, 30f));
+                dataList.add(new Entry(1f, 80f));
+                dataList.add(new Entry(2f, 60f));
+                /*dataList.add(new Entry(3f, 50f));
+                dataList.add(new Entry(5f, 70f));
+                dataList.add(new Entry(6f, 60f));*/
                 return dataList;
             default:
-                dataList.add(new BarEntry(0f, 30f));
-                dataList.add(new BarEntry(0f, 30f));
-                dataList.add(new BarEntry(0f, 30f));
-                dataList.add(new BarEntry(0f, 30f));
-                dataList.add(new BarEntry(0f, 30f));
-                dataList.add(new BarEntry(0f, 30f));
+                dataList.add(new Entry(0f, 30f));
+                dataList.add(new Entry(0f, 30f));
+                dataList.add(new Entry(0f, 30f));
+                /*dataList.add(new Entry(0f, 30f));
+                dataList.add(new Entry(0f, 30f));
+                dataList.add(new Entry(0f, 30f));*/
                 return dataList;
         }
     }

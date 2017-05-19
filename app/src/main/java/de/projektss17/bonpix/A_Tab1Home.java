@@ -26,6 +26,7 @@ import java.util.List;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarData;
@@ -47,6 +48,7 @@ public class A_Tab1Home extends Fragment {
     private List<C_Bon> bonsList = new ArrayList<>();
     private RecyclerView recyclerView1;
     private C_Bons_Adapter mAdapter1;
+    private LineChart lChart;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
@@ -68,6 +70,13 @@ public class A_Tab1Home extends Fragment {
         recyclerView1.setItemAnimator(new DefaultItemAnimator());
         recyclerView1.setAdapter(mAdapter1);
         mAdapter1.notifyDataSetChanged();*/
+
+        //lChart = (LineCahrt) rootView.findViewById(R.id.)
+
+        /*bChart = (BarChart) rootView.findViewById(R.id.chart2);
+        ArrayList<IBarDataSet> dataSets1 = new ArrayList<>();
+        createBarChart(bChart, dataSets1, "The year 2017");*/
+
         return rootView;
     }
 
