@@ -24,7 +24,6 @@
         android:layout_toLeftOf="@+id/laeden_view_edit_button"
         android:layout_toRightOf="@+id/laeden_view_laden_bild"
         android:paddingTop="25dp"
-        android:text="Beginn der Garantie"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp" />
 

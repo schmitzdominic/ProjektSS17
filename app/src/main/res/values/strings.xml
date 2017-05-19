@@ -82,10 +82,25 @@
 
     <!-- A_Laeden -->
     <string name="title_activity_a__laeden">Läden</string>
+    <string name="a_laeden_alert_dialog_title_hint">Laden eingeben ...</string>
+    <string name="a_laeden_alert_dialog_title">Laden hinzufügen</string>
+    <string name="a_laeden_alert_dialog_cancel">ABBRUCH</string>
+    <string name="a_laeden_alert_dialog_ok">BESTÄTIGEN</string>
+    <string name="a_laeden_alert_dialog_toast1">Laden bereits vorhanden! Bitte geben Sie einen anderen Wert ein.</string>
+    <string name="a_laeden_alert_dialog_toast2">Leere Eingabe! Bitte erneut versuchen.</string>
 
     <!-- Laeden Detail -->
-    <string name ="f_laden_detail_titel_hint">Laden eingeben ...</string>
-
+    <string name ="f_laeden_detail_titel_hint">Laden eingeben ...</string>
+    <string name ="f_laeden_detail_delete_titel">Achtung </string>
+    <string name ="f_laeden_detail_delete_message"> wird GELÖSCHT! \n\nWenn Sie Bestätigen werden alle zugeordneten Bons entfernt!</string>
+    <string name ="f_laeden_detail_cancel">ABBRUCH</string>
+    <string name ="f_laeden_detail_ok">BESTÄTIGEN</string>
+    <string name ="f_laeden_detail_delete_toast1">Laden</string>
+    <string name ="f_laeden_detail_delete_toast2">wurde gelöscht!</string>
+    <string name ="f_laeden_detail_save_titel">Ladenname ändern</string>
+    <string name ="f_laeden_detail_save_message">Sollen Ihre Eingaben übernommen werden?</string>
+    <string name ="f_laeden_detail_save_toast">Laden bereits vorhanden! Bitte geben Sie einen anderen Wert ein.</string>
+    <string name ="f_laeden_detail_save_save_toast">Laden geändert</string>
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>

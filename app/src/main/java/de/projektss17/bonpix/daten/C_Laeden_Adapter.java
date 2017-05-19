@@ -87,14 +87,13 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
         //holder.icon.setImageDrawable(rounderBitmapDrawable);
         holder.shopName.setText(shop.getName());
 
+        //Bei Supported Shops darf der Editierbutton nicht erscheinen => Wird unsichtbar gemacht
         if(holder.supShops.contains(shop.getName())){
             holder.editShopBtn.setVisibility(View.INVISIBLE);
         } else {
             holder.editShopBtn.setVisibility(View.VISIBLE);
         }
-
         holder.editShopBtn.setOnClickListener(new View.OnClickListener() {
-
 
             /**
              * On Click Methode für onClickListener
@@ -103,9 +102,6 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
             public void onClick(View v) {
 
                 C_Laden shopA = shopList.get(position);
-                //S.dbHandler.updateBon(S.db, bonListe.get(position));
-                //bonList.remove(position);
-
                 //Übergabe Name des angeklickten Shops => an F_Laeden_Detail
                 args = new Bundle();
                 args.clear();
