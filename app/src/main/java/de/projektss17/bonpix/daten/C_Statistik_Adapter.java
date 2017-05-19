@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -31,6 +33,149 @@ import de.projektss17.bonpix.S;
 
 public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private int count = 8;
+    private int counter = 0;
+
+
+    public class ViewHolderGeneral extends RecyclerView.ViewHolder {
+
+        public TextView anzahlScans, ausgabenGesamt, anzahlLaeden, anzahlArtikel;
+
+        public ViewHolderGeneral(View view) {
+            super(view);
+
+            // Implementierung des Layouts der einzelnen Objekte für die CardView
+            this.anzahlScans = (TextView) view.findViewById(R.id.statistik_card_general_scans_content);
+            this.ausgabenGesamt = (TextView) view.findViewById(R.id.statistik_card_general_costs_content);
+            this.anzahlLaeden = (TextView) view.findViewById(R.id.statistik_card_marketamount_content);
+            this.anzahlArtikel = (TextView) view.findViewById(R.id.statistik_card_productamount_content);
+
+        }
+    }
+
+    public class ViewHolderBar extends RecyclerView.ViewHolder {
+        BarChart chart;
+
+        public ViewHolderBar(View view) {
+            super(view);
+            chart = (BarChart) view.findViewById(R.id.chart);
+        }
+    }
+
+    public class ViewHolderLine extends RecyclerView.ViewHolder {
+        LineChart chart1;
+
+        public ViewHolderLine(View view) {
+            super(view);
+            chart1 = (LineChart) view.findViewById(R.id.chart1);
+        }
+    }
+
+
+    public class ViewHolderPie extends RecyclerView.ViewHolder {
+        PieChart chart2;
+
+        public ViewHolderPie(View view) {
+            super(view);
+            chart2 = (PieChart) view.findViewById(R.id.chart2);
+        }
+    }
+
+
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView;
+
+
+        switch(viewType){
+            case 0:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_bar_layout, parent, false);
+                return new ViewHolderBar(itemView);
+            case 1:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_line_layout, parent, false);
+                return new ViewHolderLine(itemView);
+            case 2:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_pie_layout, parent, false);
+                return new ViewHolderPie(itemView);
+            case 3:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_general_layout, parent, false);
+                return new ViewHolderGeneral(itemView);
+        }
+        return null;
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if (counter == 4){
+            counter = 0;
+            return counter;
+        }
+        else {
+            return counter;
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+
+        switch(getItemViewType(position)){
+            case 0:
+                Log.e("### DATABASEHANDLER","## onBind 0 BAR");
+                ViewHolderBar holderBar = (ViewHolderBar)holder;
+                BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
+                BarData dataBar = new BarData(dataSetBar);
+                dataBar.setBarWidth(0.9f); // set custom bar width
+                holderBar.chart.setData(dataBar);
+                holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
+                holderBar.chart.invalidate(); // refresh
+                counter++;
+                break;
+            case 1:
+                Log.e("### DATABASEHANDLER","## onBind 1 LINE");
+                ViewHolderLine holderLine = (ViewHolderLine)holder;
+                LineDataSet setComp1 = new LineDataSet(S.dbHandler.getLineData(1).get("lineOne"), "Company 1");
+                setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+                LineDataSet setComp2 = new LineDataSet(S.dbHandler.getLineData(1).get("lineTwo"), "Company 2");
+                setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
+                List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+                dataSets.add(setComp1);
+                dataSets.add(setComp2);
+                LineData data = new LineData(dataSets);
+                holderLine.chart1.setData(data);
+                holderLine.chart1.invalidate();
+                counter++;
+                break;
+            case 2:
+                Log.e("### DATABASEHANDLER","## onBind 2 PIE");
+                ViewHolderPie holderPie = (ViewHolderPie)holder;
+                PieDataSet set = new PieDataSet(S.dbHandler.getPieData(1), "Election Results");
+                PieData pieData = new PieData(set);
+                holderPie.chart2.setData(pieData);
+                holderPie.chart2.invalidate();
+                counter++;
+                break;
+            case 3:
+                ViewHolderGeneral holderGeneral = (ViewHolderGeneral)holder;
+                holderGeneral.anzahlScans.setText("20");
+                holderGeneral.ausgabenGesamt.setText("10303");
+                holderGeneral.anzahlArtikel.setText("304040");
+                holderGeneral.anzahlLaeden.setText("45");
+                counter++;
+                break;
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return count;
+    }
+
+
+
+/*
     private int count = 8;
     private int counter = 0;
 
@@ -150,11 +295,11 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderPie.chart2.invalidate();
                 counter++;
                 break;
-        } */
+        }
     }
 
     @Override
     public int getItemCount() {
         return count;
-    }
+    } */
 }

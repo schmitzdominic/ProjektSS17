@@ -98,4 +98,13 @@
     <string name="title_a_statistik_bar_chart">Bardiagramm</string>
     <string name="title_a_statistik_combined_chart">Allgemein</string>
 
+    <string name="statistik_card_general_scans_title">Eingescannte \nBons</string>
+    <string name="statistik_card_general_scans_content">Anzahl</string>
+    <string name="statistik_card_general_costs_title">Gesamte \nAusgaben</string>
+    <string name="statistik_card_general_costs_content">Betrag</string>
+    <string name="statistik_card_general_marketamount_title">Läden</string>
+    <string name="statistik_card_general_marketamount_content">Anzahl</string>
+    <string name="statistik_card_general_productamount_title">Artikel</string>
+    <string name="statistik_card_general_productamount_content">Anzahl</string>
+
 </resources>
