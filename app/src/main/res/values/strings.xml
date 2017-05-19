@@ -28,6 +28,9 @@
 
     <!-- A_Favoriten -->
     <string name="title_favoriten_screen">Favoriten</string>
+    <string name="a_favoriten_laden_name">Laden name</string>
+    <string name="a_favoriten_datum">Datum des Bon</string>
+    <string name="a_favoriten_preis">Preis</string>
 
     <!-- A_Garantie -->
     <string name="title_garantie_screen">Garantie</string>

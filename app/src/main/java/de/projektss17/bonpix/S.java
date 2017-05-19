@@ -237,6 +237,12 @@ public class S extends Activity {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Gibt anhand des namens das richtige Icon zurück
+     * @param res Resource
+     * @param name Name des Ladens
+     * @return Bitmap des Ladens
+     */
     public static Bitmap getShopIcon(Resources res, String name){
 
         switch(name){
@@ -255,6 +261,12 @@ public class S extends Activity {
 
     }
 
+    /**
+     * Gibt den Tag anhand des int wertes zurück
+     * @param res Resource
+     * @param day int tag
+     * @return Return String des Wochentags
+     */
     public static String getWeekday(Resources res, int day){
         switch(day){
             case 1: return res.getString(R.string.wochentag_1);
@@ -268,6 +280,11 @@ public class S extends Activity {
         }
     }
 
+    /**
+     * Gibt anhand eines Datum strings den Tag als int wert zurück
+     * @param dateString Datum als String
+     * @return Wochentag als int
+     */
     public static int getWeekdayNumber(String dateString){
 
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");

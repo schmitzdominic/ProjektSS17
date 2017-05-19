@@ -22,7 +22,7 @@
         android:layout_toLeftOf="@+id/favoriten_view_zusatz_favorite_price"
         android:layout_toRightOf="@+id/favoriten_view_laden_bild"
         android:paddingTop="20dp"
-        android:text="Laden Name"
+        android:text="@string/a_favoriten_laden_name"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp" />
 
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="20dp"
-        android:text="Datum des Bon"
+        android:text="@string/a_favoriten_datum"
         android:textSize="14sp"
         android:layout_toLeftOf="@+id/favoriten_view_zusatz_favorite_price"
         android:layout_toRightOf="@+id/favoriten_view_laden_bild"
@@ -46,7 +46,7 @@
         android:paddingBottom="20dp"
         android:paddingRight="20dp"
         android:gravity="center_vertical"
-        android:text="Preis"
+        android:text="@string/a_favoriten_preis"
         android:textSize="24sp"/>
 
 
