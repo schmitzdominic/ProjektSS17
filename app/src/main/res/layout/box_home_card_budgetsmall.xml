@@ -16,15 +16,15 @@
             android:layout_marginBottom="3dp"
             android:layout_marginRight="3dp"
             android:orientation="vertical">
-    <!--        android:id="@+id/budget_card_view"
-            android:layout_width="380dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="8dp"
-            android:clickable="true"
-            android:elevation="15dp"
-            android:foreground="?android:attr/selectableItemBackground">-->
+            <!--        android:id="@+id/budget_card_view"
+                    android:layout_width="380dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:elevation="15dp"
+                    android:foreground="?android:attr/selectableItemBackground">-->
 
             <RelativeLayout
                 android:layout_width="match_parent"

@@ -36,18 +36,15 @@ public class A_Tab1Home extends Fragment {
     private List<C_Bon> bonsList = new ArrayList<>();
     private RecyclerView recyclerView1;
     private C_Bons_Adapter mAdapter1;
-    private LineChart lChart;
+    private LayoutInflater inflater;
+    private ViewGroup container;
+    private View rootView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.tab_eins_recyclerview_staggered_grid);
-        mAdapter = new C_Home_Adapter();
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+
+        rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
+
+
         recyclerView1 = (RecyclerView) rootView.findViewById(R.id.tab_eins_recyclerview_bons);
         mAdapter1 = new C_Bons_Adapter(bonsList);
         prepareHomeData();
@@ -59,6 +56,9 @@ public class A_Tab1Home extends Fragment {
         recyclerView1.setAdapter(mAdapter1);
         mAdapter1.notifyDataSetChanged();
 
+        this.inflater = inflater;
+        this.container = container;
+
         //lChart = (LineCahrt) rootView.findViewById(R.id.)
 
         /*bChart = (BarChart) rootView.findViewById(R.id.chart2);
@@ -68,6 +68,13 @@ public class A_Tab1Home extends Fragment {
         return rootView;
     }
 
+    private void prepareLineData(){
+
+    }
+
+    private void prepareBudgetData(){
+
+    }
 
     private void prepareHomeData() {
         bonsList.clear();
