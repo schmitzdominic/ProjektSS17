@@ -39,7 +39,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ViewHolderBar(View view) {
             super(view);
-            Log.e("### STATISTIK ADAPTER","ViewHolderBar Scoping Chart");
             chart = (BarChart) view.findViewById(R.id.chart);
         }
     }
@@ -49,7 +48,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ViewHolderLine(View view) {
             super(view);
-            Log.e("### STATISTIK ADAPTER","ViewHolderLine Scoping Chart");
             chart1 = (LineChart) view.findViewById(R.id.chart1);
         }
     }
@@ -59,8 +57,16 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ViewHolderPie(View view) {
             super(view);
-            Log.e("### STATISTIK ADAPTER","ViewHolderPie Scoping Chart");
             chart2 = (PieChart) view.findViewById(R.id.chart2);
+        }
+    }
+
+    public class ViewHolderGeneral extends RecyclerView.ViewHolder{
+        View chart3;
+
+        ViewHolderGeneral(View view){
+            super(view);
+            chart3 = (View)view.findViewById(R.layout.box_statistik_card_general_layout);
         }
     }
 
@@ -83,15 +89,12 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         View itemView;
         switch(viewType){
             case 0:
-                Log.e("### STATISTIK ADAPTER","onCreate 0 BAR");
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_bar_layout, parent, false);
                 return new ViewHolderBar(itemView);
             case 1:
-                Log.e("### STATISTIK ADAPTER","onCreate 1 LINE");
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_line_layout, parent, false);
                 return new ViewHolderLine(itemView);
             case 2:
-                Log.e("### STATISTIK ADAPTER","onCreate 2 PIE");
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_pie_layout, parent, false);
                 return new ViewHolderPie(itemView);
         }
@@ -101,6 +104,16 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+        ViewHolderBar holderBar = (ViewHolderBar)holder;
+        BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
+        BarData dataBar = new BarData(dataSetBar);
+        dataBar.setBarWidth(0.9f); // set custom bar width
+        holderBar.chart.setData(dataBar);
+        holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
+        holderBar.chart.invalidate();
+
+
+        /*
         switch(getItemViewType(position)){
             case 0:
                 Log.e("### DATABASEHANDLER","## onBind 0 BAR");
@@ -137,7 +150,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderPie.chart2.invalidate();
                 counter++;
                 break;
-        }
+        } */
     }
 
     @Override

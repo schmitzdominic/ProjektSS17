@@ -87,4 +87,15 @@
     <!-- A_Budget_Edit -->
     <string name="title_activity_a__budget__edit">Budget Planung</string>
 
+    <!-- A_Tab2Statistik -->
+    <string name="title_a_statistik_tab_all">Alle</string>
+    <string name="title_a_statistik_tab_days">Tage</string>
+    <string name="title_a_statistik_tab_month">Monate</string>
+    <string name="title_a_statistik_tab_years">Jahre</string>
+
+    <string name="title_a_statistik_pie_chart">Kuchendiagramm</string>
+    <string name="title_a_statistik_line_chart">Liniendiagramm</string>
+    <string name="title_a_statistik_bar_chart">Bardiagramm</string>
+    <string name="title_a_statistik_combined_chart">Allgemein</string>
+
 </resources>

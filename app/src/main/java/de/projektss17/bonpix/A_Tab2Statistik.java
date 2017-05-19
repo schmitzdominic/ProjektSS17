@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import de.projektss17.bonpix.daten.C_Statistik_Adapter;
 public class A_Tab2Statistik extends Fragment{
 
     private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
     private C_Statistik_Adapter mAdapter;
     private TabLayout tabLayout;
 
@@ -32,8 +34,9 @@ public class A_Tab2Statistik extends Fragment{
         View rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
         mAdapter = new C_Statistik_Adapter();
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        //StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        //layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);

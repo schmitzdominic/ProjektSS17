@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    android:layout_marginRight="3dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="69dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/title_a_statistik_combined_chart"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight="1"></android.support.v7.widget.Toolbar>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/statistik_card_productamount_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/view"
+                android:layout_alignTop="@+id/statistik_card_marketamount_content"
+                android:layout_toEndOf="@+id/statistik_card_marketamount_content"
+                android:text="Anzahl"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textColor="@color/colorAccent"/>
+
+            <TextView
+                android:id="@+id/statistik_card_productamount_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Produktanzahl"
+                android:textAlignment="center"
+                android:layout_alignBaseline="@+id/statistik_card_marketamount_title"
+                android:layout_alignBottom="@+id/statistik_card_marketamount_title"
+                android:layout_alignStart="@+id/view3"
+                android:layout_alignEnd="@+id/statistik_card_productamount_content" />
+
+            <TextView
+                android:id="@+id/statistik_card_marketamount_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anzahl"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textColor="@color/colorAccent"
+                android:layout_above="@+id/statistik_card_general_scans_content"
+                android:layout_alignEnd="@+id/view3"
+                android:layout_alignStart="@+id/view2" />
+
+            <TextView
+                android:id="@+id/statistik_card_marketamount_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Laden Anzahl"
+                android:textAlignment="center"
+                android:layout_alignBottom="@+id/statistik_card_general_scans_content"
+                android:layout_alignStart="@+id/view2"
+                android:layout_alignEnd="@+id/view3" />
+
+            <TextView
+                android:id="@+id/statistik_card_general_costs_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Betrag"
+                android:textAlignment="center"
+                android:textSize="22sp"
+                android:layout_alignTop="@+id/statistik_card_general_costs_title"
+                android:layout_alignEnd="@+id/view"
+                android:layout_toEndOf="@+id/statistik_card_general_costs_title"
+                android:layout_alignBottom="@+id/statistik_card_general_costs_title"
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="@color/colorAccent"/>
+
+            <TextView
+                android:id="@+id/statistik_card_general_costs_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gesamte \nAusgaben"
+                android:textAlignment="center"
+                android:layout_alignBottom="@+id/view2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="11dp" />
+
+            <TextView
+                android:id="@+id/statistik_card_general_scans_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/view3"
+                android:layout_alignEnd="@+id/view2"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="11dp"
+                android:text="Anzahl"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="22sp" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/darker_gray" />
+
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="80dp"
+                android:layout_marginLeft="258dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/darker_gray" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="150dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="75dp"
+                android:background="@android:color/darker_gray"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/statistik_card_general_scans_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/view2"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/view"
+                android:layout_marginTop="12dp"
+                android:text="Eingescannte\nBons"
+                android:textAlignment="center" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

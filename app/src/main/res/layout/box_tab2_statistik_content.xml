@@ -35,22 +35,22 @@
                 <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Alle" />
+                    android:text="@string/title_a_statistik_tab_all" />
 
                 <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tage" />
+                    android:text="@string/title_a_statistik_tab_days" />
 
                 <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Monate" />
+                    android:text="@string/title_a_statistik_tab_month" />
 
                 <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Jahre" />
+                    android:text="@string/title_a_statistik_tab_years" />
             </android.support.design.widget.TabLayout>
 
             <android.support.v7.widget.Toolbar
