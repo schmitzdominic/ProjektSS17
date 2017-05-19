@@ -54,8 +54,8 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             title = (TextView) view.findViewById(R.id.budget_title);
             budgetCurrently = (TextView) view.findViewById(R.id.budget_content);
-            month = (TextView) view.findViewById(R.id.budget_turnus);
-            year = (TextView) view.findViewById(R.id.budget_year);
+            month = (TextView) view.findViewById(R.id.budget_monat_bis);
+            year = (TextView) view.findViewById(R.id.budget_jahr_bis);
             progressBar = (ProgressBar) view.findViewById(R.id.budget_progress_bar_circle);
             progressPercentage = (TextView) view.findViewById(R.id.budget_progress_percentage);
 
