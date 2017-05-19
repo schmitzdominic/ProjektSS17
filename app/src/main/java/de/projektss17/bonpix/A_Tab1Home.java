@@ -5,6 +5,7 @@ package de.projektss17.bonpix;
  * Hier bitte die Logik des ersten Tabs
  */
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
@@ -14,8 +15,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import android.support.v7.widget.StaggeredGridLayoutManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Bons_Adapter;
@@ -34,27 +38,49 @@ public class A_Tab1Home extends Fragment {
     private RecyclerView recyclerView;
     private C_Home_Adapter mAdapter;
     private List<C_Bon> bonsList = new ArrayList<>();
-    private RecyclerView recyclerView1;
+    private RecyclerView Recyclerview;
     private C_Bons_Adapter mAdapter1;
     private LayoutInflater inflater;
     private ViewGroup container;
     private View rootView;
+
+    LineChart chart;
+    LineDataSet dataSet;
+    ArrayList<ILineDataSet> lineDataSet;
+    LineData lineData;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
 
 
-        recyclerView1 = (RecyclerView) rootView.findViewById(R.id.tab_eins_recyclerview_bons);
+        Recyclerview = (RecyclerView) rootView.findViewById(R.id.tab_eins_recyclerview_bons);
         mAdapter1 = new C_Bons_Adapter(bonsList);
         prepareHomeData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
-        recyclerView1.setLayoutManager(mLayoutManager);
-        recyclerView1.addItemDecoration(
+        Recyclerview.setLayoutManager(mLayoutManager);
+        Recyclerview.addItemDecoration(
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        recyclerView1.setItemAnimator(new DefaultItemAnimator());
-        recyclerView1.setAdapter(mAdapter1);
+        Recyclerview.setItemAnimator(new DefaultItemAnimator());
+        Recyclerview.setAdapter(mAdapter1);
         mAdapter1.notifyDataSetChanged();
+        chart = (LineChart) rootView.findViewById(R.id.chart);
+
+        // Chart Einstellungen:
+
+        //chart.setTouchEnabled(false);
+        //chart.setDragEnabled(false);
+        chart.animateXY(2000, 4000);
+        chart.setPadding(30, 30, 30, 30);
+
+
+
+
+        //chart.setBackgroundColor(Color.LTGRAY); Hintergrundfarbe ändern
+
+
+
+        prepareLineData();
 
         this.inflater = inflater;
         this.container = container;
@@ -68,8 +94,39 @@ public class A_Tab1Home extends Fragment {
         return rootView;
     }
 
-    private void prepareLineData(){
+    private void prepareLineData() {
+        this.lineDataSet = new ArrayList<>();
 
+        // Liste wird mit Daten aus der Datenbank befüllt
+
+        this.dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, 3), "Gesamtpreis");
+        dataSet.setColor(Color.BLACK); // Linienfarbe
+        dataSet.setCircleColor(Color.BLACK); // Punktfarbe
+        dataSet.setCircleSize(5); // Punktgröße
+        dataSet.setLineWidth(3f); // Dicke der Linien
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(false);
+        YAxis yAxis = chart.getAxisLeft();
+        //yAxis.setDrawLabels(false); // no axis labels
+        //yAxis.setDrawAxisLine(false); // no axis line
+        //yAxis.setDrawGridLines(false); // no grid lines
+        //yAxis.setDrawZeroLine(true); // draw a zero line
+        chart.getAxisRight().setEnabled(false); // no right axis
+        this.lineDataSet.add(this.dataSet);
+        this.lineData = new LineData(this.lineDataSet);
+
+
+        this.lineData.setValueTextSize(10f);
+
+        if (chart != null) {
+            this.chart.setTouchEnabled(false);
+            this.chart.setData(this.lineData);
+            //this.chart.getLegend().setEnabled(false);
+            this.chart.invalidate();
+
+        }
     }
 
     private void prepareBudgetData(){

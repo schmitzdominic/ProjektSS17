@@ -47,7 +47,7 @@
             android:id="@+id/tab_eins_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -58,34 +58,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-
-                        <GridLayout
-                            android:id="@+id/tab_eins_grid"
-                            android:layout_width="match_parent"
-                            android:layout_height="800dp"
-                            android:layout_below="@+id/tab_eins_recyclerview_bons">
-
                                 <RelativeLayout
-                                    android:layout_width="200dp"
-                                    android:layout_height="wrap_content">
+                                    android:layout_below="@+id/tab_eins_recyclerview_bons"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center">
+
+                                        <android.support.v7.widget.CardView
+                                            android:id="@+id/home_chart_card"
+                                            android:layout_width="200dp"
+                                            android:layout_height="250dp"
+                                            android:orientation="vertical"
+                                            android:layout_marginRight="10dp">
+
                                         <com.github.mikephil.charting.charts.LineChart
                                             android:id="@+id/chart"
                                             android:layout_width="match_parent"
-                                            android:layout_height="match_parent" />
-                                </RelativeLayout>
+                                            android:layout_height="match_parent"/>
 
-                                <RelativeLayout
-                                    android:layout_width="200dp"
-                                    android:layout_height="265dp">
+                                        </android.support.v7.widget.CardView>
 
                                         <android.support.v7.widget.CardView
-                                            android:layout_width="match_parent"
+                                            android:id="@+id/home_budget_card"
+                                            android:layout_width="200dp"
                                             android:layout_height="250dp"
-                                            android:layout_marginLeft="3dp"
-                                            android:layout_marginTop="3dp"
-                                            android:layout_marginBottom="3dp"
-                                            android:layout_marginRight="3dp"
-                                            android:orientation="vertical">
+                                            android:orientation="vertical"
+                                            android:layout_toRightOf="@+id/home_chart_card">
 
                                                 <RelativeLayout
                                                     android:layout_width="match_parent"
@@ -106,76 +105,73 @@
 
 
                                                         <RelativeLayout
-                                                            android:id="@+id/home_relativeLayout2"
+                                                            android:id="@+id/relativeLayout2"
                                                             android:layout_width="190dp"
                                                             android:layout_height="190dp"
-                                                            android:layout_below="@+id/budget_title"
-                                                            android:layout_centerHorizontal="true"
-                                                            android:layout_marginTop="10dp">
+                                                            android:layout_below="@+id/home_budget_title"
+                                                            android:layout_alignParentStart="true"
+                                                            android:layout_marginTop="11dp">
 
                                                                 <TextView
-                                                                    android:id="@+id/home_textView2"
+                                                                    android:id="@+id/textView2"
                                                                     android:layout_width="wrap_content"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_centerHorizontal="true"
-                                                                    android:layout_marginTop="41dp"
-                                                                    android:text="Verfügbar"
+                                                                    android:text="Verfügbar:"
                                                                     android:textAlignment="center"
+                                                                    android:layout_marginTop="40dp"
                                                                     android:textSize="12sp" />
 
                                                                 <TextView
-                                                                    android:id="@+id/home_budget_content"
+                                                                    android:id="@+id/budget_content"
                                                                     android:layout_width="wrap_content"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_below="@id/textView2"
                                                                     android:layout_centerHorizontal="true"
                                                                     android:layout_centerVertical="true"
-                                                                    android:layout_marginTop="7dp"
                                                                     android:text="Budget"
                                                                     android:textAlignment="center"
                                                                     android:textSize="30sp"
                                                                     android:textStyle="bold" />
 
                                                                 <TextView
-                                                                    android:id="@+id/home_textView15"
+                                                                    android:id="@+id/textView15"
                                                                     android:layout_width="wrap_content"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_below="@+id/budget_content"
                                                                     android:layout_centerHorizontal="true"
-                                                                    android:layout_marginTop="7dp"
-                                                                    android:text="Es verbleiben"
+                                                                    android:layout_marginTop="10dp"
+                                                                    android:text="Es verbleiben:"
                                                                     android:textAlignment="center"
                                                                     android:textSize="12sp" />
 
                                                                 <TextView
-                                                                    android:id="@+id/home_budget_progress_percentage"
+                                                                    android:id="@+id/budget_progress_percentage"
                                                                     android:layout_width="wrap_content"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_centerHorizontal="true"
-                                                                    android:layout_marginTop="139dp"
+                                                                    android:layout_marginTop="10dp"
+                                                                    android:layout_below="@+id/textView15"
                                                                     android:text="Prozent"
                                                                     android:textAlignment="center"
                                                                     android:textSize="12sp"
                                                                     android:textStyle="bold" />
 
                                                                 <ProgressBar
-                                                                    android:id="@+id/home_budget_progress_bar_circle"
+                                                                    android:id="@+id/budget_progress_bar_circle"
                                                                     style="?android:attr/progressBarStyleHorizontal"
                                                                     android:layout_width="190dp"
-                                                                    android:layout_height="190dp"
-                                                                    android:layout_alignParentBottom="true"
-                                                                    android:layout_alignParentLeft="true"
-                                                                    android:layout_alignParentStart="true"
+                                                                    android:layout_height="180dp"
                                                                     android:background="@drawable/box_budget_circle_shape"
                                                                     android:indeterminate="false"
                                                                     android:max="100"
                                                                     android:progress="10"
-                                                                    android:progressDrawable="@drawable/box_budget_circular_progressbar" />
+                                                                    android:progressDrawable="@drawable/box_budget_circular_progressbar"
+                                                                    android:layout_alignParentStart="true" />
                                                         </RelativeLayout>
                                                 </RelativeLayout>
                                         </android.support.v7.widget.CardView>
                                 </RelativeLayout>
-                        </GridLayout>
                 </RelativeLayout>
         </LinearLayout>
 </RelativeLayout>
