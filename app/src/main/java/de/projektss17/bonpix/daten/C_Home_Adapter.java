@@ -27,7 +27,7 @@ import de.projektss17.bonpix.S;
  */
 
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private int count = 3;
+    private int count = 2;
     private int counter = 0;
     private ArrayList xAchse = new ArrayList();
 
@@ -106,36 +106,13 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        switch(getItemViewType(position)) {
+        switch (getItemViewType(position)) {
             case 0:
-                ViewHolderTime holderTime = (ViewHolderTime)holder;
-                long date = System.currentTimeMillis();
-                SimpleDateFormat sdf = new SimpleDateFormat("MMM MM dd, yyyy h:mm a");
-                String dateString = sdf.format(date);
-                holderTime.time.setText(dateString);
-                counter++;
-                break;
-                /*ViewHolderBar holderBar = (ViewHolderBar)holder;
-                BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
-                BarData dataBar = new BarData(dataSetBar);
-                dataBar.setBarWidth(0.9f); // set custom bar width
-                holderBar.chart.setData(dataBar);
-                holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
-                holderBar.chart.invalidate(); // refresh
-                counter++;
-                break;*/
-            case 1:
-                ViewHolderBudget holderBudget = (ViewHolderBudget)holder;
-                counter++;
-                break;
-            case 2:
-                ViewHolderLine holderLine = (ViewHolderLine)holder;
-                ArrayList <ILineDataSet> daten = new ArrayList<>();
+                ViewHolderLine holderLine = (ViewHolderLine) holder;
+                ArrayList<ILineDataSet> daten = new ArrayList<>();
 
                 // Liste xAchse wird mit Monaten befüllt
-                befuelleListe();
-
-                LineDataSet dataSet = new LineDataSet( S.dbHandler.getLineData(1), "test");
+                LineDataSet dataSet = new LineDataSet(S.dbHandler.getLineData(1), "test");
                 daten.add(dataSet);
                 LineData data = new LineData(daten);
 
@@ -153,13 +130,18 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holderLine.chart.invalidate(); // refresh*/
                 counter++;
                 break;
+
+            case 1:
+                ViewHolderBudget holderBudget = (ViewHolderBudget) holder;
+                counter++;
+                break;
         }
 
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (counter == 3) {
+        if (counter == 2) {
             counter = 0;
             return counter;
         }
@@ -173,18 +155,4 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return count;
     }
 
-    public void befuelleListe(){
-        xAchse.add("Januar");
-        xAchse.add("Februar");
-        xAchse.add("März");
-        xAchse.add("April");
-        xAchse.add("Mai");
-        xAchse.add("Juni");
-        xAchse.add("Juli");
-        xAchse.add("August");
-        xAchse.add("September");
-        xAchse.add("Oktober");
-        xAchse.add("November");
-        xAchse.add("Dezember");
-    }
 }

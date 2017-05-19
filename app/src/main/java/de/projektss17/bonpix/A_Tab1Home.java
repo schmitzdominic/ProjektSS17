@@ -10,7 +10,8 @@ import android.os.Bundle;
 
 import android.support.v7.widget.DefaultItemAnimator;
 
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -18,24 +19,11 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
+
 import java.util.ArrayList;
 import java.util.List;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import com.github.mikephil.charting.charts.BarChart;
+
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Bons_Adapter;
@@ -52,7 +40,7 @@ public class A_Tab1Home extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.home_recyclerview);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.tab_eins_recyclerview_staggered_grid);
         mAdapter = new C_Home_Adapter();
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
@@ -60,7 +48,7 @@ public class A_Tab1Home extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-        /*recyclerView1 = (RecyclerView) rootView.findViewById(R.id.home_recyclerview1);
+        recyclerView1 = (RecyclerView) rootView.findViewById(R.id.tab_eins_recyclerview_bons);
         mAdapter1 = new C_Bons_Adapter(bonsList);
         prepareHomeData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
@@ -69,7 +57,7 @@ public class A_Tab1Home extends Fragment {
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView1.setItemAnimator(new DefaultItemAnimator());
         recyclerView1.setAdapter(mAdapter1);
-        mAdapter1.notifyDataSetChanged();*/
+        mAdapter1.notifyDataSetChanged();
 
         //lChart = (LineCahrt) rootView.findViewById(R.id.)
 

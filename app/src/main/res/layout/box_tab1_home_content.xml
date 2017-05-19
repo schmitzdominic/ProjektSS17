@@ -43,11 +43,53 @@
     android:paddingTop="3dp"
     tools:context="de.projektss17.bonpix.A_Tab1Home">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/home_recyclerview"
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/tab_eins_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/tab_eins_recyclerview_bons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/tab_eins_recyclerview_staggered_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_below="@+id/tab_eins_recyclerview_bons"/>
+
+                </RelativeLayout>
+
+
+        </LinearLayout>
+        </ScrollView>
+
+
+        <!--<RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </RelativeLayout>-->
 
 
 </RelativeLayout>
