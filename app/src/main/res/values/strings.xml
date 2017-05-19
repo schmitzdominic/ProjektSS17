@@ -94,4 +94,13 @@
     <string name="a_budget_edit_sonstiges">Sonstiges (optional)…</string>
     <string name="a_budget_edit_vonbis_error">Von-Datum liegt hinter Bis-Datum</string>
 
+    <!-- Wochentage -->
+    <string name="wochentag_1">Sonntag</string>
+    <string name="wochentag_2">Montag</string>
+    <string name="wochentag_3">Dienstag</string>
+    <string name="wochentag_4">Mittwoch</string>
+    <string name="wochentag_5">Donnerstag</string>
+    <string name="wochentag_6">Freitag</string>
+    <string name="wochentag_7">Samstag</string>
+
 </resources>

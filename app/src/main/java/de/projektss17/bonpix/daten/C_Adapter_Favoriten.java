@@ -2,6 +2,7 @@ package de.projektss17.bonpix.daten;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import de.projektss17.bonpix.A_Budget_Edit;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
@@ -25,7 +32,7 @@ public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favorite
     private C_Bon bon;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView favoriteShopName, favoriteDate;
+        public TextView favoriteShopName, favoriteDate, favouritePrice;
         public ImageView icon, deleteBtn;
         public Resources res;
 
@@ -33,8 +40,9 @@ public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favorite
         public MyViewHolder(View view){
             super(view);
             icon = (ImageView) view.findViewById(R.id.favoriten_view_laden_bild);
-            favoriteShopName = (TextView) view.findViewById(R.id.favoriten_view_favoriteShopName);
-            favoriteDate = (TextView) view.findViewById(R.id.favoriten_view_zusatz_favoriteDate);
+            favoriteShopName = (TextView) view.findViewById(R.id.favoriten_view_favorite_shopname);
+            favoriteDate = (TextView) view.findViewById(R.id.favoriten_view_zusatz_favorite_date);
+            favouritePrice = (TextView) view.findViewById(R.id.favoriten_view_zusatz_favorite_price);
             deleteBtn = (ImageView) view.findViewById(R.id.favoriten_view_favoriten_delete_button);
             res = view.getResources();
 
@@ -69,8 +77,28 @@ public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favorite
         roundedBitmapDrawable.setAntiAlias(true);
         holder.icon.setImageDrawable(roundedBitmapDrawable);
 
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = null;
+
+        try {
+            date = df.parse(bon.getDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(date != null){
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
+            holder.favoriteDate.setText(S.getWeekday(holder.res, dayOfWeek) + "\n" + bon.getDate());
+        } else {
+            holder.favoriteDate.setText(bon.getDate());
+        }
+
+
         holder.favoriteShopName.setText(bon.getShopName());
-        holder.favoriteDate.setText(bon.getDate());
+        holder.favouritePrice.setText(bon.getTotalPrice());
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
 

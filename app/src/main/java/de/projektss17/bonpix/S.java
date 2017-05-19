@@ -250,4 +250,17 @@ public class S extends Activity {
 
     }
 
+    public static String getWeekday(Resources res, int day){
+        switch(day){
+            case 1: return res.getString(R.string.wochentag_1);
+            case 2: return res.getString(R.string.wochentag_2);
+            case 3: return res.getString(R.string.wochentag_3);
+            case 4: return res.getString(R.string.wochentag_4);
+            case 5: return res.getString(R.string.wochentag_5);
+            case 6: return res.getString(R.string.wochentag_6);
+            case 7: return res.getString(R.string.wochentag_7);
+            default: return " ";
+        }
+    }
+
 }

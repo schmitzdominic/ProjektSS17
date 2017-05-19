@@ -18,26 +18,38 @@
         android:src="@drawable/common_google_signin_btn_icon_dark_focused" />
 
     <TextView
-        android:id="@+id/favoriten_view_favoriteShopName"
+        android:id="@+id/favoriten_view_favorite_shopname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/favoriten_view_favoriten_delete_button"
+        android:layout_toLeftOf="@+id/view_total_price"
         android:layout_toRightOf="@+id/favoriten_view_laden_bild"
         android:paddingTop="20dp"
-        android:text="Beginn der Garantie"
+        android:text="Laden Name"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/favoriten_view_zusatz_favoriteDate"
+        android:id="@+id/favoriten_view_zusatz_favorite_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="20dp"
-        android:text="Ende der Favoriten"
+        android:text="Datum des Bon"
         android:textSize="14sp"
-        android:layout_toLeftOf="@id/favoriten_view_favoriten_delete_button"
+        android:layout_toLeftOf="@+id/favoriten_view_zusatz_favorite_price"
         android:layout_toRightOf="@+id/favoriten_view_laden_bild"
-        android:layout_below="@+id/favoriten_view_favoriteShopName"/>
+        android:layout_below="@+id/favoriten_view_favorite_shopname"/>
+
+    <TextView
+        android:id="@+id/favoriten_view_zusatz_favorite_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/favoriten_view_favoriten_delete_button"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center_vertical"
+        android:text="Preis"
+        android:textSize="24sp"/>
 
 
     <ImageView
