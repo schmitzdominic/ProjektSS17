@@ -125,7 +125,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public List<Entry> getLineData(SQLiteDatabase db, int count){
 
         List<Entry> dataList = new ArrayList<>();
-        int counter = 0;
+        int counter = 1;
 
         ArrayList<C_Bon> revertedBonList = new ArrayList<>();
         ArrayList<C_Bon> bonList = this.getAllBons(db);

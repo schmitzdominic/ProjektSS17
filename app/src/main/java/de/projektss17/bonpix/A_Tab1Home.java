@@ -84,7 +84,7 @@ public class A_Tab1Home extends Fragment {
 
         // Liste wird mit Daten aus der Datenbank befüllt
 
-        this.dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, 3), "Gesamtpreis");
+        this.dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, 4), "Bon");
         dataSet.setColor(Color.BLACK); // Linienfarbe
         dataSet.setCircleColor(Color.BLACK); // Punktfarbe
         dataSet.setCircleSize(5); // Punktgröße
@@ -93,6 +93,9 @@ public class A_Tab1Home extends Fragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
+        xAxis.setAxisMaximum(3);
+        xAxis.setAxisMinimum(0);
+        xAxis.setLabelCount(3);
         YAxis yAxis = chart.getAxisLeft();
         //yAxis.setDrawLabels(false); // no axis labels
         //yAxis.setDrawAxisLine(false); // no axis line
