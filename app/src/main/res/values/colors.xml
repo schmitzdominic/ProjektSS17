@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Hauptfarben -->
-    <color name="colorPrimary">#FFC107</color>
-    <color name="colorPrimaryDark">#FF8F00</color>
-    <color name="colorAccent">#03A9F4</color>
+    <color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#455a64</color>
+    <color name="colorAccent">#FF3D00</color>
+
+    <!-- ALTER FARBE
+    <color name="colorPrimary">#ffc107</color>
+    <color name="colorPrimaryDark">#ff8f00</color>
+    <color name="colorAccent">#03a9f4</color> -->
 
     <!-- Transparenz für die Floating buttons -->
     <color name="colorTransBg">#26000000</color>
@@ -15,9 +20,12 @@
     <color name="colorMenueIcon">#757575</color>
 
     <!-- Linien Farbe -->
-    <color name="linie">#CCCCCC</color>
+    <color name="linie">#cccccc</color>
 
     <!-- star-outline.xml Farbe -->
     <color name="star">#9E9E9E</color>
+
+    <!-- Standard Farben -->
+    <color name="positiv">#388e3c</color>
 
 </resources>
