@@ -33,9 +33,7 @@ import de.projektss17.bonpix.S;
 
 public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private int count = 8;
-    private int counter = 0;
-
+    private int count = 5;
 
     public class ViewHolderTopProducts extends RecyclerView.ViewHolder {
 
@@ -110,23 +108,23 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
 
-
         switch(viewType){
             case 0:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_bar_layout, parent, false);
-                return new ViewHolderBar(itemView);
-            case 1:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_line_layout, parent, false);
-                return new ViewHolderLine(itemView);
-            case 2:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_pie_layout, parent, false);
-                return new ViewHolderPie(itemView);
-            case 3:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_general_layout, parent, false);
                 return new ViewHolderGeneral(itemView);
-            case 4:
+            case 1:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_bar_layout, parent, false);
+                return new ViewHolderBar(itemView);
+            case 2:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_top_products_layout, parent, false);
                 return new ViewHolderTopProducts(itemView);
+            case 3:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_pie_layout, parent, false);
+                return new ViewHolderPie(itemView);
+            case 4:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_line_layout, parent, false);
+                return new ViewHolderLine(itemView);
+
 
         }
         return null;
@@ -135,13 +133,8 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if (counter == 5){
-            counter = 0;
-            return counter;
-        }
-        else {
-            return counter;
-        }
+        return position;
+
     }
 
     @Override
@@ -149,6 +142,13 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         switch(getItemViewType(position)){
             case 0:
+                ViewHolderGeneral holderGeneral = (ViewHolderGeneral)holder;
+                holderGeneral.anzahlScans.setText("20");
+                holderGeneral.ausgabenGesamt.setText("10303 €");
+                holderGeneral.anzahlArtikel.setText("304040");
+                holderGeneral.anzahlLaeden.setText("45");
+                break;
+            case 1:
                 Log.e("### DATABASEHANDLER","## onBind 0 BAR");
                 ViewHolderBar holderBar = (ViewHolderBar)holder;
                 BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
@@ -157,41 +157,8 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderBar.chart.setData(dataBar);
                 holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
                 holderBar.chart.invalidate(); // refresh
-                counter++;
-                break;
-            case 1:
-                Log.e("### DATABASEHANDLER","## onBind 1 LINE");
-                ViewHolderLine holderLine = (ViewHolderLine)holder;
-                LineDataSet setComp1 = new LineDataSet(S.dbHandler.getLineData(1).get("lineOne"), "Company 1");
-                setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
-                LineDataSet setComp2 = new LineDataSet(S.dbHandler.getLineData(1).get("lineTwo"), "Company 2");
-                setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
-                List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-                dataSets.add(setComp1);
-                dataSets.add(setComp2);
-                LineData data = new LineData(dataSets);
-                holderLine.chart1.setData(data);
-                holderLine.chart1.invalidate();
-                counter++;
                 break;
             case 2:
-                Log.e("### DATABASEHANDLER","## onBind 2 PIE");
-                ViewHolderPie holderPie = (ViewHolderPie)holder;
-                PieDataSet set = new PieDataSet(S.dbHandler.getPieData(1), "Election Results");
-                PieData pieData = new PieData(set);
-                holderPie.chart2.setData(pieData);
-                holderPie.chart2.invalidate();
-                counter++;
-                break;
-            case 3:
-                ViewHolderGeneral holderGeneral = (ViewHolderGeneral)holder;
-                holderGeneral.anzahlScans.setText("20");
-                holderGeneral.ausgabenGesamt.setText("10303");
-                holderGeneral.anzahlArtikel.setText("304040");
-                holderGeneral.anzahlLaeden.setText("45");
-                counter++;
-                break;
-            case 4:
                 ViewHolderTopProducts holderTopProducts = (ViewHolderTopProducts)holder;
                 holderTopProducts.produkt1.setText("Videospiele");
                 holderTopProducts.produkt2.setText("Getränke");
@@ -202,115 +169,16 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderTopProducts.percentage1.setText("45 %");
                 holderTopProducts.percentage2.setText("35 %");
                 holderTopProducts.percentage3.setText("20 %");
-                counter++;
                 break;
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return count;
-    }
-
-
-
-/*
-    private int count = 8;
-    private int counter = 0;
-
-    public class ViewHolderBar extends RecyclerView.ViewHolder {
-        BarChart chart;
-
-        public ViewHolderBar(View view) {
-            super(view);
-            chart = (BarChart) view.findViewById(R.id.chart);
-        }
-    }
-
-    public class ViewHolderLine extends RecyclerView.ViewHolder {
-        LineChart chart1;
-
-        public ViewHolderLine(View view) {
-            super(view);
-            chart1 = (LineChart) view.findViewById(R.id.chart1);
-        }
-    }
-
-    public class ViewHolderPie extends RecyclerView.ViewHolder {
-        PieChart chart2;
-
-        public ViewHolderPie(View view) {
-            super(view);
-            chart2 = (PieChart) view.findViewById(R.id.chart2);
-        }
-    }
-
-    public class ViewHolderGeneral extends RecyclerView.ViewHolder{
-        View chart3;
-
-        ViewHolderGeneral(View view){
-            super(view);
-            chart3 = (View)view.findViewById(R.layout.box_statistik_card_general_layout);
-        }
-    }
-
-    public C_Statistik_Adapter(){
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (counter == 3){
-            counter = 0;
-            return counter;
-        }
-        else {
-            return counter;
-        }
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView;
-        switch(viewType){
-            case 0:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_bar_layout, parent, false);
-                return new ViewHolderBar(itemView);
-            case 1:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_line_layout, parent, false);
-                return new ViewHolderLine(itemView);
-            case 2:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_pie_layout, parent, false);
-                return new ViewHolderPie(itemView);
-        }
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        ViewHolderBar holderBar = (ViewHolderBar)holder;
-        BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
-        BarData dataBar = new BarData(dataSetBar);
-        dataBar.setBarWidth(0.9f); // set custom bar width
-        holderBar.chart.setData(dataBar);
-        holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
-        holderBar.chart.invalidate();
-
-
-        /*
-        switch(getItemViewType(position)){
-            case 0:
-                Log.e("### DATABASEHANDLER","## onBind 0 BAR");
-                ViewHolderBar holderBar = (ViewHolderBar)holder;
-                BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
-                BarData dataBar = new BarData(dataSetBar);
-                dataBar.setBarWidth(0.9f); // set custom bar width
-                holderBar.chart.setData(dataBar);
-                holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
-                holderBar.chart.invalidate(); // refresh
-                counter++;
+            case 3:
+                Log.e("### DATABASEHANDLER","## onBind 2 PIE");
+                ViewHolderPie holderPie = (ViewHolderPie)holder;
+                PieDataSet set = new PieDataSet(S.dbHandler.getPieData(1), "Election Results");
+                PieData pieData = new PieData(set);
+                holderPie.chart2.setData(pieData);
+                holderPie.chart2.invalidate();
                 break;
-            case 1:
+            case 4:
                 Log.e("### DATABASEHANDLER","## onBind 1 LINE");
                 ViewHolderLine holderLine = (ViewHolderLine)holder;
                 LineDataSet setComp1 = new LineDataSet(S.dbHandler.getLineData(1).get("lineOne"), "Company 1");
@@ -323,16 +191,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 LineData data = new LineData(dataSets);
                 holderLine.chart1.setData(data);
                 holderLine.chart1.invalidate();
-                counter++;
-                break;
-            case 2:
-                Log.e("### DATABASEHANDLER","## onBind 2 PIE");
-                ViewHolderPie holderPie = (ViewHolderPie)holder;
-                PieDataSet set = new PieDataSet(S.dbHandler.getPieData(1), "Election Results");
-                PieData pieData = new PieData(set);
-                holderPie.chart2.setData(pieData);
-                holderPie.chart2.invalidate();
-                counter++;
                 break;
         }
     }
@@ -340,5 +198,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         return count;
-    } */
+    }
+
 }
