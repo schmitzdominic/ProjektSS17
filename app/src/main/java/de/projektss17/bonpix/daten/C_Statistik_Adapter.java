@@ -39,8 +39,8 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class ViewHolderTopProducts extends RecyclerView.ViewHolder {
 
-        public TextView produkt1, produkt2, produkt3, produkt4, produkt5;
-        public ProgressBar progress1, progress2, progress3, progress4, progress5;
+        public TextView produkt1, produkt2, produkt3, percentage1, percentage2, percentage3;
+        public ProgressBar progress1, progress2, progress3;
 
         public ViewHolderTopProducts(View view) {
             super(view);
@@ -49,14 +49,13 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
             this.produkt1 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_one_title);
             this.produkt2 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_two_title);
             this.produkt3 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_three_title);
-            this.produkt4 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_four_title);
-            this.produkt5 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_five_title);
+            this.percentage1 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_one_percentage);
+            this.percentage2 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_two_percentage);
+            this.percentage3 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_three_percentage);
 
             this.progress1 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_one_progressbar);
             this.progress2 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_two_progressbar);
             this.progress3 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_three_progressbar);
-            this.progress4 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_four_progressbar);
-            this.progress5 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_five_progressbar);
         }
     }
 
@@ -122,6 +121,12 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 2:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_pie_layout, parent, false);
                 return new ViewHolderPie(itemView);
+            case 3:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_general_layout, parent, false);
+                return new ViewHolderGeneral(itemView);
+            case 4:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_top_products_layout, parent, false);
+                return new ViewHolderTopProducts(itemView);
 
         }
         return null;
@@ -130,7 +135,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if (counter == 4){
+        if (counter == 5){
             counter = 0;
             return counter;
         }
@@ -185,21 +190,20 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderGeneral.anzahlArtikel.setText("304040");
                 holderGeneral.anzahlLaeden.setText("45");
                 counter++;
-                break;/*
+                break;
             case 4:
                 ViewHolderTopProducts holderTopProducts = (ViewHolderTopProducts)holder;
                 holderTopProducts.produkt1.setText("Videospiele");
-                holderTopProducts.produkt1.setText("Getränke");
-                holderTopProducts.produkt1.setText("Steaks");
-                holderTopProducts.produkt1.setText("Bier");
-                holderTopProducts.produkt1.setText("Single Malt Whisky");
+                holderTopProducts.produkt2.setText("Getränke");
+                holderTopProducts.produkt3.setText("Steaks");
                 holderTopProducts.progress1.setProgress(45);
-                holderTopProducts.progress2.setProgress(20);
-                holderTopProducts.progress3.setProgress(17);
-                holderTopProducts.progress4.setProgress(10);
-                holderTopProducts.progress5.setProgress(8);
+                holderTopProducts.progress2.setProgress(35);
+                holderTopProducts.progress3.setProgress(20);
+                holderTopProducts.percentage1.setText("45 %");
+                holderTopProducts.percentage2.setText("35 %");
+                holderTopProducts.percentage3.setText("20 %");
                 counter++;
-                break; */
+                break;
         }
     }
 

@@ -108,11 +108,10 @@
     <string name="statistik_card_general_productamount_title">Artikel</string>
     <string name="statistik_card_general_productamount_content">Anzahl</string>
 
-    <string name="statistik_card_topproducts_title">Top 5 Artikel</string>
+    <string name="statistik_card_topproducts_title">Top 3 Artikel</string>
     <string name="statistik_card_topproducts_article_one">Artikel 1</string>
     <string name="statistik_card_topproducts_article_two">Artikel 2</string>
     <string name="statistik_card_topproducts_article_three">Artikel 3</string>
-    <string name="statistik_card_topproducts_article_four">Artikel 4</string>
-    <string name="statistik_card_topproducts_article_five">Artikel 5</string>
+    <string name="statistik_card_topproducts_percentage">%</string>
 
 </resources>
