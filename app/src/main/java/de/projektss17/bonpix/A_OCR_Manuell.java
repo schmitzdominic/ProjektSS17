@@ -104,14 +104,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         /**
          * Guarantee Listener - Triggers Dialog (NumberPicker)
-         * Is setting GuaranteeEnd and Guarantee Boolean
+         * Is setting GuaranteeEnd with FormattedDate and Guarantee Boolean
          */
         this.garantieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(bonGarantie==false) {
-                    bonGarantie = true;
-                    garantieButton.setColorFilter(R.color.colorPrimary);
+                if(bonGarantie == false) {
                     LayoutInflater inflater = LayoutInflater.from(context);
                     View dialogView = inflater.inflate(R.layout.box_ocr_manuell_dialog_picker, null);
                     final NumberPicker picker = (NumberPicker) dialogView.findViewById(R.id.number_picker);
@@ -133,13 +131,16 @@ public class A_OCR_Manuell extends AppCompatActivity {
                             Date newDate = calendar.getTime();
                             String dateFormatted = new SimpleDateFormat("dd-MM-yyyy").format(newDate);
                             bon.setGuaranteeEnd(dateFormatted);
+                            bonGarantie = true;
+                            garantieButton.setColorFilter(R.color.colorPrimary);
                             S.outShort(A_OCR_Manuell.this, "Garantie wurde hinzugefügt!");
                             Log.e("### GuaranteeEnd VALUE:", "" + dateFormatted);
                         }
                     });
                     builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
-                            // Dismiss
+                            bonGarantie = false;
+                            garantieButton.setColorFilter(Color.WHITE);
                         }
                     });
                     final AlertDialog yearPickerDialog = builder.create();
