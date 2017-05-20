@@ -39,7 +39,7 @@ public class A_Tab1Home extends Fragment {
     private C_Home_Adapter mAdapter;
     private List<C_Bon> bonsList = new ArrayList<>();
     private RecyclerView Recyclerview;
-    private C_Bons_Adapter mAdapter1;
+    private C_Home_Adapter mAdapter1;
     private LayoutInflater inflater;
     private ViewGroup container;
     private View rootView;
@@ -55,7 +55,7 @@ public class A_Tab1Home extends Fragment {
 
 
         Recyclerview = (RecyclerView) rootView.findViewById(R.id.tab_eins_recyclerview_bons);
-        mAdapter1 = new C_Bons_Adapter(bonsList);
+        mAdapter1 = new C_Home_Adapter(bonsList);
         prepareHomeData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
         Recyclerview.setLayoutManager(mLayoutManager);
@@ -68,28 +68,13 @@ public class A_Tab1Home extends Fragment {
 
         // Chart Einstellungen:
 
-        //chart.setTouchEnabled(false);
-        //chart.setDragEnabled(false);
         chart.animateXY(2000, 4000);
         chart.setPadding(30, 30, 30, 30);
-
-
-
-
-        //chart.setBackgroundColor(Color.LTGRAY); Hintergrundfarbe ändern
-
-
 
         prepareLineData();
 
         this.inflater = inflater;
         this.container = container;
-
-        //lChart = (LineCahrt) rootView.findViewById(R.id.)
-
-        /*bChart = (BarChart) rootView.findViewById(R.id.chart2);
-        ArrayList<IBarDataSet> dataSets1 = new ArrayList<>();
-        createBarChart(bChart, dataSets1, "The year 2017");*/
 
         return rootView;
     }
