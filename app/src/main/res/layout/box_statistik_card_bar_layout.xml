@@ -33,9 +33,7 @@
             android:layout_marginBottom="17dp"
             android:text="@string/title_a_statistik_bar_chart"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
     </RelativeLayout>
 

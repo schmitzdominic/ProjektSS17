@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    android:layout_marginRight="3dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/statistik_bar_chart_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/toolbar"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/statistik_card_topproducts_title"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/statistik_card_topproducts_article_one_title"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/statistik_card_topproducts_article_one"
+            android:textAlignment="center"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignParentStart="true" />
+
+        <ProgressBar
+            android:id="@+id/statistik_card_topproducts_article_one_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/statistik_card_topproducts_article_one_title"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_toEndOf="@+id/statistik_card_topproducts_article_one_title"
+            android:maxHeight="50dp"
+            android:progressBackgroundTint="@color/colorAccent" />
+
+
+        <TextView
+            android:id="@+id/statistik_card_topproducts_article_two_title"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:text="@string/statistik_card_topproducts_article_two"
+            android:textAlignment="center"
+            android:layout_below="@+id/statistik_card_topproducts_article_one_title"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="17dp" />
+
+        <ProgressBar
+            android:id="@+id/statistik_card_topproducts_article_two_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/statistik_card_topproducts_article_two_title"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_toEndOf="@+id/statistik_card_topproducts_article_two_title"
+            android:maxHeight="50dp"
+            android:progressBackgroundTint="@color/colorAccent" />
+
+
+        <TextView
+            android:id="@+id/statistik_card_topproducts_article_three_title"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/statistik_card_topproducts_article_two_title"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="17dp"
+            android:text="@string/statistik_card_topproducts_article_three"
+            android:textAlignment="center" />
+
+        <ProgressBar
+            android:id="@+id/statistik_card_topproducts_article_three_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/statistik_card_topproducts_article_three_title"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_toEndOf="@+id/statistik_card_topproducts_article_three_title"
+            android:maxHeight="50dp"
+            android:progressBackgroundTint="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/statistik_card_topproducts_article_four_title"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/statistik_card_topproducts_article_three_title"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="17dp"
+            android:text="@string/statistik_card_topproducts_article_four"
+            android:textAlignment="center" />
+
+        <ProgressBar
+            android:id="@+id/statistik_card_topproducts_article_four_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/statistik_card_topproducts_article_four_title"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_toEndOf="@+id/statistik_card_topproducts_article_four_title"
+            android:maxHeight="50dp"
+            android:progressBackgroundTint="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/statistik_card_topproducts_article_five_title"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="17dp"
+            android:text="@string/statistik_card_topproducts_article_five"
+            android:textAlignment="center"
+            android:layout_below="@+id/statistik_card_topproducts_article_four_title"
+            android:layout_alignParentStart="true" />
+
+        <ProgressBar
+            android:id="@+id/statistik_card_topproducts_article_five_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/statistik_card_topproducts_article_five_title"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_toEndOf="@+id/statistik_card_topproducts_article_five_title"
+            android:maxHeight="50dp"
+            android:progressBackgroundTint="@color/colorAccent" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

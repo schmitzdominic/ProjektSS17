@@ -37,6 +37,30 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private int counter = 0;
 
 
+    public class ViewHolderTopProducts extends RecyclerView.ViewHolder {
+
+        public TextView produkt1, produkt2, produkt3, produkt4, produkt5;
+        public ProgressBar progress1, progress2, progress3, progress4, progress5;
+
+        public ViewHolderTopProducts(View view) {
+            super(view);
+
+            // Implementierung des Layouts der einzelnen Objekte für die CardView
+            this.produkt1 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_one_title);
+            this.produkt2 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_two_title);
+            this.produkt3 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_three_title);
+            this.produkt4 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_four_title);
+            this.produkt5 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_five_title);
+
+            this.progress1 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_one_progressbar);
+            this.progress2 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_two_progressbar);
+            this.progress3 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_three_progressbar);
+            this.progress4 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_four_progressbar);
+            this.progress5 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_five_progressbar);
+        }
+    }
+
+
     public class ViewHolderGeneral extends RecyclerView.ViewHolder {
 
         public TextView anzahlScans, ausgabenGesamt, anzahlLaeden, anzahlArtikel;
@@ -98,9 +122,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 2:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_pie_layout, parent, false);
                 return new ViewHolderPie(itemView);
-            case 3:
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_general_layout, parent, false);
-                return new ViewHolderGeneral(itemView);
+
         }
         return null;
     }
@@ -119,7 +141,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
 
         switch(getItemViewType(position)){
             case 0:
@@ -164,7 +185,21 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderGeneral.anzahlArtikel.setText("304040");
                 holderGeneral.anzahlLaeden.setText("45");
                 counter++;
-                break;
+                break;/*
+            case 4:
+                ViewHolderTopProducts holderTopProducts = (ViewHolderTopProducts)holder;
+                holderTopProducts.produkt1.setText("Videospiele");
+                holderTopProducts.produkt1.setText("Getränke");
+                holderTopProducts.produkt1.setText("Steaks");
+                holderTopProducts.produkt1.setText("Bier");
+                holderTopProducts.produkt1.setText("Single Malt Whisky");
+                holderTopProducts.progress1.setProgress(45);
+                holderTopProducts.progress2.setProgress(20);
+                holderTopProducts.progress3.setProgress(17);
+                holderTopProducts.progress4.setProgress(10);
+                holderTopProducts.progress5.setProgress(8);
+                counter++;
+                break; */
         }
     }
 

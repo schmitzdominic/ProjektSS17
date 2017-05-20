@@ -98,6 +98,7 @@
     <string name="title_a_statistik_bar_chart">Bardiagramm</string>
     <string name="title_a_statistik_combined_chart">Allgemein</string>
 
+    <string name="statistik_card_general_title">Allgemeiner Überblick aller Bon</string>
     <string name="statistik_card_general_scans_title">Eingescannte \nBons</string>
     <string name="statistik_card_general_scans_content">Anzahl</string>
     <string name="statistik_card_general_costs_title">Gesamte \nAusgaben</string>
@@ -106,5 +107,12 @@
     <string name="statistik_card_general_marketamount_content">Anzahl</string>
     <string name="statistik_card_general_productamount_title">Artikel</string>
     <string name="statistik_card_general_productamount_content">Anzahl</string>
+
+    <string name="statistik_card_topproducts_title">Top 5 Artikel</string>
+    <string name="statistik_card_topproducts_article_one">Artikel 1</string>
+    <string name="statistik_card_topproducts_article_two">Artikel 2</string>
+    <string name="statistik_card_topproducts_article_three">Artikel 3</string>
+    <string name="statistik_card_topproducts_article_four">Artikel 4</string>
+    <string name="statistik_card_topproducts_article_five">Artikel 5</string>
 
 </resources>
