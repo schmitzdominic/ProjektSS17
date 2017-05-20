@@ -117,7 +117,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     picker.setMinValue(1);
                     picker.setValue(2);
                     final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Garantielänge");
+                    builder.setTitle("Garantielänge (Jahre)");
                     builder.setView(dialogView);
                     builder.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
