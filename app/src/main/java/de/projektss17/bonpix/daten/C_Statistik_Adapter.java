@@ -28,12 +28,22 @@ import de.projektss17.bonpix.S;
 
 
 /**
- * Created by Marcus on 02.05.2017.
+ * ReCreated by Johanns on 18.05.2017 - 20.05.2017.
  */
 
 public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private int count = 6;  // Gibt an wie viele Cards die RecyclerView beinhalten soll
+    private int count = 6;              // Gibt an wie viele Cards die RecyclerView beinhalten soll
+    private ArrayList<C_Bon> bons;      // Sammlung aller aus der DB ausgelesenen Bons
+    private ArrayList<C_Laden> laeden;  // Sammlung aller auser DB ausgelesenen Läden
+    private C_DatabaseHandler dbh;      // Verwaltungsklasse für den Zugriff auf die DB zur Filterung
+    public String filter = "ALLE";      // Filter-Inforamation für die Methode createFilteredData (siehe unten im Code)
+
+
+    public C_Statistik_Adapter(C_DatabaseHandler dbh){
+        this.dbh = dbh;
+    }
+
 
     public class ViewHolderTopFacts extends RecyclerView.ViewHolder {
 
@@ -119,7 +129,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
@@ -159,10 +168,12 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+        createFilteredData();   //Befüllt die ArrayLists (Läden & Bons) entsprechend der Filterung
+
         switch(getItemViewType(position)){
             case 0:
                 ViewHolderGeneral holderGeneral = (ViewHolderGeneral)holder;
-                holderGeneral.anzahlScans.setText("20");
+                holderGeneral.anzahlScans.setText(filter);      //Derzeit nur zum Testen -> Ausgabe des Strings Filter
                 holderGeneral.ausgabenGesamt.setText("10303 €");
                 holderGeneral.anzahlArtikel.setText("304040");
                 holderGeneral.anzahlLaeden.setText("45");
@@ -225,4 +236,28 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return count;
     }
 
+
+    //Bereitet die anhand der Filterung ausgewählten Daten vor
+    public void createFilteredData(){
+
+       if(filter=="ALLE"){
+           //laeden = dbh.getAllLaeden( HIER DB REIN );
+           //bons = dbh.getAllBons( HIER DB REIN);
+       }
+
+       if(filter =="TAG"){
+           //laeden = dbh.getDayFilteredLaeden( HIER DB REIN );
+           //bons = dbh.getDayFilteredBons( HIER DB REIN);
+       }
+
+        if(filter =="MONAT"){
+            //laeden = dbh.getMonthFilteredLaeden( HIER DB REIN );
+            //bons = dbh.getMonthFilteredBons( HIER DB REIN);
+        }
+
+        if(filter =="JAHR"){
+            //laeden = dbh.getYearFilteredLaeden( HIER DB REIN );
+            //bons = dbh.getYearFilteredBons( HIER DB REIN);
+        }
+    }
 }
