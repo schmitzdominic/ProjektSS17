@@ -114,4 +114,12 @@
     <string name="statistik_card_topproducts_article_three">Artikel 3</string>
     <string name="statistik_card_topproducts_percentage">%</string>
 
+    <string name="statistik_card_topfacts_title">Top Fakten</string>
+    <string name="statistik_card_topfacts_fact_one_content">Inhalt</string>
+    <string name="statistik_card_topfacts_fact_two_content">Max-Mustermann-Str. XB</string>
+    <string name="statistik_card_topfacts_fact_three_content">Betrag</string>
+    <string name="statistik_card_topfacts_fact_one_title">Meistbesuchter \nLaden</string>
+    <string name="statistik_card_topfacts_fact_two_title">Adresse:</string>
+    <string name="statistik_card_topfacts_fact_three_title">Durchschn. \nAusgaben:</string>
+
 </resources>

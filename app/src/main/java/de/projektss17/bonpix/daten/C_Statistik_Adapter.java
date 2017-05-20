@@ -33,7 +33,23 @@ import de.projektss17.bonpix.S;
 
 public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private int count = 5;
+    private int count = 6;  // Gibt an wie viele Cards die RecyclerView beinhalten soll
+
+    public class ViewHolderTopFacts extends RecyclerView.ViewHolder {
+
+        public TextView fact1, fact2, fact3;
+
+        public ViewHolderTopFacts(View view) {
+            super(view);
+
+            // Implementierung des Layouts der einzelnen Objekte für die CardView
+            this.fact1 = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_one_content);
+            this.fact2 = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_two_content);
+            this.fact3 = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_three_content);
+
+        }
+    }
+
 
     public class ViewHolderTopProducts extends RecyclerView.ViewHolder {
 
@@ -122,6 +138,9 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_pie_layout, parent, false);
                 return new ViewHolderPie(itemView);
             case 4:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_topfacts_layout, parent, false);
+                return new ViewHolderTopFacts(itemView);
+            case 5:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_line_layout, parent, false);
                 return new ViewHolderLine(itemView);
 
@@ -179,6 +198,12 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderPie.chart2.invalidate();
                 break;
             case 4:
+                ViewHolderTopFacts holderTopFacts = (ViewHolderTopFacts) holder;
+                holderTopFacts.fact1.setText("LIDL");
+                holderTopFacts.fact2.setText("Max-Mustermann-Str. 4\n86161 Augsburg");
+                holderTopFacts.fact3.setText("2585 €");
+                break;
+            case 5:
                 Log.e("### DATABASEHANDLER","## onBind 1 LINE");
                 ViewHolderLine holderLine = (ViewHolderLine)holder;
                 LineDataSet setComp1 = new LineDataSet(S.dbHandler.getLineData(1).get("lineOne"), "Company 1");
