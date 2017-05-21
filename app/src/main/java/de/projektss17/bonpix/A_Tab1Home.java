@@ -24,7 +24,6 @@ import java.util.List;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
@@ -90,11 +89,6 @@ public class A_Tab1Home extends Fragment {
         xAxis.setAxisMaximum(3);
         xAxis.setAxisMinimum(0);
         xAxis.setLabelCount(3);
-        YAxis yAxis = chart.getAxisLeft();
-        //yAxis.setDrawLabels(false); // no axis labels
-        //yAxis.setDrawAxisLine(false); // no axis line
-        //yAxis.setDrawGridLines(false); // no grid lines
-        //yAxis.setDrawZeroLine(true); // draw a zero line
         chart.getAxisRight().setEnabled(false); // no right axis
         this.lineDataSet.add(this.dataSet);
         this.lineData = new LineData(this.lineDataSet);
@@ -105,7 +99,6 @@ public class A_Tab1Home extends Fragment {
         if (chart != null) {
             this.chart.setTouchEnabled(false);
             this.chart.setData(this.lineData);
-            //this.chart.getLegend().setEnabled(false);
             this.chart.invalidate();
 
         }
