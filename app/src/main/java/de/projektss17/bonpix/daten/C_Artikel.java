@@ -47,7 +47,7 @@ public class C_Artikel {
      */
     public double getPrice(){
         return this.price;
-    }
+}
 
     /**
      * Gibt die Kategorie des Artikels wieder

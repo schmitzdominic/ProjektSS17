@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="40dp">
+
+    <TextView
+        android:id="@+id/bon_anzeigen_artikel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Artikel"
+        android:layout_marginLeft="54dp"
+        android:layout_marginStart="54dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/bon_anzeigen_preis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preis"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="71dp"
+        android:layout_marginEnd="71dp" />
+</RelativeLayout>
