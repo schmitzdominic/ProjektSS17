@@ -23,7 +23,7 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/bon_anzeigen_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
@@ -35,7 +35,7 @@
                 android:layout_marginEnd="69dp" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/bon_anzeigen_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/ic_info_outline_white_24dp"
