@@ -62,7 +62,7 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
             @Override
             public void onClick (View v) {
                 new AlertDialog.Builder(A_Bon_Anzeigen.this)
-                .setTitle("Info")
+                .setTitle("Sonstige Informationen")
                 .setMessage(bon.getOtherInformations())
                 .setNeutralButton("Ok", null)
                 .create()
