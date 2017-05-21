@@ -39,7 +39,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemViewType(int position) {
-        if (counter == 0){
+        if (position == 0){
             return 0;
         }
         else {
@@ -130,7 +130,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                 } catch(ClassCastException e){
 
             }
-                counter++;
+                //counter++;
 
         }
     }
