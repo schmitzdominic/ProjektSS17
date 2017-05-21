@@ -8,6 +8,7 @@ package de.projektss17.bonpix;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,18 +49,22 @@ public class A_Tab2Statistik extends Fragment{
                     case 0:
                         mAdapter.filter="ALLE";     // keine Filter, d.h. alles wird angezeigt
                         mAdapter.notifyDataSetChanged();
+                        S.outShort((AppCompatActivity)getActivity(),"Gesamte Statistiken");
                         break;
                     case 1:
                         mAdapter.filter="TAG";      // Filterung auf den Tag, d.h. Alles des gegenwärtigen Tages wird angezeigt
                         mAdapter.notifyDataSetChanged();
+                        S.outShort((AppCompatActivity)getActivity(),"Statistiken des heutigen Tages");
                         break;
                     case 2:
                         mAdapter.filter="MONAT";    // Filterung auf den Monat, d.h. Alles des gegenwärtigen Monats wird angezeigt
                         mAdapter.notifyDataSetChanged();
+                        S.outShort((AppCompatActivity)getActivity(),"Statistiken des gegenwärtigen Monats");
                         break;
                     case 3:
                         mAdapter.filter="JAHR";     // Filterung auf den Jahr, d.h. Alles des gegenwärtigen Jahr wird angezeigt
                         mAdapter.notifyDataSetChanged();
+                        S.outShort((AppCompatActivity)getActivity(),"Statistiken des gegenwärtigen Jahres");
                         break;
                 }
             }

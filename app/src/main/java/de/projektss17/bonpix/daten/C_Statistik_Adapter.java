@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +34,11 @@ import de.projektss17.bonpix.S;
 
 public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private int count = 6;              // Gibt an wie viele Cards die RecyclerView beinhalten soll
+    private int count = 6;              // Gibt an wie viele Cards die RecyclerView beinhalten soll (derzeit 6 feste CARDS!)
     private ArrayList<C_Bon> bons;      // Sammlung aller aus der DB ausgelesenen Bons
     private ArrayList<C_Laden> laeden;  // Sammlung aller auser DB ausgelesenen Läden
     private C_DatabaseHandler dbh;      // Verwaltungsklasse für den Zugriff auf die DB zur Filterung
-    public String filter = "ALLE";      // Filter-Inforamation für die Methode createFilteredData (siehe unten im Code)
+    public String filter = "ALLE";      // Filter-Inforamation für die Methode createFilteredData (WICHTIG: siehe unten im Code)
 
 
     public C_Statistik_Adapter(C_DatabaseHandler dbh){
@@ -45,6 +46,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
+    // LAYOUT TopFacts
     public class ViewHolderTopFacts extends RecyclerView.ViewHolder {
 
         public TextView fact1, fact2, fact3;
@@ -61,6 +63,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
+    // LAYOUT TopProducts
     public class ViewHolderTopProducts extends RecyclerView.ViewHolder {
 
         public TextView produkt1, produkt2, produkt3, percentage1, percentage2, percentage3;
@@ -84,6 +87,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
+    // LAYOUT - Allgemeine Infos
     public class ViewHolderGeneral extends RecyclerView.ViewHolder {
 
         public TextView anzahlScans, ausgabenGesamt, anzahlLaeden, anzahlArtikel;
@@ -100,6 +104,8 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+
+    // LAYOUT - Allgemeine Infos
     public class ViewHolderBar extends RecyclerView.ViewHolder {
         BarChart chart;
 
@@ -109,6 +115,8 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+
+    // LAYOUT - LineChart
     public class ViewHolderLine extends RecyclerView.ViewHolder {
         LineChart chart1;
 
@@ -119,6 +127,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
+    // LAYOUT - PieChart
     public class ViewHolderPie extends RecyclerView.ViewHolder {
         PieChart chart2;
 
@@ -152,8 +161,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 5:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_statistik_card_line_layout, parent, false);
                 return new ViewHolderLine(itemView);
-
-
         }
         return null;
     }
@@ -168,15 +175,26 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        createFilteredData();   //Befüllt die ArrayLists (Läden & Bons) entsprechend der Filterung
+        double ausgabenGesamt=0.0;  //Gesamtausgaben des Array bons (Könnte theoretisch auch bei den oberen Attributen stehen)
+        int anzahlArtikel = 0;      //Anzahl aller Artikel des Array bons (Könnte theoretisch auch bei den oberen Attributen stehen)
+        createFilteredData();       //WICHTIG: Befüllt die ArrayLists (Läden & Bons) entsprechend der Filterung zur späteren Verarbeitung
 
         switch(getItemViewType(position)){
             case 0:
                 ViewHolderGeneral holderGeneral = (ViewHolderGeneral)holder;
-                holderGeneral.anzahlScans.setText(filter);      //Derzeit nur zum Testen -> Ausgabe des Strings Filter
-                holderGeneral.ausgabenGesamt.setText("10303 €");
-                holderGeneral.anzahlArtikel.setText("304040");
-                holderGeneral.anzahlLaeden.setText("45");
+                holderGeneral.anzahlScans.setText(Integer.toString(bons.size()));
+
+                for(int i = 0; i < bons.size(); i++)
+                    for(int j = 0; j < bons.get(i).getArticles().size();j++)
+                        ausgabenGesamt+=bons.get(i).getArticles().get(j).getPrice();
+
+                holderGeneral.ausgabenGesamt.setText(formatDouble(ausgabenGesamt)+" €");
+
+                for(int i = 0; i < bons.size();i++)
+                    anzahlArtikel+=bons.get(i).getArticles().size();
+
+                holderGeneral.anzahlArtikel.setText(Integer.toString(anzahlArtikel));
+                holderGeneral.anzahlLaeden.setText(Integer.toString(laeden.size()));
                 break;
             case 1:
                 Log.e("### DATABASEHANDLER","## onBind 0 BAR");
@@ -190,15 +208,15 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
             case 2:
                 ViewHolderTopProducts holderTopProducts = (ViewHolderTopProducts)holder;
-                holderTopProducts.produkt1.setText("Videospiele");
-                holderTopProducts.produkt2.setText("Getränke");
-                holderTopProducts.produkt3.setText("Steaks");
-                holderTopProducts.progress1.setProgress(45);
-                holderTopProducts.progress2.setProgress(35);
-                holderTopProducts.progress3.setProgress(20);
-                holderTopProducts.percentage1.setText("45 %");
-                holderTopProducts.percentage2.setText("35 %");
-                holderTopProducts.percentage3.setText("20 %");
+                holderTopProducts.produkt1.setText("Videospiele");  // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopProducts.produkt2.setText("Getränke");     // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopProducts.produkt3.setText("Steaks");       // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopProducts.progress1.setProgress(45);        // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopProducts.progress2.setProgress(35);        // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopProducts.progress3.setProgress(20);        // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopProducts.percentage1.setText("45 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopProducts.percentage2.setText("35 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopProducts.percentage3.setText("20 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
                 break;
             case 3:
                 Log.e("### DATABASEHANDLER","## onBind 2 PIE");
@@ -210,9 +228,9 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
             case 4:
                 ViewHolderTopFacts holderTopFacts = (ViewHolderTopFacts) holder;
-                holderTopFacts.fact1.setText("LIDL");
-                holderTopFacts.fact2.setText("Max-Mustermann-Str. 4\n86161 Augsburg");
-                holderTopFacts.fact3.setText("2585 €");
+                holderTopFacts.fact1.setText("LIDL");                                   // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopFacts.fact2.setText("Max-Mustermann-Str. 4\n86161 Augsburg");  // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopFacts.fact3.setText("2585 €");                                 // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
                 break;
             case 5:
                 Log.e("### DATABASEHANDLER","## onBind 1 LINE");
@@ -237,27 +255,72 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-    //Bereitet die anhand der Filterung ausgewählten Daten vor
+    /**
+     * WICHTIG:
+     * Klasse zur Vorbereitung der ArrayLists für die spätere Verarbeitung in den Statistiken
+     * Je Nachdem wie gefiltert werden soll, holt sich die Methode die Daten aus der DB eines bestimmten Zeitraums
+     *
+     * Derzeit werden die ArrayLists mit DummyDaten befüllt - Bitte darauf achten!
+     */
     public void createFilteredData(){
 
+        laeden = dbh.getAllLaeden(S.db);
+
        if(filter=="ALLE"){
-           //laeden = dbh.getAllLaeden( HIER DB REIN );
-           //bons = dbh.getAllBons( HIER DB REIN);
+           //bons = dbh.getAllBons(S.db);   derzeit dient die createBonData zum befüllen
+           bons = createBonData(190);
        }
 
        if(filter =="TAG"){
-           //laeden = dbh.getDayFilteredLaeden( HIER DB REIN );
-           //bons = dbh.getDayFilteredBons( HIER DB REIN);
+           //bons = neu implementierte Funktion zum Auslesen von Daten eines bestimmten Zeitraums
+           bons = createBonData(7);
        }
 
         if(filter =="MONAT"){
-            //laeden = dbh.getMonthFilteredLaeden( HIER DB REIN );
-            //bons = dbh.getMonthFilteredBons( HIER DB REIN);
+            //bons = neu implementierte Funktion zum Auslesen von Daten eines bestimmten Zeitraums
+            bons = createBonData(36);
         }
 
         if(filter =="JAHR"){
-            //laeden = dbh.getYearFilteredLaeden( HIER DB REIN );
-            //bons = dbh.getYearFilteredBons( HIER DB REIN);
+            //bons = neu implementierte Funktion zum Auslesen von Daten eines bestimmten Zeitraums
+            bons = createBonData(105);
         }
+    }
+
+
+    /**
+     * ALLE 'DUMMYDATEN'-Funktionen werden gelöscht sofern DB-Anbdinung besteht!
+     * formatDoulbe nach Anbindung bitte im onBindViewHolder löschen/ersetzen!
+     */
+
+    // DUMMYDATEN - Formatierung der RandomMath Doubles auf zwei Nachkommastellen
+    public static String formatDouble(double i)
+    {
+        DecimalFormat f = new DecimalFormat("#0.00");
+        double toFormat = ((double)Math.round(i*100))/100;
+        return f.format(toFormat);
+    }
+
+    //DUMMYDATEN - BONS
+    public ArrayList<C_Bon> createBonData(int anzahl){
+
+        ArrayList<C_Bon> bons = new ArrayList<>();
+
+        for(int i = 0; i < anzahl; i++)
+            bons.add(new C_Bon(i, "Path/Bons/Test","Supermarkt "+i, "Max-Mustermann Str. XB"+i+" \n86161 Augsburg",
+                    "Das sind DUMMYBONS", "21.05.2017", "30.05.2017", false, true, createArticleData(anzahl)));
+
+        return bons;
+    }
+
+    //DUMMYDATEN - ARTIKEL
+    public ArrayList<C_Artikel> createArticleData(int anzahl){
+
+        ArrayList<C_Artikel> articles = new ArrayList<>();
+
+        for(int i = 0; i < anzahl; i++)
+            articles.add(new C_Artikel("Artikel " + i, (Math.random()*100.0)/100.0));
+
+        return articles;
     }
 }

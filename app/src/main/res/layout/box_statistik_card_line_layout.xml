@@ -22,7 +22,11 @@
             android:id="@+id/chart1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar" />
+            android:layout_below="@+id/toolbar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            />
 
         <TextView
             android:id="@+id/statistik_bar_chart_title"
