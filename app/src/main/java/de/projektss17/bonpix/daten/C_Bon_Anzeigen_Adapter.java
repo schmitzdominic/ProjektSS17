@@ -49,7 +49,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public class ViewHolderHeader extends RecyclerView.ViewHolder {
 
-        public TextView ladenName, adresse, datum, artikel,gesbetrag;
+        public TextView ladenName, adresse, datum, artikel,garantie,gesbetrag;
         public ImageView kassenzettel;
 
         public ViewHolderHeader(View view){
@@ -60,6 +60,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
             datum = (TextView) view.findViewById(R.id.bon_anzeigen_datum);
             artikel = (TextView) view.findViewById(R.id.bon_anzeigen_artikel);
             gesbetrag = (TextView) view.findViewById(R.id.bon_anzeigen_gesbetrag);
+            garantie = (TextView) view.findViewById(R.id.bon_anzeigen_garantie);
 
         }
     }
@@ -119,6 +120,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                 holderHeader.ladenName.setText("Ladenname: " + bon.getShopName());
                 holderHeader.adresse.setText("Adresse: " + bon.getAdress());
                 holderHeader.datum.setText("Datum: " + bon.getDate());
+                holderHeader.garantie.setText("Garantie: " + bon.getGuaranteeEnd());
                 holderHeader.gesbetrag.setText("Gesamtbetrag: " + df.format(gesBetrag));
                 counter++;
             case 1:
