@@ -5,10 +5,12 @@ package de.projektss17.bonpix;
  * Hier bitte die Logik des ersten Tabs
  */
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
 import android.support.v7.widget.DefaultItemAnimator;
+
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,133 +22,104 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import de.projektss17.bonpix.daten.C_Bon;
-import de.projektss17.bonpix.daten.C_Bons_Adapter;
+import de.projektss17.bonpix.daten.C_Home_Adapter;
 
 public class A_Tab1Home extends Fragment {
 
-    // RECYCLERVIEW VARIABLEN
 
     private List<C_Bon> bonsList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private C_Bons_Adapter mAdapter;
+    private RecyclerView Recyclerview;
+    private C_Home_Adapter mAdapter1;
 
-    // CHART VARIABLEN
+    private View rootView;
 
-    private PieChart pieChart1, pieChart2;
-    private BarChart bChart, bChart3;
+    LineChart chart;
+    LineDataSet dataSet;
+    ArrayList<ILineDataSet> lineDataSet;
+    LineData lineData;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.view_home_bons);
-        mAdapter = new C_Bons_Adapter(bonsList);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
+
+
+        Recyclerview = (RecyclerView) rootView.findViewById(R.id.tab_eins_recyclerview_bons);
+        mAdapter1 = new C_Home_Adapter(bonsList);
         prepareHomeData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(
+        Recyclerview.setLayoutManager(mLayoutManager);
+        Recyclerview.addItemDecoration(
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+        Recyclerview.setItemAnimator(new DefaultItemAnimator());
+        Recyclerview.setAdapter(mAdapter1);
+        mAdapter1.notifyDataSetChanged();
+        chart = (LineChart) rootView.findViewById(R.id.chart);
 
-        // Kuchendiagramm
-        pieChart1 = (PieChart) rootView.findViewById(R.id.chart1);
-        createPieChart(pieChart1, "Test");
+        // Chart Einstellungen:
 
-        //Balkendiagramm 1
-        bChart = (BarChart) rootView.findViewById(R.id.chart2);
-        ArrayList<IBarDataSet> dataSets1 = new ArrayList<>();
-        createBarChart(bChart, dataSets1, "The year 2017");
+        chart.animateXY(2000, 4000);
+        chart.setPadding(30, 30, 30, 30);
 
-        //Balkendiagramm 2
-        bChart3 = (BarChart) rootView.findViewById(R.id.chart3);
-        ArrayList<IBarDataSet> dataSets3 = new ArrayList<>();
-        createBarChart(bChart3, dataSets3, "The year 2018");
 
+        prepareLineData();
         return rootView;
     }
 
+    private void prepareLineData() {
+        this.lineDataSet = new ArrayList<>();
 
-    private void prepareHomeData(){
+        // Liste wird mit Daten aus der Datenbank befüllt
+
+        this.dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, 4), "Bon");
+        dataSet.setColor(Color.BLACK); // Linienfarbe
+        dataSet.setCircleColor(Color.BLACK); // Punktfarbe
+        dataSet.setCircleSize(5); // Punktgröße
+        dataSet.setLineWidth(3f); // Dicke der Linien
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setAxisMaximum(3);
+        xAxis.setAxisMinimum(0);
+        xAxis.setLabelCount(3);
+        chart.getAxisRight().setEnabled(false); // no right axis
+        this.lineDataSet.add(this.dataSet);
+        this.lineData = new LineData(this.lineDataSet);
+
+
+        this.lineData.setValueTextSize(10f);
+
+        if (chart != null) {
+            this.chart.setTouchEnabled(false);
+            this.chart.setData(this.lineData);
+            this.chart.invalidate();
+
+        }
+    }
+
+    // TODO: 21.05.2017 aktuelles Budget aus der Datenbank holen
+    private void prepareBudgetData(){
+
+    }
+
+    private void prepareHomeData() {
         bonsList.clear();
-
-        ArrayList<C_Bon> bonList = S.dbHandler.getAllBons(S.db);
-
-        for(int i = bonList.size()-1; i >= bonList.size()-3; i--){
-            this.bonsList.add(bonList.get(i));
+        int count = 0;
+        for (C_Bon bon : S.dbHandler.getAllBons(S.db)) {
+            if (count == 3) {
+                break;
+            }
+            bonsList.add(bon);
+            count++;
         }
-        mAdapter.notifyDataSetChanged();
+
     }
 
-    /**
-     * Erstellt ein Balkendiagramm
-     * Zuerst werden die Werte gefüllt und dann in das Diagramm eingelesen
-     */
-    private void createBarChart(BarChart bar, ArrayList<IBarDataSet> daten, String name){
-        ArrayList<BarEntry> val = new ArrayList<BarEntry>();
-        prepareBarData(val);   // Daten werden gefüllt
-
-        BarDataSet set = new BarDataSet(val, name);
-        set.setColors(ColorTemplate.MATERIAL_COLORS);
-
-        daten.add(set);
-        BarData data = new BarData(daten);
-
-        data.setValueTextSize(10f);
-        data.setBarWidth(0.9f);
-
-        bar.setTouchEnabled(false);
-        bar.setData(data);
-    }
-
-    /**
-     * Füllt die Values eines Balkendiagramms mit random Werten
-     */
-    private void prepareBarData(ArrayList<BarEntry> values){
-        for (int i = 0; i < 10 + 1; i++) {
-            float val = (float) (Math.random());
-            values.add(new BarEntry(i, val));
-        }
-    }
-
-    /**
-     * Erstellt ein Kreisdiagramm
-     * Zuerst werden die Werte gefüllt und dann in das Diagramm eingelesen
-     */
-    private void createPieChart(PieChart bar, String name){
-        ArrayList<PieEntry> val = new ArrayList<>();
-        preparePieData(val);    // Daten werden gefüllt
-
-        final PieDataSet dataSet = new PieDataSet(val, name);
-        final PieData pieData = new PieData(dataSet);
-
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        bar.setCenterText("Pie Chart");
-        bar.setData(pieData);
-        bar.animateY(1000);
-        bar.setBackgroundColor(5);
-        pieData.setDrawValues(true);
-    }
-
-    /**
-     * Füllt die Values eines Kreisdiagramms mit Werten
-     */
-    private void preparePieData(ArrayList<PieEntry> values){
-        values.add(new PieEntry(0.2f, 0));
-        values.add(new PieEntry(0.2f, 1));
-        values.add(new PieEntry(0.50f, 2));
-    }
 }

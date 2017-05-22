@@ -17,7 +17,7 @@ import java.util.List;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
-public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHolder> {
+public class C_Home_Adapter extends RecyclerView.Adapter<C_Home_Adapter.ViewHolder> {
 
 
     private List<C_Bon> bonsList;
@@ -49,14 +49,14 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
      * Constructor
      * @param bonsList
      */
-    public C_Bons_Adapter(List<C_Bon> bonsList){
+    public C_Home_Adapter(List<C_Bon> bonsList){
         this.bonsList = bonsList;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         Log.e("### BONS", "ONCREATEVIEWHOLDER");
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_bons_view_layout, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_bonsview_layout_small, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -82,26 +82,26 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
              */
             @Override
             public void onClick(View v) {
-                    row_index = position;
-                    // Put the onClick cases here
-                    switch (v.getId()) {
-                        case R.id.imageview_button: {
-                            if (bon.getFavourite()){
-                                holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
+                row_index = position;
+                // Put the onClick cases here
+                switch (v.getId()) {
+                    case R.id.imageview_button: {
+                        if (bon.getFavourite()){
+                            holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
+                            holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
+                            bon.setFavourite(false);
+                            S.dbHandler.updateBon(S.db, bon);
+                        } else {
+                            if (row_index == position) {
+                                holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
                                 holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
-                                bon.setFavourite(false);
+                                bon.setFavourite(true);
                                 S.dbHandler.updateBon(S.db, bon);
-                            } else {
-                                if (row_index == position) {
-                                    holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
-                                    holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
-                                    bon.setFavourite(true);
-                                    S.dbHandler.updateBon(S.db, bon);
-                                }
                             }
                         }
-                        break;
                     }
+                    break;
+                }
             }
         });
     }
