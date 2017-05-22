@@ -9,7 +9,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/bon_anzeigen_image"
+            android:id="@+id/bon_anzeigen_picture"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_alignParentLeft="true"
@@ -29,9 +29,9 @@
             android:layout_marginStart="21dp"
             android:layout_marginTop="10dp"
             android:text="Ladenname"
-            android:layout_alignTop="@+id/bon_anzeigen_image"
-            android:layout_toRightOf="@+id/bon_anzeigen_image"
-            android:layout_toEndOf="@+id/bon_anzeigen_image" />
+            android:layout_alignTop="@+id/bon_anzeigen_picture"
+            android:layout_toRightOf="@+id/bon_anzeigen_picture"
+            android:layout_toEndOf="@+id/bon_anzeigen_picture" />
 
         <TextView
             android:id="@+id/bon_anzeigen_datum"
@@ -71,8 +71,8 @@
             android:layout_height="wrap_content"
             android:text="Gesamtbetrag"
             android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/bon_anzeigen_image"
-            android:layout_alignStart="@+id/bon_anzeigen_image"
+            android:layout_alignLeft="@+id/bon_anzeigen_picture"
+            android:layout_alignStart="@+id/bon_anzeigen_picture"
             android:layout_marginBottom="15dp" />
 
     </RelativeLayout>

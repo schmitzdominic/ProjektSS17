@@ -1,8 +1,11 @@
 package de.projektss17.bonpix.daten;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,11 +14,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import de.projektss17.bonpix.A_Max_Bon_Pic;
+import de.projektss17.bonpix.A_OCR_Manuell;
 import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 
 /**
  * Created by SemperFi on 21.05.2017.
@@ -51,10 +58,13 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         public TextView ladenName, adresse, datum, artikel,garantie,gesbetrag;
         public ImageView kassenzettel;
+        public Uri image;
+        public View v;
 
         public ViewHolderHeader(View view){
             super(view);
-            kassenzettel  = (ImageView) view.findViewById(R.id.bon_anzeigen_image);
+            this.v = view;
+            kassenzettel  = (ImageView) view.findViewById(R.id.bon_anzeigen_picture);
             ladenName = (TextView) view.findViewById(R.id.bon_anzeigen_ladenname);
             adresse = (TextView) view.findViewById(R.id.bon_anzeigen_adresse);
             datum = (TextView) view.findViewById(R.id.bon_anzeigen_datum);
@@ -62,7 +72,39 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
             gesbetrag = (TextView) view.findViewById(R.id.bon_anzeigen_gesbetrag);
             garantie = (TextView) view.findViewById(R.id.bon_anzeigen_garantie);
 
+            kassenzettel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(image != null){
+                        Intent intent = new Intent(v.getContext(), A_Max_Bon_Pic.class);
+                        intent.putExtra("imageUri", image.toString());
+                        v.getContext().startActivity(intent);
+                    }
+                }
+            });
+
         }
+
+        /**
+         *
+         * @param uri
+         */
+        public void setImage(Uri uri){
+            this.image = uri;
+        }
+
+        /**
+         * Bekommt die Uri aus einem Bitmap zurück
+         * @param inImage Bitmap
+         * @return Uri des Bitmap
+         */
+        public Uri getImageUri(Bitmap inImage) {
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            String path = MediaStore.Images.Media.insertImage(v.getContext().getContentResolver(), inImage, "Title", null);
+            return Uri.parse(path);
+        }
+
     }
 
 
@@ -107,15 +149,13 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                 ViewHolderHeader holderHeader = (ViewHolderHeader)holder;
 
                 if (!bon.getPath().equals("PFAD")) {
-                    File sd = Environment.getExternalStorageDirectory();
-                    String LogSd = sd.toString();
-                    Log.e("###GET EXTERNAL STORAGE", "" + LogSd);
-                    File image = new File(sd + bon.getPath(), "imageView");
+                    File image = new File(bon.getPath());
                     Log.e("###BON GETPATH", "" + bon.getPath());
                     BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                     Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
 
                     holderHeader.kassenzettel.setImageBitmap(bitmap);
+                    holderHeader.setImage(holderHeader.getImageUri(bitmap));
                 }
                 holderHeader.ladenName.setText("Ladenname: " + bon.getShopName());
                 holderHeader.adresse.setText("Adresse: " + bon.getAdress());
