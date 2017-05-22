@@ -1,47 +1,45 @@
 package de.projektss17.bonpix.daten;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
-public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHolder> {
+public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHolder> {
 
 
     private List<C_Bon> bonsList;
     private int row_index = -1;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, content;
+        public TextView title, content, price;
         public ImageView icon;
         public ImageView button;
+        public Resources res;
 
         public ViewHolder(View view){
             super(view);
             icon = (ImageView) view.findViewById(R.id.imageview_picture);
             title = (TextView) view.findViewById(R.id.view_name);
             content = (TextView) view.findViewById(R.id.view_state);
+            price = (TextView) view.findViewById(R.id.view_total_price);
             button = (ImageView) view.findViewById(R.id.imageview_button);
+            res = view.getResources();
 
-            // TODO: Derzeit ist das "REWE" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
-            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.ic_aldisuedlogo);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(view.getResources(), imageBitmap);
-            roundedBitmapDrawable.setCircular(true);
-            roundedBitmapDrawable.setAntiAlias(true);
-            icon.setImageDrawable(roundedBitmapDrawable);
-            // --- END TO DO ---
         }
     }
 
@@ -49,7 +47,7 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
      * Constructor
      * @param bonsList
      */
-    public C_Bons_Adapter(List<C_Bon> bonsList){
+    public C_Adapter_Bons(List<C_Bon> bonsList){
         this.bonsList = bonsList;
     }
 
@@ -62,8 +60,15 @@ public class C_Bons_Adapter extends RecyclerView.Adapter<C_Bons_Adapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position){
         final C_Bon bon = bonsList.get(position);
+
+        Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
+        roundedBitmapDrawable.setAntiAlias(true);
+        holder.icon.setImageDrawable(roundedBitmapDrawable);
+
         holder.title.setText(bon.getShopName());
-        holder.content.setText(bon.getDate());
+        holder.content.setText(S.getWeekday(holder.res, S.getWeekdayNumber(bon.getDate())) + "\n" + bon.getDate());
+        holder.price.setText(String.format("%s €", bon.getTotalPrice().replace(".", ",")));
         //Loading the FavoriteList
         if (bon.getFavourite()){
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star));

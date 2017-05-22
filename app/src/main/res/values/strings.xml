@@ -28,9 +28,14 @@
 
     <!-- A_Favoriten -->
     <string name="title_favoriten_screen">Favoriten</string>
+    <string name="a_favoriten_laden_name">Laden name</string>
+    <string name="a_favoriten_datum">Datum des Bon</string>
+    <string name="a_favoriten_preis">Preis</string>
 
     <!-- A_Garantie -->
     <string name="title_garantie_screen">Garantie</string>
+    <string name="a_garantie_garantie_bis">Garantie bis</string>
+
 
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>
@@ -85,6 +90,22 @@
     <string name="add_widget">Add widget</string>
 
     <!-- A_Budget_Edit -->
-    <string name="title_activity_a__budget__edit">Budget Planung</string>
+    <string name="title_budget_edit">Budget Planung</string>
+    <string name="a_budget_edit_speichern">Speichern</string>
+    <string name="a_budget_edit_titel">Titel eingeben…</string>
+    <string name="a_budget_edit_betrag">Betrag eingeben…</string>
+    <string name="a_budget_edit_vondatum">Zeitraum (Beginn)…</string>
+    <string name="a_budget_edit_bisdatum">Zeitraum (Ende)…</string>
+    <string name="a_budget_edit_sonstiges">Sonstiges (optional)…</string>
+    <string name="a_budget_edit_vonbis_error">Von-Datum liegt hinter Bis-Datum</string>
+
+    <!-- Wochentage -->
+    <string name="wochentag_1">Sonntag</string>
+    <string name="wochentag_2">Montag</string>
+    <string name="wochentag_3">Dienstag</string>
+    <string name="wochentag_4">Mittwoch</string>
+    <string name="wochentag_5">Donnerstag</string>
+    <string name="wochentag_6">Freitag</string>
+    <string name="wochentag_7">Samstag</string>
 
 </resources>

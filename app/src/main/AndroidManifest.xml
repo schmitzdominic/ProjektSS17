@@ -19,7 +19,8 @@
         <activity
             android:name=".A_Main"
             android:label="@string/title_a_main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +43,8 @@
             android:name=".A_Gruppen"
             android:label="@string/title_gruppen_screen"
             android:parentActivityName=".A_Main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
@@ -51,7 +53,8 @@
             android:name=".A_Favoriten"
             android:label="@string/title_favoriten_screen"
             android:parentActivityName=".A_Main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
@@ -60,7 +63,8 @@
             android:name=".A_Garantie"
             android:label="@string/title_garantie_screen"
             android:parentActivityName=".A_Main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
@@ -78,7 +82,8 @@
             android:name=".A_Version"
             android:label="@string/title_version_screen"
             android:parentActivityName=".A_Einstellungen"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Einstellungen" />
@@ -97,7 +102,8 @@
             android:name=".A_Max_Bon_Pic"
             android:label="@string/title_max_bon_pic_screen"
             android:parentActivityName=".A_OCR_Manuell"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_OCR_Manuell" />
@@ -106,19 +112,15 @@
             android:name=".A_Backup"
             android:label="@string/title_backup_screen"
             android:parentActivityName=".A_Einstellungen"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Einstellungen" />
         </activity>
-
-        <meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="ocr" />
-
         <activity
             android:name=".A_Budget_Edit"
-            android:label="@string/title_activity_a__budget__edit"
+            android:label="@string/title_budget_edit"
             android:parentActivityName=".A_Budget"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
@@ -127,6 +129,11 @@
                 android:value="de.projektss17.bonpix.A_Budget"/>
 
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="ocr" />
+
     </application>
 
 </manifest>
