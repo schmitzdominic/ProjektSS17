@@ -18,7 +18,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/toolbar"
-            android:id="@+id/relativeLayout3">
+            android:id="@+id/statistik_card_topfacts_relative_layout">
 
             <TextView
                 android:id="@+id/statistik_card_productamount_content"
@@ -165,7 +165,7 @@
             android:text="@string/statistik_card_general_title"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:layout_above="@+id/relativeLayout3" />
+            android:layout_above="@+id/statistik_card_topfacts_relative_layout" />
     </RelativeLayout>
 
 

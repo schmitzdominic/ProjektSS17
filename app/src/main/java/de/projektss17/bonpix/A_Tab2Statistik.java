@@ -33,7 +33,7 @@ public class A_Tab2Statistik extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
-        mAdapter = new C_Statistik_Adapter(new C_DatabaseHandler(getActivity()));
+        mAdapter = new C_Statistik_Adapter();
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -49,22 +49,17 @@ public class A_Tab2Statistik extends Fragment{
                     case 0:
                         mAdapter.filter="ALLE";     // keine Filter, d.h. alles wird angezeigt
                         mAdapter.notifyDataSetChanged();
-                        S.outShort((AppCompatActivity)getActivity(),"Gesamte Statistiken");
-                        break;
                     case 1:
                         mAdapter.filter="TAG";      // Filterung auf den Tag, d.h. Alles des gegenwärtigen Tages wird angezeigt
                         mAdapter.notifyDataSetChanged();
-                        S.outShort((AppCompatActivity)getActivity(),"Statistiken des heutigen Tages");
                         break;
                     case 2:
                         mAdapter.filter="MONAT";    // Filterung auf den Monat, d.h. Alles des gegenwärtigen Monats wird angezeigt
                         mAdapter.notifyDataSetChanged();
-                        S.outShort((AppCompatActivity)getActivity(),"Statistiken des gegenwärtigen Monats");
                         break;
                     case 3:
                         mAdapter.filter="JAHR";     // Filterung auf den Jahr, d.h. Alles des gegenwärtigen Jahr wird angezeigt
                         mAdapter.notifyDataSetChanged();
-                        S.outShort((AppCompatActivity)getActivity(),"Statistiken des gegenwärtigen Jahres");
                         break;
                 }
             }

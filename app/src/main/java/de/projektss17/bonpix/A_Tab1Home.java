@@ -63,11 +63,11 @@ public class A_Tab1Home extends Fragment {
         mAdapter.notifyDataSetChanged();
 
         // Kuchendiagramm
-        pieChart1 = (PieChart) rootView.findViewById(R.id.chart1);
+        pieChart1 = (PieChart) rootView.findViewById(R.id.statistik_card_line);
         createPieChart(pieChart1, "Test");
 
         //Balkendiagramm 1
-        bChart = (BarChart) rootView.findViewById(R.id.chart2);
+        bChart = (BarChart) rootView.findViewById(R.id.statistik_card_pie);
         ArrayList<IBarDataSet> dataSets1 = new ArrayList<>();
         createBarChart(bChart, dataSets1, "The year 2017");
 

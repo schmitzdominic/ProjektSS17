@@ -1,7 +1,6 @@
 package de.projektss17.bonpix.daten;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +36,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private int count = 6;              // Gibt an wie viele Cards die RecyclerView beinhalten soll (derzeit 6 feste CARDS!)
     private ArrayList<C_Bon> bons;      // Sammlung aller aus der DB ausgelesenen Bons
     private ArrayList<C_Laden> laeden;  // Sammlung aller auser DB ausgelesenen Läden
-    private C_DatabaseHandler dbh;      // Verwaltungsklasse für den Zugriff auf die DB zur Filterung
     public String filter = "ALLE";      // Filter-Inforamation für die Methode createFilteredData (WICHTIG: siehe unten im Code)
-
-
-    public C_Statistik_Adapter(C_DatabaseHandler dbh){
-        this.dbh = dbh;
-    }
 
 
     // LAYOUT TopFacts
@@ -111,7 +104,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ViewHolderBar(View view) {
             super(view);
-            chart = (BarChart) view.findViewById(R.id.chart);
+            chart = (BarChart) view.findViewById(R.id.statistik_card_bar);
         }
     }
 
@@ -122,7 +115,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ViewHolderLine(View view) {
             super(view);
-            chart1 = (LineChart) view.findViewById(R.id.chart1);
+            chart1 = (LineChart) view.findViewById(R.id.statistik_card_line);
         }
     }
 
@@ -133,7 +126,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ViewHolderPie(View view) {
             super(view);
-            chart2 = (PieChart) view.findViewById(R.id.chart2);
+            chart2 = (PieChart) view.findViewById(R.id.statistik_card_pie);
         }
     }
 
@@ -197,7 +190,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderGeneral.anzahlLaeden.setText(Integer.toString(laeden.size()));
                 break;
             case 1:
-                Log.e("### DATABASEHANDLER","## onBind 0 BAR");
                 ViewHolderBar holderBar = (ViewHolderBar)holder;
                 BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
                 BarData dataBar = new BarData(dataSetBar);
@@ -219,7 +211,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderTopProducts.percentage3.setText("20 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
                 break;
             case 3:
-                Log.e("### DATABASEHANDLER","## onBind 2 PIE");
                 ViewHolderPie holderPie = (ViewHolderPie)holder;
                 PieDataSet set = new PieDataSet(S.dbHandler.getPieData(1), "Election Results");
                 PieData pieData = new PieData(set);
@@ -233,7 +224,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderTopFacts.fact3.setText("2585 €");                                 // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
                 break;
             case 5:
-                Log.e("### DATABASEHANDLER","## onBind 1 LINE");
                 ViewHolderLine holderLine = (ViewHolderLine)holder;
                 LineDataSet setComp1 = new LineDataSet(S.dbHandler.getLineData(1).get("lineOne"), "Company 1");
                 setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -264,25 +254,25 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
      */
     public void createFilteredData(){
 
-        laeden = dbh.getAllLaeden(S.db);
+        laeden = S.dbHandler.getAllLaeden(S.db);
 
        if(filter=="ALLE"){
-           //bons = dbh.getAllBons(S.db);   derzeit dient die createBonData zum befüllen
+           //bons = S.dbHandler.getAllBons(S.db);   derzeit dient die createBonData zum befüllen
            bons = createBonData(190);
        }
 
        if(filter =="TAG"){
-           //bons = neu implementierte Funktion zum Auslesen von Daten eines bestimmten Zeitraums
+           //bons = S.dbHandler.getAllBons(S.db);   derzeit dient die createBonData zum befüllen
            bons = createBonData(7);
        }
 
         if(filter =="MONAT"){
-            //bons = neu implementierte Funktion zum Auslesen von Daten eines bestimmten Zeitraums
+            //bons = S.dbHandler.getAllBons(S.db);   derzeit dient die createBonData zum befüllen
             bons = createBonData(36);
         }
 
         if(filter =="JAHR"){
-            //bons = neu implementierte Funktion zum Auslesen von Daten eines bestimmten Zeitraums
+            //bons = S.dbHandler.getAllBons(S.db);   derzeit dient die createBonData zum befüllen
             bons = createBonData(105);
         }
     }
