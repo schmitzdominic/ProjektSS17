@@ -18,7 +18,7 @@ import de.projektss17.bonpix.daten.C_Budget;
 import de.projektss17.bonpix.daten.C_Adapter_Budget;
 
 
-public class A_Budget extends AppCompatActivity implements View.OnClickListener {
+public class A_Budget extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -96,13 +96,6 @@ public class A_Budget extends AppCompatActivity implements View.OnClickListener 
         });
 
     }
-
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
 
     /**
      * Methode soll die Daten aus der DB lesen und die RecyclerView damit befüllen
