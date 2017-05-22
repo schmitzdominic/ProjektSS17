@@ -39,7 +39,6 @@ public class A_Tab3Bons extends Fragment{
         return rootView;
     }
 
-
     /**
      * Set Data for RecyclerView Bons
      */

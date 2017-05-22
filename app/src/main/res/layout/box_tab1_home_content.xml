@@ -40,7 +40,7 @@
         android:layout_marginRight="5dp">
 
         <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/chart1"
+            android:id="@+id/statistik_card_line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center" />
@@ -61,7 +61,7 @@
         android:layout_marginRight="5dp">
 
         <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart2"
+            android:id="@+id/statistik_card_pie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center" />
