@@ -18,6 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.projektss17.bonpix.daten.C_AssetHelper;
+import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
 import de.projektss17.bonpix.daten.C_Preferences;
 
@@ -161,13 +162,37 @@ public class S extends Activity {
                 }).create().show();
     }
 
+    /**
+     * Öffnet ein POPUP-Fenster (Hinweis/Alert) beim Aufruf
+     * @param beforeActivity Vorherige Instanz der Activity
+     * @param title Legt den Titel des PopUp-Fensters fest (wird im Fenster angezeigt)
+     * @param message Legt die Nachricht (z.B. eine Frage) des Fenster fest
+     * @param cancel Legt den Ihnalt des Cancel-Buttons fest
+     * @param confirm Legt den Inhalt des Confirm-Buttons fest
+     */
+    public static void popUpDialogSaveBon(final AppCompatActivity beforeActivity, final Intent intent, int title, int message, int cancel, int confirm, final C_Bon bon) {
+
+        new AlertDialog.Builder(beforeActivity)
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeButton(cancel, null)
+                .setPositiveButton(confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        S.dbHandler.addBon(S.db, bon);
+                        beforeActivity.startActivity(intent);
+                        beforeActivity.finish();
+
+                    }
+                }).create().show();
+    }
+
 
 
     // Erstellt von Johanns am 27.04.2017
 
     /**
      * Öffnet ein POPUP-Fenster (INFO) welches nach dem Aufruf automatisch geschlossen wird
-     * @param v Mitgabe der View (z.B. onClickListener -> View) für den Context
      * @param title Legt den Titel des PopUp-Fensters fest (wird im Fenster als Überschrift angezeigt)
      * @param message Legt die Nachricht (z.B. eine Frage) des Fenster fest
      * @param time Legt die Zeit fest, nach welchem das PopUp automatisch geschlossen wird

@@ -45,8 +45,11 @@ public class A_Tab3Bons extends Fragment{
      */
     private void prepareBonData(){
         bonsList.clear();
-        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
-            this.bonsList.add(bon);
+
+        ArrayList<C_Bon> bonList = S.dbHandler.getAllBons(S.db);
+
+        for(int i = bonList.size()-1; i >= 0; i--){
+            this.bonsList.add(bonList.get(i));
         }
     }
 }
