@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -38,9 +39,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 
 import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_Bon;
@@ -66,6 +69,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private boolean bonGarantie = false;
     private C_OCR ocr;
     private C_Bon bon;
+    private A_OCR_Manuell context = this;
 
 
     @Override
@@ -98,22 +102,52 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", "0", false, false, null); // Erstellt einen Leeren Bon
 
 
-        // Garantie Button onClickListener
+        /**
+         * Guarantee Listener - Triggers Dialog (NumberPicker)
+         * Is setting GuaranteeEnd with FormattedDate and Guarantee Boolean
+         */
         this.garantieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(bonGarantie==false) {
-                    bonGarantie = true;
-                    garantieButton.setColorFilter(R.color.colorPrimary);
-
-                    // PopUp Info Fenster wird geöffnet und automatisch geschlossen
-                    S.outShort(A_OCR_Manuell.this, "Garantie wurde hinzugefügt!");
-                }else{
+                if(bonGarantie == false) {
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View dialogView = inflater.inflate(R.layout.box_ocr_manuell_dialog_picker, null);
+                    final NumberPicker picker = (NumberPicker) dialogView.findViewById(R.id.number_picker);
+                    picker.setMaxValue(5);
+                    picker.setMinValue(1);
+                    picker.setValue(2);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Garantielänge (Jahre)");
+                    builder.setView(dialogView);
+                    builder.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int index){
+                            Date date = new Date();
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(date);
+                            int yearPicked = picker.getValue();
+                            int year = Calendar.getInstance().get(Calendar.YEAR);
+                            year += yearPicked;
+                            calendar.set(Calendar.YEAR, year);
+                            Date newDate = calendar.getTime();
+                            String dateFormatted = new SimpleDateFormat("dd-MM-yyyy").format(newDate);
+                            bon.setGuaranteeEnd(dateFormatted);
+                            bonGarantie = true;
+                            garantieButton.setColorFilter(R.color.colorPrimary);
+                            S.outShort(A_OCR_Manuell.this, "Garantie wurde hinzugefügt!");
+                            Log.e("### GuaranteeEnd VALUE:", "" + dateFormatted);
+                        }
+                    });
+                    builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int index){
+                            bonGarantie = false;
+                            garantieButton.setColorFilter(Color.WHITE);
+                        }
+                    });
+                    final AlertDialog yearPickerDialog = builder.create();
+                    yearPickerDialog.show();
+                } else {
                     bonGarantie = false;
                     garantieButton.setColorFilter(Color.WHITE);
-
-                    // PopUp Info Fenster wird geöffnet und automatisch geschlossen
                     S.outShort(A_OCR_Manuell.this, "Garantie wurde entfernt!");
                 }
             }
