@@ -6,36 +6,37 @@ import java.util.ArrayList;
  * Created by JOhanns on 30.04.2017.
  */
 
-public class C_Budget {
+public class C_Budget{
 
-    private int budgetMax, budgetCurrently,id;
-    private int processbar, progressPercentage; // NICHT RELEVANT FÜR DIE DB
-    private String zeitraumVon, zeitraumBis, title, sonstiges;
+    private int budgetMax, budgetLost,id;
+    private String zeitraumVon;
+    private String zeitraumBis;
+    private String title;
+    private String sonstiges;
     private ArrayList<C_Bon> bons;       // Array-List für alle Kassenbons zu diesem Budget
 
+    public C_Budget(int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges, ArrayList<C_Bon> bons){
+        this(0, budgetMax, budgetLost, zeitraumVon, zeitraumBis, title, sonstiges, bons);
+    }
 
-    public C_Budget(int id, int budgetMax, int budgetCurrently, int processbar, String zeitraumVon, String zeitraumBis, String title, String sonstiges, ArrayList<C_Bon> bons){
+    public C_Budget(int id, int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges){
+        this(id, budgetMax, budgetLost, zeitraumVon, zeitraumBis, title, sonstiges, null);
+    }
+
+    public C_Budget(int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges){
+        this(0, budgetMax, budgetLost, zeitraumVon, zeitraumBis, title, sonstiges, null);
+    }
+
+    public C_Budget(int id, int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges, ArrayList<C_Bon> bons){
         this.id = id;
         this.budgetMax = budgetMax;
-        this.budgetCurrently = budgetCurrently;
-        this.processbar = processbar;
+        this.budgetLost = budgetLost;
         this.zeitraumVon = zeitraumVon;
         this.zeitraumBis = zeitraumBis;
         this.title = title;
         this.sonstiges = sonstiges;
         this.bons = bons;
 
-    }
-
-
-    public C_Budget(int budgetMax, int budgetCurrently, int processbar, String zeitraumVon, String zeitraumBis, String title, String sonstiges){
-        this.budgetMax = budgetMax;
-        this.budgetCurrently = budgetCurrently;
-        this.processbar = processbar;
-        this.zeitraumVon = zeitraumVon;
-        this.zeitraumBis = zeitraumBis;
-        this.title = title;
-        this.sonstiges = sonstiges;
     }
 
 
@@ -55,25 +56,28 @@ public class C_Budget {
         this.budgetMax = budgetMax;
     }
 
-    public int getBudgetCurrently() {
-        return budgetCurrently;
+    public int getBudgetLost() {
+        return budgetLost;
     }
 
-    public void setBudgetCurrently(int budgetCurrently) {
-        this.budgetCurrently = budgetCurrently;
+    public void setBudgetLost(int budgetLost) {
+        this.budgetLost = budgetLost;
     }
 
-    public int getProcessbar() {
-        return processbar;
+    public String getZeitraumVon() {
+        return zeitraumVon;
     }
 
-
-    public int getProgressPercentage() {
-        return budgetCurrently*100/budgetMax;
+    public String getZeitraumBis() {
+        return zeitraumBis;
     }
 
-    public void setProgressPercentage(int progressPercentage) {
-        this.progressPercentage = progressPercentage;
+    public void setZeitraumBis(String zeitraumBis) {
+        this.zeitraumBis = zeitraumBis;
+    }
+
+    public void setZeitraumVon(String zeitraumVon) {
+        this.zeitraumVon = zeitraumVon;
     }
 
     public String getTitle() {
@@ -92,11 +96,11 @@ public class C_Budget {
         this.sonstiges = sonstiges;
     }
 
-    public ArrayList<C_Bon> getBonBons() {
+    public ArrayList<C_Bon> getBons() {
         return bons;
     }
 
-    public void setBonBons(ArrayList<C_Bon> bonBons) {
+    public void setBons(ArrayList<C_Bon> bonBons) {
         this.bons = bonBons;
     }
 
@@ -147,5 +151,26 @@ public class C_Budget {
 
         return "MONTH";
 
+    }
+
+    @Override
+    public String toString() {
+        String out = "ID: "+ this.id + ", \n" +
+                "Budget: " + this.getBudgetMax() + ", \n" +
+                "Stand: " + this.getBudgetLost() + ", \n" +
+                "von: " + this.getZeitraumVon() + ", \n" +
+                "bis: " + this.getZeitraumBis() + ", \n" +
+                "titel: " + this.getTitle() + ", \n" +
+                "sonstiges: " + this.getSonstiges();
+
+        if(this.bons != null){
+            out += "\nBons:";
+            for(C_Bon bon : this.getBons()){
+                out += "\n\t" + bon.getId() + " - " + bon.getShopName() + " - " + bon.getTotalPrice();
+            }
+        } else {
+            out += "\nNO BONS FOUND!";
+        }
+        return out;
     }
 }

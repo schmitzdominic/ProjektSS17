@@ -5,6 +5,7 @@ import android.animation.Animator;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -41,39 +42,51 @@ import java.util.Random;
 import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_AssetHelper;
 import de.projektss17.bonpix.daten.C_Bon;
+import de.projektss17.bonpix.daten.C_Budget;
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.daten.C_Preferences;
 
 public class A_Main extends AppCompatActivity {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mToggle;
-    private boolean isFABOpen = false, isDrawOpen = false, cameraPermissions;
-    private FloatingActionButton kameraButton, fotoButton, manuellButton;
-    private LinearLayout fotoLayout, manuellLayout;
-    private View fabBGLayout;
+    // Primitive Datentypen
+    private boolean isFABOpen = false;
+    private boolean isDrawOpen = false;
+    private boolean cameraPermissions;
     private String fileNameTakenPhoto;
-    private Uri mCapturedImageURI;
     public ArrayList<String> picturePathList;
+
+    // Layout
+    private ActionBarDrawerToggle toggle;
+    private DrawerLayout navigationDrawerLayout;
+    private FloatingActionButton plusButton;
+    private FloatingActionButton fotoButton;
+    private FloatingActionButton manuellButton;
+    private LinearLayout fotoLayout;
+    private LinearLayout manuellLayout;
+    private NavigationView navigationView;
+    private SectionsPagerAdapter sectionsPagerAdapter;
+    private TabLayout tabLayout;
+    private Toolbar toolbar;
+    private Uri mCapturedImageURI;
+    private View fabBGLayout;
+    private ViewPager viewPager;
+
+    // Statischer Bereich
     private static final int REQUEST_IMAGE_CAPTURE = 2;
 
-    /** Selbsterklärend. Wer noch nicht weiß was diese Methode bewirkt,
-     * Bitte 2_layout.pdf lesen!
-     * @param savedInstanceState
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.box_main_screen);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        this.toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close){
+        // Navigation Drawer
+        this.navigationDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        this.toggle = new ActionBarDrawerToggle(this, this.navigationDrawerLayout, R.string.open, R.string.close){
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 isDrawOpen = false;
@@ -86,72 +99,61 @@ public class A_Main extends AppCompatActivity {
 
         };
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-
-        requestPermissions(new String[]{Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE});
-
-        // DataBase Connection
-        S.dbHandler = new C_DatabaseHandler(this);
-        S.dbArtikelHandler = new C_AssetHelper(this);
-        S.db = S.dbHandler.getWritableDatabase();
-        S.dbArtikel = S.dbArtikelHandler.getWritableDatabase();
-        S.dbHandler.checkTables(S.db);
-
-        // Settings Instance
-        S.prefs = new C_Preferences(this);
-
-        S.dbHandler.showLogAllDBEntries();
-
-        // Beim ersten Start der App
-        this.onFirstStart();
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.main_container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        picturePathList = new ArrayList<>();
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-
-        // NavigationView (wird benötigt um Menü Items zu klicken)
-        NavigationView mV = (NavigationView) findViewById(R.id.main_nav_menu);
-
         // Layout
+        this.viewPager = (ViewPager) findViewById(R.id.main_container);
+        this.tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         this.fotoLayout = (LinearLayout) findViewById(R.id.main_foto_button_layout);
         this.manuellLayout = (LinearLayout) findViewById(R.id.main_manuell_button_layout);
-
-        // Buttons
-        this.kameraButton = (FloatingActionButton) findViewById(R.id.main_kamera_button);
         this.fotoButton = (FloatingActionButton) findViewById(R.id.main_foto_button);
+        this.plusButton = (FloatingActionButton) findViewById(R.id.main_kamera_button);
         this.manuellButton = (FloatingActionButton) findViewById(R.id.main_manuell_button);
-        fabBGLayout = findViewById(R.id.main_fabBGLayout);
+        this.navigationView = (NavigationView) findViewById(R.id.main_nav_menu);
+        this.fabBGLayout = findViewById(R.id.main_fabBGLayout);
 
-        // Klick auf den Foto Button
-        fotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activeTakePhoto();
-            }
-        });
+        // Berechtigungen
+        this.requestPermissions(new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE});
 
-        // Klick auf den Manuell Button
-        manuellButton.setOnClickListener(new View.OnClickListener() {
+        // Instanziierungen und Konfigurationen
+        this.toggle.syncState();
+        this.picturePathList = new ArrayList<>();
+        this.navigationDrawerLayout.addDrawerListener(toggle);
+        this.sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        this.viewPager.setAdapter(sectionsPagerAdapter);
+        this.tabLayout.setupWithViewPager(viewPager);
+
+        this.initPersistence();
+        this.initOnClickListener();
+        this.onFirstStart();
+
+    }
+
+    /**
+     * Initialisiert alle OnClickListener
+     */
+    private void initOnClickListener(){
+        this.manuellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 S.showManuell(A_Main.this,"new");
             }
         });
 
-        // Klick auf den Kamera Button
-        kameraButton.setOnClickListener(new View.OnClickListener() {
+        this.fabBGLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeFABMenu();
+            }
+        });
+
+        this.fotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activeTakePhoto();
+            }
+        });
+
+        this.plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isFABOpen) {
@@ -162,15 +164,8 @@ public class A_Main extends AppCompatActivity {
             }
         });
 
-        fabBGLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeFABMenu();
-            }
-        });
-
-        // Wenn ein Menü item (NavigationDrawer) geklickt wird
-        mV.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        // Wenn ein Menüitem (NavigationDrawer) geklickt wird
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 int id = item.getItemId();
@@ -187,6 +182,9 @@ public class A_Main extends AppCompatActivity {
                     case R.id.menu_nav_garantie:
                         S.showGarantie(A_Main.this);
                         return true;
+                    case R.id.menu_nav_laeden:
+                        S.showLaeden(A_Main.this);
+                        return true;
                     case R.id.menu_nav_einstellungen:
                         S.showEinstellungen(A_Main.this);
                         return true;
@@ -195,6 +193,36 @@ public class A_Main extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * Initialisiert die Datenpersisitenz
+     * WICHTIG beim starten der App
+     */
+    private void initPersistence(){
+        S.dbHandler = new C_DatabaseHandler(this);
+        S.dbArtikelHandler = new C_AssetHelper(this);
+        S.db = S.dbHandler.getWritableDatabase();
+        S.dbArtikel = S.dbArtikelHandler.getWritableDatabase();
+        S.dbHandler.checkTables(S.db);
+        S.dbHandler.showLogAllDBEntries();
+        S.prefs = new C_Preferences(this);
+    }
+
+    /**
+     * Gibt den atkuellen Status des FAB Menüs zurück
+     * @return boolean
+     */
+    public boolean getFabState(){
+        return this.isFABOpen;
+    }
+
+    /**
+     * Gibt den FAB zurück
+     * @return FloatingActionButton
+     */
+    public FloatingActionButton getFloatingActionButtonPlus(){
+        return this.plusButton;
     }
 
     /**
@@ -224,7 +252,7 @@ public class A_Main extends AppCompatActivity {
         int id = item.getItemId();
 
         // Wird ausgelöst wenn der NavigationDrawer aktiviert wird
-        if (mToggle.onOptionsItemSelected(item)) {
+        if (toggle.onOptionsItemSelected(item)) {
             this.isDrawOpen = true;
             return true;
         }
@@ -247,7 +275,7 @@ public class A_Main extends AppCompatActivity {
     public void onBackPressed() {
 
         if (isDrawOpen) {
-            mDrawerLayout.closeDrawers();
+            navigationDrawerLayout.closeDrawers();
         }else if (isFABOpen) {
             closeFABMenu();
         } else {
@@ -258,12 +286,12 @@ public class A_Main extends AppCompatActivity {
     /**
      * Zeigt das Floating Button Menü an
      */
-    private void showFABMenu() {
+    public void showFABMenu() {
         isFABOpen = true;
         this.fotoLayout.setVisibility(View.VISIBLE);
         this.manuellLayout.setVisibility(View.VISIBLE);
 
-        this.kameraButton.animate().rotationBy(90);
+        this.plusButton.animate().rotationBy(90);
         this.fotoLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         this.manuellLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
     }
@@ -271,10 +299,10 @@ public class A_Main extends AppCompatActivity {
     /**
      * Schließt das Floating Button Menü
      */
-    private void closeFABMenu() {
+    public void closeFABMenu() {
         isFABOpen = false;
         fabBGLayout.setVisibility(View.GONE);
-        this.kameraButton.animate().rotationBy(-90);
+        this.plusButton.animate().rotationBy(-90);
         this.fotoButton.animate().translationY(0);
         this.manuellButton.animate().translationY(0);
         this.fotoLayout.animate().translationY(0);
@@ -407,6 +435,8 @@ public class A_Main extends AppCompatActivity {
             values.put(MediaStore.Images.Media.TITLE, fileNameTakenPhoto);
             mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+            takePictureIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            takePictureIntent.putExtra(MediaStore.EXTRA_SIZE_LIMIT,5582912L);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
@@ -491,10 +521,19 @@ public class A_Main extends AppCompatActivity {
                 artikelList.add(new C_Artikel(""+i+dummyArtikel, i*dummyArtikel));
             }
 
-            Log.e("### CEATE DUMMY DATA", " "+i+" OF "+value);
-            S.dbHandler.addBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", "21.10.2016", "21.10.2018", true, true, artikelList));
+            Log.e("### CEATE DUMMY DATA", " "+(i+1)+" OF "+value);
+            if(i < 10){
+                S.dbHandler.addBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", "0"+i+".10.2016", "0"+i+".10.2018", "1337", true, true, artikelList));
+            } else {
+                S.dbHandler.addBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", i+".10.2016", i+".10.2018", "1337", true, true, artikelList));
+            }
+
 
             artikelList.clear();
+        }
+
+        for(int i = 1; i < 3; i++){
+            S.dbHandler.addBudget(S.db, new C_Budget(i*1000, i*100, "0"+i+".01.2020", "0"+i+".01.2020", "TESTBUDGET"+i, "LALALALA", S.dbHandler.getNumberOfNewestBons(S.db, i)));
         }
     }
 }

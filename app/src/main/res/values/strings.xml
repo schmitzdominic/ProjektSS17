@@ -19,6 +19,7 @@
     <string name="nav_favoriten">Favoriten</string>
     <string name="nav_garantie">Garantie</string>
     <string name="nav_einstellungen">Einstellungen</string>
+    <string name="nav_laeden">Läden</string>
 
     <!-- A_Budget-->
     <string name="title_budget_screen">Budget</string>
@@ -28,9 +29,14 @@
 
     <!-- A_Favoriten -->
     <string name="title_favoriten_screen">Favoriten</string>
+    <string name="a_favoriten_laden_name">Laden name</string>
+    <string name="a_favoriten_datum">Datum des Bon</string>
+    <string name="a_favoriten_preis">Preis</string>
 
     <!-- A_Garantie -->
     <string name="title_garantie_screen">Garantie</string>
+    <string name="a_garantie_garantie_bis">Garantie bis</string>
+
 
     <!-- A_Einstellungen -->
     <string name="title_einstellungen_screen">Einstellungen</string>
@@ -79,6 +85,28 @@
     <!-- A_Show_Recognition -->
     <string name="title_show_recognition_screen">Ausgabe</string>
 
+    <!-- A_Laeden -->
+    <string name="title_activity_a__laeden">Läden</string>
+    <string name="a_laeden_alert_dialog_title_hint">Laden eingeben ...</string>
+    <string name="a_laeden_alert_dialog_title">Laden hinzufügen</string>
+    <string name="a_laeden_alert_dialog_cancel">ABBRUCH</string>
+    <string name="a_laeden_alert_dialog_ok">BESTÄTIGEN</string>
+    <string name="a_laeden_alert_dialog_toast1">Laden bereits vorhanden! Bitte geben Sie einen anderen Wert ein.</string>
+    <string name="a_laeden_alert_dialog_toast2">Leere Eingabe! Bitte erneut versuchen.</string>
+
+    <!-- Laeden Detail -->
+    <string name ="f_laeden_detail_titel_hint">Laden eingeben ...</string>
+    <string name ="f_laeden_detail_delete_titel">Achtung </string>
+    <string name ="f_laeden_detail_delete_message"> wird GELÖSCHT! \n\nWenn Sie Bestätigen werden alle zugeordneten Bons entfernt!</string>
+    <string name ="f_laeden_detail_cancel">ABBRUCH</string>
+    <string name ="f_laeden_detail_ok">BESTÄTIGEN</string>
+    <string name ="f_laeden_detail_delete_toast1">Laden</string>
+    <string name ="f_laeden_detail_delete_toast2">wurde gelöscht!</string>
+    <string name ="f_laeden_detail_save_titel">Ladenname ändern</string>
+    <string name ="f_laeden_detail_save_message">Sollen Ihre Eingaben übernommen werden?</string>
+    <string name ="f_laeden_detail_save_toast">Laden bereits vorhanden! Bitte geben Sie einen anderen Wert ein.</string>
+    <string name ="f_laeden_detail_save_save_toast">Laden geändert</string>
+
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings">DREIPUNKTEOPTION</string>
     <string name="appwidget_text">EXAMPLE</string>
@@ -89,6 +117,57 @@
     <string name="title_activity_a__bon__anzeigen">Bon Anzeigen</string>
 
     <!-- A_Budget_Edit -->
-    <string name="title_activity_a__budget__edit">Budget Planung</string>
+    <string name="title_budget_edit">Budget Planung</string>
+    <string name="a_budget_edit_speichern">Speichern</string>
+    <string name="a_budget_edit_titel">Titel eingeben…</string>
+    <string name="a_budget_edit_betrag">Betrag eingeben…</string>
+    <string name="a_budget_edit_vondatum">Zeitraum (Beginn)…</string>
+    <string name="a_budget_edit_bisdatum">Zeitraum (Ende)…</string>
+    <string name="a_budget_edit_sonstiges">Sonstiges (optional)…</string>
+    <string name="a_budget_edit_vonbis_error">Von-Datum liegt hinter Bis-Datum</string>
+
+    <!-- Wochentage -->
+    <string name="wochentag_1">Sonntag</string>
+    <string name="wochentag_2">Montag</string>
+    <string name="wochentag_3">Dienstag</string>
+    <string name="wochentag_4">Mittwoch</string>
+    <string name="wochentag_5">Donnerstag</string>
+    <string name="wochentag_6">Freitag</string>
+    <string name="wochentag_7">Samstag</string>
+
+    <!-- A_Tab2Statistik -->
+    <string name="title_a_statistik_tab_all">Alle</string>
+    <string name="title_a_statistik_tab_days">Tag</string>
+    <string name="title_a_statistik_tab_month">Monat</string>
+    <string name="title_a_statistik_tab_years">Jahr</string>
+
+    <string name="title_a_statistik_pie_chart">Kuchendiagramm</string>
+    <string name="title_a_statistik_line_chart">Liniendiagramm</string>
+    <string name="title_a_statistik_bar_chart">Bardiagramm</string>
+    <string name="title_a_statistik_combined_chart">Allgemein</string>
+
+    <string name="statistik_card_general_title">Allgemeiner Überblick aller Bons</string>
+    <string name="statistik_card_general_scans_title">Eingescannte \nBons</string>
+    <string name="statistik_card_general_scans_content">Anzahl</string>
+    <string name="statistik_card_general_costs_title">Gesamte \nAusgaben</string>
+    <string name="statistik_card_general_costs_content">Betrag</string>
+    <string name="statistik_card_general_marketamount_title">Läden</string>
+    <string name="statistik_card_general_marketamount_content">Anzahl</string>
+    <string name="statistik_card_general_productamount_title">Artikel</string>
+    <string name="statistik_card_general_productamount_content">Anzahl</string>
+
+    <string name="statistik_card_topproducts_title">Top 3 Artikel</string>
+    <string name="statistik_card_topproducts_article_one">Artikel 1</string>
+    <string name="statistik_card_topproducts_article_two">Artikel 2</string>
+    <string name="statistik_card_topproducts_article_three">Artikel 3</string>
+    <string name="statistik_card_topproducts_percentage">%</string>
+
+    <string name="statistik_card_topfacts_title">Top Fakten</string>
+    <string name="statistik_card_topfacts_fact_one_content">Inhalt</string>
+    <string name="statistik_card_topfacts_fact_two_content">Max-Mustermann-Str. XB</string>
+    <string name="statistik_card_topfacts_fact_three_content">Betrag</string>
+    <string name="statistik_card_topfacts_fact_one_title">Meistbesuchter \nLaden</string>
+    <string name="statistik_card_topfacts_fact_two_title">Adresse:</string>
+    <string name="statistik_card_topfacts_fact_three_title">Durchschn. \nAusgaben:</string>
 
 </resources>

@@ -35,8 +35,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/colorPrimary"
-                android:text="Speichern"
-                android:textSize="18sp" />
+                android:text="@string/a_budget_edit_speichern" />
 
         </RelativeLayout>
 
@@ -75,7 +74,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
                 android:ems="10"
-                android:hint="Titel eingeben ..."
+                android:hint="@string/a_budget_edit_titel"
+                android:maxLength="20"
                 android:inputType="textAutoComplete" />
         </LinearLayout>
 
@@ -106,7 +106,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
                 android:ems="10"
-                android:hint="Betrag eingeben ..."
+                android:hint="@string/a_budget_edit_betrag"
                 android:inputType="number"
                 android:digits="0123456789"
                 android:maxLength="6"/>
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
-                android:hint="Zeitraum (Beginn) ..."
+                android:hint="@string/a_budget_edit_vondatum"
                 android:inputType="number"
                 android:textSize="18sp"
                 android:paddingLeft="5dp"/>
@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
-                android:hint="Zeitraum (Ende) ..."
+                android:hint="@string/a_budget_edit_bisdatum"
                 android:inputType="textAutoComplete"
                 android:textSize="18sp"
                 android:paddingLeft="5dp"/>
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
-                android:hint="Sonstiges (optional) ..."
+                android:hint="@string/a_budget_edit_sonstiges"
                 android:inputType="textAutoComplete" />
         </LinearLayout>
 

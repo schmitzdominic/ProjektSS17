@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
-import de.projektss17.bonpix.daten.C_Garantie_Adapter;
+import de.projektss17.bonpix.daten.C_Adapter_Garantie;
 
 public class A_Garantie extends AppCompatActivity {
 
     private List<C_Bon> bonListe = new ArrayList<>();
     private RecyclerView recyclerViewGarantie;
-    private C_Garantie_Adapter mAdapter;
+    private C_Adapter_Garantie mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class A_Garantie extends AppCompatActivity {
         //XML instaniziieren
         this.recyclerViewGarantie = (RecyclerView) findViewById(R.id.garantie_view);
 
-        mAdapter = new C_Garantie_Adapter(bonListe);
+        mAdapter = new C_Adapter_Garantie(bonListe);
         prepareBonData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewGarantie.setLayoutManager(mLayoutManager);
@@ -49,7 +49,7 @@ public class A_Garantie extends AppCompatActivity {
      */
     private void prepareBonData(){
 
-        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
+        for(C_Bon bon : (ArrayList<C_Bon>) S.dbHandler.rotateList(S.dbHandler.getAllBons(S.db))){
             if(bon.getGuarantee()){
                 this.bonListe.add(bon);
             }

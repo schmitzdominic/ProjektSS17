@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AlertDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceActivity;
@@ -13,7 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -92,6 +99,13 @@ public class S extends Activity {
      */
     public static void showGarantie(AppCompatActivity beforeActivity){
         S.startActivitiy(beforeActivity, A_Garantie.class);
+    }
+
+    /**
+     * Ruft die Laeden Activity auf
+     */
+    public static void showLaeden(AppCompatActivity beforeActivity){
+        S.startActivitiy(beforeActivity, A_Laeden.class);
     }
 
     /**
@@ -239,6 +253,74 @@ public class S extends Activity {
      */
     public static void outLong(AppCompatActivity context, String msg){
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Gibt anhand des namens das richtige Icon zurück
+     * @param res Resource
+     * @param name Name des Ladens
+     * @return Bitmap des Ladens
+     */
+    public static Bitmap getShopIcon(Resources res, String name){
+
+        switch(name){
+            case "ALDI NORD": return BitmapFactory.decodeResource(res,  R.mipmap.ic_aldinordlogo);
+            case "ALDI SÜD": return BitmapFactory.decodeResource(res,  R.mipmap.ic_aldisuedlogo);
+            case "Aral": return BitmapFactory.decodeResource(res,  R.mipmap.ic_arallogo);
+            case "Edeka": return BitmapFactory.decodeResource(res,  R.mipmap.ic_edekalogo);
+            case "Media Markt": return BitmapFactory.decodeResource(res,  R.mipmap.ic_mediamarktlogo);
+            case "Müller": return BitmapFactory.decodeResource(res,  R.mipmap.ic_muellerlogo);
+            case "Netto": return BitmapFactory.decodeResource(res,  R.mipmap.ic_nettologo);
+            case "REWE": return BitmapFactory.decodeResource(res,  R.mipmap.ic_rewelogo);
+            case "Saturn": return BitmapFactory.decodeResource(res,  R.mipmap.ic_saturnlogo);
+            case "Shell": return BitmapFactory.decodeResource(res,  R.mipmap.ic_shelllogo);
+            default: return BitmapFactory.decodeResource(res,  R.mipmap.ic_shopping_cart_black_24dp);
+        }
+
+    }
+
+    /**
+     * Gibt den Tag anhand des int wertes zurück
+     * @param res Resource
+     * @param day int tag
+     * @return Return String des Wochentags
+     */
+    public static String getWeekday(Resources res, int day){
+        switch(day){
+            case 1: return res.getString(R.string.wochentag_1);
+            case 2: return res.getString(R.string.wochentag_2);
+            case 3: return res.getString(R.string.wochentag_3);
+            case 4: return res.getString(R.string.wochentag_4);
+            case 5: return res.getString(R.string.wochentag_5);
+            case 6: return res.getString(R.string.wochentag_6);
+            case 7: return res.getString(R.string.wochentag_7);
+            default: return " ";
+        }
+    }
+
+    /**
+     * Gibt anhand eines Datum strings den Tag als int wert zurück
+     * @param dateString Datum als String
+     * @return Wochentag als int
+     */
+    public static int getWeekdayNumber(String dateString){
+
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = null;
+
+        try {
+            date = df.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(date != null){
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            return c.get(Calendar.DAY_OF_WEEK);
+        } else {
+            return 0;
+        }
     }
 
 }
