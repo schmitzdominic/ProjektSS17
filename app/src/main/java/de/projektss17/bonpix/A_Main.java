@@ -187,6 +187,9 @@ public class A_Main extends AppCompatActivity {
                     case R.id.menu_nav_garantie:
                         S.showGarantie(A_Main.this);
                         return true;
+                    case R.id.menu_nav_laeden:
+                        S.showLaeden(A_Main.this);
+                        return true;
                     case R.id.menu_nav_einstellungen:
                         S.showEinstellungen(A_Main.this);
                         return true;

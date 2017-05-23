@@ -613,6 +613,25 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Get all Bons with specific Store
+     * @param db
+     * @param name
+     * @return
+     */
+    public ArrayList<C_Bon> getBonsOfStore(SQLiteDatabase db, String name){
+        ArrayList<C_Bon> list = new ArrayList<>();
+        for (C_Bon bon : S.dbHandler.getAllBons(db)){
+            if (bon.getShopName().equals(name)){
+                list.add(bon);
+            }
+            else {
+                continue;
+            }
+        }
+        return list;
+    }
+
+    /**
      * Gibt alle Daten aus der DB im Log aus.
      */
     public void showLogAllDBEntries(){
@@ -671,5 +690,95 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_Artikel);
         db.execSQL(CREATE_TABLE_BonArtikel);
 
+    }
+
+    /**
+     * Get the Data for BarCharts
+     * @param time
+     * @return
+     */
+    public List<BarEntry> getBarData(int time){
+        //TODO: Logic part for preparing Bar Data
+        List<BarEntry> dataList = new ArrayList<>();
+        switch(time){
+            case 1:
+                dataList.add(new BarEntry(0f, 30f));
+                dataList.add(new BarEntry(1f, 80f));
+                dataList.add(new BarEntry(2f, 60f));
+                dataList.add(new BarEntry(3f, 50f));
+                dataList.add(new BarEntry(5f, 70f));
+                dataList.add(new BarEntry(6f, 60f));
+                return dataList;
+            default:
+                dataList.add(new BarEntry(0f, 30f));
+                dataList.add(new BarEntry(1f, 80f));
+                dataList.add(new BarEntry(2f, 60f));
+                dataList.add(new BarEntry(3f, 50f));
+                dataList.add(new BarEntry(5f, 70f));
+                dataList.add(new BarEntry(6f, 60f));
+                return dataList;
+        }
+    }
+
+    /**
+     * Get the Data for LineCharts
+     * @param  time
+     * @return
+     */
+    public Map<String, List<Entry>> getLineData(int time){
+        //TODO: Logic part for preparing Bar Data
+        Map<String, List<Entry>> map = new HashMap();
+        List<Entry> lineOne = new ArrayList<Entry>();
+        List<Entry> lineTwo = new ArrayList<Entry>();
+        switch(time){
+            case 1:
+                Entry c1e1 = new Entry(0f, 100000f); // 0 == quarter 1
+                lineOne.add(c1e1);
+                Entry c1e2 = new Entry(1f, 140000f); // 1 == quarter 2 ...
+                lineOne.add(c1e2);
+                map.put("lineOne", lineOne);
+                Entry c2e1 = new Entry(0f, 130000f); // 0 == quarter 1
+                lineTwo.add(c2e1);
+                Entry c2e2 = new Entry(1f, 115000f); // 1 == quarter 2 ...
+                lineTwo.add(c2e2);
+                map.put("lineTwo", lineTwo);
+                return map;
+            default:
+                Entry c3e1 = new Entry(0f, 100000f); // 0 == quarter 1
+                lineOne.add(c3e1);
+                Entry c3e2 = new Entry(1f, 140000f); // 1 == quarter 2 ...
+                lineOne.add(c3e2);
+                map.put("lineOne", lineOne);
+                Entry c4e1 = new Entry(0f, 130000f); // 0 == quarter 1
+                lineTwo.add(c4e1);
+                Entry c4e2 = new Entry(1f, 115000f); // 1 == quarter 2 ...
+                lineTwo.add(c4e2);
+                map.put("lineTwo", lineTwo);
+                return map;
+        }
+    }
+
+    /**
+     * Get the Data for PieCharts
+     * @param time
+     * @return
+     */
+    public List<PieEntry> getPieData(int time){
+        List<PieEntry> dataList = new ArrayList<>();
+        //TODO: Logic part for preparing Bar Data
+        switch(time){
+            case 1:
+                dataList.add(new PieEntry(18.5f, "Green"));
+                dataList.add(new PieEntry(26.7f, "Yellow"));
+                dataList.add(new PieEntry(24.0f, "Red"));
+                dataList.add(new PieEntry(30.8f, "Blue"));
+                return dataList;
+            default:
+                dataList.add(new PieEntry(18.5f, "Green"));
+                dataList.add(new PieEntry(26.7f, "Yellow"));
+                dataList.add(new PieEntry(24.0f, "Red"));
+                dataList.add(new PieEntry(30.8f, "Blue"));
+                return dataList;
+        }
     }
 }

@@ -84,6 +84,13 @@ public class S extends Activity {
     }
 
     /**
+     * Ruft die Laeden Activity auf
+     */
+    public static void showLaeden(AppCompatActivity beforeActivity){
+        S.startActivitiy(beforeActivity, A_Laeden.class);
+    }
+
+    /**
      * Ruft die Einstellungen Activity auf
      */
     public static void showEinstellungen(AppCompatActivity beforeActivity){
