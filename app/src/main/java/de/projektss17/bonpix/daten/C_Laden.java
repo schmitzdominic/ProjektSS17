@@ -1,10 +1,12 @@
 package de.projektss17.bonpix.daten;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by Domi on 27.04.2017.
  */
 
-public class C_Laden {
+public class C_Laden implements Comparable{
 
     private int id;
     private String name;
@@ -54,5 +56,11 @@ public class C_Laden {
     public String toString() {
         return "\nID: " + this.getId() +
                 "\nNAME: " + this.getName();
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        C_Laden other = (C_Laden)o;
+        return this.getName().toLowerCase().compareTo(other.getName().toLowerCase());
     }
 }
