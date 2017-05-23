@@ -64,8 +64,10 @@ public class A_Tab1Home extends Fragment {
         chart.animateXY(2000, 4000);
         chart.setPadding(30, 30, 30, 30);
 
+        if(bonsList.size() != 0){
+            prepareLineData();
+        }
 
-        prepareLineData();
         return rootView;
     }
 
@@ -107,16 +109,17 @@ public class A_Tab1Home extends Fragment {
     }
 
     private void prepareHomeData() {
-        bonsList.clear();
-        int count = 0;
-        for (C_Bon bon : S.dbHandler.getAllBons(S.db)) {
-            if (count == 3) {
-                break;
+        if(S.dbHandler.getAllBons(S.db).size() != 0){
+            bonsList.clear();
+            int count = 0;
+            for (C_Bon bon : S.dbHandler.getAllBons(S.db)) {
+                if (count == 3) {
+                    break;
+                }
+                bonsList.add(bon);
+                count++;
             }
-            bonsList.add(bon);
-            count++;
         }
-
     }
 
 }
