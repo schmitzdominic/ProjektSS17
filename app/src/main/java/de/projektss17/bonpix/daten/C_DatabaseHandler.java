@@ -42,9 +42,79 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * Get all Bons via ArrayList<String>
-     * @param db
-     * @return
+     * Dreht die Reihenfolge einer Liste um
+     * @param list Liste
+     * @return umgedrehte Liste
+     */
+    public ArrayList rotateList(ArrayList list){
+
+        ArrayList rotateList = new ArrayList<>();
+
+        for(int i = list.size()-1; i >= 0; i--){
+            rotateList.add(list.get(i));
+        }
+
+        return rotateList;
+    }
+
+    /**
+     * Wird in YYYY-MM-DD convertiert
+     * @param date Original Datum DD.MM.YYYY
+     * @return convertiertes Datum
+     */
+    public String convertToDateISO8601(String date){
+        if(date.contains(".")){
+            return date.split("\\.")[2] + "-" + date.split("\\.")[1] + "-" + date.split("\\.")[0];
+        } else {
+            return date;
+        }
+
+    }
+
+    /**
+     * Wird in DD.MM.YYYY convertiert
+     * @param date Original Datum YYYY-MM-DD
+     * @return convertiertes Datum
+     */
+    public String convertFromDateISO8601(String date){
+        if(date.contains("-")){
+            return date.split("-")[2] + "." + date.split("-")[1] + "." + date.split("-")[0];
+        } else {
+            return date;
+        }
+
+    }
+
+    /**
+     * Prüft ob sich die Artikel eines Budgets geändert haben.
+     * @param db Datenbank
+     * @param budget Budget
+     */
+    public void refreshBudget(SQLiteDatabase db, C_Budget budget){
+
+        ArrayList<Integer> bonIds = new ArrayList<>();
+        ArrayList<C_Bon> bonsBudget = budget.getBons();
+
+        for(C_Bon bon : budget.getBons()){
+            bonIds.add(bon.getId());
+        }
+
+        for(C_Bon bon : this.getBonsBetweenDate(db, budget.getZeitraumVon(), budget.getZeitraumBis())){
+            if(!bonIds.contains(bon.getId())){
+                bonsBudget.add(bon);
+                budget.setBudgetLost((int) (budget.getBudgetLost() + Double.parseDouble(bon.getTotalPrice().replace(",","."))));
+            }
+        }
+
+        budget.setBons(bonsBudget);
+        S.dbHandler.updateBudget(db, budget);
+
+    }
+
+    /**
+     * Get all Bons via ArrayList<C_Bon>
+     * @param db Datenbank
+     * @return ArrayList mit allen Bons
      */
     public ArrayList<C_Bon> getAllBons(SQLiteDatabase db){
 
@@ -60,10 +130,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         this.getLaden(db, cursor.getInt(2)).getName(),
                         cursor.getString(3),
                         cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getString(6),
-                        cursor.getInt(7) > 0,
-                        cursor.getInt(8) > 0);
+                        this.convertFromDateISO8601(cursor.getString(5)),
+                        this.convertFromDateISO8601(cursor.getString(6)),
+                        cursor.getString(7),
+                        cursor.getInt(8) > 0,
+                        cursor.getInt(9) > 0);
 
                 bon.setArticles(this.getAllArticleFromBon(db, bon));
                 bonsList.add(bon);
@@ -73,6 +144,38 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         cursor.close();
         return bonsList;
+    }
+
+    /**
+     * Get all Budgets via ArrayList<C_Budget>
+     * @param db Datenbank
+     * @return ArrayList mit allen Budgets
+     */
+    public ArrayList<C_Budget> getAllBudgets(SQLiteDatabase db){
+
+        ArrayList<C_Budget> budgetList = new ArrayList<>();
+        String query = "SELECT * FROM budget";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+
+                C_Budget budget = new C_Budget(cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getInt(2),
+                        convertFromDateISO8601(cursor.getString(3)),
+                        convertFromDateISO8601(cursor.getString(4)),
+                        cursor.getString(5),
+                        cursor.getString(6));
+
+                budget.setBons(this.getAllBonsFromBudget(db, budget));
+                budgetList.add(budget);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return budgetList;
     }
 
     /**
@@ -98,6 +201,134 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         return articleList;
+    }
+
+    /**
+     * Gibt alle Bons eines Budgets zurück
+     * @param db Datenbank
+     * @param budget Budget
+     * @return ArrayList mit allen dazugehörigen Bons
+     */
+    public ArrayList<C_Bon> getAllBonsFromBudget(SQLiteDatabase db, C_Budget budget){
+
+        ArrayList<C_Bon> bonList = new ArrayList<>();
+
+        String query = "SELECT a.bonid, a.bildpfad, a.ladenname, a.anschrift, a.sonstigeinfos, a.datum, a.garantieende, a.gesamtpreis, a.favoriten, a.garantie FROM bon a " +
+                "LEFT JOIN bonbudget bb ON bb.bonid = a.bonid " +
+                "WHERE bb.budgetid = '" + budget.getId() + "'";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                C_Bon bon = new C_Bon(cursor.getInt(0),
+                        cursor.getString(1),
+                        this.getLaden(db, cursor.getInt(2)).getName(),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        this.convertFromDateISO8601(cursor.getString(5)),
+                        this.convertFromDateISO8601(cursor.getString(6)),
+                        cursor.getString(7),
+                        cursor.getInt(8) > 0,
+                        cursor.getInt(9) > 0);
+
+                bon.setArticles(this.getAllArticleFromBon(db, bon));
+                bonList.add(bon);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return bonList;
+    }
+
+    /**
+     * Gibt alle bons zwischen zwei datums zurück
+     * @param db Datenbank
+     * @param date1 Datum von
+     * @param date2 Datum bis
+     * @return Alle bons in diesem Zeitraum
+     */
+    public ArrayList<C_Bon> getBonsBetweenDate(SQLiteDatabase db, String date1, String date2){
+
+        ArrayList<C_Bon> list = new ArrayList<>();
+        String query = "SELECT * FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            do {
+                C_Bon bon = new C_Bon(cursor.getInt(0),
+                        cursor.getString(1),
+                        this.getLaden(db, cursor.getInt(2)).getName(),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        this.convertFromDateISO8601(cursor.getString(5)),
+                        this.convertFromDateISO8601(cursor.getString(6)),
+                        cursor.getString(7),
+                        cursor.getInt(8) > 0,
+                        cursor.getInt(9) > 0);
+
+                bon.setArticles(this.getAllArticleFromBon(db, bon));
+                list.add(bon);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return rotateList(list);
+    }
+
+    /**
+     * Gibt die Summe aller Gesamtpreise einer Bonliste zurück
+     * @param bons Bonliste
+     * @return Alle Gesamtpreise summiert
+     */
+    public double getTotalPriceFromBonsSumup(ArrayList<C_Bon> bons){
+
+        double summe = 0;
+
+        for(C_Bon bon : bons){
+            summe += Double.parseDouble(bon.getTotalPrice().replace(",","."));
+        }
+
+        return summe;
+    }
+
+    /**
+     * Holt die neuesten Bons aus der Datenbank
+     * @param db Datenbank
+     * @param anzahl Anzahl der Bons die herausgeholt werden soll
+     * @return ArrayList mit den aktuellsten Bons
+     */
+    public ArrayList<C_Bon> getNumberOfNewestBons(SQLiteDatabase db, int anzahl){
+
+        ArrayList<C_Bon> list = new ArrayList<>();
+        String query = "SELECT * FROM bon WHERE bonid = (SELECT MAX(bonid) FROM bon)";
+
+        for(int i = 1; i < anzahl; i++){
+            query += " OR bonid = (SELECT MAX(bonid)-"+i+" FROM bon)";
+        }
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            do {
+                C_Bon bon = new C_Bon(cursor.getInt(0),
+                        cursor.getString(1),
+                        this.getLaden(db, cursor.getInt(2)).getName(),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        this.convertFromDateISO8601(cursor.getString(5)),
+                        this.convertFromDateISO8601(cursor.getString(6)),
+                        cursor.getString(7),
+                        cursor.getInt(8) > 0,
+                        cursor.getInt(9) > 0);
+
+                bon.setArticles(this.getAllArticleFromBon(db, bon));
+                list.add(bon);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return rotateList(list);
+
     }
 
     /**
@@ -197,6 +428,26 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Gibt alle Bon Budgets zurück
+     * @param db Datenbank
+     * @return HashMap mit allen Zuweißungen Integer, Integer
+     */
+    public HashMap<Integer, Integer> getAllBonBudget(SQLiteDatabase db){
+
+        HashMap<Integer, Integer> list = new HashMap<>();
+        String query = "SELECT * FROM bonbudget";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                list.put(cursor.getInt(0), cursor.getInt(1));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
+    /**
      * Gibt einen Laden zurück falls dieser existiert
      * @param db Datenbank
      * @param ladenName Name des gesuchtne Ladens
@@ -244,6 +495,24 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             for(C_Bon bon : this.getAllBons(db)){
                 if(bon.getId() == id){
                     return bon;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gibt ein Budget zurück falls dieses existiert
+     * @param db Datenbank
+     * @param id ID des Budgets
+     * @return C_Budget wenn es existiert, null wenn nicht
+     */
+    public C_Budget getBudget(SQLiteDatabase db, int id){
+
+        if(checkIfBudgetExist(db, id)){
+            for(C_Budget budget : this.getAllBudgets(db)){
+                if(budget.getId() == id){
+                    return budget;
                 }
             }
         }
@@ -308,8 +577,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("ladenname", ladenId);
         values.put("anschrift", bon.getAdress());
         values.put("sonstigeinfos", bon.getOtherInformations());
-        values.put("datum", bon.getDate());
-        values.put("garantieende", bon.getGuaranteeEnd());
+        values.put("datum", this.convertToDateISO8601(bon.getDate()));
+        values.put("garantieende", this.convertToDateISO8601(bon.getGuaranteeEnd()));
+        values.put("gesamtpreis", bon.getTotalPrice());
         values.put("favoriten", bon.getFavourite());
         values.put("garantie", bon.getGuarantee());
 
@@ -328,6 +598,37 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 for(C_Artikel dbArticle : this.getAllArticle(db)){
                     if(bonArticle.getName().equals(dbArticle.getName()) && bonArticle.getPrice() == dbArticle.getPrice()){
                         this.addBonArticle(db, bonid, dbArticle.getId());
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Fügt ein neues Budget hinzu
+     * @param db Datenbank
+     * @param budget Budget
+     */
+    public void addBudget(SQLiteDatabase db, C_Budget budget){
+
+        ContentValues values = new ContentValues();
+
+        values.put("budget", budget.getBudgetMax());
+        values.put("stand", budget.getBudgetLost());
+        values.put("von", this.convertToDateISO8601(budget.getZeitraumVon()));
+        values.put("bis", this.convertToDateISO8601(budget.getZeitraumBis()));
+        values.put("titel", budget.getTitle());
+        values.put("sonstiges", budget.getSonstiges());
+
+        db.insert("budget", null, values);
+
+        int budgetid = this.getAllBudgets(S.db).get(this.getAllBudgets(S.db).size()-1).getId();
+
+        if(this.checkIfBudgetExist(db, budgetid)){
+            for(C_Bon budgetBon : budget.getBons()){
+                for(C_Bon dbBon : this.getAllBons(db)){
+                    if(budgetBon.getId() == dbBon.getId()){
+                        this.addBudgetBon(db, budgetid, dbBon.getId());
                     }
                 }
             }
@@ -396,6 +697,30 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Fügt eine neue zuweißung Budget zu Bon hinzu
+     * @param db Datenbank
+     * @param budgetId Budget Id
+     * @param bonId Bon Id
+     */
+    public void addBudgetBon(SQLiteDatabase db, int budgetId, int bonId){
+
+        boolean dontmatch = true;
+
+        for(int a : this.getAllBonBudget(db).keySet()){
+            if(a == budgetId && this.getAllBonBudget(db).get(a) == bonId){
+                dontmatch = false;
+            }
+        }
+
+        if(dontmatch){
+            ContentValues values = new ContentValues();
+            values.put("budgetid", budgetId);
+            values.put("bonid", bonId);
+            db.insert("bonbudget", null, values);
+        }
+    }
+
+    /**
      * Updated einen Artikel
      * @param db Datenbank
      * @param article Artikel
@@ -450,8 +775,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("ladenname", ladenId);
         values.put("anschrift", bon.getAdress());
         values.put("sonstigeinfos", bon.getOtherInformations());
-        values.put("datum", bon.getDate());
-        values.put("garantieende", bon.getGuaranteeEnd());
+        values.put("datum", this.convertToDateISO8601(bon.getDate()));
+        values.put("garantieende", this.convertToDateISO8601(bon.getGuaranteeEnd()));
+        values.put("gesamtpreis", bon.getTotalPrice());
         values.put("favoriten", bon.getFavourite());
         values.put("garantie", bon.getGuarantee());
 
@@ -471,6 +797,35 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             }
         }
 
+    }
+
+    /**
+     * Updated ein Budget
+     * @param db Datenbank
+     * @param budget Budget
+     */
+    public void updateBudget(SQLiteDatabase db, C_Budget budget){
+
+        ContentValues values = new ContentValues();
+
+        values.put("budgetid", budget.getId());
+        values.put("budget", budget.getBudgetMax());
+        values.put("stand", budget.getBudgetLost());
+        values.put("von", this.convertToDateISO8601(budget.getZeitraumVon()));
+        values.put("bis", this.convertToDateISO8601(budget.getZeitraumBis()));
+        values.put("titel", budget.getTitle());
+        values.put("sonstiges", budget.getSonstiges());
+
+        db.update("budget", values, "budgetid="+budget.getId(), null);
+        db.delete("bonbudget", "budgetid="+budget.getId(), null);
+
+        for(C_Bon budgetBon : budget.getBons()){
+            for(C_Bon dbBon : this.getAllBons(db)){
+                if(budgetBon.getId() == dbBon.getId()){
+                    this.addBudgetBon(db, budget.getId(), dbBon.getId());
+                }
+            }
+        }
     }
 
     /**
@@ -550,6 +905,21 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Überprüft ob ein Budget bereits existiert.
+     * @param db Datenbank
+     * @param id des Budgets
+     * @return true - existiert, false - existiert nicht
+     */
+    public boolean checkIfBudgetExist(SQLiteDatabase db, int id){
+        for(C_Budget budget : this.getAllBudgets(db)){
+            if(budget.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * * * !!!!!! WICHTIG !!!!!!!!!!
      * LÖSCHT EBENSO ALLE KASSENZETTEL DIE MIT DEM LADEN
      * VERKNÜPFT SIND DA SONST DIE APP ABSTÜRZT!!
@@ -615,6 +985,18 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Löscht ein Budget
+     * @param db Datenbank
+     * @param id ID des Budgets
+     */
+    public void removeBudget(SQLiteDatabase db, int id){
+        if(this.checkIfBudgetExist(db, id)){
+            db.delete("budget", "budgetid="+id, null);
+            db.delete("bonbudget", "budgetid="+id, null);
+        }
+    }
+
+    /**
      * Get all Bons with specific Store
      * @param db
      * @param name
@@ -653,6 +1035,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             Log.e("######### ARTIKEL: ", artikel.toString() + "\n---------------------");
         }
 
+        Log.e("######### DB BUDGETS","#########################################");
+        for(C_Budget budget : S.dbHandler.getAllBudgets(S.db)){
+            Log.e("######### BUDGET: ", budget.toString() + "\n---------------------");
+        }
+
     }
 
 
@@ -670,8 +1057,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 "ladenname INTEGER, " +
                 "anschrift VARCHAR(255), " +
                 "sonstigeinfos VARCHAR(255), " +
-                "datum VARCHAR(255), " +
-                "garantieende VARCHAR(255), " +
+                "datum TEXT, " +
+                "garantieende TEXT, " +
+                "gesamtpreis VARCHAR(255), " +
                 "favoriten BOOLEAN, " +
                 "garantie BOOLEAN, " +
                 "FOREIGN KEY (ladenname) REFERENCES laden(ladenid))";
@@ -681,16 +1069,32 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 "preis DECIMAL(6,2), " +
                 "kategorie VARCHAR(50))";
 
+        String CREATE_TABLE_Budget = "CREATE TABLE IF NOT EXISTS budget (budgetid INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "budget INTEGER, " +
+                "stand INTEGER, " +
+                "von TEXT, " +
+                "bis TEXT, " +
+                "titel VARCHAR(255), " +
+                "sonstiges VARCHAR(255))";
+
         String CREATE_TABLE_BonArtikel = "CREATE TABLE IF NOT EXISTS bonartikel (bonid INTEGER NOT NULL, " +
                 "artikelid INTEGER NOT NULL, " +
                 "PRIMARY KEY (bonid, artikelid), " +
                 "FOREIGN KEY (bonid) REFERENCES bon(bonid), " +
                 "FOREIGN KEY (artikelid) REFERENCES artikel(artikelid))";
 
+        String CREATE_TABLE_BonBudget = "CREATE TABLE IF NOT EXISTS bonbudget (budgetid INTEGER NOT NULL, " +
+                "bonid INTEGER NOT NULL, " +
+                "PRIMARY KEY (budgetid, bonid), " +
+                "FOREIGN KEY (budgetid) REFERENCES budget(budgetid), " +
+                "FOREIGN KEY (bonid) REFERENCES bon(bonid))";
+
         db.execSQL(CREATE_TABLE_Laden);
         db.execSQL(CREATE_TABLE_Bon);
         db.execSQL(CREATE_TABLE_Artikel);
+        db.execSQL(CREATE_TABLE_Budget);
         db.execSQL(CREATE_TABLE_BonArtikel);
+        db.execSQL(CREATE_TABLE_BonBudget);
 
     }
 

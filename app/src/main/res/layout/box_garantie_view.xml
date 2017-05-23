@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/garantie_view_laden_bild"
@@ -21,7 +19,7 @@
         android:id="@+id/garantie_view_garantiebeginn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/garantie_view_garantie_delete_button"
+        android:layout_toLeftOf="@+id/garantie_view_zusatz_favorite_price"
         android:layout_toRightOf="@+id/garantie_view_laden_bild"
         android:paddingTop="20dp"
         android:text="Beginn der Garantie"
@@ -35,9 +33,21 @@
         android:paddingBottom="20dp"
         android:text="Ende der Garantie"
         android:textSize="14sp"
-        android:layout_toLeftOf="@id/garantie_view_garantie_delete_button"
+        android:layout_toLeftOf="@id/garantie_view_zusatz_favorite_price"
         android:layout_toRightOf="@+id/garantie_view_laden_bild"
         android:layout_below="@+id/garantie_view_garantiebeginn"/>
+
+    <TextView
+        android:id="@+id/garantie_view_zusatz_favorite_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/garantie_view_garantie_delete_button"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center_vertical"
+        android:text="Preis"
+        android:textSize="24sp"/>
 
 
     <ImageView

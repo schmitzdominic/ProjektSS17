@@ -9,12 +9,13 @@ import java.util.ArrayList;
 public class C_Bon {
 
     private int id;
-    private String path,
-            shopName,
-            adress,
-            otherInformations,
-            date,
-            guaranteeEnd;
+    private String path;
+    private String shopName;
+    private String adress;
+    private String otherInformations;
+    private String date;
+    private String guaranteeEnd;
+    private String totalPrice;
     private ArrayList<C_Artikel> articles;
     private boolean favourite,
             guarantee;
@@ -32,8 +33,8 @@ public class C_Bon {
      * @param articles
      */
     public C_Bon(String path, String shopName, String adress, String otherInformations,
-                 String date, String guaranteeEnd, boolean favourite, boolean guarantee, ArrayList<C_Artikel> articles) {
-        this(0, path, shopName, adress, otherInformations, date, guaranteeEnd, favourite, guarantee, articles);
+                 String date, String guaranteeEnd, String totalPrice, boolean favourite, boolean guarantee, ArrayList<C_Artikel> articles) {
+        this(0, path, shopName, adress, otherInformations, date, guaranteeEnd, totalPrice, favourite, guarantee, articles);
     }
 
     /**
@@ -49,8 +50,8 @@ public class C_Bon {
      * @param guarantee
      */
     public C_Bon(int id, String path, String shopName, String adress, String otherInformations,
-                 String date, String guaranteeEnd, boolean favourite, boolean guarantee) {
-        this(id, path, shopName, adress, otherInformations, date, guaranteeEnd, favourite, guarantee, null);
+                 String date, String guaranteeEnd, String totalPrice, boolean favourite, boolean guarantee) {
+        this(id, path, shopName, adress, otherInformations, date, guaranteeEnd, totalPrice, favourite, guarantee, null);
     }
 
     /**
@@ -67,7 +68,7 @@ public class C_Bon {
      * @param articles
      */
     public C_Bon(int id, String path, String shopName, String adress, String otherInformations,
-                 String date, String guaranteeEnd, boolean favourite, boolean guarantee, ArrayList<C_Artikel> articles){
+                 String date, String guaranteeEnd, String totalPrice, boolean favourite, boolean guarantee, ArrayList<C_Artikel> articles){
         this.id = id;
         this.path = path;
         this.shopName = shopName;
@@ -75,6 +76,7 @@ public class C_Bon {
         this.otherInformations = otherInformations;
         this.date = date;
         this.guaranteeEnd = guaranteeEnd;
+        this.totalPrice = totalPrice;
         this.favourite = favourite;
         this.guarantee = guarantee;
         this.articles = articles;
@@ -161,6 +163,14 @@ public class C_Bon {
     }
 
     /**
+     * Gibt den Gesamtpreis zurück
+     * @return String als Gesamtpreis
+     */
+    public String getTotalPrice() {
+        return totalPrice;
+    }
+
+    /**
      * Setzt eine neue Id
      * @param id int
      */
@@ -240,6 +250,14 @@ public class C_Bon {
         this.articles = articles;
     }
 
+    /**
+     * Weißt dem Bon einen neuen Gesamtpreis zu
+     * @param totalPrice Gesamtpreis
+     */
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     @Override
     public String toString() {
         String out = "ID: "+ this.id + ", \n" +
@@ -249,6 +267,7 @@ public class C_Bon {
                 "Other Informations: " + this.getOtherInformations() + ", \n" +
                 "Date: " + this.getDate() + ", \n" +
                 "Guaranteeend: " + this.getGuaranteeEnd() + ", \n" +
+                "totalPrice: " + this.totalPrice + ", \n" +
                 "Favourite: " + this.getFavourite() + ", \n" +
                 "Guarantee: " +this.getGuarantee();
 
