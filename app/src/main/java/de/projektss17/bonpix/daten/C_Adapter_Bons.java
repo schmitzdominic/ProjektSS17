@@ -53,7 +53,6 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
                                             intent = new Intent(v.getContext(), A_Bon_Anzeigen.class);
                                             intent.putExtra("BonPos", pos);
                                             v.getContext().startActivity(intent);
-                                            Log.e("### VIEWHOLDER CLICK", "CLICKED");
                                         }
                                     });
             // TODO: Derzeit ist das "REWE" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
