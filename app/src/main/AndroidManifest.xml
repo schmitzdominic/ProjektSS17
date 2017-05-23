@@ -129,19 +129,6 @@
                 android:value="de.projektss17.bonpix.A_Budget"/>
 
         </activity>
-
-        <activity
-            android:name=".A_Budget_Edit"
-            android:label="@string/title_activity_a__budget__edit"
-            android:parentActivityName=".A_Budget"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.projektss17.bonpix.A_Budget"/>
-
-        </activity>
-
         <activity
             android:name=".A_Laeden"
             android:label="@string/title_activity_a__laeden"

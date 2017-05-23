@@ -298,7 +298,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         for(int i = 0; i < anzahl; i++)
             bons.add(new C_Bon(i, "Path/Bons/Test","Supermarkt "+i, "Max-Mustermann Str. XB"+i+" \n86161 Augsburg",
-                    "Das sind DUMMYBONS", "21.05.2017", "30.05.2017", false, true, createArticleData(anzahl)));
+                    "Das sind DUMMYBONS", "21.05.2017", "30.05.2017", "1337", false, true, createArticleData(anzahl)));
 
         return bons;
     }

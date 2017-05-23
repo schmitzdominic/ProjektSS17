@@ -147,24 +147,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * Get the Data for LineCharts
-     * @return Last
-     */
-    public List<Entry> getLineData(SQLiteDatabase db, int count){
-
-        List<Entry> dataList = new ArrayList<>();
-        int counter = 0;
-
-        for(C_Bon bon : (ArrayList<C_Bon>) this.rotateList(this.getAllBons(db))){
-            dataList.add(new Entry((float) counter, Float.parseFloat(bon.getTotalPrice())));
-            counter++;
-            if(counter == count) break;
-        }
-
-        return dataList;
-    }
-
-    /**
      * Get all Budgets via ArrayList<C_Budget>
      * @param db Datenbank
      * @return ArrayList mit allen Budgets
