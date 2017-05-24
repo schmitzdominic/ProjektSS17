@@ -260,7 +260,7 @@ public class A_Main extends AppCompatActivity {
 
         // Wird ausgelöst wenn einer der (drei punkte) Optionen aufgerufen wird
         switch (id) {
-            case R.id.menu_main_DUMMY:
+            case R.id.menu_main_search:
                 // Rufe die Activity auf
                 return true;
         }
