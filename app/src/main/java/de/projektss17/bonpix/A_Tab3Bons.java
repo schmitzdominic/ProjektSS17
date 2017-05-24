@@ -146,7 +146,7 @@ public class A_Tab3Bons extends Fragment implements SearchView.OnQueryTextListen
         return false;
     }
 
-    private void handleIntent(Intent intent) {
+    /*private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             doSearch(query);
@@ -161,5 +161,5 @@ public class A_Tab3Bons extends Fragment implements SearchView.OnQueryTextListen
 
     private void doSearch(String queryStr) {
         Log.e("Your search: ",queryStr);
-    }
+    }*/
 }
