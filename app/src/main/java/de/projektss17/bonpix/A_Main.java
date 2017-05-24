@@ -164,6 +164,7 @@ public class A_Main extends AppCompatActivity {
             }
         });
 
+
         // Wenn ein Menüitem (NavigationDrawer) geklickt wird
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
