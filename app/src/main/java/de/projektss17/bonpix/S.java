@@ -317,7 +317,8 @@ public class S extends Activity {
     }
 
     /**
-     * Notification Builder - Opens a clickable notification! Yolo
+     * Notification Builder - Opens a clickable notification!
+     * (Could be opened with S.sendNotification(context, activity.class, string, string, boolean))
      * @param context
      * @param cls
      * @param title
@@ -332,9 +333,8 @@ public class S extends Activity {
                         .setAutoCancel(closeAfterClick);
 
         Intent notificationIntent = new Intent(context, cls);
-        //notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
+        //Defines the action inside the notification
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
@@ -343,5 +343,4 @@ public class S extends Activity {
         NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
     }
-
 }
