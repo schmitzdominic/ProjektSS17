@@ -258,7 +258,7 @@ public class C_Bon {
         this.totalPrice = totalPrice;
     }
 
-    /*@Override
+    @Override
     public String toString() {
         String out = "ID: "+ this.id + ", \n" +
                 "Path: " + this.getPath() + ", \n" +
@@ -279,6 +279,6 @@ public class C_Bon {
         } else {
             out += "\nNO ARTICLES FOUND!";
         }
-        return out;*/
-    //}
+        return out;
+    }
 }

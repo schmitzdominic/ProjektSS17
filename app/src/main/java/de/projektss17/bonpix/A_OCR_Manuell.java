@@ -119,18 +119,17 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     picker.setMinValue(1);
                     picker.setValue(2);
                     final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Garantielänge (Jahre)");
+                    builder.setTitle(view.getContext().getResources().getString(R.string.a_ocr_manuell_garantie_laenge));
                     builder.setView(dialogView);
-                    builder.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener(){
+                    builder.setPositiveButton(view.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_confirm), new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
                             int yearPicked = picker.getValue();
                             bonGarantie = true;
                             valuePicked = yearPicked;
                             garantieButton.setColorFilter(R.color.colorPrimary);
-                            S.outShort(A_OCR_Manuell.this, "Garantie wurde hinzugefügt!");
                         }
                     });
-                    builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener(){
+                    builder.setNegativeButton(view.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_cancel), new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
                             bonGarantie = false;
                             garantieButton.setColorFilter(Color.WHITE);
@@ -141,7 +140,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 } else {
                     bonGarantie = false;
                     garantieButton.setColorFilter(Color.WHITE);
-                    S.outShort(A_OCR_Manuell.this, "Garantie wurde entfernt!");
                 }
             }
         });
@@ -1030,28 +1028,17 @@ public class A_OCR_Manuell extends AppCompatActivity {
     }
 
     /**
-     * Get Date + nYears as String
-     * Formatted in dd-MM-yyyy
-     * @param value How much Years you want to add
-     * @return DateString
-     */
-    public String getGuaranteeDate(int value){
-        mYear += value;
-        String pass = new StringBuilder().append(mYear).append("-").append(month).append("-").append(day).toString();
-        Log.e("FORMATTED String","" + pass);
-        return pass;
-    }
-
-    /**
      * Baut einen Bon der abgespeichert werden kann
      * @return Bon mit allen werten aus der Maske
      */
     public C_Bon saveBon(){
 
+        String guaranteeEnd = "";
+
         if(this.bonGarantie){
-            Log.i("if BONGARANTIE","REACHED");
-            String pass = getGuaranteeDate(valuePicked);
-            bon.setGuaranteeEnd(pass);
+            guaranteeEnd = this.dateTextView.getText().toString().split("\\.")[0] + "." +
+                    this.dateTextView.getText().toString().split("\\.")[1] + "." +
+                    (Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[2]) + valuePicked);
         }
 
         C_Bon saveBon = new C_Bon(this.imageOCRUriString,
@@ -1059,11 +1046,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 this.anschriftInput.getText().toString(),
                 this.sonstigesText,
                 this.dateTextView.getText().toString(),
-                bon.getGuaranteeEnd(),
+                guaranteeEnd,
                 this.totalPrice.getText().toString(),
                 false,
                 this.bonGarantie,
                 this.getAllArticle());
+
+        Log.e("LOG", saveBon.toString());
 
         return saveBon;
     }
