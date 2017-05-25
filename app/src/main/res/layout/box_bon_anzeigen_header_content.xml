@@ -28,7 +28,7 @@
             android:layout_alignTop="@+id/bon_anzeigen_picture"
             android:layout_marginStart="38dp"
             android:layout_toEndOf="@+id/bon_anzeigen_picture"
-            android:text="Laden"
+            android:text="@string/bon_anzeigen_laden_title"
             android:textStyle="bold"/>
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_ladenname_title"
             android:layout_below="@+id/bon_anzeigen_ladenname_title"
-            android:text="Supermarkt"
+            android:text="@string/bon_anzeigen_laden"
             android:textSize="14sp"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"/>
@@ -49,7 +49,7 @@
             android:layout_alignStart="@+id/bon_anzeigen_ladenname"
             android:layout_below="@+id/bon_anzeigen_ladenname"
             android:layout_marginTop="8dp"
-            android:text="Adresse"
+            android:text="@string/bon_anzeigen_adresse_title"
             android:textStyle="bold"/>
 
         <TextView
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_adresse_title"
             android:layout_below="@+id/bon_anzeigen_adresse_title"
-            android:text="Max_Mustermann-Str. XB"
+            android:text="@string/bon_anzeigen_adresse"
             android:textSize="14sp"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"/>
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_adresse"
             android:layout_below="@+id/bon_anzeigen_adresse"
-            android:text="8X8X9 TestPLZ"
+            android:text="@string/bon_anzeigen_plz"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"/>
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/bon_anzeigen_datum"
             android:layout_alignStart="@+id/bon_anzeigen_adresse"
-            android:text="Datum"
+            android:text="@string/bon_anzeigen_datum_title"
             android:textStyle="bold"/>
 
         <TextView
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/bon_anzeigen_picture"
             android:layout_alignStart="@+id/bon_anzeigen_datum_title"
-            android:text="X0.X1.20XX"
+            android:text="@string/bon_anzeigen_datum"
             android:textSize="14sp"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"/>
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="5dp"
-            android:text="Gesamtbetrag"
+            android:text="@string/bon_anzeigen_gesbetrag_title"
             android:textStyle="bold"
             android:layout_below="@+id/bon_anzeigen_picture"
             android:layout_alignStart="@+id/bon_anzeigen_picture" />
@@ -110,9 +110,9 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_gesbetrag_title"
             android:layout_below="@+id/bon_anzeigen_gesbetrag_title"
-            android:text="1XX.XX €"
+            android:text="@string/bon_anzeigen_gesbetrag"
             android:textColor="@color/cardview_light_background"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <TextView
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_datum"
             android:layout_alignTop="@+id/bon_anzeigen_gesbetrag_title"
-            android:text="Garantie (Zeitraum)"
+            android:text="@string/bon_anzeigen_garantie_title"
             android:textStyle="bold"/>
 
         <TextView
@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_garantie_title"
             android:layout_below="@+id/bon_anzeigen_garantie_title"
-            android:text="bis X1.X2.20XX"
+            android:text="@string/bon_anzeigen_garantie"
             android:textSize="14sp"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"/>
