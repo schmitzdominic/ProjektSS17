@@ -60,7 +60,8 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="android.support.PARENT_ACTIVITY | android.app.searchable"
+                android:resource="@xml/searchable"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
         <activity
@@ -70,7 +71,8 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="android.app.searchable | android.support.PARENT_ACTIVITY"
+                android:resource="@xml/searchable"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
         <activity
