@@ -140,8 +140,8 @@
         </activity>
 
         <meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="ocr" />
+            android:name="com.google.android.backup.api_key | com.google.android.gms.vision.DEPENDENCIES"
+            android:value="AEdPqrEAAAAItopB_DbXKNWj0etOKqp-neYlFIF8IVxiNK6yjA | ocr" />
 
     </application>
 
