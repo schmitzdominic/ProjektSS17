@@ -1,5 +1,6 @@
 package de.projektss17.bonpix.daten;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,33 +101,33 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     // LAYOUT - Allgemeine Infos
     public class ViewHolderBar extends RecyclerView.ViewHolder {
-        BarChart chart;
+        BarChart barChart;
 
         public ViewHolderBar(View view) {
             super(view);
-            chart = (BarChart) view.findViewById(R.id.statistik_card_bar);
+            barChart = (BarChart) view.findViewById(R.id.statistik_card_bar);
         }
     }
 
 
     // LAYOUT - LineChart
     public class ViewHolderLine extends RecyclerView.ViewHolder {
-        LineChart chart1;
+        LineChart lineChart;
 
         public ViewHolderLine(View view) {
             super(view);
-            chart1 = (LineChart) view.findViewById(R.id.statistik_card_line);
+            lineChart = (LineChart) view.findViewById(R.id.statistik_card_line);
         }
     }
 
 
     // LAYOUT - PieChart
     public class ViewHolderPie extends RecyclerView.ViewHolder {
-        PieChart chart2;
+        PieChart pieChart;
 
         public ViewHolderPie(View view) {
             super(view);
-            chart2 = (PieChart) view.findViewById(R.id.statistik_card_pie);
+            pieChart = (PieChart) view.findViewById(R.id.statistik_card_pie);
         }
     }
 
@@ -194,9 +195,9 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
                 BarData dataBar = new BarData(dataSetBar);
                 dataBar.setBarWidth(0.9f); // set custom bar width
-                holderBar.chart.setData(dataBar);
-                holderBar.chart.setFitBars(true); // make the x-axis fit exactly all bars
-                holderBar.chart.invalidate(); // refresh
+                holderBar.barChart.setData(dataBar);
+                holderBar.barChart.setFitBars(true); // make the x-axis fit exactly all bars
+                holderBar.barChart.invalidate(); // refresh
                 break;
             case 2:
                 ViewHolderTopProducts holderTopProducts = (ViewHolderTopProducts)holder;
@@ -214,8 +215,8 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ViewHolderPie holderPie = (ViewHolderPie)holder;
                 PieDataSet set = new PieDataSet(S.dbHandler.getPieData(1), "Election Results");
                 PieData pieData = new PieData(set);
-                holderPie.chart2.setData(pieData);
-                holderPie.chart2.invalidate();
+                holderPie.pieChart.setData(pieData);
+                holderPie.pieChart.invalidate();
                 break;
             case 4:
                 ViewHolderTopFacts holderTopFacts = (ViewHolderTopFacts) holder;
@@ -233,8 +234,8 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 dataSets.add(setComp1);
                 dataSets.add(setComp2);
                 LineData data = new LineData(dataSets);
-                holderLine.chart1.setData(data);
-                holderLine.chart1.invalidate();
+                holderLine.lineChart.setData(data);
+                holderLine.lineChart.invalidate();
                 break;
         }
     }

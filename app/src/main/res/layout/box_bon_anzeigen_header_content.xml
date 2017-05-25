@@ -39,8 +39,7 @@
             android:layout_below="@+id/bon_anzeigen_ladenname_title"
             android:text="@string/bon_anzeigen_laden"
             android:textSize="14sp"
-            android:textColor="@color/cardview_light_background"
-            android:textStyle="bold"/>
+            android:textColor="@color/cardview_light_background"/>
 
         <TextView
             android:id="@+id/bon_anzeigen_adresse_title"
@@ -60,8 +59,7 @@
             android:layout_below="@+id/bon_anzeigen_adresse_title"
             android:text="@string/bon_anzeigen_adresse"
             android:textSize="14sp"
-            android:textColor="@color/cardview_light_background"
-            android:textStyle="bold"/>
+            android:textColor="@color/cardview_light_background"/>
 
         <TextView
             android:id="@+id/bon_anzeigen_plz"
@@ -70,8 +68,7 @@
             android:layout_alignStart="@+id/bon_anzeigen_adresse"
             android:layout_below="@+id/bon_anzeigen_adresse"
             android:text="@string/bon_anzeigen_plz"
-            android:textColor="@color/cardview_light_background"
-            android:textStyle="bold"/>
+            android:textColor="@color/cardview_light_background"/>
 
         <TextView
             android:id="@+id/bon_anzeigen_datum_title"
@@ -90,8 +87,7 @@
             android:layout_alignStart="@+id/bon_anzeigen_datum_title"
             android:text="@string/bon_anzeigen_datum"
             android:textSize="14sp"
-            android:textColor="@color/cardview_light_background"
-            android:textStyle="bold"/>
+            android:textColor="@color/cardview_light_background"/>
 
         <TextView
             android:id="@+id/bon_anzeigen_gesbetrag_title"
@@ -112,7 +108,7 @@
             android:layout_below="@+id/bon_anzeigen_gesbetrag_title"
             android:text="@string/bon_anzeigen_gesbetrag"
             android:textColor="@color/cardview_light_background"
-            android:textSize="22sp"
+            android:textSize="19sp"
             android:textStyle="bold" />
 
         <TextView
@@ -131,7 +127,7 @@
             android:layout_alignStart="@+id/bon_anzeigen_garantie_title"
             android:layout_below="@+id/bon_anzeigen_garantie_title"
             android:text="@string/bon_anzeigen_garantie"
-            android:textSize="14sp"
+            android:textSize="19sp"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"/>
 

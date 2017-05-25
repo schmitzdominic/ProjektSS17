@@ -172,7 +172,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                 } catch(ClassCastException e){
 
             }
-                //counter++;
+                counter++;
 
         }
     }
