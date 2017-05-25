@@ -246,5 +246,3 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
     }
 
 }
-
-
