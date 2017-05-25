@@ -470,6 +470,7 @@ public class A_Main extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
         if (settings.getBoolean("first_time", true)) {
+            Log.e("onFirstStart","REACHED");
             this.setDefaultSettings();
             this.setDefaultDBValues();
             this.createDBDummyData(20);
