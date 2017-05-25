@@ -1,26 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="40dp">
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@color/cardview_light_background">
 
-    <TextView
-        android:id="@+id/bon_anzeigen_artikel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Artikel"
-        android:layout_marginLeft="54dp"
-        android:layout_marginStart="54dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/bon_anzeigen_artikel_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="16dp"
+            android:text="Artikel"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/bon_anzeigen_preis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Preis"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="71dp"
-        android:layout_marginEnd="71dp" />
+        <TextView
+            android:id="@+id/bon_anzeigen_artikel_preis_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="118dp"
+            android:text="Preis"
+            android:textStyle="bold"
+            android:layout_above="@+id/bon_anzeigen_artikel_preis"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/bon_anzeigen_artikel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TestArtikel"
+            android:layout_below="@+id/bon_anzeigen_artikel_title"
+            android:layout_alignStart="@+id/bon_anzeigen_artikel_title" />
+
+        <TextView
+            android:id="@+id/bon_anzeigen_artikel_preis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/bon_anzeigen_artikel"
+            android:layout_alignBottom="@+id/bon_anzeigen_artikel"
+            android:layout_alignStart="@+id/bon_anzeigen_artikel_preis_title"
+            android:text="X02.0X €" />
+
 </RelativeLayout>

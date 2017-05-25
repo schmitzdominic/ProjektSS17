@@ -67,7 +67,7 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
                 new AlertDialog.Builder(A_Bon_Anzeigen.this)
                 .setTitle("Sonstige Informationen")
                 .setMessage(bon.getOtherInformations())
-                .setNeutralButton("Ok", null)
+                .setPositiveButton("Ok", null)
                 .create()
                 .show();
             }

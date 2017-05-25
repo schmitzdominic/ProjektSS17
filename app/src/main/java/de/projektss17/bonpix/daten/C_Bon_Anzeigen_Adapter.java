@@ -114,7 +114,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
         public ViewHolderBottom (View view) {
             super(view);
             artikel = (TextView) view.findViewById(R.id.bon_anzeigen_artikel);
-            preis = (TextView) view.findViewById(R.id.bon_anzeigen_preis);
+            preis = (TextView) view.findViewById(R.id.bon_anzeigen_artikel_preis);
         }
     }
 
@@ -157,18 +157,18 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                     holderHeader.kassenzettel.setImageBitmap(bitmap);
                     holderHeader.setImage(holderHeader.getImageUri(bitmap));
                 }
-                holderHeader.ladenName.setText("Ladenname: " + bon.getShopName());
-                holderHeader.adresse.setText("Adresse: " + bon.getAdress());
-                holderHeader.datum.setText("Datum: " + bon.getDate());
-                holderHeader.garantie.setText("Garantie: " + bon.getGuaranteeEnd());
-                holderHeader.gesbetrag.setText("Gesamtbetrag: " + df.format(gesBetrag));
+                holderHeader.ladenName.setText(bon.getShopName());
+                holderHeader.adresse.setText(bon.getAdress());
+                holderHeader.datum.setText(bon.getDate());
+                holderHeader.garantie.setText(bon.getGuaranteeEnd());
+                holderHeader.gesbetrag.setText(df.format(gesBetrag)+" €");
                 counter++;
             case 1:
 
                 try{
                     ViewHolderBottom holderBottom = (ViewHolderBottom)holder;
                     holderBottom.artikel.setText(artikel.get(getArticleIndex()).getName());
-                    holderBottom.preis.setText("Preis: " + artikel.get(getArticleIndex()).getPrice());
+                    holderBottom.preis.setText(Double.toString(artikel.get(getArticleIndex()).getPrice()) +" €");
                 } catch(ClassCastException e){
 
             }
