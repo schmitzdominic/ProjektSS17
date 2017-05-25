@@ -40,8 +40,6 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.bon = bon;
         artikel = bon.getArticles();
         count = artikel.size();
-        //Hier muss das Array eigebtlich um 1 Hochgezählt werden jedoch stürzt dann die App ab
-        //count += 1;
     }
 
     @Override
@@ -148,9 +146,8 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                 DecimalFormat df = new DecimalFormat("#0.00");
                 ViewHolderHeader holderHeader = (ViewHolderHeader)holder;
 
-                if (!bon.getPath().equals("PFAD")) {
+                if (!bon.getPath().equals(R.string.bon_anzeigen_string_compare_path)) {
                     File image = new File(bon.getPath());
-                    Log.e("###BON GETPATH", "" + bon.getPath());
                     BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                     Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
 

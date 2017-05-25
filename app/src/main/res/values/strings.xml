@@ -112,10 +112,6 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_a__bon__anzeigen">Bon Anzeigen</string>
-
     <!-- A_Budget_Edit -->
     <string name="title_budget_edit">Budget Planung</string>
     <string name="a_budget_edit_speichern">Speichern</string>
@@ -188,5 +184,7 @@
     <string name="bon_anzeigen_garantie">0X.0X.20XX</string>
     <string name="bon_anzeigen_artikel">TestArtikel X0</string>
     <string name="bon_anzeigen_preis">X0.0X €</string>
+
+    <string name="bon_anzeigen_string_compare_path">PFAD</string>
 
 </resources>
