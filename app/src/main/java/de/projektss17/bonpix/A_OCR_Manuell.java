@@ -1037,7 +1037,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
      */
     public String getGuaranteeDate(int value){
         mYear += value;
-        String pass = new StringBuilder().append(day).append("-").append(month).append("-").append(mYear).toString();
+        String pass = new StringBuilder().append(mYear).append("-").append(month).append("-").append(day).toString();
         Log.e("FORMATTED String","" + pass);
         return pass;
     }
