@@ -42,6 +42,7 @@ public class A_Tab1Home extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
+        setHasOptionsMenu(false);
         Recyclerview = (RecyclerView) rootView.findViewById(R.id.tab_eins_recyclerview_bons);
         mAdapter1 = new C_Home_Adapter(bonsList);
         prepareHomeData();

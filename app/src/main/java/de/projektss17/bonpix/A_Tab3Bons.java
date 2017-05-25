@@ -37,6 +37,7 @@ public class A_Tab3Bons extends Fragment{
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.box_bons_content, container, false);
+        setHasOptionsMenu(true);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.view_bons);
         mAdapter = new C_Adapter_Bons(bonsList);
         prepareBonData();
@@ -48,7 +49,6 @@ public class A_Tab3Bons extends Fragment{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-        setHasOptionsMenu(true);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
