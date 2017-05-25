@@ -157,6 +157,9 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                     holderHeader.kassenzettel.setImageBitmap(bitmap);
                     holderHeader.setImage(holderHeader.getImageUri(bitmap));
                 }
+
+                // TODO - der String "€" ist ein fester Wert. Für die Zukunft muss daher eine Lösung her!
+
                 holderHeader.ladenName.setText(bon.getShopName());
                 holderHeader.adresse.setText(bon.getAdress());
                 holderHeader.datum.setText(bon.getDate());
@@ -165,6 +168,8 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                 counter++;
             case 1:
 
+
+                // TODO - der String "€" ist ein fester Wert. Für die Zukunft muss daher eine Lösung her!
                 try{
                     ViewHolderBottom holderBottom = (ViewHolderBottom)holder;
                     holderBottom.artikel.setText(artikel.get(getArticleIndex()).getName());
