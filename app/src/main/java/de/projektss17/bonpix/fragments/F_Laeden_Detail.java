@@ -118,6 +118,8 @@ public class F_Laeden_Detail extends DialogFragment {
     @Override
     public void onResume() {
         shopName.setText(this.name);
+        shopName.setSelection(shopName.getText().length());
+        shopName.setSingleLine(true);
         super.onResume();
     }
 
