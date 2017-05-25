@@ -39,7 +39,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
     public C_Bon_Anzeigen_Adapter(C_Bon bon){
         this.bon = bon;
         artikel = bon.getArticles();
-        count = artikel.size();
+        count = artikel.size()+1;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public class ViewHolderHeader extends RecyclerView.ViewHolder {
 
-        public TextView ladenName, adresse, datum, artikel,garantie,gesbetrag;
+        public TextView ladenName, adresse, datum, artikel,garantie, garantieTitle, gesbetrag;
         public ImageView kassenzettel;
         public Uri image;
         public View v;
@@ -69,6 +69,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
             artikel = (TextView) view.findViewById(R.id.bon_anzeigen_artikel);
             gesbetrag = (TextView) view.findViewById(R.id.bon_anzeigen_gesbetrag);
             garantie = (TextView) view.findViewById(R.id.bon_anzeigen_garantie);
+            garantieTitle = (TextView) view.findViewById(R.id.bon_anzeigen_garantie_title);
 
             kassenzettel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,21 +147,31 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                 DecimalFormat df = new DecimalFormat("#0.00");
                 ViewHolderHeader holderHeader = (ViewHolderHeader)holder;
 
-                if (!bon.getPath().equals(R.string.bon_anzeigen_string_compare_path)) {
-                    File image = new File(bon.getPath());
-                    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                    Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
+                if(bon.getPath() != null && bon.getPath().contains(".")){
+                    if (bon.getPath().split("\\.")[1].equals("jpg")) {
+                        File image = new File(bon.getPath());
+                        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                        Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
 
-                    holderHeader.kassenzettel.setImageBitmap(bitmap);
-                    holderHeader.setImage(holderHeader.getImageUri(bitmap));
+                        holderHeader.kassenzettel.setImageBitmap(bitmap);
+                        holderHeader.setImage(holderHeader.getImageUri(bitmap));
+                    }
                 }
+
 
                 // TODO - der String "€" ist ein fester Wert. Für die Zukunft muss daher eine Lösung her!
 
                 holderHeader.ladenName.setText(bon.getShopName());
                 holderHeader.adresse.setText(bon.getAdress());
                 holderHeader.datum.setText(bon.getDate());
-                holderHeader.garantie.setText(bon.getGuaranteeEnd());
+                if(bon.getGuaranteeEnd().contains(".")){
+                    holderHeader.garantieTitle.setVisibility(View.VISIBLE);
+                    holderHeader.garantie.setText(bon.getGuaranteeEnd());
+                } else {
+                    holderHeader.garantieTitle.setVisibility(View.INVISIBLE);
+                    holderHeader.garantie.setText("");
+                }
+
                 holderHeader.gesbetrag.setText(df.format(gesBetrag)+" €");
                 counter++;
             case 1:
@@ -169,8 +180,8 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                 // TODO - der String "€" ist ein fester Wert. Für die Zukunft muss daher eine Lösung her!
                 try{
                     ViewHolderBottom holderBottom = (ViewHolderBottom)holder;
-                    holderBottom.artikel.setText(artikel.get(getArticleIndex()).getName());
-                    holderBottom.preis.setText(Double.toString(artikel.get(getArticleIndex()).getPrice()) +" €");
+                    holderBottom.artikel.setText(artikel.get(getArticleIndex()-1).getName());
+                    holderBottom.preis.setText(Double.toString(artikel.get(getArticleIndex()-1).getPrice()) + " €");
                 } catch(ClassCastException e){
 
             }
@@ -181,13 +192,13 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemCount() {
-
         return count;
     }
 
     //TODO: Überprüfen!
     public int getArticleIndex(){
-        if (counter > count){
+        Log.e("COUNTER", counter-1 + " - " + count);
+        if (counter-1 > count){
             counter = 1;
             return counter -1;
         }

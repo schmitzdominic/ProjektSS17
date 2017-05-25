@@ -2,6 +2,8 @@
     <string name="app_name">BonPix</string>
     <string name="built_nr">0.2</string>
 
+    <!-- Allgemein -->
+    <string name="waehrung">€</string>
 
     <!-- A_main -->
     <string name="title_a_main">BonPix</string>
@@ -168,6 +170,7 @@
 
 
     <!-- A_Bon_Anzeigen -->
+    <string name="title_bon_anzeigen">Bon Anzeigen</string>
     <string name="bon_anzeigen_laden_title">Laden</string>
     <string name="bon_anzeigen_adresse_title">Adresse</string>
     <string name="bon_anzeigen_datum_title">Datum</string>
@@ -184,7 +187,5 @@
     <string name="bon_anzeigen_garantie">0X.0X.20XX</string>
     <string name="bon_anzeigen_artikel">TestArtikel X0</string>
     <string name="bon_anzeigen_preis">X0.0X €</string>
-
-    <string name="bon_anzeigen_string_compare_path">PFAD</string>
 
 </resources>

@@ -100,9 +100,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.addArticleButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article); // Neuen Artikel hinzufügen Button
 
         this.ocr = new C_OCR(this); // Erstellt eine OCR instanz.
-        this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.createCalendar(); // Calendar wird befüllt
         this.refreshSpinner(); // Spinner Refresh
+        this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
         this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", "0", false, false, null); // Erstellt einen Leeren Bon
 
@@ -800,7 +800,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
             if(ladenName.equals("NOT SUPPORTED")){
                 ladenSpinner.setSelection(0);
             } else {
-
                 for(int i = 0; i < ladenSpinner.getCount(); i++){
                     if(ladenSpinner.getAdapter().getItem(i).toString().contains(ladenName)){
                         ladenSpinner.setSelection(i);
@@ -993,7 +992,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             bonId = mIntent.getIntExtra("bonId", bonId);
             C_Bon bon = S.dbHandler.getBon(db, bonId);
 
-            if(!bon.getPath().equals("PFAD")) {
+            if(bon.getPath() != null && bon.getPath().contains(".")) {
                 this.fillMask(bon.getPath(), bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());
             } else {
                 this.fillMask(null, bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());

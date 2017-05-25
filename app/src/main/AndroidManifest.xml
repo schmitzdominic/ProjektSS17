@@ -120,7 +120,7 @@
         </activity>
         <activity
             android:name=".A_Bon_Anzeigen"
-            android:label="@string/title_activity_a__bon__anzeigen"
+            android:label="@string/title_bon_anzeigen"
             android:parentActivityName=".A_Main"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
