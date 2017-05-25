@@ -60,6 +60,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private Button  kameraButton, addArticleButton;
     private Spinner ladenSpinner;
     private Calendar calendar;
+    private Calendar cal;
     private TextView dateTextView, totalPrice, sonstigesView;
     private ImageView ocrImageView;
     private View mExclusiveEmptyView;
@@ -70,6 +71,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private C_OCR ocr;
     private C_Bon bon;
     private A_OCR_Manuell context = this;
+    private int valuePicked, mYear;
 
 
     @Override
@@ -121,20 +123,11 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     builder.setView(dialogView);
                     builder.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
-                            Date date = new Date();
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(date);
                             int yearPicked = picker.getValue();
-                            int year = Calendar.getInstance().get(Calendar.YEAR);
-                            year += yearPicked;
-                            calendar.set(Calendar.YEAR, year);
-                            Date newDate = calendar.getTime();
-                            String dateFormatted = new SimpleDateFormat("dd-MM-yyyy").format(newDate);
-                            bon.setGuaranteeEnd(dateFormatted);
                             bonGarantie = true;
+                            valuePicked = yearPicked;
                             garantieButton.setColorFilter(R.color.colorPrimary);
                             S.outShort(A_OCR_Manuell.this, "Garantie wurde hinzugefügt!");
-                            Log.e("### GuaranteeEnd VALUE:", "" + dateFormatted);
                         }
                     });
                     builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener(){
@@ -355,6 +348,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     showDate("" + getNumberWithZero(arg1),
                             "" + getNumberWithZero(arg2 + 1),
                             "" + getNumberWithZero(arg3));
+                    day = "" + getNumberWithZero(arg3);
+                    month = "" + getNumberWithZero(arg2 + 1);
+                    mYear = arg1;
+                    year = getNumberWithZero(arg1);
                 }
             };
 
@@ -366,8 +363,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
     public void createCalendar(){
         this.calendar = Calendar.getInstance();
         this.year = "" + this.calendar.get(Calendar.YEAR);
-        this.month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
-        this.day = "" + this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
+        this.month = this.getNumberWithZero(calendar.get(Calendar.MONTH) +1);
+        this.day = this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
         this.showDate(year, month, day);
     }
 
@@ -724,7 +721,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 arrayPrices[i] += ".0";
             }
         }
-
         return arrayPrices;
     }
 
@@ -753,7 +749,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
         }
 
         finalPrice = Math.round(finalPrice * 100) / 100.00;
-
         DecimalFormat df = new DecimalFormat("#0.00");
 
         return df.format(finalPrice);
@@ -910,7 +905,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
             this.addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
         }
-
         return allRelevantFieldsFull;
     }
 
@@ -1032,8 +1026,20 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 articles.add(new C_Artikel(articleField.getText().toString(), price));
             }
         }
-
         return articles;
+    }
+
+    /**
+     * Get Date + nYears as String
+     * Formatted in dd-MM-yyyy
+     * @param value How much Years you want to add
+     * @return DateString
+     */
+    public String getGuaranteeDate(int value){
+        mYear += value;
+        String pass = new StringBuilder().append(day).append("-").append(month).append("-").append(mYear).toString();
+        Log.e("FORMATTED String","" + pass);
+        return pass;
     }
 
     /**
@@ -1041,6 +1047,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * @return Bon mit allen werten aus der Maske
      */
     public C_Bon saveBon(){
+
+        if(this.bonGarantie){
+            Log.i("if BONGARANTIE","REACHED");
+            String pass = getGuaranteeDate(valuePicked);
+            bon.setGuaranteeEnd(pass);
+        }
 
         C_Bon saveBon = new C_Bon(this.imageOCRUriString,
                 bon.getShopName(),
@@ -1052,8 +1064,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 false,
                 this.bonGarantie,
                 this.getAllArticle());
-
-        Log.e("BON", saveBon.toString());
 
         return saveBon;
     }
