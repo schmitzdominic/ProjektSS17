@@ -1,6 +1,9 @@
 package de.projektss17.bonpix;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +15,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.Toast;
 
@@ -310,6 +314,34 @@ public class S extends Activity {
         } else {
             return 0;
         }
+    }
+
+    /**
+     * Notification Builder - Opens a clickable notification! Yolo
+     * @param context
+     * @param cls
+     * @param title
+     * @param txt
+     */
+    public static void sendNotification(Context context, Class<?> cls, String title, String txt, boolean closeAfterClick){
+        NotificationCompat.Builder builder =
+                (NotificationCompat.Builder) new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.mipmap.ic_shopping_cart_black_24dp)
+                        .setContentTitle(title)
+                        .setContentText(txt)
+                        .setAutoCancel(closeAfterClick);
+
+        Intent notificationIntent = new Intent(context, cls);
+        //notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+
+        // Add as notification
+        NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
     }
 
 }

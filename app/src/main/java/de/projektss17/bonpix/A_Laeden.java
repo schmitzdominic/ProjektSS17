@@ -138,6 +138,11 @@ public class A_Laeden extends AppCompatActivity {
         for(C_Laden shop : S.dbHandler.getAllLaeden(S.db)){
             this.shopList.add(shop);
         }
+
+        //TestAufruf Notification
+        //ToDo Delete me later alligator
+        S.sendNotification(this, A_Garantie.class, "Info:", "Aktuell sind " + S.dbHandler.getAllLaeden(S.db).size() + " Laeden in der App enthalten", true);
+
         mAdapter.notifyDataSetChanged();
         //Sortierung der Recycler View
         Collections.sort(shopList);
