@@ -166,4 +166,12 @@
     <string name="statistik_card_topfacts_fact_two_title">Adresse:</string>
     <string name="statistik_card_topfacts_fact_three_title">Durchschn. \nAusgaben:</string>
 
+
+    <!-- A_Tab1Home -->
+    <string name="tab_home_boncard_title_content">Letzte eingescannte Bons</string>
+    <string name="tab_home_budgetcard_title_content">Wichtigste Budgetplanung</string>
+    <string name="tab_home_chartcard_line_title_content">Überblick aller eingescannter Bons</string>
+
+    <string name="tab_home_boncard_bon_content">default</string>
+
 </resources>

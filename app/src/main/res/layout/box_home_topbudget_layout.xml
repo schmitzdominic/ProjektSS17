@@ -18,8 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_horizontal|center_vertical"
-            android:text="Wichtigste Budgetplanung"
-            android:textAlignment="center" />
+            android:text="@string/tab_home_budgetcard_title_content"
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
