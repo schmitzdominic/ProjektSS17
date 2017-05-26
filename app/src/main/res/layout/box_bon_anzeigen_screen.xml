@@ -24,28 +24,34 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             <ImageButton
+                android:id="@+id/bon_anzeigen_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="105dp"
+                android:background="@color/colorPrimary"
+                app:srcCompat="@mipmap/ic_delete_white_24dp" />
+
+            <ImageButton
                 android:id="@+id/bon_anzeigen_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                app:srcCompat="@mipmap/ic_mode_edit_white_big_24dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="69dp"
-                android:layout_marginEnd="69dp" />
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="60dp"
+                android:background="@color/colorPrimary"
+                app:srcCompat="@mipmap/ic_mode_edit_white_24dp" />
 
             <ImageButton
                 android:id="@+id/bon_anzeigen_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/ic_info_outline_white_24dp"
-                android:background="@color/colorPrimary"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="17dp"
-                android:layout_marginEnd="17dp" />
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="17dp"
+                android:background="@color/colorPrimary"
+                app:srcCompat="@mipmap/ic_info_white_24dp" />
 
         </RelativeLayout>
 

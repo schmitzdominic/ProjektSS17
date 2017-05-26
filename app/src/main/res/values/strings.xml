@@ -188,4 +188,7 @@
     <string name="bon_anzeigen_artikel">TestArtikel X0</string>
     <string name="bon_anzeigen_preis">X0.0X €</string>
 
+    <string name="bon_anzeigen_delete_title">Bon Löschen</string>
+    <string name="bon_anzeigen_delete_message">Wollen Sie wirklich diesen Bon löschen?</string>
+
 </resources>

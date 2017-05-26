@@ -4,7 +4,7 @@
     <color name="colorPrimary">#757575</color>
     <color name="colorPrimaryDark">#424242</color>
     <color name="colorAccent">#ff5722</color>
-    <color name="colorSecondary">#BDBDBD</color>
+    <color name="colorSecondary">#bdbdbd</color>
 
     <!-- Transparenz für die Floating buttons -->
     <color name="colorTransBg">#26000000</color>
