@@ -55,14 +55,6 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
                                             v.getContext().startActivity(intent);
                                         }
                                     });
-            // TODO: Derzeit ist das "REWE" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
-            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(), R.mipmap.ic_shopping_cart_black_24dp);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(view.getResources(), imageBitmap);
-            roundedBitmapDrawable.setCircular(true);
-            roundedBitmapDrawable.setAntiAlias(true);
-            icon.setImageDrawable(roundedBitmapDrawable);
-            // --- END TO DO ---
-
         }
     }
 

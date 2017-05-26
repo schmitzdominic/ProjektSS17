@@ -1,6 +1,5 @@
 package de.projektss17.bonpix;
 
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

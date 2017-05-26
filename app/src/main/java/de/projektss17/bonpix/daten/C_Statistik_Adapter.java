@@ -1,6 +1,5 @@
 package de.projektss17.bonpix.daten;
 
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;

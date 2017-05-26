@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import de.projektss17.bonpix.A_Max_Bon_Pic;
 import de.projektss17.bonpix.R;
 
-public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private C_Bon bon;     // Zwischenspeicher für die Bons
     public int count;     // Count für die Inhalte der RecyclerView
@@ -27,7 +26,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
     private ArrayList<C_Artikel> artikel = new ArrayList<>();
 
 
-    public C_Bon_Anzeigen_Adapter(C_Bon bon){
+    public C_Adapter_Bon_Anzeigen(C_Bon bon){
         this.bon = bon;
         artikel = bon.getArticles();
         count = artikel.size()+1;
@@ -159,7 +158,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
 
                 } catch(ClassCastException e){
-                    Log.e("BON ANZEIGEN ADAPTER","CLASS CAST EXCEPTION");
+
                 }
             counter++;
         }
