@@ -45,7 +45,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public class ViewHolderHeader extends RecyclerView.ViewHolder {
 
-        public TextView ladenName, adresse, datum, artikel, garantie, garantieTitle, gesbetrag;
+        public TextView ladenName, adresse, adresseTitle, datum, artikel, garantie, garantieTitle, gesbetrag;
         public ImageView kassenzettel;
         public Uri image;
         public View v;
@@ -56,6 +56,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
             kassenzettel  = (ImageView) view.findViewById(R.id.bon_anzeigen_picture);
             ladenName = (TextView) view.findViewById(R.id.bon_anzeigen_ladenname);
             adresse = (TextView) view.findViewById(R.id.bon_anzeigen_adresse);
+            adresseTitle = (TextView) view.findViewById(R.id.bon_anzeigen_adresse_title);
             datum = (TextView) view.findViewById(R.id.bon_anzeigen_datum);
             artikel = (TextView) view.findViewById(R.id.bon_anzeigen_artikel);
             gesbetrag = (TextView) view.findViewById(R.id.bon_anzeigen_gesbetrag);
@@ -124,8 +125,17 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
 
                 holderHeader.ladenName.setText(bon.getShopName());
-                holderHeader.adresse.setText(bon.getAdress());
                 holderHeader.datum.setText(bon.getDate());
+
+                if(bon.getAdress() != null && !bon.getAdress().isEmpty()){
+                    holderHeader.adresseTitle.setVisibility(View.VISIBLE);
+                    holderHeader.adresse.setText(bon.getAdress());
+                } else {
+                    holderHeader.adresseTitle.setVisibility(View.INVISIBLE);
+                    holderHeader.adresse.setText("");
+                }
+
+
                 if(bon.getGuaranteeEnd().contains(".")){
                     holderHeader.garantieTitle.setVisibility(View.VISIBLE);
                     holderHeader.garantie.setText(bon.getGuaranteeEnd());
@@ -140,8 +150,9 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
             case 1:
 
                 try{
+
                     ViewHolderBottom holderBottom = (ViewHolderBottom)holder;
-                    final int index = getArticleIndex();
+
                     if(getArticleIndex() < this.artikel.size()){
                         holderBottom.artikel.setText(artikel.get(getArticleIndex()).getName());
                         holderBottom.preis.setText(artikel.get(getArticleIndex()).getPrice() + " " + holderBottom.v.getContext().getResources().getString(R.string.waehrung));

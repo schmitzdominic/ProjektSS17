@@ -171,7 +171,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                     if(getState().equals("edit")){
                         S.dbHandler.updateBon(S.db, saveBon());
-                        //Log.e("ARTICLES", S.dbHandler.getBon(S.db, saveBon().getId()).getArticles().toString());
                         finish();
 
                     } else {
