@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,25 +12,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import de.projektss17.bonpix.A_Max_Bon_Pic;
-import de.projektss17.bonpix.A_OCR_Manuell;
 import de.projektss17.bonpix.R;
-import de.projektss17.bonpix.S;
-
-/**
- * Created by SemperFi on 21.05.2017.
- */
 
 public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private C_Bon bon;     // Zwischenspeicher für die Bons
     public int count;     // Count für die Inhalte der RecyclerView
     public int counter = 0;
+    public int recycled = 0;
     private ArrayList<C_Artikel> artikel = new ArrayList<>();
 
 
@@ -54,7 +45,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public class ViewHolderHeader extends RecyclerView.ViewHolder {
 
-        public TextView ladenName, adresse, datum, artikel,garantie, garantieTitle, gesbetrag;
+        public TextView ladenName, adresse, datum, artikel, garantie, garantieTitle, gesbetrag;
         public ImageView kassenzettel;
         public Uri image;
         public View v;
@@ -83,35 +74,16 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
             });
 
         }
-
-        /**
-         *
-         * @param uri
-         */
-        public void setImage(Uri uri){
-            this.image = uri;
-        }
-
-        /**
-         * Bekommt die Uri aus einem Bitmap zurück
-         * @param inImage Bitmap
-         * @return Uri des Bitmap
-         */
-        public Uri getImageUri(Bitmap inImage) {
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-            String path = MediaStore.Images.Media.insertImage(v.getContext().getContentResolver(), inImage, "Title", null);
-            return Uri.parse(path);
-        }
-
     }
 
 
     public class ViewHolderBottom extends RecyclerView.ViewHolder{
         public TextView artikel, preis;
+        public View v;
 
         public ViewHolderBottom (View view) {
             super(view);
+            this.v = view;
             artikel = (TextView) view.findViewById(R.id.bon_anzeigen_artikel);
             preis = (TextView) view.findViewById(R.id.bon_anzeigen_artikel_preis);
         }
@@ -138,13 +110,7 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         switch (getItemViewType(position)){
             case 0:
-                double gesBetrag = 0;
-                for(C_Artikel article : bon.getArticles()){
-                    gesBetrag += article.getPrice();
-                }
 
-                gesBetrag = Math.round(gesBetrag * 100) / 100.00;
-                DecimalFormat df = new DecimalFormat("#0.00");
                 ViewHolderHeader holderHeader = (ViewHolderHeader)holder;
 
                 if(bon.getPath() != null && bon.getPath().contains(".")){
@@ -154,12 +120,8 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                         Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
 
                         holderHeader.kassenzettel.setImageBitmap(bitmap);
-                        holderHeader.setImage(holderHeader.getImageUri(bitmap));
                     }
                 }
-
-
-                // TODO - der String "€" ist ein fester Wert. Für die Zukunft muss daher eine Lösung her!
 
                 holderHeader.ladenName.setText(bon.getShopName());
                 holderHeader.adresse.setText(bon.getAdress());
@@ -172,21 +134,23 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
                     holderHeader.garantie.setText("");
                 }
 
-                holderHeader.gesbetrag.setText(df.format(gesBetrag)+" €");
+                holderHeader.gesbetrag.setText(bon.getTotalPrice() + " " + holderHeader.v.getContext().getResources().getString(R.string.waehrung));
                 counter++;
+
             case 1:
 
-
-                // TODO - der String "€" ist ein fester Wert. Für die Zukunft muss daher eine Lösung her!
                 try{
                     ViewHolderBottom holderBottom = (ViewHolderBottom)holder;
-                    holderBottom.artikel.setText(artikel.get(getArticleIndex()-1).getName());
-                    holderBottom.preis.setText(Double.toString(artikel.get(getArticleIndex()-1).getPrice()) + " €");
+                    final int index = getArticleIndex();
+                    if(getArticleIndex() < this.artikel.size()){
+                        holderBottom.artikel.setText(artikel.get(getArticleIndex()).getName());
+                        holderBottom.preis.setText(artikel.get(getArticleIndex()).getPrice() + " " + holderBottom.v.getContext().getResources().getString(R.string.waehrung));
+                    }
+
                 } catch(ClassCastException e){
-
-            }
-                counter++;
-
+                    Log.e("BON ANZEIGEN ADAPTER","CLASS CAST EXCEPTION");
+                }
+            counter++;
         }
     }
 
@@ -195,15 +159,22 @@ public class C_Bon_Anzeigen_Adapter extends RecyclerView.Adapter<RecyclerView.Vi
         return count;
     }
 
-    //TODO: Überprüfen!
     public int getArticleIndex(){
-        Log.e("COUNTER", counter-1 + " - " + count);
-        if (counter-1 > count){
-            counter = 1;
-            return counter -1;
+
+        if (counter > count){
+            counter = count - this.recycled+1;
+            this.recycled = 0;
+            return counter-2;
         }
         else {
-            return counter -1;
+            this.recycled = 0;
+            return counter-2;
         }
+    }
+
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
+        this.recycled++;
     }
 }

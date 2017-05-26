@@ -94,6 +94,6 @@ public class C_Artikel {
         return "\nID: " + this.getId() +
                 "\nNAME: " + this.getName() +
                 "\nPRICE: " + this.getPrice() +
-                "\nKATEGORIE: " + this.getCategory();
+                "\nKATEGORIE: " + this.getCategory() + "\n";
     }
 }

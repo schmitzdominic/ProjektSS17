@@ -59,6 +59,7 @@ import static de.projektss17.bonpix.S.db;
 public class A_OCR_Manuell extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMAGE = 1;
+    private int bonId;
     private String year, month, day, imageOCRUriString, sonstigesText;
     private boolean setFocusOnLine = true, negPos;
     private ArrayAdapter<String> spinnerAdapter;
@@ -99,12 +100,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.totalPrice = (TextView) findViewById(R.id.ocr_manuell_total_price); // Totaler Preis
         this.addArticleButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article); // Neuen Artikel hinzufügen Button
 
+        this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", "0", false, false, null); // Erstellt einen Leeren Bon
         this.ocr = new C_OCR(this); // Erstellt eine OCR instanz.
         this.createCalendar(); // Calendar wird befüllt
         this.refreshSpinner(); // Spinner Refresh
         this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
-        this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", "0", false, false, null); // Erstellt einen Leeren Bon
 
 
         /**
@@ -170,6 +171,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                     if(getState().equals("edit")){
                         S.dbHandler.updateBon(S.db, saveBon());
+                        //Log.e("ARTICLES", S.dbHandler.getBon(S.db, saveBon().getId()).getArticles().toString());
+                        finish();
 
                     } else {
                         // Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet
@@ -992,12 +995,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
             bonId = mIntent.getIntExtra("bonId", bonId);
             C_Bon bon = S.dbHandler.getBon(db, bonId);
 
+            this.bon.setId(bonId);
+
             if(bon.getPath() != null && bon.getPath().contains(".")) {
                 this.fillMask(bon.getPath(), bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());
             } else {
                 this.fillMask(null, bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());
             }
-            // TODO Anhand der Datenbank implementieren
 
         } else if (state.equals("foto")) { // Wenn die Maske den Status foto hat (z.B. wenn gerade ein Foto gemacht wurde)
 
@@ -1076,16 +1080,33 @@ public class A_OCR_Manuell extends AppCompatActivity {
      */
     public C_Bon saveBon(){
 
-        C_Bon saveBon = new C_Bon(this.imageOCRUriString,
-                bon.getShopName(),
-                this.anschriftInput.getText().toString(),
-                this.sonstigesText,
-                this.dateTextView.getText().toString(),
-                bon.getGuaranteeEnd(),
-                this.totalPrice.getText().toString(),
-                false,
-                this.bonGarantie,
-                this.getAllArticle());
+        C_Bon saveBon;
+
+        if(getState().equals("edit")){
+            saveBon = new C_Bon(this.bon.getId(),
+                    this.imageOCRUriString,
+                    bon.getShopName(),
+                    this.anschriftInput.getText().toString(),
+                    this.sonstigesText,
+                    this.dateTextView.getText().toString(),
+                    bon.getGuaranteeEnd(),
+                    this.totalPrice.getText().toString(),
+                    false,
+                    this.bonGarantie,
+                    this.getAllArticle());
+        } else {
+            saveBon = new C_Bon(this.imageOCRUriString,
+                    bon.getShopName(),
+                    this.anschriftInput.getText().toString(),
+                    this.sonstigesText,
+                    this.dateTextView.getText().toString(),
+                    bon.getGuaranteeEnd(),
+                    this.totalPrice.getText().toString(),
+                    false,
+                    this.bonGarantie,
+                    this.getAllArticle());
+        }
+
 
         Log.e("BON", saveBon.toString());
 

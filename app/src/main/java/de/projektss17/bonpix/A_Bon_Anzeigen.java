@@ -28,8 +28,10 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
 
 
     private C_Bon_Anzeigen_Adapter mAdapter;
+    private RecyclerView recyclerView;
     private int pos;
     private ImageButton edit, info;
+    private C_Bon bon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +42,11 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent mIntent = getIntent();
         this.pos = mIntent.getIntExtra("BonPos", pos);
-        final C_Bon bon = S.dbHandler.getBon(db, pos);
         this.edit = (ImageButton) findViewById(R.id.bon_anzeigen_edit);
         this.info = (ImageButton) findViewById(R.id.bon_anzeigen_info);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.bon_list_recyclerview);
-        mAdapter = new C_Bon_Anzeigen_Adapter(bon);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(
-                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+        recyclerView = (RecyclerView) findViewById(R.id.bon_list_recyclerview);
+
 
         this.edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,24 +66,20 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
                 .show();
             }
         });
-
     }
 
-    /**
-     * Gibt ein Bitmap bei Angabe der Uri zurück
-     * @param uri Uri
-     * @return Bitmap aus der Uri
-     */
-    public Bitmap getBitmapFromUri(Uri uri){
-        try {
-            return MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-        } catch (IOException e) {
-            Log.e("### getBitmapFromUri", e.toString());
-        }
-        return null;
-    }
-
-    public Uri getUri(String uri){
-        return Uri.parse(uri);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.bon = S.dbHandler.getBon(db, pos);
+        mAdapter = new C_Bon_Anzeigen_Adapter(this.bon);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 }

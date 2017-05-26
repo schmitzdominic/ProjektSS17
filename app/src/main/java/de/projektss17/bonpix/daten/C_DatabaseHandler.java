@@ -656,7 +656,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         boolean dontmatch = true;
 
         for(C_Artikel a : this.getAllArticle(db)){
-            if(a.getName().equals(article.getName())){
+            if(a.getName().equals(article.getName()) && a.getPrice() == article.getPrice()){
                 dontmatch = false;
             }
         }
