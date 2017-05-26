@@ -56,7 +56,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<C_Home_Adapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         Log.e("### BONS", "ONCREATEVIEWHOLDER");
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_bonsview_layout_small, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_boncard_layout, parent, false);
         return new ViewHolder(itemView);
     }
 
