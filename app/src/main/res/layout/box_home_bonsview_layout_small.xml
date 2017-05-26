@@ -1,12 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="270dp"
     android:orientation="vertical"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp">
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <!-- Titel der Card -->
+        <TextView
+            android:id="@+id/tab_home_boncard_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Letzte gescannte Bons"
+            android:textAlignment="center"
+            android:gravity="center_horizontal|center_vertical"/>
+
+
+        <!-- Erster Bon in der Card -->
+        <RelativeLayout
+            android:id="@+id/tab_home_boncard_first_bon"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/tab_home_boncard_first_bon_big_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/star_outline"
+                android:tint="@color/colorPrimary"
+                android:layout_marginRight="15dp"/>
+
+            <TextView
+                android:id="@+id/tab_home_boncard_first_bon_betrag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/tab_home_boncard_first_bon_big_image"
+                android:paddingBottom="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="25dp"
+                android:layout_marginRight="15dp"
+                android:text="default"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tab_home_boncard_first_bon_below_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tab_home_boncard_first_bon_above_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toLeftOf="@+id/tab_home_boncard_first_bon_betrag"
+                android:layout_toRightOf="@+id/tab_home_boncard_first_bon_small_image"
+                android:paddingBottom="20dp"
+                android:text="default"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tab_home_boncard_first_bon_above_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/tab_home_boncard_first_bon_betrag"
+                android:layout_toRightOf="@+id/tab_home_boncard_first_bon_small_image"
+                android:layout_marginLeft="15dp"
+                android:paddingTop="20dp"
+                android:text="Default"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/tab_home_boncard_first_bon_small_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/common_google_signin_btn_icon_dark_focused"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="15dp"/>
+
+        </RelativeLayout>
+
+
+        <!-- Zweiter Bon in der Card -->
+        <RelativeLayout
+            android:id="@+id/tab_home_boncard_second_bon"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/tab_home_boncard_second_bon_big_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/star_outline"
+                android:tint="@color/colorPrimary"
+                android:layout_marginRight="15dp"/>
+
+            <TextView
+                android:id="@+id/tab_home_boncard_second_bon_betrag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/tab_home_boncard_second_bon_big_image"
+                android:paddingBottom="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="25dp"
+                android:layout_marginRight="15dp"
+                android:text="default"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tab_home_boncard_second_bon_below_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tab_home_boncard_second_bon_above_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toLeftOf="@+id/tab_home_boncard_second_bon_betrag"
+                android:layout_toRightOf="@+id/tab_home_boncard_second_bon_small_image"
+                android:paddingBottom="20dp"
+                android:text="default"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tab_home_boncard_second_bon_above_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/tab_home_boncard_second_bon_betrag"
+                android:layout_toRightOf="@+id/tab_home_boncard_second_bon_small_image"
+                android:layout_marginLeft="15dp"
+                android:paddingTop="20dp"
+                android:text="Default"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/tab_home_boncard_second_bon_small_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/common_google_signin_btn_icon_dark_focused"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="15dp"/>
+
+        </RelativeLayout>
+
+
+        <!-- Zweiter Bon in der Card -->
+        <RelativeLayout
+            android:id="@+id/tab_home_boncard_third_bon"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/tab_home_boncard_third_bon_big_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/star_outline"
+                android:tint="@color/colorPrimary"
+                android:layout_marginRight="15dp"/>
+
+            <TextView
+                android:id="@+id/tab_home_boncard_third_bon_betrag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/tab_home_boncard_third_bon_big_image"
+                android:paddingBottom="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="25dp"
+                android:layout_marginRight="15dp"
+                android:text="default"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tab_home_boncard_third_bon_below_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tab_home_boncard_third_bon_above_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toLeftOf="@+id/tab_home_boncard_third_bon_betrag"
+                android:layout_toRightOf="@+id/tab_home_boncard_third_bon_small_image"
+                android:paddingBottom="20dp"
+                android:text="default"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tab_home_boncard_third_bon_above_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/tab_home_boncard_third_bon_betrag"
+                android:layout_toRightOf="@+id/tab_home_boncard_third_bon_small_image"
+                android:layout_marginLeft="15dp"
+                android:paddingTop="20dp"
+                android:text="Default"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/tab_home_boncard_third_bon_small_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/common_google_signin_btn_icon_dark_focused"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="15dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <!--
     <ImageView
         android:id="@+id/imageview_picture"
         android:layout_width="40dp"
@@ -48,4 +259,6 @@
         android:layout_centerVertical="true"
         android:src="@drawable/star_outline"
         android:tint="@color/colorPrimary"/>
-</RelativeLayout>
+
+        -->
+</android.support.v7.widget.CardView>

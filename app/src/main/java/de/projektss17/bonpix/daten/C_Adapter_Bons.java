@@ -8,11 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -33,11 +30,11 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
 
         public ViewHolder(View view){
             super(view);
-            icon = (ImageView) view.findViewById(R.id.imageview_picture);
-            title = (TextView) view.findViewById(R.id.view_name);
-            content = (TextView) view.findViewById(R.id.view_state);
-            price = (TextView) view.findViewById(R.id.view_total_price);
-            button = (ImageView) view.findViewById(R.id.imageview_button);
+            icon = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_small_image);
+            title = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_above_content);
+            content = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_below_content);
+            price = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_betrag);
+            button = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_big_image);
             res = view.getResources();
 
         }
@@ -88,7 +85,7 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
                     row_index = position;
                     // Put the onClick cases here
                     switch (v.getId()) {
-                        case R.id.imageview_button: {
+                        case R.id.tab_home_boncard_first_bon_big_image: {
                             if (bon.getFavourite()){
                                 holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
                                 holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));

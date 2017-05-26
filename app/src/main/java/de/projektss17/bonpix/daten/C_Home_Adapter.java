@@ -30,10 +30,10 @@ public class C_Home_Adapter extends RecyclerView.Adapter<C_Home_Adapter.ViewHold
 
         public ViewHolder(View view){
             super(view);
-            icon = (ImageView) view.findViewById(R.id.imageview_picture);
-            title = (TextView) view.findViewById(R.id.view_name);
-            content = (TextView) view.findViewById(R.id.view_state);
-            button = (ImageView) view.findViewById(R.id.imageview_button);
+            icon = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_small_image);
+            title = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_above_content);
+            content = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_below_content);
+            button = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_big_image);
 
             // TODO: Derzeit ist das "REWE" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
             Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(),  R.mipmap.ic_aldisuedlogo);
@@ -85,7 +85,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<C_Home_Adapter.ViewHold
                 row_index = position;
                 // Put the onClick cases here
                 switch (v.getId()) {
-                    case R.id.imageview_button: {
+                    case R.id.tab_home_boncard_first_bon_big_image: {
                         if (bon.getFavourite()){
                             holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
                             holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
