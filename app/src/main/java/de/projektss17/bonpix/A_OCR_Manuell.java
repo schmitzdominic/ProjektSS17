@@ -842,9 +842,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
             this.removeAllArticles();
             this.fillMask(this.getImageUri(myBitmap),
                     this.ocr.getLadenName(),
-                    null, // TODO Anschrift über OCR suchen!
+                    this.ocr.getAdresse(),
                     null,  // TODO Datum über OCR suchen!
-                    null,
+                    this.ocr.getTel(),
                     this.ocr.getArticles());
         } else {
             this.removeAllArticles();

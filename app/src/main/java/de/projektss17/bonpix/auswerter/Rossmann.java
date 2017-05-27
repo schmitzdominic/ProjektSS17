@@ -35,4 +35,9 @@ public class Rossmann extends Default {
     public int getRecognizeArt() {
         return 1;
     }
+
+    @Override
+    public String getAdress(String txt) {
+        return "KEINE ADRESSE GEFUNDEN!";
+    }
 }

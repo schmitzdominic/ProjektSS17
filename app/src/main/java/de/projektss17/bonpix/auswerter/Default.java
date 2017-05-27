@@ -5,12 +5,13 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Default implements I_Auswerter{
 
     protected Context context;
     protected Resources res;
-    protected int recognitionArt;
 
     public Default(Context context){
         this.context = context;
@@ -111,24 +112,7 @@ public class Default implements I_Auswerter{
     }
 
     public int getRecognizeArt(){
-        this.recognitionArt = 2;
-        return this.recognitionArt;
-    }
-
-    public String getAdresse(String txt){
-        return "";
-    }
-
-    //############################### deprecated Section!
-
-    /**
-     * Setzt ein gewisses Standardformat
-     * @param txt
-     * @return String
-     */
-    public String formater(String txt){
-        txt = txt.replaceAll(" +", " ");
-        return txt;
+        return 2;
     }
 
     /**
@@ -136,37 +120,22 @@ public class Default implements I_Auswerter{
      * @param txt
      * @return Postleitzahl String
      */
-    public String getPLZ(String txt){
+    public String getAdress(String txt){
 
-        int count = 0;
-        String zahl = "";
-        boolean block = false;
+        String adressReg = "(\\d{5})\\s(\\w{1,20})";
 
-        for(int i = 0; i < txt.length(); i++){
+        Pattern c = Pattern.compile(adressReg);
+        Matcher m = c.matcher(txt);
 
-            if(isDigit(txt.charAt(i)) && count == 5){
-                count = 0;
-                zahl = "";
-                block = true;
-            } else if(!isDigit(txt.charAt(i))){
-                block = false;
-            }
-
-            if(count == 5 && isLetter(txt.charAt(i))){
-                return zahl;
-            }
-
-            if(isDigit(txt.charAt(i)) && !block){
-                count++;
-                zahl += txt.charAt(i);
-                continue;
-            } else {
-                count = 0;
-                zahl = "";
-                continue;
+        if(m.find()){
+            try {
+                return m.group();
+            } catch(IllegalStateException e){
+                return "KEINE ADRESSE GEFUNDEN!";
             }
         }
-        return "PLZ NICHT ERKANNT";
+
+        return "KEINE ADRESSE GEFUNDEN!";
     }
 
     /**
@@ -176,40 +145,28 @@ public class Default implements I_Auswerter{
      */
     public String getTel(String txt){
 
-        // Existiert überhaupt eine Telefonnummer im String?
-        if(txt.contains("Tel") ||
-                txt.contains("TEL") ||
-                txt.contains("tel") ||
-                txt.contains("Telefon")) {
-            String tel[];
-            // Falls Ja, bitte splitte den String an der Stelle
-            if(txt.contains("Telefon")) {
-                tel = txt.split("Telefon");
-            } else if (txt.contains("TEL")) {
-                tel = txt.split("TEL");
-            } else if (txt.contains("tel")) {
-                tel = txt.split("tel");
-            } else if (txt.contains("Tel")) {
-                tel = txt.split("Tel");
-            } else {
-                tel = new String[2];
+        String telReg = "(\\d{3,6})\\D(\\d{3,6})\\D(\\d{3,6})|"+    // Art 0821/3882-4839
+                "(\\d{3,6})\\D(\\d{4,10})|"+                // Art 0821/4838284
+                "(\\d{8,15})",                              // Art 080722284
+                telx[];
+
+        Pattern c = Pattern.compile("telefon|tel",Pattern.CASE_INSENSITIVE);
+        Matcher m = c.matcher(txt);
+
+        if(m.find()){
+            telx = txt.split(m.group());
+            telx[1] = telx[1].substring(0,20);
+            c = Pattern.compile(telReg);
+            m = c.matcher(telx[1]);
+            m.find();
+            try {
+                return m.group();
+            } catch(IllegalStateException e){
+                return "KEINE TELEFONNUMMER GEFUNDEN!";
             }
-            String retNumber = "";
-            // Ließ 50 Charaktere nach dem split aus und gib die nächsten
-            // Zahlen bis zu einem Charakter zurück
-            for(int i = 0; i < 50; i++){
-                if(this.isDigit(tel[1].charAt(i))){
-                    retNumber += tel[1].charAt(i);
-                }
-                if(this.isLetter(tel[1].charAt(i))){
-                    break;
-                }
-            }
-            return retNumber;
-        } else {
-            // Falls nein, bitte gib eine Meldung zurück
-            return "KEINE TELEFONNUMMER ERKANNT!";
         }
+
+        return "KEINE TELEFONNUMMER GEFUNDEN!";
     }
 
     /**
@@ -228,15 +185,6 @@ public class Default implements I_Auswerter{
      */
     public boolean isLetter(char c) {
         return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
-    }
-
-    /**
-     * Ist der übergebene char ein return? true ja, false nein
-     * @param c
-     * @return true, false
-     */
-    public boolean isReturn(char c){
-        return (c == '\n');
     }
 
     /**

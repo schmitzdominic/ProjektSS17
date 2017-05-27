@@ -24,7 +24,10 @@ public class C_OCR {
 
     private Context context;
     private C_MatchLaden laden;
-    private String ladenName, adresse, recognizedText;
+    private String ladenName;
+    private String adresse;
+    private String recognizedText;
+    private String tel;
     private ArrayList<String> produkte, preise;
     private Resources res;
     private Default ladenInstanz;
@@ -92,7 +95,15 @@ public class C_OCR {
         // Attribute setzen
 
         if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
-            this.adresse = this.ladenInstanz.getAdresse(this.recognizedText);
+
+            if(!this.ladenInstanz.getAdress(this.recognizedText).equals("KEINE ADRESSE GEFUNDEN!")){
+                this.adresse = this.ladenInstanz.getAdress(this.recognizedText);
+            }
+
+            if(!this.ladenInstanz.getTel(this.recognizedText).equals("KEINE TELEFONNUMMER GEFUNDEN!")){
+                this.tel = this.ladenInstanz.getTel(this.recognizedText);
+            }
+
             Log.e("Recognition Art"," " + this.ladenInstanz.getRecognizeArt());
             if(this.ladenInstanz.getRecognizeArt() == 1){
                 return this.setArticlesArt1(bitmap);
@@ -323,5 +334,13 @@ public class C_OCR {
      */
     public ArrayList<Point> getPointList(){
         return this.pointList;
+    }
+
+    /**
+     * Gibt die Telefonnummer zurück
+     * @return Telefonnummer
+     */
+    public String getTel() {
+        return tel;
     }
 }
