@@ -63,6 +63,8 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             this.thirdContentBelow = (TextView) view.findViewById(R.id.tab_home_boncard_third_bon_below_content);
             this.thirdBonPrice = (TextView) view.findViewById(R.id.tab_home_boncard_third_bon_betrag);
 
+
+            //ToDo - BonImages Rund machen (sind derzeit viereckig)
             this.firstBonImage = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_small_image);
             this.firstFavoriteImage = proofFavorite(bons.get(0), (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_big_image));
             this.secondBonImage = (ImageView) view.findViewById(R.id.tab_home_boncard_second_bon_small_image);
@@ -74,6 +76,13 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             this.bon1 = (Button) view.findViewById(R.id.tab_home_boncard_first_bon);
             this.bon2 = (Button) view.findViewById(R.id.tab_home_boncard_second_bon);
             this.bon3 = (Button) view.findViewById(R.id.tab_home_boncard_third_bon);
+
+
+            //ToDo - Hier muss ein onClick-Listener für die oberen drei Buttons (bon1, ...) implementiert werden
+            // ---->> onClick bewirkt eine startActivity (Intent) an die Activity Bon_Anzeigen
+            // HINWEIS: je nachdem welchen Bon man anklickt, sollen diese Daten an die Bon_Anzeigen weitergeleitet und autom. befüllt werden
+
+            // INFO: Implementierung im nächsten Sprint, da parallel zu diesem Item Bon_Anzeigen überarbeitet wurde!!!!
 
         }
     }
