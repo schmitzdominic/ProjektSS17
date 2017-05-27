@@ -23,11 +23,11 @@ import de.projektss17.bonpix.S;
 
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private int count = 3;
-    private Context context;
-    private ArrayList<C_Bon> bons;
-    private ArrayList<C_Budget> budgets;
-    private String curreny, percentage;
+    private int count = 3;                      // Anzahlt der Items in der RecyclerView - derzeit 3 feste Cards!
+    private Context context;                    // Context der Hauptactivity (Tab_Home) zur weiteren Verarbeitung
+    private ArrayList<C_Bon> bons;              // Sammlung der jeweiligen ausgewählten Bons aus der DB zur weiteren Verarbeitung
+    private ArrayList<C_Budget> budgets;        // Sammlung der jeweiligen ausgewählten Budgets aus der DB zur weitren Verarbeitung
+    private String curreny, percentage;         // Feste String aus der String-XML (Für '€'-Zeichen und '%'-Zeichen
 
 
     public C_Home_Adapter(Context context) {
@@ -37,7 +37,8 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     // LAYOUT BonCard
-    // (Hinweis: Drei feste Inhalte! Dynamisch würde kein Sinn machen, da hierfür die Tab Bons bereit steht! )
+    // (Hinweis: Drei feste Inhalte! Dynamisch würde kein Sinn machen,
+    //  da hierfür die Tab Bons bereit steht und die implementierung möglicherweise nicht funktioniert! )
     public class ViewHolderBonCard extends RecyclerView.ViewHolder {
 
         public Button bon1, bon2, bon3;
@@ -79,6 +80,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     // LAYOUT BudgetCard
+    // INFO: 1:1 Layout von der Budgetierungs-Activity
     public class ViewHolderBudgetCard extends RecyclerView.ViewHolder {
 
         public TextView budgetCurrently, yearBefore, monthBefore, yearAfter, monthAfter, progressPercentage, tagVon, tagBis;
@@ -98,12 +100,12 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             this.progressBar = (ProgressBar) view.findViewById(R.id.budget_progress_bar_circle);
             this.progressPercentage = (TextView) view.findViewById(R.id.budget_progress_percentage);
 
-
         }
     }
 
 
     // LAYOUT LineChartCard
+    //Diese Logik war bereits gegeben vom vorherigen Sprint! (Bei Fragen an den jeweiligen wenden!)
     public class ViewHolderLinechartCard extends RecyclerView.ViewHolder {
 
         public LineChart lineChart;
@@ -111,7 +113,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public ViewHolderLinechartCard(View view) {
             super(view);
 
-            //Diese Logik war bereits gegeben vom vorherigen Sprint! (Bei Fragen an den jeweiligen wenden!)
             //ToDo - Es muss noch entschieden weren, welche Daten ausgelesen und ausgewertet werden
             LineDataSet dataSet;
             ArrayList<ILineDataSet> lineDataSet;
@@ -173,6 +174,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_topbudget_layout, parent, false);
                 return new ViewHolderBudgetCard(itemView);
             case 2:
+                //ToDo - Hier muss überlegt werden, was ausgewertet wird, um dementsprechend die Daten aus der DB zu ziehen!
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_linechart_layout, parent, false);
                 return new ViewHolderLinechartCard(itemView);
         }
@@ -183,9 +185,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        //HINWEIS: Derzeit ist die erste Chart (Bons) statisch ... es dynamisch zu machen könnte sehr komplex werden
-        // Layout STATISCH - Daten jedoch DYNAMISCH!
-
+        //HINWEIS: Derzeit sind alle drei Cards statisch. Die Inhalte sind jedoch DYNAMISCH!
         switch (getItemViewType(position)) {
             case 0:
                 final ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
@@ -200,7 +200,11 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holderBonCard.thirdBonPrice.setText(bons.get(2).getTotalPrice() + curreny);
                 holderBonCard.firstBonImage.setImageResource(R.mipmap.ic_edekalogo);
 
+                holderBonCard.secondBonImage.setImageResource(R.mipmap.ic_edekalogo);
+                holderBonCard.thirdBonImage.setImageResource(R.mipmap.ic_edekalogo);
 
+
+                // Erster Favoriten-Button - Beim Drücken wird Funktion setAndChangeFavorite aufgerufen
                 holderBonCard.firstFavoriteImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -209,8 +213,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 });
 
 
-                holderBonCard.secondBonImage.setImageResource(R.mipmap.ic_edekalogo);
-
+                // Zweiter Favoriten-Button - Beim Drücken wird Funktion setAndChangeFavorite aufgerufen
                 holderBonCard.secondFavoriteImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -219,8 +222,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 });
 
 
-                holderBonCard.thirdBonImage.setImageResource(R.mipmap.ic_edekalogo);
-
+                // Dritter Favoriten-Button - Beim Drücken wird Funktion setAndChangeFavorite aufgerufen
                 holderBonCard.thirdFavoriteImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -257,15 +259,34 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return count;
     }
 
+
+    /**
+     * Errechnet den restlichen Budgetbetrag und gibt diesen als String zurück
+     * @param budget Ein ausgewähltes Budget aus der DB ( Derzeit wird immer das erste genommen! )
+     * @return Rückgabe des Restbetrags
+     */
     private String getRestBudget(C_Budget budget) {
         return "" + ((double) budget.getBudgetMax() - budget.getBudgetLost());
     }
 
+
+    /**
+     * Errechnet den restlichen Budgetbetrag als Prozent aus und gibt diesen als String zurück
+     * @param budget Ein ausgewähltes Budget aus der DB ( Derzeit wird immer das erste genommen! )
+     * @return Rückgabe des Restbetrags als Prozent
+     */
     private String getRestPercentage(C_Budget budget) {
         return "" + (Math.round(((Double.parseDouble(this.getRestBudget(budget)) / budget.getBudgetMax()) * 100) * 100) / 100.00);
     }
 
 
+    /**
+     * Prüft beim erstellen des Layouts, komm der Bon ein Favorit ist oder nicht
+     * INFO: Wenn Favorit true dann wird die ImageView dunkel befüllt, anderfalls bleibt der Inhalt unausgefüllt
+     * @param bon Übergabe eines ausgewählten Bons, welches überprüft wird
+     * @param favImage Übergabe der ImageView, die geändert wird ( In diesem Fall Favoriten-Image)
+     * @return Rückgabe des übergebenen, bereits veränderten, Images
+     */
     private ImageView proofFavorite(final C_Bon bon, final ImageView favImage) {
 
         if (bon.getFavourite()) {
@@ -283,6 +304,13 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
+    /**
+     * Wird beim onClick-Listener aufgerufen - Ändert die Farbe des ImageViews und setzt den Favoriten-Boolean entsprechend des Kriteriums
+     * INFO: Prüft ob true - wenn ja wird auf false gesetzt und die DB mit dem Bon geupdatet - Das selbe umgekehrt mit Anfangswert false !
+     * @param bon Übergabe eines ausgewählten Bons, welches überprüft wird
+     * @param favImage Übergabe der ImageView, die geändert wird ( In diesem Fall Favoriten-Image)
+     * @return Rückgabe des übergebenen, bereits veränderten, Images
+     */
     private ImageView setAndChangeFavorite(final C_Bon bon, final ImageView favImage) {
 
         if(bon.getFavourite()){
@@ -301,39 +329,4 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     }
-
-        /*
-        favImage.setOnClickListener(new View.OnClickListener(){
-
-            /**
-             * OnClickListener for the RecyclerView
-             * @param v
-
-            @Override
-            public void onClick(View v) {
-                row_index = favImage.pos;
-                // Put the onClick cases here
-                switch (v.getId()) {
-                    case R.id.tab_home_boncard_first_bon_big_image: {
-                        if (bon.getFavourite()){
-                            favImage.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
-                            favImage.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
-                            bon.setFavourite(false);
-                            S.dbHandler.updateBon(S.db, bon);
-                        } else {
-                            if (row_index == position) {
-                                favImage.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
-                                favImage.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
-                                bon.setFavourite(true);
-                                S.dbHandler.updateBon(S.db, bon);
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-        }); */
-
-
-
 }
