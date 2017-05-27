@@ -2,9 +2,31 @@
 <resources>
 
     <string-array name="supp_laeden">
+        <item>Lidl</item>
+        <item>ALDI SÜD</item>
+        <item>ALDI NORD</item>
+        <item>REWE</item>
+        <item>Edeka</item>
+        <item>Rossman</item>
+        <item>DM</item>
+        <item>Müller</item>
+        <item>Real</item>
+        <item>Penny</item>
+        <item>Norma</item>
+        <item>Netto</item>
+        <item>Marktkauf</item>
+        <item>Media Markt</item>
+        <item>Techno Markt</item>
+        <item>Expert Markt</item>
+        <item>Saturn</item>
+        <item>Aral</item>
+        <item>Shell</item>
+        <item>OMV</item>
+        <item>Jet</item>
+        <item>Agip</item>
+        <item>Esso</item>
         <item>ALDI </item>
         <item> ALDI </item>
-        <item> Rossmann </item>
     </string-array>
 
 </resources>

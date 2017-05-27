@@ -4,6 +4,7 @@
     <string-array name="klassen">
         <item>Default</item>
         <item>Aldi</item>
+        <item>Rossmann</item>
     </string-array>
 
 </resources>

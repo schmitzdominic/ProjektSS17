@@ -10,6 +10,7 @@ public class Default implements I_Auswerter{
 
     protected Context context;
     protected Resources res;
+    protected int recognitionArt;
 
     public Default(Context context){
         this.context = context;
@@ -107,6 +108,11 @@ public class Default implements I_Auswerter{
         }
 
         return retString;
+    }
+
+    public int getRecognizeArt(){
+        this.recognitionArt = 2;
+        return this.recognitionArt;
     }
 
     public String getAdresse(String txt){

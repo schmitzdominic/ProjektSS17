@@ -2,6 +2,7 @@ package de.projektss17.bonpix.recognition;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.regex.Pattern;
@@ -36,9 +37,12 @@ public class C_MatchLaden {
         Pattern p;
 
         for(String laden : laeden){
-            p = Pattern.compile(laden);
-            if(p.matcher(txt).find())
+            p = Pattern.compile(laden.replaceAll(" ",""), Pattern.CASE_INSENSITIVE);
+
+            if(p.matcher(txt.replaceAll(" ","")).find()){
+                Log.e("MATCH","######################");
                 return laden;
+            }
         }
 
         return "NOT SUPPORTED";
@@ -86,7 +90,7 @@ public class C_MatchLaden {
 
         String [] classArray = this.context.getResources().getStringArray(R.array.klassen);
 
-        Pattern p  = Pattern.compile(name.replaceAll(" ", ""), Pattern.CASE_INSENSITIVE);;
+        Pattern p  = Pattern.compile(name.replaceAll(" ", ""), Pattern.CASE_INSENSITIVE);
 
         for(String c : classArray)
             if(p.matcher(c).find())
