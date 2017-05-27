@@ -40,7 +40,6 @@ public class C_MatchLaden {
             p = Pattern.compile(laden.replaceAll(" ",""), Pattern.CASE_INSENSITIVE);
 
             if(p.matcher(txt.replaceAll(" ","")).find()){
-                Log.e("MATCH","######################");
                 return laden;
             }
         }

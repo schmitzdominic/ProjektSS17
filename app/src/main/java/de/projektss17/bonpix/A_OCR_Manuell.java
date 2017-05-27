@@ -848,12 +848,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     this.ocr.getArticles());
         } else {
             this.removeAllArticles();
-            this.fillMask(this.getImageUri(myBitmap),
-                    null,
-                    null, // TODO Anschrift über OCR suchen!
-                    null,  // TODO Datum über OCR suchen!
-                    null,
-                    null);
+
+            if(this.ocr.getLadenName() != null && !this.ocr.getLadenName().isEmpty()){
+                this.fillMask(this.getImageUri(myBitmap), this.ocr.getLadenName(), null, null, null, null);
+            } else {
+                this.fillMask(this.getImageUri(myBitmap), null, null, null, null, null);
+            }
         }
 
     }

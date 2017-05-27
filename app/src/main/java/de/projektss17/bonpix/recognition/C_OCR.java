@@ -93,7 +93,7 @@ public class C_OCR {
 
         if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
             this.adresse = this.ladenInstanz.getAdresse(this.recognizedText);
-            Log.e("RECOART","######################## " + this.ladenInstanz.getRecognizeArt());
+            Log.e("Recognition Art"," " + this.ladenInstanz.getRecognizeArt());
             if(this.ladenInstanz.getRecognizeArt() == 1){
                 return this.setArticlesArt1(bitmap);
             } else {
