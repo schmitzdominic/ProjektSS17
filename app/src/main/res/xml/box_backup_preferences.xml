@@ -13,21 +13,5 @@
             android:summary="Täglich"
             android:title="Auf Google Drive sichern" />
 
-        <Preference
-            android:key="backup_konto"
-            android:summary="Max.Mustermann@gmail.com"
-            android:title="Konto" />
-
-        <Preference
-            android:key="backup_ueber"
-            android:summary="nur WLAN"
-            android:title="Sichern über" />
-
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="backup_incl_settings"
-            android:summary="1.0 GB gesichert"
-            android:title="Inklusive Settings"/>
-
     </PreferenceCategory>
 </PreferenceScreen>
