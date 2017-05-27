@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_main_search"
         android:title="@string/action_settings_search"
-        android:icon="@mipmap/ic_search_black"
+        android:icon="@mipmap/ic_search_white_24dp"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 </menu>
