@@ -1,11 +1,7 @@
 package de.projektss17.bonpix.daten;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -24,7 +18,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import java.util.ArrayList;
 
-import de.projektss17.bonpix.A_Tab1Home;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
@@ -37,8 +30,8 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private String curreny, percentage;
 
 
-    public C_Home_Adapter(Context context){
-        this.context=context;
+    public C_Home_Adapter(Context context) {
+        this.context = context;
         this.curreny = context.getString(R.string.currency_europe);
         this.percentage = context.getString(R.string.percentage);
     }
@@ -59,22 +52,22 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             super(view);
 
             // Implementierung des Layouts der einzelnen Objekte für die CardView
-            this.firstContentAbove = (TextView)view.findViewById(R.id.tab_home_boncard_first_bon_above_content);
-            this.firstContentBelow = (TextView)view.findViewById(R.id.tab_home_boncard_first_bon_below_content);
-            this.firstBonPrice = (TextView)view.findViewById(R.id.tab_home_boncard_first_bon_betrag);
-            this.secondContentAbove = (TextView)view.findViewById(R.id.tab_home_boncard_second_bon_above_content);
-            this.secondContentBelow = (TextView)view.findViewById(R.id.tab_home_boncard_second_bon_below_content);
-            this.secondBonPrice = (TextView)view.findViewById(R.id.tab_home_boncard_second_bon_betrag);
-            this.thirdContentAbove = (TextView)view.findViewById(R.id.tab_home_boncard_third_bon_above_content);
-            this.thirdContentBelow = (TextView)view.findViewById(R.id.tab_home_boncard_third_bon_below_content);
-            this.thirdBonPrice = (TextView)view.findViewById(R.id.tab_home_boncard_third_bon_betrag);
+            this.firstContentAbove = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_above_content);
+            this.firstContentBelow = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_below_content);
+            this.firstBonPrice = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_betrag);
+            this.secondContentAbove = (TextView) view.findViewById(R.id.tab_home_boncard_second_bon_above_content);
+            this.secondContentBelow = (TextView) view.findViewById(R.id.tab_home_boncard_second_bon_below_content);
+            this.secondBonPrice = (TextView) view.findViewById(R.id.tab_home_boncard_second_bon_betrag);
+            this.thirdContentAbove = (TextView) view.findViewById(R.id.tab_home_boncard_third_bon_above_content);
+            this.thirdContentBelow = (TextView) view.findViewById(R.id.tab_home_boncard_third_bon_below_content);
+            this.thirdBonPrice = (TextView) view.findViewById(R.id.tab_home_boncard_third_bon_betrag);
 
-            this.firstBonImage = (ImageView)view.findViewById(R.id.tab_home_boncard_first_bon_small_image);
-            this.firstFavoriteImage = (ImageView)view.findViewById(R.id.tab_home_boncard_first_bon_big_image);
-            this.secondBonImage = (ImageView)view.findViewById(R.id.tab_home_boncard_second_bon_small_image);
-            this.secondFavoriteImage = (ImageView)view.findViewById(R.id.tab_home_boncard_second_bon_big_image);
-            this.thirdBonImage = (ImageView)view.findViewById(R.id.tab_home_boncard_third_bon_small_image);
-            this.thirdFavoriteImage = (ImageView)view.findViewById(R.id.tab_home_boncard_third_bon_big_image);
+            this.firstBonImage = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_small_image);
+            this.firstFavoriteImage = proofFavorite(bons.get(0), (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_big_image));
+            this.secondBonImage = (ImageView) view.findViewById(R.id.tab_home_boncard_second_bon_small_image);
+            this.secondFavoriteImage = proofFavorite(bons.get(1), (ImageView) view.findViewById(R.id.tab_home_boncard_second_bon_big_image));
+            this.thirdBonImage = (ImageView) view.findViewById(R.id.tab_home_boncard_third_bon_small_image);
+            this.thirdFavoriteImage = proofFavorite(bons.get(2), (ImageView) view.findViewById(R.id.tab_home_boncard_third_bon_big_image));
 
             //Implementierung der Invisible-Buttons zum Auswählen der zuletzt eingescannten Bons
             this.bon1 = (Button) view.findViewById(R.id.tab_home_boncard_first_bon);
@@ -88,7 +81,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     // LAYOUT BudgetCard
     public class ViewHolderBudgetCard extends RecyclerView.ViewHolder {
 
-        public TextView budgetCurrently, yearBefore,monthBefore, yearAfter, monthAfter, progressPercentage, tagVon, tagBis;
+        public TextView budgetCurrently, yearBefore, monthBefore, yearAfter, monthAfter, progressPercentage, tagVon, tagBis;
         public ProgressBar progressBar;
 
         public ViewHolderBudgetCard(View view) {
@@ -102,7 +95,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             this.yearAfter = (TextView) view.findViewById(R.id.budget_jahr_bis);
             this.tagVon = (TextView) view.findViewById(R.id.budget_tag_von);
             this.tagBis = (TextView) view.findViewById(R.id.budget_tag_bis);
-            this.progressBar = (ProgressBar)view.findViewById(R.id.budget_progress_bar_circle);
+            this.progressBar = (ProgressBar) view.findViewById(R.id.budget_progress_bar_circle);
             this.progressPercentage = (TextView) view.findViewById(R.id.budget_progress_percentage);
 
 
@@ -111,11 +104,11 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     // LAYOUT LineChartCard
-    public class ViewHolderLinechartCard extends RecyclerView.ViewHolder{
+    public class ViewHolderLinechartCard extends RecyclerView.ViewHolder {
 
         public LineChart lineChart;
 
-        public ViewHolderLinechartCard(View view){
+        public ViewHolderLinechartCard(View view) {
             super(view);
 
             //Diese Logik war bereits gegeben vom vorherigen Sprint! (Bei Fragen an den jeweiligen wenden!)
@@ -124,7 +117,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ArrayList<ILineDataSet> lineDataSet;
             LineData lineData;
 
-            this.lineChart = (LineChart)view.findViewById(R.id.tab_home_chartcard_linechart);
+            this.lineChart = (LineChart) view.findViewById(R.id.tab_home_chartcard_linechart);
             lineChart.animateXY(2000, 4000);
             lineChart.setPadding(30, 30, 30, 30);
 
@@ -170,9 +163,9 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         View itemView;
 
-        switch(viewType){
+        switch (viewType) {
             case 0:
-                bons = S.dbHandler.getNumberOfNewestBons(S.db,3);   // Holt die letzten drei Bons aus der DB
+                bons = S.dbHandler.getNumberOfNewestBons(S.db, 3);   // Holt die letzten drei Bons aus der DB
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_boncard_layout, parent, false);
                 return new ViewHolderBonCard(itemView);
             case 1:
@@ -190,9 +183,12 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        switch (getItemViewType(position)){
+        //HINWEIS: Derzeit ist die erste Chart (Bons) statisch ... es dynamisch zu machen könnte sehr komplex werden
+        // Layout STATISCH - Daten jedoch DYNAMISCH!
+
+        switch (getItemViewType(position)) {
             case 0:
-                ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
+                final ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
                 holderBonCard.firstContentAbove.setText(bons.get(0).getShopName());
                 holderBonCard.firstContentBelow.setText(bons.get(0).getDate());
                 holderBonCard.firstBonPrice.setText(bons.get(0).getTotalPrice() + curreny);
@@ -201,13 +197,37 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holderBonCard.secondBonPrice.setText(bons.get(1).getTotalPrice() + curreny);
                 holderBonCard.thirdContentAbove.setText(bons.get(2).getShopName());
                 holderBonCard.thirdContentBelow.setText(bons.get(2).getDate());
-                holderBonCard.thirdBonPrice.setText(bons.get(2).getTotalPrice()+ curreny);
+                holderBonCard.thirdBonPrice.setText(bons.get(2).getTotalPrice() + curreny);
                 holderBonCard.firstBonImage.setImageResource(R.mipmap.ic_edekalogo);
-                //holderBonCard.firstFavoriteImage
+
+
+                holderBonCard.firstFavoriteImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        holderBonCard.firstFavoriteImage = setAndChangeFavorite(bons.get(0),holderBonCard.firstFavoriteImage);
+                    }
+                });
+
+
                 holderBonCard.secondBonImage.setImageResource(R.mipmap.ic_edekalogo);
-                //holderBonCard.secondFavoriteImage
+
+                holderBonCard.secondFavoriteImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        holderBonCard.secondFavoriteImage = setAndChangeFavorite(bons.get(1),holderBonCard.secondFavoriteImage);
+                    }
+                });
+
+
                 holderBonCard.thirdBonImage.setImageResource(R.mipmap.ic_edekalogo);
-                //holderBonCard.thirdFavoriteImage
+
+                holderBonCard.thirdFavoriteImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        holderBonCard.thirdFavoriteImage = setAndChangeFavorite(bons.get(2),holderBonCard.thirdFavoriteImage);
+                    }
+                });
+
                 break;
             case 1:
                 ViewHolderBudgetCard holderBudgetCard = (ViewHolderBudgetCard) holder;
@@ -223,6 +243,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 break;
             case 2:
+                //ToDo - Hier muss noch überlegt werden, was genau ausgewertet werden soll!
                 ViewHolderLinechartCard holderLinechartCard = (ViewHolderLinechartCard) holder;
                 holderLinechartCard.lineChart.setBackgroundColor(555885);
                 break;
@@ -236,12 +257,83 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return count;
     }
 
-    private String getRestBudget(C_Budget budget){
-        return ""+((double) budget.getBudgetMax() - budget.getBudgetLost());
+    private String getRestBudget(C_Budget budget) {
+        return "" + ((double) budget.getBudgetMax() - budget.getBudgetLost());
     }
 
-    private String getRestPercentage(C_Budget budget){
-        return ""+(Math.round(((Double.parseDouble(this.getRestBudget(budget)) / budget.getBudgetMax())*100) * 100) / 100.00);
+    private String getRestPercentage(C_Budget budget) {
+        return "" + (Math.round(((Double.parseDouble(this.getRestBudget(budget)) / budget.getBudgetMax()) * 100) * 100) / 100.00);
     }
+
+
+    private ImageView proofFavorite(final C_Bon bon, final ImageView favImage) {
+
+        if (bon.getFavourite()) {
+
+            favImage.setImageDrawable(favImage.getContext().getResources().getDrawable(R.drawable.star));
+            favImage.setColorFilter(favImage.getContext().getResources().getColor(R.color.colorPrimary));
+
+            return favImage;
+        } else {
+            favImage.setImageDrawable(favImage.getContext().getResources().getDrawable(R.drawable.star_outline));
+            favImage.setColorFilter(favImage.getContext().getResources().getColor(R.color.colorPrimary));
+
+            return favImage;
+        }
+    }
+
+
+    private ImageView setAndChangeFavorite(final C_Bon bon, final ImageView favImage) {
+
+        if(bon.getFavourite()){
+            favImage.setImageDrawable(favImage.getContext().getResources().getDrawable(R.drawable.star_outline));
+            favImage.setColorFilter(favImage.getContext().getResources().getColor(R.color.colorPrimary));
+            bon.setFavourite(false);
+            S.dbHandler.updateBon(S.db, bon);
+            return favImage;
+        } else {
+            favImage.setImageDrawable(favImage.getContext().getResources().getDrawable(R.drawable.star));
+            favImage.setColorFilter(favImage.getContext().getResources().getColor(R.color.colorPrimary));
+            bon.setFavourite(true);
+            S.dbHandler.updateBon(S.db, bon);
+            return favImage;
+        }
+
+
+    }
+
+        /*
+        favImage.setOnClickListener(new View.OnClickListener(){
+
+            /**
+             * OnClickListener for the RecyclerView
+             * @param v
+
+            @Override
+            public void onClick(View v) {
+                row_index = favImage.pos;
+                // Put the onClick cases here
+                switch (v.getId()) {
+                    case R.id.tab_home_boncard_first_bon_big_image: {
+                        if (bon.getFavourite()){
+                            favImage.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
+                            favImage.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
+                            bon.setFavourite(false);
+                            S.dbHandler.updateBon(S.db, bon);
+                        } else {
+                            if (row_index == position) {
+                                favImage.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
+                                favImage.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
+                                bon.setFavourite(true);
+                                S.dbHandler.updateBon(S.db, bon);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }); */
+
+
 
 }

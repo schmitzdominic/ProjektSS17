@@ -44,7 +44,8 @@
                 android:layout_marginTop="16dp"
                 android:src="@drawable/star_outline"
                 android:tint="@color/colorPrimary"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="15dp"
+                android:clickable="true"/>
 
             <TextView
                 android:id="@+id/tab_home_boncard_first_bon_betrag"
@@ -125,7 +126,8 @@
                 android:layout_marginTop="16dp"
                 android:src="@drawable/star_outline"
                 android:tint="@color/colorPrimary"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="15dp"
+                android:clickable="true"/>
 
             <TextView
                 android:id="@+id/tab_home_boncard_second_bon_betrag"
@@ -207,7 +209,8 @@
                 android:layout_marginTop="16dp"
                 android:src="@drawable/star_outline"
                 android:tint="@color/colorPrimary"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="15dp"
+                android:clickable="true"/>
 
             <TextView
                 android:id="@+id/tab_home_boncard_third_bon_betrag"
