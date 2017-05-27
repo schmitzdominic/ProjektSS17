@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tab_home_boncard"
     android:layout_width="match_parent"
-    android:layout_height="270dp"
+    android:layout_height="310dp"
     android:orientation="vertical"
     android:layout_marginRight="5dp"
     android:layout_marginLeft="5dp"
@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/tab_home_boncard_title"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/tab_home_boncard_title_content"
             android:textAlignment="center"
@@ -29,7 +29,7 @@
         <RelativeLayout
             android:id="@+id/tab_home_boncard_first_bon"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="80dp"
             android:clickable="true">
 
             <ImageView
@@ -83,7 +83,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/common_google_signin_btn_icon_dark_focused"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="15dp"/>
 
         </RelativeLayout>
@@ -100,7 +100,7 @@
         <RelativeLayout
             android:id="@+id/tab_home_boncard_second_bon"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="80dp"
             android:clickable="true">
 
             <ImageView
@@ -154,7 +154,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/common_google_signin_btn_icon_dark_focused"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="15dp"/>
 
         </RelativeLayout>
@@ -172,7 +172,7 @@
         <RelativeLayout
             android:id="@+id/tab_home_boncard_third_bon"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="80dp"
             android:clickable="true">
 
             <ImageView
@@ -226,7 +226,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/common_google_signin_btn_icon_dark_focused"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="15dp"/>
 
         </RelativeLayout>

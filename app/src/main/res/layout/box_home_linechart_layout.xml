@@ -16,7 +16,7 @@
         <TextView
             android:id="@+id/tab_home_chartcard_line_title"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/tab_home_chartcard_line_title_content"
             android:textAlignment="center"
@@ -27,7 +27,7 @@
             android:layout_height="match_parent">
 
             <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/chart"
+                android:id="@+id/tab_home_chartcard_linechart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
