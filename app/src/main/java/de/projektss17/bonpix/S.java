@@ -327,7 +327,7 @@ public class S extends Activity {
     public static void sendNotification(Context context, Class<?> cls, String title, String txt, boolean closeAfterClick){
         NotificationCompat.Builder builder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.mipmap.ic_shopping_cart_black_24dp)
+                        .setSmallIcon(R.mipmap.ic_shopping_cart_black_24dp) //ToDo hier muss später unser Icon implementiert werden
                         .setContentTitle(title)
                         .setContentText(txt)
                         .setAutoCancel(closeAfterClick);
