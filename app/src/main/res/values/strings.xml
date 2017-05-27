@@ -21,6 +21,10 @@
     <string name="nav_einstellungen">Einstellungen</string>
     <string name="nav_laeden">Läden</string>
 
+    <!-- Währung (Allgemein) -->
+    <string name="currency_europe">€</string>
+    <string name="percentage">%</string>
+    
     <!-- A_Budget-->
     <string name="title_budget_screen">Budget</string>
 

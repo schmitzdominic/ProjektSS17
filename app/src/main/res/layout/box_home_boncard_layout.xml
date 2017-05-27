@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tab_home_boncard"
     android:layout_width="match_parent"
     android:layout_height="310dp"
     android:orientation="vertical"
     android:layout_marginRight="5dp"
     android:layout_marginLeft="5dp"
-    android:layout_marginTop="5dp">
+    android:layout_marginTop="5dp"
+    tools:context="A_Tab1Home">
 
     <LinearLayout
+        android:id="@+id/tab_home_boncard_all"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clickable="true">
 
 
         <!-- Titel der Card -->
@@ -27,7 +31,6 @@
 
         <!-- Erster Bon in der Card -->
         <RelativeLayout
-            android:id="@+id/tab_home_boncard_first_bon"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:clickable="true">
@@ -53,7 +56,7 @@
                 android:paddingTop="25dp"
                 android:layout_marginRight="15dp"
                 android:text="@string/tab_home_boncard_bon_content"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tab_home_boncard_first_bon_below_content"
@@ -86,6 +89,17 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="15dp"/>
 
+            <Button
+                android:id="@+id/tab_home_boncard_first_bon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tab_home_boncard_first_bon_below_content"
+                android:layout_alignBottom="@+id/tab_home_boncard_first_bon_below_content"
+                android:layout_toStartOf="@+id/tab_home_boncard_first_bon_big_image"
+                android:layout_alignParentTop="true"
+                android:layout_alignEnd="@+id/tab_home_boncard_first_bon_betrag"
+                android:background="@null"/>
+
         </RelativeLayout>
 
 
@@ -98,7 +112,6 @@
 
         <!-- Zweiter Bon in der Card -->
         <RelativeLayout
-            android:id="@+id/tab_home_boncard_second_bon"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:clickable="true">
@@ -124,7 +137,7 @@
                 android:paddingTop="25dp"
                 android:layout_marginRight="15dp"
                 android:text="@string/tab_home_boncard_bon_content"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tab_home_boncard_second_bon_below_content"
@@ -157,6 +170,17 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="15dp"/>
 
+            <Button
+                android:id="@+id/tab_home_boncard_second_bon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tab_home_boncard_second_bon_below_content"
+                android:layout_alignBottom="@+id/tab_home_boncard_second_bon_below_content"
+                android:layout_toStartOf="@+id/tab_home_boncard_second_bon_big_image"
+                android:layout_alignParentTop="true"
+                android:layout_alignEnd="@+id/tab_home_boncard_second_bon_betrag"
+                android:background="@null"/>
+
         </RelativeLayout>
 
 
@@ -170,7 +194,6 @@
 
         <!-- Dritter Bon in der Card -->
         <RelativeLayout
-            android:id="@+id/tab_home_boncard_third_bon"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:clickable="true">
@@ -196,7 +219,7 @@
                 android:paddingTop="25dp"
                 android:layout_marginRight="15dp"
                 android:text="@string/tab_home_boncard_bon_content"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tab_home_boncard_third_bon_below_content"
@@ -228,6 +251,18 @@
                 android:src="@drawable/common_google_signin_btn_icon_dark_focused"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="15dp"/>
+
+
+            <Button
+                android:id="@+id/tab_home_boncard_third_bon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tab_home_boncard_third_bon_below_content"
+                android:layout_alignBottom="@+id/tab_home_boncard_third_bon_below_content"
+                android:layout_toStartOf="@+id/tab_home_boncard_third_bon_big_image"
+                android:layout_alignParentTop="true"
+                android:layout_alignEnd="@+id/tab_home_boncard_third_bon_betrag"
+                android:background="@null"/>
 
         </RelativeLayout>
 

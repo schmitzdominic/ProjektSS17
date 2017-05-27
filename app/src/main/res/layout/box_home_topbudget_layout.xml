@@ -165,7 +165,8 @@
                     android:text="Budget"
                     android:textAlignment="center"
                     android:textSize="30sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"/>
 
                 <TextView
                     android:id="@+id/textView15"
@@ -187,7 +188,8 @@
                     android:text="Prozent"
                     android:textAlignment="center"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"/>
 
                 <ProgressBar
                     android:id="@+id/budget_progress_bar_circle"
