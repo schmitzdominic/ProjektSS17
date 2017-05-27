@@ -43,19 +43,6 @@ public class F_Einstellungen extends PreferenceFragment implements SharedPrefere
         if (key.equals(KEY_NOTE)) {
             Log.e("#Settings Checkbox", " ### " + sharedPreferences.getBoolean(KEY_NOTE, true));
         }
-        else if (key.equals(KEY_SOUND)){
-            Log.e("#Settings Checkbox 2", " ### " + sharedPreferences.getBoolean(KEY_SOUND, true));
-        }
-        else if (key.equals(KEY_MAIL)){
-            Preference connectionPref = findPreference(key);
-            // Set summary to be the user-description for the selected value
-            connectionPref.setSummary(sharedPreferences.getString(key, ""));
-        }
-        else if (key.equals(KEY_NAME)){
-            Preference connectionPref = findPreference(key);
-            // Set summary to be the user-description for the selected value
-            connectionPref.setSummary(sharedPreferences.getString(key, ""));
-        }
     }
 
     @Override
