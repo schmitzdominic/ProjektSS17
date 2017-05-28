@@ -1,5 +1,6 @@
 package de.projektss17.bonpix.daten;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 
 /**
  * Created by Fabian on 11.05.2017.
@@ -27,12 +29,15 @@ public class C_Laeden_Detail_Adapter extends RecyclerView.Adapter<C_Laeden_Detai
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView bonDate, bonPrice;
         public ImageView shopIcon;
+        public Resources res;
 
 
         public MyViewHolder(View view){
             super(view);
+            res = view.getResources();
             bonDate = (TextView) view.findViewById(R.id.laeden_detail_view_bon_date);
             bonPrice = (TextView) view.findViewById(R.id.laeden_detail_view_bon_price);
+            shopIcon = (ImageView) view.findViewById(R.id.laeden_detail_icon);
 
         }
     }
@@ -53,9 +58,9 @@ public class C_Laeden_Detail_Adapter extends RecyclerView.Adapter<C_Laeden_Detai
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         this.bon = bonListe.get(position);
+
         holder.bonDate.setText(bon.getDate());
-        //ToDo Hier momentan noch ein Dummy-Wert, muss später ausgetauscht werden
-        holder.bonPrice.setText("300€");
+        holder.bonPrice.setText(bon.getTotalPrice());
     }
     @Override
     public int getItemCount() {
