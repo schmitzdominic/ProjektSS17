@@ -126,13 +126,6 @@ public class A_Main extends AppCompatActivity {
         this.initOnClickListener();
         this.onFirstStart();
 
-        Log.e("### EINGESCANNTE BONS", S.dbHandler.getAllBonsCount(S.db) + "");
-        Log.e("### LÄDEN", S.dbHandler.getAllLaedenCount(S.db) + "");
-        Log.e("### ARTIKEL", S.dbHandler.getAllArticleCount(S.db) + "");
-        Log.e("### GESAMTAUSGABEN", S.dbHandler.getTotalExpenditure(S.db) + "");
-        Log.e("### MEISTBESUCHTERLADEN", S.dbHandler.getMostVisitedLaden(S.db).getName());
-        Log.e("### LADEN DURCHSCHNITT", S.dbHandler.averageExpenditureLaden(S.db, S.dbHandler.getMostVisitedLaden(S.db)));
-
     }
 
     /**
