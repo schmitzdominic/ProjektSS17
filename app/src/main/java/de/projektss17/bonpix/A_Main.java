@@ -131,7 +131,7 @@ public class A_Main extends AppCompatActivity {
         Log.e("### ARTIKEL", S.dbHandler.getAllArticleCount(S.db) + "");
         Log.e("### GESAMTAUSGABEN", S.dbHandler.getTotalExpenditure(S.db) + "");
         Log.e("### MEISTBESUCHTERLADEN", S.dbHandler.getMostVisitedLaden(S.db).getName());
-        Log.e("### LADEN DURCHSCHNITT", S.dbHandler.averageExpenditureLaden(S.db, S.dbHandler.getLaden(S.db, S.dbHandler.getMostVisitedLaden(S.db).getName())));
+        Log.e("### LADEN DURCHSCHNITT", S.dbHandler.averageExpenditureLaden(S.db, S.dbHandler.getMostVisitedLaden(S.db)));
 
     }
 
