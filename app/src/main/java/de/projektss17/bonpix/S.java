@@ -319,10 +319,23 @@ public class S extends Activity {
     /**
      * Notification Builder - Opens a clickable notification!
      * (Could be opened with S.sendNotification(context, activity.class, string, string, boolean))
-     * @param context
-     * @param cls
-     * @param title
-     * @param txt
+     * @param context Context
+     * @param cls Klasse zu der beim Klick gewechselt werden soll
+     * @param title Titel der Notification
+     * @param txt Text der Notification
+     */
+    public static void sendNotification(Context context, Class<?> cls, String title, String txt){
+        sendNotification(context, cls, title, txt, true);
+    }
+
+    /**
+     * Notification Builder - Opens a clickable notification!
+     * (Could be opened with S.sendNotification(context, activity.class, string, string, boolean))
+     * @param context Context
+     * @param cls Klasse zu der beim Klick gewechselt werden soll
+     * @param title Titel der Notification
+     * @param txt Text der Notification
+     * @param closeAfterClick Soll die Notification geschlossen werden nach dem klick
      */
     public static void sendNotification(Context context, Class<?> cls, String title, String txt, boolean closeAfterClick){
         NotificationCompat.Builder builder =
