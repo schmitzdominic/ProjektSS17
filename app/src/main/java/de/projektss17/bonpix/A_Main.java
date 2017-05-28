@@ -474,6 +474,8 @@ public class A_Main extends AppCompatActivity {
             this.setDefaultDBValues();
             this.createDBDummyData(20);
 
+            /*ToDo ausführen des App-Tutorials: Tutorial für Home, Statistik, Bons */
+
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);
         }
