@@ -783,9 +783,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 ladenSpinner.setSelection(0);
             } else {
 
+                Log.e("LADENNAME", ladenName);
+
                 for(int i = 0; i < ladenSpinner.getCount(); i++){
                     if(ladenSpinner.getAdapter().getItem(i).toString().contains(ladenName)){
                         ladenSpinner.setSelection(i);
+                        Log.e("LADEN", "FOUND!");
                         break;
                     }
                 }
