@@ -248,8 +248,8 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holderBudgetCard.yearAfter.setText(budgets.get(0).getYearBis());
                 holderBudgetCard.monthAfter.setText(budgets.get(0).getMonthBis());
                 holderBudgetCard.progressPercentage.setText(getRestPercentage(budgets.get(0)) + percentage);
-                holderBudgetCard.tagVon.setText(budgets.get(0).getYearVon().split("\\.")[0]);
-                holderBudgetCard.tagBis.setText(budgets.get(0).getYearBis().split("\\.")[0]);
+                holderBudgetCard.tagVon.setText(budgets.get(0).getZeitraumVon().split("\\.")[0]);
+                holderBudgetCard.tagBis.setText(budgets.get(0).getZeitraumBis().split("\\.")[0]);
                 holderBudgetCard.progressBar.setProgress((int) (100 - Double.parseDouble(getRestPercentage(budgets.get(0)))));
 
                 break;
