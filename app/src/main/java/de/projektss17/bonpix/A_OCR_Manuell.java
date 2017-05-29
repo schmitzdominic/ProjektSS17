@@ -862,9 +862,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
             this.removeAllArticles();
 
             if(this.ocr.getLadenName() != null && !this.ocr.getLadenName().isEmpty()){
-                this.fillMask(this.getImageUri(myBitmap), this.ocr.getLadenName(), null, null, null, null);
+                this.fillMask(path, this.ocr.getLadenName(), null, null, null, null);
             } else {
-                this.fillMask(this.getImageUri(myBitmap), null, null, null, null, null);
+                this.fillMask(path, null, null, null, null, null);
             }
         }
 
