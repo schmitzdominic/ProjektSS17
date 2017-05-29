@@ -11,12 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.A_Bon_Anzeigen;
@@ -27,6 +26,7 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
 
 
     private List<C_Bon> bonsList;
+    private List<C_Bon> filteredList;
     private int row_index = -1;
     private Intent intent;
     private Bundle bundle;
@@ -64,6 +64,7 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
      */
     public C_Adapter_Bons(List<C_Bon> bonsList){
         this.bonsList = bonsList;
+        this.filteredList = new ArrayList<>();
     }
 
     @Override
@@ -128,5 +129,11 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
     @Override
     public int getItemCount(){
         return bonsList.size();
+    }
+
+    public void setFilter(List<C_Bon> passedList) {
+        bonsList = new ArrayList<>();
+        bonsList.addAll(passedList);
+        notifyDataSetChanged();
     }
 }

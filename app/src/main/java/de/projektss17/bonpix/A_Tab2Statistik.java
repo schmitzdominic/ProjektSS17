@@ -25,11 +25,11 @@ public class A_Tab2Statistik extends Fragment{
     private C_Statistik_Adapter mAdapter;
     private TabLayout tabLayout;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
+        setHasOptionsMenu(false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
         mAdapter = new C_Statistik_Adapter();
         layoutManager = new LinearLayoutManager(getActivity());
@@ -68,8 +68,7 @@ public class A_Tab2Statistik extends Fragment{
             @Override
             public void onTabReselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
         });
-
-
         return rootView;
     }
+
 }
