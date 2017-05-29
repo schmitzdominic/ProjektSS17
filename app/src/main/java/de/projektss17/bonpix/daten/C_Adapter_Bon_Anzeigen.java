@@ -46,7 +46,7 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.Vi
 
         public TextView ladenName, adresse, adresseTitle, datum, artikel, garantie, garantieTitle, gesbetrag;
         public ImageView kassenzettel;
-        public Uri image;
+        public String image;
         public View v;
 
         public ViewHolderHeader(View view){
@@ -67,7 +67,7 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.Vi
                 public void onClick(View v) {
                     if(image != null){
                         Intent intent = new Intent(v.getContext(), A_Max_Bon_Pic.class);
-                        intent.putExtra("imageUri", image.toString());
+                        intent.putExtra("imageUri", image);
                         v.getContext().startActivity(intent);
                     }
                 }
@@ -118,7 +118,7 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.Vi
                         File image = new File(bon.getPath());
                         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                         Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
-
+                        holderHeader.image = bon.getPath();
                         holderHeader.kassenzettel.setImageBitmap(bitmap);
                     }
                 }

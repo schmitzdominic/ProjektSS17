@@ -10,8 +10,10 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Adapter_Bon_Anzeigen;
@@ -40,9 +42,7 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
         this.delete = (ImageButton) findViewById(R.id.bon_anzeigen_delete);
         this.edit = (ImageButton) findViewById(R.id.bon_anzeigen_edit);
         this.info = (ImageButton) findViewById(R.id.bon_anzeigen_info);
-
-        recyclerView = (RecyclerView) findViewById(R.id.bon_list_recyclerview);
-
+        this.recyclerView = (RecyclerView) findViewById(R.id.bon_list_recyclerview);
 
         this.delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +93,6 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
         mAdapter.notifyDataSetChanged();
     }
 }
