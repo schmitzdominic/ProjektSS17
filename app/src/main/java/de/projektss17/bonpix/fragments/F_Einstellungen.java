@@ -1,5 +1,6 @@
 package de.projektss17.bonpix.fragments;
 
+import android.app.backup.BackupManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -39,6 +40,9 @@ public class F_Einstellungen extends PreferenceFragment implements SharedPrefere
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        BackupManager backupManager = new BackupManager(getActivity());
+        backupManager.dataChanged();
 
         if (key.equals(KEY_NOTE)) {
             Log.e("#Settings Checkbox", " ### " + sharedPreferences.getBoolean(KEY_NOTE, true));

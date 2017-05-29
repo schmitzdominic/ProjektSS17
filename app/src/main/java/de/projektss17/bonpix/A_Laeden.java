@@ -2,6 +2,7 @@ package de.projektss17.bonpix;
 
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -129,6 +130,7 @@ public class A_Laeden extends AppCompatActivity {
                 }
             }
         });
+
     }
     /**
      * Set Data for RecyclerView Shops

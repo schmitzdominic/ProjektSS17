@@ -55,14 +55,12 @@ public class C_Home_Adapter extends RecyclerView.Adapter<C_Home_Adapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        Log.e("### BONS", "ONCREATEVIEWHOLDER");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_bonsview_layout_small, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position){
-        Log.e("### BONS", "ONBINDVIEWHOLDER");
         final C_Bon bon = bonsList.get(position);
         holder.title.setText(bon.getShopName());
         holder.content.setText(bon.getDate());
@@ -108,7 +106,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<C_Home_Adapter.ViewHold
 
     @Override
     public int getItemCount(){
-        Log.e("### BONS", "GETITEMCOUNT");
         return bonsList.size();
     }
 }
