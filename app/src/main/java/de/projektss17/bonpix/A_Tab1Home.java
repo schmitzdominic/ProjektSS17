@@ -22,19 +22,30 @@ public class A_Tab1Home extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private C_Home_Adapter homeAdapter;
+    private View rootView;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.tab_home_recycler_view);
-        homeAdapter = new C_Home_Adapter(getActivity());
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(homeAdapter);
-        homeAdapter.notifyDataSetChanged();
+        this.rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
 
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(S.dbHandler.getAllBons(S.db).size() > 2 && S.dbHandler.getAllBudgets(S.db).size() > 0) {
+
+            recyclerView = (RecyclerView) rootView.findViewById(R.id.tab_home_recycler_view);
+            homeAdapter = new C_Home_Adapter(getActivity());
+            layoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(homeAdapter);
+            homeAdapter.notifyDataSetChanged();
+
+        }
+
+    }
 }
