@@ -267,6 +267,17 @@ public class S extends Activity {
     public static Bitmap getShopIcon(Resources res, String name){
 
         switch(name){
+            case "Rossmann": return BitmapFactory.decodeResource(res,  R.mipmap.ic_rossmannlogo);
+            case "DM": return BitmapFactory.decodeResource(res,  R.mipmap.ic_dmlogo);
+            case "Real": return BitmapFactory.decodeResource(res,  R.mipmap.ic_reallogo);
+            case "Penny": return BitmapFactory.decodeResource(res,  R.mipmap.ic_pennylogo);
+            case "Norma": return BitmapFactory.decodeResource(res,  R.mipmap.ic_normalogo);
+            case "Marktkauf": return BitmapFactory.decodeResource(res,  R.mipmap.ic_marktkauflogo);
+            case "Expert Markt": return BitmapFactory.decodeResource(res,  R.mipmap.ic_expertlogo);
+            case "OMV": return BitmapFactory.decodeResource(res,  R.mipmap.ic_omvlogo);
+            case "Jet": return BitmapFactory.decodeResource(res,  R.mipmap.ic_jetlogo);
+            case "Agip": return BitmapFactory.decodeResource(res,  R.mipmap.ic_agiplogo);
+            case "Esso": return BitmapFactory.decodeResource(res,  R.mipmap.ic_essologo);
             case "ALDI NORD": return BitmapFactory.decodeResource(res,  R.mipmap.ic_aldinordlogo);
             case "ALDI SÜD": return BitmapFactory.decodeResource(res,  R.mipmap.ic_aldisuedlogo);
             case "Aral": return BitmapFactory.decodeResource(res,  R.mipmap.ic_arallogo);
@@ -277,7 +288,7 @@ public class S extends Activity {
             case "REWE": return BitmapFactory.decodeResource(res,  R.mipmap.ic_rewelogo);
             case "Saturn": return BitmapFactory.decodeResource(res,  R.mipmap.ic_saturnlogo);
             case "Shell": return BitmapFactory.decodeResource(res,  R.mipmap.ic_shelllogo);
-            default: return BitmapFactory.decodeResource(res,  R.mipmap.ic_shopping_cart_black_24dp);
+            default: return BitmapFactory.decodeResource(res,  R.mipmap.bonpix);
         }
 
     }
