@@ -1,5 +1,6 @@
 package de.projektss17.bonpix.daten;
 
+import android.app.backup.BackupManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,10 +27,12 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "bonpix";
     private static final int DATABASE_VERSION = 1;
+    Context context;
 
 
     public C_DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -39,6 +42,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
+
+    public void backupDataChanged(){
+        BackupManager backupManager = new BackupManager(context);
+        backupManager.dataChanged();
     }
 
     /**
@@ -584,6 +592,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("garantie", bon.getGuarantee());
 
         db.insert("bon", null, values);
+        backupDataChanged();
 
         int bonid = this.getAllBons(S.db).get(this.getAllBons(S.db).size()-1).getId();
 
@@ -621,6 +630,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("sonstiges", budget.getSonstiges());
 
         db.insert("budget", null, values);
+        backupDataChanged();
 
         int budgetid = this.getAllBudgets(S.db).get(this.getAllBudgets(S.db).size()-1).getId();
 
@@ -644,6 +654,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("name", laden.getName());
         db.insert("laden", null, values);
+        backupDataChanged();
     }
 
     /**
@@ -669,6 +680,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 values.put("kategorie", article.getCategory());
             }
             db.insert("artikel", null, values);
+            backupDataChanged();
         }
     }
 
@@ -693,6 +705,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             values.put("bonid", bonId);
             values.put("artikelid", articleId);
             db.insert("bonartikel", null, values);
+            backupDataChanged();
         }
     }
 
@@ -717,6 +730,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             values.put("budgetid", budgetId);
             values.put("bonid", bonId);
             db.insert("bonbudget", null, values);
+            backupDataChanged();
         }
     }
 
@@ -735,6 +749,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("kategorie", article.getCategory());
 
         db.update("artikel", values, "artikelid="+article.getId(), null);
+        backupDataChanged();
     }
 
     /**
@@ -745,11 +760,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public void updateLaden(SQLiteDatabase db, C_Laden laden){
 
         ContentValues values = new ContentValues();
-
         values.put("ladenid", laden.getId());
         values.put("name", laden.getName());
 
         db.update("laden", values, "ladenid="+laden.getId(), null);
+        backupDataChanged();
     }
 
     /**
@@ -760,7 +775,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public void updateBon(SQLiteDatabase db, C_Bon bon){
 
         ContentValues values = new ContentValues();
-
         int ladenId;
 
         if(this.checkIfLadenExist(db, bon.getShopName())){
@@ -788,6 +802,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         }
 
         db.delete("bonartikel", "bonid="+bon.getId(), null);
+        backupDataChanged();
 
         for(C_Artikel bonArticle : bon.getArticles()){
             for(C_Artikel dbArticle : this.getAllArticle(db)){
@@ -818,6 +833,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         db.update("budget", values, "budgetid="+budget.getId(), null);
         db.delete("bonbudget", "budgetid="+budget.getId(), null);
+
+        backupDataChanged();
 
         for(C_Bon budgetBon : budget.getBons()){
             for(C_Bon dbBon : this.getAllBons(db)){

@@ -257,12 +257,12 @@ public class A_Main extends AppCompatActivity {
             return true;
         }
 
-        // Wird ausgelöst wenn einer der (drei punkte) Optionen aufgerufen wird
+        /*// Wird ausgelöst wenn einer der (drei punkte) Optionen aufgerufen wird
         switch (id) {
             case R.id.menu_main_DUMMY:
                 // Rufe die Activity auf
                 return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -470,6 +470,7 @@ public class A_Main extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
         if (settings.getBoolean("first_time", true)) {
+            Log.e("onFirstStart","REACHED");
             this.setDefaultSettings();
             this.setDefaultDBValues();
             this.createDBDummyData(20);
