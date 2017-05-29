@@ -1020,7 +1020,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      */
     public void showLogAllDBEntries(){
 
-        /*Log.e("######### DB LAEDEN","#########################################");
+        Log.e("######### DB LAEDEN","#########################################");
         for(C_Laden laden : S.dbHandler.getAllLaeden(S.db)){
             Log.e("######### LADEN: ", laden.toString() + "\n---------------------");
         }
@@ -1038,7 +1038,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         Log.e("######### DB BUDGETS","#########################################");
         for(C_Budget budget : S.dbHandler.getAllBudgets(S.db)){
             Log.e("######### BUDGET: ", budget.toString() + "\n---------------------");
-        }*/
+        }
 
     }
 

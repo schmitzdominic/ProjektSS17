@@ -35,7 +35,7 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
         public MyViewHolder(View view){
             super(view);
             icon = (ImageView) view.findViewById(R.id.garantie_view_laden_bild);
-            warrantyShop = (TextView) view.findViewById(R.id.garantie_view_garantiebeginn);
+            warrantyShop = (TextView) view.findViewById(R.id.garantie_view_shopname);
             warrantyEnd = (TextView) view.findViewById(R.id.garantie_view_zusatz_garantieende);
             warrantyPrice = (TextView) view.findViewById(R.id.garantie_view_zusatz_favorite_price);
             deleteBtn = (ImageView) view.findViewById(R.id.garantie_view_garantie_delete_button);
@@ -72,7 +72,6 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
         holder.icon.setImageDrawable(roundedBitmapDrawable);
         holder.warrantyShop.setText(bon.getShopName());
         holder.warrantyEnd.setText(holder.res.getString(R.string.a_garantie_garantie_bis) + " " + bon.getGuaranteeEnd());
-        Log.e("ADAPTER GARANTIE","" + bon.getGuaranteeEnd());
 
         // TODO: € is hardcoded. Has to be implement as Value String in strings.xml or another solution
         holder.warrantyPrice.setText(bon.getTotalPrice() + " €");
