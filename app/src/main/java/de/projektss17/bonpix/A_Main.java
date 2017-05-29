@@ -171,9 +171,9 @@ public class A_Main extends AppCompatActivity {
                     case R.id.menu_nav_budget:
                         S.showBudget(A_Main.this);
                         return true;
-                    case R.id.menu_nav_gruppen:
+                    /*case R.id.menu_nav_gruppen:
                         S.showGruppen(A_Main.this);
-                        return true;
+                        return true;*/
                     case R.id.menu_nav_favoriten:
                         S.showFavoriten(A_Main.this);
                         return true;
@@ -250,6 +250,7 @@ public class A_Main extends AppCompatActivity {
             this.isDrawOpen = true;
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

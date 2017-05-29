@@ -6,10 +6,10 @@
         android:icon="@mipmap/ic_attach_money_black_24dp"
         android:title="@string/nav_budget" />
 
-    <item
+    <!--<item
         android:id="@+id/menu_nav_gruppen"
         android:icon="@mipmap/ic_group_black_24dp"
-        android:title="@string/nav_gruppen" />
+        android:title="@string/nav_gruppen" /> -->
 
     <item
         android:id="@+id/menu_nav_favoriten"
