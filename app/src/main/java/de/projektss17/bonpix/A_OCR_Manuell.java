@@ -783,7 +783,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         if(path != null) {
 
-
             this.ocrImageView.setImageURI(null);
             this.ocrImageView.setImageBitmap(this.getBitmapFromPath(path));
             this.imageOCRUriString = path;
