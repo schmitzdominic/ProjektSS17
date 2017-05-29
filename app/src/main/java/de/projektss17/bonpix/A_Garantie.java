@@ -1,12 +1,19 @@
 package de.projektss17.bonpix;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
 import java.util.ArrayList;
@@ -45,6 +52,59 @@ public class A_Garantie extends AppCompatActivity {
     }
 
     /**
+     * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
+     * hinzu
+     *
+     * @param menu
+     * @return true wenn alles hinzugefügt wurde
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        super.onPrepareOptionsMenu(menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem item = menu.findItem(R.id.menu_main_search);
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        SearchView sv = (SearchView) MenuItemCompat.getActionView(item);
+        sv.setIconifiedByDefault(false);
+        sv.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        sv.setSubmitButtonEnabled(true);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String filterString){
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String pass){
+                final List<C_Bon> filteredBonsList = filter(bonListe, pass);
+                mAdapter.setFilter(filteredBonsList);
+                return true;
+            }
+        });
+        MenuItemCompat.setActionView(item, sv);
+        return true;
+    }
+
+    private List<C_Bon> filter(List<C_Bon> bons, String query) {
+        query = query.toLowerCase();
+        final List<C_Bon> filteredBonsList = new ArrayList<>();
+        for (C_Bon bon : bons) {
+            if(bon.getGuarantee()) {
+                if (bon.getShopName().toLowerCase().contains(query) || bon.getTotalPrice().contains(query) || bon.getDate().contains(query) || bon.getGuaranteeEnd().contains(query)) {
+                    filteredBonsList.add(bon);
+                }
+            }
+        }
+        return filteredBonsList;
+    }
+
+    /**
      * Daten in Array-List BonListe füllen, welche später angezeigt werden
      */
     private void prepareBonData(){
@@ -56,5 +116,4 @@ public class A_Garantie extends AppCompatActivity {
         }
         mAdapter.notifyDataSetChanged();
     }
-
 }

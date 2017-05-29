@@ -112,9 +112,6 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
                         S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString())));
             }
 
-
-            Intent intent = new Intent(A_Budget_Edit.this, A_Budget.class);
-            startActivity(intent);
             finish();
 
         }
@@ -246,5 +243,3 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
     }
 
 }
-
-

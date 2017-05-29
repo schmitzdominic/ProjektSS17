@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,6 +43,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -50,26 +53,31 @@ import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.recognition.C_OCR;
 
+import static de.projektss17.bonpix.S.db;
+
 
 public class A_OCR_Manuell extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMAGE = 1;
+    private int bonId;
     private String year, month, day, imageOCRUriString, sonstigesText;
     private boolean setFocusOnLine = true, negPos;
     private ArrayAdapter<String> spinnerAdapter;
     private Button  kameraButton, addArticleButton;
     private Spinner ladenSpinner;
     private Calendar calendar;
+    private Calendar cal;
     private TextView dateTextView, totalPrice, sonstigesView;
     private ImageView ocrImageView;
     private View mExclusiveEmptyView;
     private EditText anschriftInput;
     private LinearLayout linearLayout;
     private ImageButton garantieButton, saveButton;
-    private boolean bonGarantie = false;
+    private boolean garantieChanged = false;
     private C_OCR ocr;
     private C_Bon bon;
     private A_OCR_Manuell context = this;
+    private int valuePicked, mYear;
 
 
     @Override
@@ -95,10 +103,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.addArticleButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article); // Neuen Artikel hinzufügen Button
 
         this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", "0", false, false, null); // Erstellt einen Leeren Bon
-        this.refreshSpinner(); // Spinner Refresh
         this.ocr = new C_OCR(this); // Erstellt eine OCR instanz.
-        this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.createCalendar(); // Calendar wird befüllt
+        this.refreshSpinner(); // Spinner Refresh
+        this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
 
 
@@ -109,7 +117,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.garantieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(bonGarantie == false) {
+                if(bon.getGuarantee() == false) {
                     LayoutInflater inflater = LayoutInflater.from(context);
                     View dialogView = inflater.inflate(R.layout.box_ocr_manuell_dialog_picker, null);
                     final NumberPicker picker = (NumberPicker) dialogView.findViewById(R.id.number_picker);
@@ -117,38 +125,30 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     picker.setMinValue(1);
                     picker.setValue(2);
                     final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Garantielänge (Jahre)");
+                    builder.setTitle(view.getContext().getResources().getString(R.string.a_ocr_manuell_garantie_laenge));
                     builder.setView(dialogView);
-                    builder.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener(){
+                    builder.setPositiveButton(view.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_confirm), new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
-                            Date date = new Date();
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(date);
                             int yearPicked = picker.getValue();
-                            int year = Calendar.getInstance().get(Calendar.YEAR);
-                            year += yearPicked;
-                            calendar.set(Calendar.YEAR, year);
-                            Date newDate = calendar.getTime();
-                            String dateFormatted = new SimpleDateFormat("dd-MM-yyyy").format(newDate);
-                            bon.setGuaranteeEnd(dateFormatted);
-                            bonGarantie = true;
+                            bon.setGuarantee(true);
+                            valuePicked = yearPicked;
                             garantieButton.setColorFilter(R.color.colorPrimary);
-                            S.outShort(A_OCR_Manuell.this, "Garantie wurde hinzugefügt!");
-                            Log.e("### GuaranteeEnd VALUE:", "" + dateFormatted);
+                            garantieChanged = true;
                         }
                     });
-                    builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener(){
+                    builder.setNegativeButton(view.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_cancel), new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
-                            bonGarantie = false;
+                            bon.setGuarantee(false);
+                            bon.setGuaranteeEnd("NA");
                             garantieButton.setColorFilter(Color.WHITE);
                         }
                     });
                     final AlertDialog yearPickerDialog = builder.create();
                     yearPickerDialog.show();
                 } else {
-                    bonGarantie = false;
+                    bon.setGuarantee(false);
+                    bon.setGuaranteeEnd("NA");
                     garantieButton.setColorFilter(Color.WHITE);
-                    S.outShort(A_OCR_Manuell.this, "Garantie wurde entfernt!");
                 }
             }
         });
@@ -165,6 +165,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                     if(getState().equals("edit")){
                         S.dbHandler.updateBon(S.db, saveBon());
+                        finish();
 
                     } else {
                         // Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet
@@ -355,6 +356,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     showDate("" + getNumberWithZero(arg1),
                             "" + getNumberWithZero(arg2 + 1),
                             "" + getNumberWithZero(arg3));
+                    day = "" + getNumberWithZero(arg3);
+                    month = "" + getNumberWithZero(arg2 + 1);
+                    mYear = arg1;
+                    year = getNumberWithZero(arg1);
                 }
             };
 
@@ -366,8 +371,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
     public void createCalendar(){
         this.calendar = Calendar.getInstance();
         this.year = "" + this.calendar.get(Calendar.YEAR);
-        this.month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
-        this.day = "" + this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
+        this.month = this.getNumberWithZero(calendar.get(Calendar.MONTH) +1);
+        this.day = this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
         this.showDate(year, month, day);
     }
 
@@ -446,7 +451,15 @@ public class A_OCR_Manuell extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            this.fillMaskOCR(this.getBitmapFromUri(data.getData()));
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+
+            this.fillMaskOCR(picturePath);
         }
     }
 
@@ -724,7 +737,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 arrayPrices[i] += ".0";
             }
         }
-
         return arrayPrices;
     }
 
@@ -753,7 +765,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
         }
 
         finalPrice = Math.round(finalPrice * 100) / 100.00;
-
         DecimalFormat df = new DecimalFormat("#0.00");
 
         return df.format(finalPrice);
@@ -761,19 +772,21 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Befüllt alle Werte
-     * @param imageUri Uri zum Bild
+     * @param path Pfad zum Bild
      * @param ladenName Ladenname
      * @param anschrift Anschrift
      * @param datum Datum
      * @param sonstiges Sonstiges
      * @param articles Array mit Articles
      */
-    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, ArrayList<C_Artikel> articles){
+    private void fillMask(String path, String ladenName, String anschrift, String datum, String sonstiges, ArrayList<C_Artikel> articles){
 
-        if(imageUri != null) {
+        if(path != null) {
+
+
             this.ocrImageView.setImageURI(null);
-            this.ocrImageView.setImageURI(imageUri);
-            this.imageOCRUriString = imageUri.toString();
+            this.ocrImageView.setImageBitmap(this.getBitmapFromPath(path));
+            this.imageOCRUriString = path;
             this.ocrImageView.setClickable(true);
             this.kameraButton.setTextColor(Color.BLACK);
         }
@@ -831,15 +844,15 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Versucht anhand eines Bitmaps über OCR die Maske zu befüllen!
-     * @param myBitmap Bitmap
+     * @param path Pfad
      */
-    private void fillMaskOCR(Bitmap myBitmap){
+    private void fillMaskOCR(String path){
 
-        boolean status = this.ocr.recognize(myBitmap);
+        boolean status = this.ocr.recognize(this.getBitmapFromPath(path));
 
         if(status){
             this.removeAllArticles();
-            this.fillMask(this.getImageUri(myBitmap),
+            this.fillMask(path,
                     this.ocr.getLadenName(),
                     this.ocr.getAdresse(),
                     null,  // TODO Datum über OCR suchen!
@@ -909,7 +922,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
             this.addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
         }
-
         return allRelevantFieldsFull;
     }
 
@@ -939,6 +951,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
         return null;
     }
 
+    public Bitmap getBitmapFromPath(String path){
+
+        File image = new File(path);
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        return BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
+    }
+
     /**
      * Prüft nochmal expliziet den Status und gibt diesen wieder
      * @return Status der Maske
@@ -962,7 +981,25 @@ public class A_OCR_Manuell extends AppCompatActivity {
     public void doState(String state){
 
         if (state.equals("edit")) { // Wenn die Maske den Status edit hat (z.B. ein Bon aufgerufen wird)
-            // TODO Anhand der Datenbank implementieren
+            int bonId = 0;
+            Intent mIntent = getIntent();
+            bonId = mIntent.getIntExtra("bonId", bonId);
+            C_Bon bon = S.dbHandler.getBon(db, bonId);
+
+            this.bon.setId(bonId);
+            this.bon.setFavourite(bon.getFavourite());
+            this.bon.setGuarantee(bon.getGuarantee());
+            this.bon.setGuaranteeEnd(bon.getGuaranteeEnd());
+
+            if(this.bon.getGuarantee()){
+                garantieButton.setColorFilter(R.color.colorPrimary);
+            }
+
+            if(bon.getPath() != null && bon.getPath().contains(".")) {
+                this.fillMask(bon.getPath(), bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());
+            } else {
+                this.fillMask(null, bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());
+            }
 
         } else if (state.equals("foto")) { // Wenn die Maske den Status foto hat (z.B. wenn gerade ein Foto gemacht wurde)
 
@@ -970,7 +1007,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             File imgFile = new File(aList.get(aList.size()-1));
 
             if (imgFile.exists()) {
-                this.fillMaskOCR(BitmapFactory.decodeFile(imgFile.getAbsolutePath()));
+                this.fillMaskOCR(imgFile.getAbsolutePath());
             }
         } else if (state.equals("new")) { // Wenn die Maske den Status new hat (z.B. bei einer neuen Maske)
             return;
@@ -1031,7 +1068,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 articles.add(new C_Artikel(articleField.getText().toString(), price));
             }
         }
-
         return articles;
     }
 
@@ -1041,16 +1077,44 @@ public class A_OCR_Manuell extends AppCompatActivity {
      */
     public C_Bon saveBon(){
 
-        C_Bon saveBon = new C_Bon(this.imageOCRUriString,
-                bon.getShopName(),
-                this.anschriftInput.getText().toString(),
-                this.sonstigesText,
-                this.dateTextView.getText().toString(),
-                bon.getGuaranteeEnd(),
-                this.totalPrice.getText().toString(),
-                false,
-                this.bonGarantie,
-                this.getAllArticle());
+        String guaranteeEnd = "NA";
+        C_Bon saveBon;
+
+        if(this.bon.getGuarantee()){
+            guaranteeEnd = this.dateTextView.getText().toString().split("\\.")[0] + "." +
+                    this.dateTextView.getText().toString().split("\\.")[1] + "." +
+                    (Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[2]) + valuePicked);
+        }
+
+        if(getState().equals("edit")){
+
+            if(garantieChanged){
+                bon.setGuaranteeEnd(guaranteeEnd);
+            }
+
+            saveBon = new C_Bon(this.bon.getId(),
+                    this.imageOCRUriString,
+                    this.bon.getShopName(),
+                    this.anschriftInput.getText().toString(),
+                    this.sonstigesText,
+                    this.dateTextView.getText().toString(),
+                    this.bon.getGuaranteeEnd(),
+                    this.totalPrice.getText().toString(),
+                    this.bon.getFavourite(),
+                    this.bon.getGuarantee(),
+                    this.getAllArticle());
+        } else {
+            saveBon = new C_Bon(this.imageOCRUriString,
+                    this.bon.getShopName(),
+                    this.anschriftInput.getText().toString(),
+                    this.sonstigesText,
+                    this.dateTextView.getText().toString(),
+                    guaranteeEnd,
+                    this.totalPrice.getText().toString(),
+                    false,
+                    this.bon.getGuarantee(),
+                    this.getAllArticle());
+        }
 
         Log.e("BON", saveBon.toString());
 

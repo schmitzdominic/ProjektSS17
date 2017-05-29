@@ -6,9 +6,9 @@ package de.projektss17.bonpix;
  */
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import de.projektss17.bonpix.daten.C_DatabaseHandler;
 import de.projektss17.bonpix.daten.C_Statistik_Adapter;
 
 
@@ -25,13 +24,14 @@ public class A_Tab2Statistik extends Fragment{
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private C_Statistik_Adapter mAdapter;
+    public FloatingActionButton fabPlus;
     private TabLayout tabLayout;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
+        setHasOptionsMenu(false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
         mAdapter = new C_Statistik_Adapter();
         layoutManager = new LinearLayoutManager(getActivity());
@@ -39,6 +39,32 @@ public class A_Tab2Statistik extends Fragment{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+
+        fabPlus = ((A_Main) getActivity()).getFloatingActionButtonPlus();
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx,int dy){
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy >0) {
+                    // Scroll Down
+                    if (fabPlus.isShown()) {
+
+                        if (((A_Main) getActivity()).getFabState()) {
+                            ((A_Main) getActivity()).closeFABMenu();
+                        }
+                        fabPlus.hide();
+                    }
+                }
+                else if (dy <0) {
+                    // Scroll Up
+                    if (!fabPlus.isShown()) {
+                        fabPlus.show();
+                    }
+                }
+            }
+        });
 
         // Click eines Tabs bewirkt eine Aktion (in diesem Fall sollen die Charts gefiltert werden)
         tabLayout = (TabLayout)rootView.findViewById(R.id.statistik_tabs);
@@ -64,14 +90,15 @@ public class A_Tab2Statistik extends Fragment{
                 }
             }
 
+
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
         });
-
-
         return rootView;
     }
+
 }
