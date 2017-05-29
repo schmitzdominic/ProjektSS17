@@ -6,6 +6,7 @@ package de.projektss17.bonpix;
  */
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -23,6 +24,7 @@ public class A_Tab2Statistik extends Fragment{
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private C_Statistik_Adapter mAdapter;
+    public FloatingActionButton fabPlus;
     private TabLayout tabLayout;
 
     @Override
@@ -37,6 +39,32 @@ public class A_Tab2Statistik extends Fragment{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+
+        fabPlus = ((A_Main) getActivity()).getFloatingActionButtonPlus();
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx,int dy){
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy >0) {
+                    // Scroll Down
+                    if (fabPlus.isShown()) {
+
+                        if (((A_Main) getActivity()).getFabState()) {
+                            ((A_Main) getActivity()).closeFABMenu();
+                        }
+                        fabPlus.hide();
+                    }
+                }
+                else if (dy <0) {
+                    // Scroll Up
+                    if (!fabPlus.isShown()) {
+                        fabPlus.show();
+                    }
+                }
+            }
+        });
 
         // Click eines Tabs bewirkt eine Aktion (in diesem Fall sollen die Charts gefiltert werden)
         tabLayout = (TabLayout)rootView.findViewById(R.id.statistik_tabs);
@@ -61,6 +89,8 @@ public class A_Tab2Statistik extends Fragment{
                         break;
                 }
             }
+
+
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}

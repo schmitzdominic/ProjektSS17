@@ -8,7 +8,7 @@
     android:background="@color/cardview_light_background">
 
     <ImageView
-        android:id="@+id/imageview_picture"
+        android:id="@+id/tab_home_boncard_first_bon_small_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
@@ -17,31 +17,31 @@
         android:src="@drawable/common_google_signin_btn_icon_dark_focused"/>
 
     <TextView
-        android:id="@+id/view_name"
+        android:id="@+id/tab_home_boncard_first_bon_above_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/view_total_price"
-        android:layout_toRightOf="@+id/imageview_picture"
+        android:layout_toLeftOf="@+id/tab_home_boncard_first_bon_betrag"
+        android:layout_toRightOf="@+id/tab_home_boncard_first_bon_small_image"
         android:paddingTop="20dp"
         android:text="Default"
         android:textSize="16sp"/>
 
     <TextView
-        android:id="@+id/view_state"
+        android:id="@+id/tab_home_boncard_first_bon_below_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_name"
-        android:layout_toLeftOf="@+id/view_total_price"
-        android:layout_toRightOf="@+id/imageview_picture"
+        android:layout_below="@+id/tab_home_boncard_first_bon_above_content"
+        android:layout_toLeftOf="@+id/tab_home_boncard_first_bon_betrag"
+        android:layout_toRightOf="@+id/tab_home_boncard_first_bon_small_image"
         android:paddingBottom="20dp"
         android:text="default"
         android:textSize="14sp"/>
 
     <TextView
-        android:id="@+id/view_total_price"
+        android:id="@+id/tab_home_boncard_first_bon_betrag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/imageview_button"
+        android:layout_toLeftOf="@+id/tab_home_boncard_first_bon_big_image"
         android:paddingTop="30dp"
         android:paddingBottom="20dp"
         android:paddingRight="20dp"
@@ -49,7 +49,7 @@
         android:textSize="24sp"/>
 
     <ImageView
-        android:id="@+id/imageview_button"
+        android:id="@+id/tab_home_boncard_first_bon_big_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

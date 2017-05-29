@@ -458,7 +458,7 @@ public class A_Main extends AppCompatActivity {
         if (settings.getBoolean("first_time", true)) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
-            this.createDBDummyData(20);
+            //this.createDBDummyData(20);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);

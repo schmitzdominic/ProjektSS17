@@ -126,7 +126,7 @@ public class A_Tab3Bons extends Fragment{
         query = query.toLowerCase();
         final List<C_Bon> filteredBonsList = new ArrayList<>();
         for (C_Bon bon : bons) {
-            if (bon.getOtherInformations().toLowerCase().contains(query) || bon.getShopName().toLowerCase().contains(query) || bon.getTotalPrice().contains(query) || bon.getDate().contains(query)) {
+            if(bon.getShopName().toLowerCase().contains(query) || bon.getTotalPrice().contains(query) || bon.getDate().contains(query)){
                 filteredBonsList.add(bon);
             }
         }
