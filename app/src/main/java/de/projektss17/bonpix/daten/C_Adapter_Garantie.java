@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.R;
@@ -23,13 +24,13 @@ import de.projektss17.bonpix.S;
 public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.MyViewHolder> {
 
     private List<C_Bon> bonListe;
+    private List<C_Bon> filteredList;
     private C_Bon bon;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView warrantyBegin, warrantyEnd, warrantyPrice;
         public ImageView icon, deleteBtn;
         public Resources res;
-
 
         public MyViewHolder(View view){
             super(view);
@@ -48,28 +49,24 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
      * @param bonListe
      */
     public C_Adapter_Garantie(List<C_Bon> bonListe){
-
+        this.filteredList = new ArrayList<>();
         this.bonListe = bonListe;
     }
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.box_garantie_view, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final C_Adapter_Garantie.MyViewHolder holder, final int position) {
         this.bon = bonListe.get(position);
-
         Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
         roundedBitmapDrawable.setAntiAlias(true);
         holder.icon.setImageDrawable(roundedBitmapDrawable);
-
         holder.warrantyBegin.setText(bon.getShopName());
         holder.warrantyEnd.setText(holder.res.getString(R.string.a_garantie_garantie_bis) + " " + bon.getGuaranteeEnd());
         holder.warrantyPrice.setText(bon.getTotalPrice() + " €");
@@ -92,15 +89,16 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
 
             }
         });
-
-
-
     }
 
     @Override
     public int getItemCount() {
-
         return this.bonListe.size();
+    }
 
+    public void setFilter(List<C_Bon> passedList) {
+        bonListe = new ArrayList<>();
+        bonListe.addAll(passedList);
+        notifyDataSetChanged();
     }
 }

@@ -1,7 +1,10 @@
 package de.projektss17.bonpix.daten;
 
 import android.content.res.Resources;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
+import de.projektss17.bonpix.A_Bon_Anzeigen;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
@@ -20,7 +26,10 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
 
 
     private List<C_Bon> bonsList;
+    private List<C_Bon> filteredList;
     private int row_index = -1;
+    private Intent intent;
+    private Bundle bundle;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title, content, price;
@@ -28,7 +37,7 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
         public ImageView button;
         public Resources res;
 
-        public ViewHolder(View view){
+        public ViewHolder(final View view){
             super(view);
             icon = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_small_image);
             title = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_above_content);
@@ -36,7 +45,16 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
             price = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_betrag);
             button = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_big_image);
             res = view.getResources();
-
+            view.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            final C_Bon bon = bonsList.get(getAdapterPosition());
+                                            int pos = bon.getId();
+                                            intent = new Intent(v.getContext(), A_Bon_Anzeigen.class);
+                                            intent.putExtra("BonPos", pos);
+                                            v.getContext().startActivity(intent);
+                                        }
+                                    });
         }
     }
 
@@ -46,6 +64,7 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
      */
     public C_Adapter_Bons(List<C_Bon> bonsList){
         this.bonsList = bonsList;
+        this.filteredList = new ArrayList<>();
     }
 
     @Override
@@ -83,6 +102,7 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
             @Override
             public void onClick(View v) {
                     row_index = position;
+
                     // Put the onClick cases here
                     switch (v.getId()) {
                         case R.id.tab_home_boncard_first_bon_big_image: {
@@ -109,5 +129,11 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
     @Override
     public int getItemCount(){
         return bonsList.size();
+    }
+
+    public void setFilter(List<C_Bon> passedList) {
+        bonsList = new ArrayList<>();
+        bonsList.addAll(passedList);
+        notifyDataSetChanged();
     }
 }

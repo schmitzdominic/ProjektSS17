@@ -15,15 +15,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:backupAgent=".daten.C_BackupAgent_DB"
+        android:fullBackupContent="@xml/auto_backup_rules"
+        android:fullBackupOnly="true">
         <activity
             android:name=".A_Main"
             android:label="@string/title_a_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -56,7 +62,8 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="android.support.PARENT_ACTIVITY | android.app.searchable"
+                android:resource="@xml/searchable"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
         <activity
@@ -66,7 +73,8 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="android.app.searchable | android.support.PARENT_ACTIVITY"
+                android:resource="@xml/searchable"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
         <activity
@@ -91,8 +99,8 @@
         <activity
             android:name=".A_OCR_Manuell"
             android:label="@string/title_manuell_screen"
-            android:parentActivityName=".A_Main"
             android:screenOrientation="portrait"
+            android:parentActivityName=".A_Main"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -119,6 +127,16 @@
                 android:value="de.projektss17.bonpix.A_Einstellungen" />
         </activity>
         <activity
+            android:name=".A_Bon_Anzeigen"
+            android:label="@string/title_bon_anzeigen"
+            android:parentActivityName=".A_Main"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.projektss17.bonpix.A_Main" />
+        </activity>
+
+        <activity
             android:name=".A_Budget_Edit"
             android:label="@string/title_budget_edit"
             android:parentActivityName=".A_Budget"
@@ -140,8 +158,8 @@
         </activity>
 
         <meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="ocr" />
+            android:name="com.google.android.backup.api_key | com.google.android.gms.vision.DEPENDENCIES"
+            android:value="AEdPqrEAAAAItopB_DbXKNWj0etOKqp-neYlFIF8IVxiNK6yjA | ocr" />
 
     </application>
 
