@@ -463,6 +463,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 }
             }
         }
+
         return null;
     }
 
@@ -1154,7 +1155,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             }
         }
 
-        return this.getLaden(db, id);
+        return id == 0 ? new C_Laden("") : this.getLaden(db, id);
+
     }
 
     /**

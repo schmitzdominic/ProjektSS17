@@ -53,6 +53,7 @@ public class C_OCR {
     public boolean recognize(Bitmap bitmap){
 
         this.recognizedText = this.recognizer(bitmap);
+
         return this.recognize(bitmap, this.laden.getLaden(this.recognizedText));
 
     }
@@ -101,7 +102,7 @@ public class C_OCR {
             }
 
             if(!this.ladenInstanz.getTel(this.recognizedText).equals("KEINE TELEFONNUMMER GEFUNDEN!")){
-                this.tel = this.ladenInstanz.getTel(this.recognizedText);
+                this.tel = "Tel: " + this.ladenInstanz.getTel(this.recognizedText);
             }
 
             Log.e("Recognition Art"," " + this.ladenInstanz.getRecognizeArt());
@@ -129,6 +130,7 @@ public class C_OCR {
             Log.e("ERROR", "Detector dependencies are not yet available");
         } else {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+
             SparseArray<TextBlock> items = textRecognizer.detect(frame); // TODO Absturz wenn Frame kein Text enthält.
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -252,7 +254,7 @@ public class C_OCR {
                     this.ladenInstanz.getProducts(this.recognizedText).size() :
                     this.ladenInstanz.getPrices(this.recognizedText).size();
 
-            articleStripes = this.picChanger.getLineList(cropedBitmap, (int) ((cropedBitmap.getHeight() / lines) * 1.1));
+            articleStripes = this.picChanger.getLineList(cropedBitmap, (int) ((cropedBitmap.getHeight() / lines)*this.ladenInstanz.getDefaultSize()));
 
             Log.e("STRIPES COUNT", articleStripes.size() + "");
             if (articleStripes.size() == 0) {

@@ -13,7 +13,6 @@
         <item>Real</item>
         <item>Penny</item>
         <item>Norma</item>
-        <item>Netto</item>
         <item>Marktkauf</item>
         <item>Media Markt</item>
         <item>Techno Markt</item>
@@ -27,6 +26,7 @@
         <item>Esso</item>
         <item>ALDI </item>
         <item> ALDI </item>
+        <item>Netto</item>
     </string-array>
 
 </resources>

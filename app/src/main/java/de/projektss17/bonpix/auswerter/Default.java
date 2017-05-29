@@ -115,6 +115,10 @@ public class Default implements I_Auswerter{
         return 2;
     }
 
+    public double getDefaultSize(){
+        return 1.1;
+    }
+
     /**
      * Liest die Postleitzahl aus einem String aus
      * @param txt
@@ -155,7 +159,7 @@ public class Default implements I_Auswerter{
 
         if(m.find()){
             telx = txt.split(m.group());
-            telx[1] = telx[1].substring(0,20);
+            telx[1] = telx[1];
             c = Pattern.compile(telReg);
             m = c.matcher(telx[1]);
             m.find();
