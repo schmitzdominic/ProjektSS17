@@ -11,6 +11,7 @@
             android:summary="Enable or disable Notifications"
             android:title="Enable Notifications"
             android:defaultValue="true"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
