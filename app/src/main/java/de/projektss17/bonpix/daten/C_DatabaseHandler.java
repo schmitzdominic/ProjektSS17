@@ -11,6 +11,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -462,6 +463,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 }
             }
         }
+
         return null;
     }
 
@@ -1013,6 +1015,191 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             }
         }
         return list;
+    }
+
+    /**
+     * Gibt die Anzahl aller vorhandenen Bons zurück
+     * @param db Datenbank
+     * @return Anzahl
+     */
+    public int getAllBonsCount(SQLiteDatabase db){
+        return this.getAllBonsCount(db, null, null);
+    }
+
+    /**
+     * Gibt die Anzahl aller vorhandenen Bons zurück
+     * @param db Datenbank
+     * @param date1 Von Datum
+     * @param date2 Bis Datum
+     * @return Anzahl
+     */
+    public int getAllBonsCount(SQLiteDatabase db, String date1, String date2){
+
+        int count = 0;
+        String query = date1 != null && date2 != null ?
+                "SELECT bonid FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT bonid FROM bon";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                count++;
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return count;
+    }
+
+    /**
+     * Gibt die Anzahl aller vorhandenen Laeden zurück
+     * @param db Datenbank
+     * @return Anzahl
+     */
+    public int getAllLaedenCount(SQLiteDatabase db){
+        return this.getAllLaeden(db).size();
+    }
+
+    /**
+     * Gibt die Anzahl aller vorhandenen Artikel zurück
+     * @param db Datenbank
+     * @return Anzahl
+     */
+    public int getAllArticleCount(SQLiteDatabase db){
+        return this.getAllArticle(db).size();
+    }
+
+    /**
+     * Gibt den Gesamtbetrag aller Ausgaben wieder
+     * @param db Datenbank
+     * @return Gesamtbetrag
+     */
+    public String getTotalExpenditure(SQLiteDatabase db){
+        return getTotalExpenditure(db, null, null);
+    }
+
+    /**
+     * Gibt den Gesamtbetrag aller Ausgaben wieder
+     * @param db Datenbank
+     * @param date1 Von Datum
+     * @param date2 Bis Datum
+     * @return Gesamtbetrag
+     */
+    public String getTotalExpenditure(SQLiteDatabase db, String date1, String date2){
+
+        double totalExpenditure = 0;
+        String query = date1 != null && date2 != null ?
+                "SELECT gesamtpreis FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT gesamtpreis FROM bon";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                totalExpenditure += Double.parseDouble(cursor.getString(0).replace(",","."));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        totalExpenditure = Math.round(totalExpenditure * 100) / 100.00;
+        DecimalFormat df = new DecimalFormat("#0.00");
+
+        return df.format(totalExpenditure);
+    }
+
+    /**
+     * Gibt den meistbesuchten Laden zurück
+     * @param db Datenbank
+     * @return Meistbesuchten Laden
+     */
+    public C_Laden getMostVisitedLaden(SQLiteDatabase db){
+        return this.getMostVisitedLaden(db, null, null);
+    }
+
+    /**
+     * Gibt den meistbesuchten Laden zurück
+     * @param db Datenbank
+     * @param date1 Von Datum
+     * @param date2 Bis Datum
+     * @return Meistbesuchten Laden
+     */
+    public C_Laden getMostVisitedLaden(SQLiteDatabase db, String date1, String date2){
+
+        HashMap<Integer, Integer> visitList = new HashMap<>();
+
+        for(C_Laden laden : this.getAllLaeden(db)){
+            visitList.put(laden.getId(), 0);
+        }
+
+        String query = date1 != null && date2 != null ?
+                "SELECT ladenname FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT ladenname FROM bon";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                int visit = visitList.get(cursor.getInt(0));
+                visitList.put(cursor.getInt(0), ++visit);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        int mostUsed = 0, id = 0;
+
+        for(Integer count : visitList.keySet()){
+            if(visitList.get(count) > mostUsed){
+                id = count;
+                mostUsed = visitList.get(count);
+            }
+        }
+
+        return id == 0 ? new C_Laden("") : this.getLaden(db, id);
+
+    }
+
+    /**
+     * Durchschnittsbetrag eines Ladens
+     * @param db Datenbank
+     * @param laden Laden von dem wir den Durchschnittsbetrag bekommen wollen
+     * @return Betrag
+     */
+    public String averageExpenditureLaden(SQLiteDatabase db, C_Laden laden){
+        return this.averageExpenditureLaden(db, laden, null, null);
+    }
+
+    /**
+     * Durchschnittsbetrag eines Ladens innerhalb eines Zeitraums
+     * @param db Datenbank
+     * @param laden Laden von dem wir den Durchschnittsbetrag bekommen wollen
+     * @param date1 Von Datum
+     * @param date2 Bis Datum
+     * @return Betrag
+     */
+    public String averageExpenditureLaden(SQLiteDatabase db, C_Laden laden, String date1, String date2){
+
+        double gesPreis = 0, anz = 0;
+
+        String query = date1 != null && date2 != null ?
+                "SELECT gesamtpreis FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"') AND ( ladenname = '" + laden.getId() + "' )" :
+                "SELECT gesamtpreis FROM bon WHERE ( ladenname = '" + laden.getId() + "' )";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                gesPreis += Double.parseDouble(cursor.getString(0).replace(",","."));
+                anz++;
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        double average = Math.round((gesPreis / anz) * 100) / 100.00;
+        DecimalFormat df = new DecimalFormat("#0.00");
+
+        return df.format(average);
+
     }
 
     /**

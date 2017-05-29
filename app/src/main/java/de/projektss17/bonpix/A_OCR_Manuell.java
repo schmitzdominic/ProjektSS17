@@ -94,12 +94,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.totalPrice = (TextView) findViewById(R.id.ocr_manuell_total_price); // Totaler Preis
         this.addArticleButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article); // Neuen Artikel hinzufügen Button
 
+        this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", "0", false, false, null); // Erstellt einen Leeren Bon
+        this.refreshSpinner(); // Spinner Refresh
         this.ocr = new C_OCR(this); // Erstellt eine OCR instanz.
         this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.createCalendar(); // Calendar wird befüllt
-        this.refreshSpinner(); // Spinner Refresh
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
-        this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", "0", false, false, null); // Erstellt einen Leeren Bon
 
 
         /**
@@ -782,7 +782,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
             if(ladenName.equals("NOT SUPPORTED")){
                 ladenSpinner.setSelection(0);
             } else {
-
                 for(int i = 0; i < ladenSpinner.getCount(); i++){
                     if(ladenSpinner.getAdapter().getItem(i).toString().contains(ladenName)){
                         ladenSpinner.setSelection(i);
@@ -842,18 +841,18 @@ public class A_OCR_Manuell extends AppCompatActivity {
             this.removeAllArticles();
             this.fillMask(this.getImageUri(myBitmap),
                     this.ocr.getLadenName(),
-                    null, // TODO Anschrift über OCR suchen!
+                    this.ocr.getAdresse(),
                     null,  // TODO Datum über OCR suchen!
-                    null,
+                    this.ocr.getTel(),
                     this.ocr.getArticles());
         } else {
             this.removeAllArticles();
-            this.fillMask(this.getImageUri(myBitmap),
-                    null,
-                    null, // TODO Anschrift über OCR suchen!
-                    null,  // TODO Datum über OCR suchen!
-                    null,
-                    null);
+
+            if(this.ocr.getLadenName() != null && !this.ocr.getLadenName().isEmpty()){
+                this.fillMask(this.getImageUri(myBitmap), this.ocr.getLadenName(), null, null, null, null);
+            } else {
+                this.fillMask(this.getImageUri(myBitmap), null, null, null, null, null);
+            }
         }
 
     }

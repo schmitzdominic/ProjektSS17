@@ -108,7 +108,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<C_Home_Adapter.ViewHold
 
     @Override
     public int getItemCount(){
-        Log.e("### BONS", "GETITEMCOUNT");
         return bonsList.size();
     }
 }

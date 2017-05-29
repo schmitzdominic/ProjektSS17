@@ -8,11 +8,11 @@ import java.util.ArrayList;
  * Created by Domi on 15.04.2017.
  */
 
-public class Aldi extends Default {
+public class Aral extends Default {
 
-    private String name = "Aldi";
+    private String name = "Aral";
 
-    public Aldi(Context context){
+    public Aral(Context context){
         super(context);
     }
 
@@ -33,6 +33,11 @@ public class Aldi extends Default {
 
     @Override
     public int getRecognizeArt() {
-        return 1;
+        return 2;
+    }
+
+    @Override
+    public double getDefaultSize(){
+        return 1.0;
     }
 }

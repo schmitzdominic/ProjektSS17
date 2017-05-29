@@ -173,9 +173,9 @@ public class A_Main extends AppCompatActivity {
                     case R.id.menu_nav_budget:
                         S.showBudget(A_Main.this);
                         return true;
-                    case R.id.menu_nav_gruppen:
+                    /*case R.id.menu_nav_gruppen:
                         S.showGruppen(A_Main.this);
-                        return true;
+                        return true;*/
                     case R.id.menu_nav_favoriten:
                         S.showFavoriten(A_Main.this);
                         return true;
@@ -257,12 +257,12 @@ public class A_Main extends AppCompatActivity {
             return true;
         }
 
-        // Wird ausgelöst wenn einer der (drei punkte) Optionen aufgerufen wird
+        /*// Wird ausgelöst wenn einer der (drei punkte) Optionen aufgerufen wird
         switch (id) {
             case R.id.menu_main_DUMMY:
                 // Rufe die Activity auf
                 return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -472,7 +472,7 @@ public class A_Main extends AppCompatActivity {
         if (settings.getBoolean("first_time", true)) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
-            this.createDBDummyData(20);
+            //this.createDBDummyData(20);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);

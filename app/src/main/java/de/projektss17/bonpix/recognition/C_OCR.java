@@ -24,7 +24,10 @@ public class C_OCR {
 
     private Context context;
     private C_MatchLaden laden;
-    private String ladenName, adresse, recognizedText;
+    private String ladenName;
+    private String adresse;
+    private String recognizedText;
+    private String tel;
     private ArrayList<String> produkte, preise;
     private Resources res;
     private Default ladenInstanz;
@@ -50,6 +53,7 @@ public class C_OCR {
     public boolean recognize(Bitmap bitmap){
 
         this.recognizedText = this.recognizer(bitmap);
+
         return this.recognize(bitmap, this.laden.getLaden(this.recognizedText));
 
     }
@@ -75,6 +79,8 @@ public class C_OCR {
             this.recognizedText = this.recognizer(bitmap);
         }
 
+        this.ladenName = ladenName;
+
         // Nur um sicher zu gehen das der Name auch supportet wird
         if(laden.getAuswerterClass(ladenName) == null){
             ladenName = "NOT SUPPORTED";
@@ -88,10 +94,24 @@ public class C_OCR {
         }
 
         // Attribute setzen
-        this.ladenName = ladenName;
+
         if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
-            this.adresse = this.ladenInstanz.getAdresse(this.recognizedText);
-            return this.setArticles(bitmap);
+
+            if(!this.ladenInstanz.getAdress(this.recognizedText).equals("KEINE ADRESSE GEFUNDEN!")){
+                this.adresse = this.ladenInstanz.getAdress(this.recognizedText);
+            }
+
+            if(!this.ladenInstanz.getTel(this.recognizedText).equals("KEINE TELEFONNUMMER GEFUNDEN!")){
+                this.tel = "Tel: " + this.ladenInstanz.getTel(this.recognizedText);
+            }
+
+            Log.e("Recognition Art"," " + this.ladenInstanz.getRecognizeArt());
+            if(this.ladenInstanz.getRecognizeArt() == 1){
+                return this.setArticlesArt1(bitmap);
+            } else {
+                return this.setArticlesArt2(bitmap);
+            }
+
         } else {
             S.outLong((AppCompatActivity)(this.context), this.res.getString(R.string.c_ocr_kassenzettel_nicht_erkannt));
             return false;
@@ -110,6 +130,7 @@ public class C_OCR {
             Log.e("ERROR", "Detector dependencies are not yet available");
         } else {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+
             SparseArray<TextBlock> items = textRecognizer.detect(frame); // TODO Absturz wenn Frame kein Text enthält.
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -120,7 +141,6 @@ public class C_OCR {
                     if(item.getCornerPoints() != null){
                         for(Point point : item.getCornerPoints()){
                             if(point != null){
-                                //Log.e("## POINT", ""+point.toString());
                                 this.pointList.add(point);
                             }
 
@@ -146,7 +166,7 @@ public class C_OCR {
      * @param bitmap Original Bitmap
      * @return möglich - true, Nicht möglich - false
      */
-    private boolean setArticles(Bitmap bitmap){
+    private boolean setArticlesArt1(Bitmap bitmap){
 
         try{
             ArrayList<String> articleList = new ArrayList<>(), priceList = new ArrayList<>();
@@ -216,6 +236,51 @@ public class C_OCR {
         }
     }
 
+    private boolean setArticlesArt2(Bitmap bitmap){
+        try {
+            ArrayList<Bitmap> articleStripes = new ArrayList<>();
+            Bitmap cropedBitmap;
+
+            // Es wird nur die Artikel/Preisregion herausgeschnitten
+            if (this.getPointList().size() != 0) {
+                cropedBitmap = this.picChanger.getOnlyArticleArea(bitmap, this.getPointList());
+            } else {
+                throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: POINTLIST=" + this.getPointList().size());
+            }
+
+            this.recognizedText = this.recognizer(cropedBitmap);
+
+            int lines = (this.ladenInstanz.getProducts(this.recognizedText).size() < this.ladenInstanz.getPrices(this.recognizedText).size()) ?
+                    this.ladenInstanz.getProducts(this.recognizedText).size() :
+                    this.ladenInstanz.getPrices(this.recognizedText).size();
+
+            articleStripes = this.picChanger.getLineList(cropedBitmap, (int) ((cropedBitmap.getHeight() / lines)*this.ladenInstanz.getDefaultSize()));
+
+            Log.e("STRIPES COUNT", articleStripes.size() + "");
+            if (articleStripes.size() == 0) {
+                return false;
+            }
+
+            for (Bitmap bit : articleStripes) {
+                this.recognizedText = this.recognizer(bit);
+                Log.e("OUT LINE", recognizedText);
+                Log.e("PRDUKTE", "ARTIKEL=" + this.ladenInstanz.getProducts(this.recognizedText).size() + " PREIS=" + this.ladenInstanz.getPrices(this.recognizedText).size());
+
+                if (this.ladenInstanz.getProducts(this.recognizedText).size() == this.ladenInstanz.getPrices(this.recognizedText).size()) {
+                    if (this.ladenInstanz.getProducts(this.recognizedText).size() != 0) {
+                        this.articles.add(new C_Artikel(this.ladenInstanz.getProducts(this.recognizedText).get(0), Double.parseDouble(this.ladenInstanz.getPrices(this.recognizedText).get(0).replace(",","."))));
+                        Log.e("MATCH", this.ladenInstanz.getProducts(this.recognizedText).get(0) + " - " + this.ladenInstanz.getPrices(this.recognizedText).get(0));
+                    }
+
+                }
+            }
+            return true;
+
+        } catch (E_NoBonFoundException e){
+            return false;
+        }
+    }
+
 
     /**
      * Gibt alle gefunden Artikel zurück
@@ -271,5 +336,13 @@ public class C_OCR {
      */
     public ArrayList<Point> getPointList(){
         return this.pointList;
+    }
+
+    /**
+     * Gibt die Telefonnummer zurück
+     * @return Telefonnummer
+     */
+    public String getTel() {
+        return tel;
     }
 }
