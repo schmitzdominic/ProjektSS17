@@ -108,7 +108,7 @@
     <string name ="f_laeden_detail_save_save_toast">Laden geändert</string>
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
-    <string name="action_settings">DREIPUNKTEOPTION</string>
+    <string name="action_settings_search">Suchen</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 

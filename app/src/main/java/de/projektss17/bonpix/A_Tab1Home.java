@@ -8,13 +8,10 @@ package de.projektss17.bonpix;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-
 import android.support.v7.widget.DefaultItemAnimator;
-
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,20 +30,19 @@ import de.projektss17.bonpix.daten.C_Home_Adapter;
 
 public class A_Tab1Home extends Fragment {
 
-
     private List<C_Bon> bonsList = new ArrayList<>();
     private RecyclerView Recyclerview;
     private C_Home_Adapter mAdapter1;
-
     private View rootView;
-
     LineChart chart;
+
     LineDataSet dataSet;
     ArrayList<ILineDataSet> lineDataSet;
     LineData lineData;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
+        setHasOptionsMenu(false);
         Recyclerview = (RecyclerView) rootView.findViewById(R.id.tab_eins_recyclerview_bons);
         mAdapter1 = new C_Home_Adapter(bonsList);
         prepareHomeData();
@@ -60,12 +56,10 @@ public class A_Tab1Home extends Fragment {
         chart = (LineChart) rootView.findViewById(R.id.chart);
 
         // Chart Einstellungen:
-
         chart.animateXY(2000, 4000);
         chart.setPadding(30, 30, 30, 30);
-
-
         prepareLineData();
+
         return rootView;
     }
 
@@ -73,7 +67,6 @@ public class A_Tab1Home extends Fragment {
         this.lineDataSet = new ArrayList<>();
 
         // Liste wird mit Daten aus der Datenbank befüllt
-
         this.dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, 4), "Bon");
         dataSet.setColor(Color.BLACK); // Linienfarbe
         dataSet.setCircleColor(Color.BLACK); // Punktfarbe
@@ -89,21 +82,17 @@ public class A_Tab1Home extends Fragment {
         chart.getAxisRight().setEnabled(false); // no right axis
         this.lineDataSet.add(this.dataSet);
         this.lineData = new LineData(this.lineDataSet);
-
-
         this.lineData.setValueTextSize(10f);
 
         if (chart != null) {
             this.chart.setTouchEnabled(false);
             this.chart.setData(this.lineData);
             this.chart.invalidate();
-
         }
     }
 
-    // TODO: 21.05.2017 aktuelles Budget aus der Datenbank holen
     private void prepareBudgetData(){
-
+        // TODO: 21.05.2017 aktuelles Budget aus der Datenbank holen
     }
 
     private void prepareHomeData() {
@@ -116,7 +105,5 @@ public class A_Tab1Home extends Fragment {
             bonsList.add(bon);
             count++;
         }
-
     }
-
 }
