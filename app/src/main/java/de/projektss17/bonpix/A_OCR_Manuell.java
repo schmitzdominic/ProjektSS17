@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,6 +43,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -50,10 +53,13 @@ import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.recognition.C_OCR;
 
+import static de.projektss17.bonpix.S.db;
+
 
 public class A_OCR_Manuell extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMAGE = 1;
+    private int bonId;
     private String year, month, day, imageOCRUriString, sonstigesText;
     private boolean setFocusOnLine = true, negPos;
     private ArrayAdapter<String> spinnerAdapter;
@@ -96,12 +102,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.totalPrice = (TextView) findViewById(R.id.ocr_manuell_total_price); // Totaler Preis
         this.addArticleButton = (Button) findViewById(R.id.ocr_manuell_btn_add_new_article); // Neuen Artikel hinzufügen Button
 
+        this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", "0", false, false, null); // Erstellt einen Leeren Bon
         this.ocr = new C_OCR(this); // Erstellt eine OCR instanz.
-        this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.createCalendar(); // Calendar wird befüllt
         this.refreshSpinner(); // Spinner Refresh
+        this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
-        this.bon = new C_Bon("NA","", "", "", this.dateTextView.getText().toString(), "NA", "0", false, false, null); // Erstellt einen Leeren Bon
 
 
         /**
@@ -156,6 +162,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                     if(getState().equals("edit")){
                         S.dbHandler.updateBon(S.db, saveBon());
+                        finish();
 
                     } else {
                         // Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet
@@ -441,7 +448,15 @@ public class A_OCR_Manuell extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            this.fillMaskOCR(this.getBitmapFromUri(data.getData()));
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+
+            this.fillMaskOCR(picturePath);
         }
     }
 
@@ -754,19 +769,21 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Befüllt alle Werte
-     * @param imageUri Uri zum Bild
+     * @param path Pfad zum Bild
      * @param ladenName Ladenname
      * @param anschrift Anschrift
      * @param datum Datum
      * @param sonstiges Sonstiges
      * @param articles Array mit Articles
      */
-    private void fillMask(Uri imageUri, String ladenName, String anschrift, String datum, String sonstiges, ArrayList<C_Artikel> articles){
+    private void fillMask(String path, String ladenName, String anschrift, String datum, String sonstiges, ArrayList<C_Artikel> articles){
 
-        if(imageUri != null) {
+        if(path != null) {
+
+
             this.ocrImageView.setImageURI(null);
-            this.ocrImageView.setImageURI(imageUri);
-            this.imageOCRUriString = imageUri.toString();
+            this.ocrImageView.setImageBitmap(this.getBitmapFromPath(path));
+            this.imageOCRUriString = path;
             this.ocrImageView.setClickable(true);
             this.kameraButton.setTextColor(Color.BLACK);
         }
@@ -775,7 +792,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
             if(ladenName.equals("NOT SUPPORTED")){
                 ladenSpinner.setSelection(0);
             } else {
-
                 for(int i = 0; i < ladenSpinner.getCount(); i++){
                     if(ladenSpinner.getAdapter().getItem(i).toString().contains(ladenName)){
                         ladenSpinner.setSelection(i);
@@ -825,15 +841,15 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Versucht anhand eines Bitmaps über OCR die Maske zu befüllen!
-     * @param myBitmap Bitmap
+     * @param path Pfad
      */
-    private void fillMaskOCR(Bitmap myBitmap){
+    private void fillMaskOCR(String path){
 
-        boolean status = this.ocr.recognize(myBitmap);
+        boolean status = this.ocr.recognize(this.getBitmapFromPath(path));
 
         if(status){
             this.removeAllArticles();
-            this.fillMask(this.getImageUri(myBitmap),
+            this.fillMask(path,
                     this.ocr.getLadenName(),
                     null, // TODO Anschrift über OCR suchen!
                     null,  // TODO Datum über OCR suchen!
@@ -841,7 +857,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     this.ocr.getArticles());
         } else {
             this.removeAllArticles();
-            this.fillMask(this.getImageUri(myBitmap),
+            this.fillMask(path,
                     null,
                     null, // TODO Anschrift über OCR suchen!
                     null,  // TODO Datum über OCR suchen!
@@ -932,6 +948,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
         return null;
     }
 
+    public Bitmap getBitmapFromPath(String path){
+
+        File image = new File(path);
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        return BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
+    }
+
     /**
      * Prüft nochmal expliziet den Status und gibt diesen wieder
      * @return Status der Maske
@@ -955,7 +978,18 @@ public class A_OCR_Manuell extends AppCompatActivity {
     public void doState(String state){
 
         if (state.equals("edit")) { // Wenn die Maske den Status edit hat (z.B. ein Bon aufgerufen wird)
-            // TODO Anhand der Datenbank implementieren
+            int bonId = 0;
+            Intent mIntent = getIntent();
+            bonId = mIntent.getIntExtra("bonId", bonId);
+            C_Bon bon = S.dbHandler.getBon(db, bonId);
+
+            this.bon.setId(bonId);
+
+            if(bon.getPath() != null && bon.getPath().contains(".")) {
+                this.fillMask(bon.getPath(), bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());
+            } else {
+                this.fillMask(null, bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());
+            }
 
         } else if (state.equals("foto")) { // Wenn die Maske den Status foto hat (z.B. wenn gerade ein Foto gemacht wurde)
 
@@ -963,7 +997,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             File imgFile = new File(aList.get(aList.size()-1));
 
             if (imgFile.exists()) {
-                this.fillMaskOCR(BitmapFactory.decodeFile(imgFile.getAbsolutePath()));
+                this.fillMaskOCR(imgFile.getAbsolutePath());
             }
         } else if (state.equals("new")) { // Wenn die Maske den Status new hat (z.B. bei einer neuen Maske)
             return;
@@ -1041,18 +1075,32 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     (Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[2]) + valuePicked);
         }
 
-        C_Bon saveBon = new C_Bon(this.imageOCRUriString,
-                bon.getShopName(),
-                this.anschriftInput.getText().toString(),
-                this.sonstigesText,
-                this.dateTextView.getText().toString(),
-                guaranteeEnd,
-                this.totalPrice.getText().toString(),
-                false,
-                this.bonGarantie,
-                this.getAllArticle());
+        if(getState().equals("edit")){
+            saveBon = new C_Bon(this.bon.getId(),
+                    this.imageOCRUriString,
+                    bon.getShopName(),
+                    this.anschriftInput.getText().toString(),
+                    this.sonstigesText,
+                    this.dateTextView.getText().toString(),
+                    bon.getGuaranteeEnd(),
+                    this.totalPrice.getText().toString(),
+                    false,
+                    this.bonGarantie,
+                    this.getAllArticle());
+        } else {
+            saveBon = new C_Bon(this.imageOCRUriString,
+                    bon.getShopName(),
+                    this.anschriftInput.getText().toString(),
+                    this.sonstigesText,
+                    this.dateTextView.getText().toString(),
+                    bon.getGuaranteeEnd(),
+                    this.totalPrice.getText().toString(),
+                    false,
+                    this.bonGarantie,
+                    this.getAllArticle());
+        }
 
-        Log.e("LOG", saveBon.toString());
+        Log.e("BON", saveBon.toString());
 
         return saveBon;
     }

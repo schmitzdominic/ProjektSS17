@@ -2,6 +2,8 @@
     <string name="app_name">BonPix</string>
     <string name="built_nr">0.2</string>
 
+    <!-- Allgemein -->
+    <string name="waehrung">€</string>
 
     <!-- A_main -->
     <string name="title_a_main">BonPix</string>
@@ -20,6 +22,10 @@
     <string name="nav_garantie">Garantie</string>
     <string name="nav_einstellungen">Einstellungen</string>
     <string name="nav_laeden">Läden</string>
+
+    <!-- Währung (Allgemein) -->
+    <string name="currency_europe">€</string>
+    <string name="percentage">%</string>
 
     <!-- A_Budget-->
     <string name="title_budget_screen">Budget</string>
@@ -110,7 +116,7 @@
     <string name ="f_laeden_detail_save_save_toast">Laden geändert</string>
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
-    <string name="action_settings">DREIPUNKTEOPTION</string>
+    <string name="action_settings_search">Suchen</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
@@ -167,5 +173,36 @@
     <string name="statistik_card_topfacts_fact_one_title">Meistbesuchter \nLaden</string>
     <string name="statistik_card_topfacts_fact_two_title">Adresse:</string>
     <string name="statistik_card_topfacts_fact_three_title">Durchschn. \nAusgaben:</string>
+
+
+    <!-- A_Tab1Home -->
+    <string name="tab_home_boncard_title_content">Letzte eingescannte Bons</string>
+    <string name="tab_home_budgetcard_title_content">Wichtigste Budgetplanung</string>
+    <string name="tab_home_chartcard_line_title_content">Überblick aller eingescannter Bons</string>
+
+    <string name="tab_home_boncard_bon_content">default</string>
+
+
+    <!-- A_Bon_Anzeigen -->
+    <string name="title_bon_anzeigen">Bon Anzeigen</string>
+    <string name="bon_anzeigen_laden_title">Laden</string>
+    <string name="bon_anzeigen_adresse_title">Adresse</string>
+    <string name="bon_anzeigen_datum_title">Datum</string>
+    <string name="bon_anzeigen_gesbetrag_title">Gesamtbetrag</string>
+    <string name="bon_anzeigen_garantie_title">Garantie (Ende)</string>
+    <string name="bon_anzeigen_artikel_title">Artikel</string>
+    <string name="bon_anzeigen_preis_title">Preis</string>
+
+    <string name="bon_anzeigen_laden">Supermarkt XY</string>
+    <string name="bon_anzeigen_adresse">Max-Mustermann-Str. XB</string>
+    <string name="bon_anzeigen_plz">80XB9 Musterstadt</string>
+    <string name="bon_anzeigen_datum">0X.0X.20XX</string>
+    <string name="bon_anzeigen_gesbetrag">XOOCB.00 €</string>
+    <string name="bon_anzeigen_garantie">0X.0X.20XX</string>
+    <string name="bon_anzeigen_artikel">TestArtikel X0</string>
+    <string name="bon_anzeigen_preis">X0.0X €</string>
+
+    <string name="bon_anzeigen_delete_title">Bon Löschen</string>
+    <string name="bon_anzeigen_delete_message">Wollen Sie wirklich diesen Bon löschen?</string>
 
 </resources>

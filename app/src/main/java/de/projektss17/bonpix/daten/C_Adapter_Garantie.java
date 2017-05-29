@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.R;
@@ -24,13 +25,13 @@ import de.projektss17.bonpix.S;
 public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.MyViewHolder> {
 
     private List<C_Bon> bonListe;
+    private List<C_Bon> filteredList;
     private C_Bon bon;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView warrantyShop, warrantyEnd, warrantyPrice;
         public ImageView icon, deleteBtn;
         public Resources res;
-
 
         public MyViewHolder(View view){
             super(view);
@@ -49,16 +50,14 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
      * @param bonListe
      */
     public C_Adapter_Garantie(List<C_Bon> bonListe){
-
+        this.filteredList = new ArrayList<>();
         this.bonListe = bonListe;
     }
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.box_garantie_view, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
@@ -96,5 +95,11 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
     @Override
     public int getItemCount() {
         return this.bonListe.size();
+    }
+
+    public void setFilter(List<C_Bon> passedList) {
+        bonListe = new ArrayList<>();
+        bonListe.addAll(passedList);
+        notifyDataSetChanged();
     }
 }
