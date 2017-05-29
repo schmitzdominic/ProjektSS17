@@ -1157,10 +1157,24 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         return this.getLaden(db, id);
     }
 
+    /**
+     * Durchschnittsbetrag eines Ladens
+     * @param db Datenbank
+     * @param laden Laden von dem wir den Durchschnittsbetrag bekommen wollen
+     * @return Betrag
+     */
     public String averageExpenditureLaden(SQLiteDatabase db, C_Laden laden){
         return this.averageExpenditureLaden(db, laden, null, null);
     }
 
+    /**
+     * Durchschnittsbetrag eines Ladens innerhalb eines Zeitraums
+     * @param db Datenbank
+     * @param laden Laden von dem wir den Durchschnittsbetrag bekommen wollen
+     * @param date1 Von Datum
+     * @param date2 Bis Datum
+     * @return Betrag
+     */
     public String averageExpenditureLaden(SQLiteDatabase db, C_Laden laden, String date1, String date2){
 
         double gesPreis = 0, anz = 0;
