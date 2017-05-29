@@ -73,7 +73,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private EditText anschriftInput;
     private LinearLayout linearLayout;
     private ImageButton garantieButton, saveButton;
-    private boolean bonGarantie = false;
+    private boolean garantieChanged = false;
     private C_OCR ocr;
     private C_Bon bon;
     private A_OCR_Manuell context = this;
@@ -117,7 +117,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.garantieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(bonGarantie == false) {
+                if(bon.getGuarantee() == false) {
                     LayoutInflater inflater = LayoutInflater.from(context);
                     View dialogView = inflater.inflate(R.layout.box_ocr_manuell_dialog_picker, null);
                     final NumberPicker picker = (NumberPicker) dialogView.findViewById(R.id.number_picker);
@@ -130,21 +130,24 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     builder.setPositiveButton(view.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_confirm), new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
                             int yearPicked = picker.getValue();
-                            bonGarantie = true;
+                            bon.setGuarantee(true);
                             valuePicked = yearPicked;
                             garantieButton.setColorFilter(R.color.colorPrimary);
+                            garantieChanged = true;
                         }
                     });
                     builder.setNegativeButton(view.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_cancel), new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
-                            bonGarantie = false;
+                            bon.setGuarantee(false);
+                            bon.setGuaranteeEnd("NA");
                             garantieButton.setColorFilter(Color.WHITE);
                         }
                     });
                     final AlertDialog yearPickerDialog = builder.create();
                     yearPickerDialog.show();
                 } else {
-                    bonGarantie = false;
+                    bon.setGuarantee(false);
+                    bon.setGuaranteeEnd("NA");
                     garantieButton.setColorFilter(Color.WHITE);
                 }
             }
@@ -984,6 +987,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
             C_Bon bon = S.dbHandler.getBon(db, bonId);
 
             this.bon.setId(bonId);
+            this.bon.setFavourite(bon.getFavourite());
+            this.bon.setGuarantee(bon.getGuarantee());
+            this.bon.setGuaranteeEnd(bon.getGuaranteeEnd());
+
+            if(this.bon.getGuarantee()){
+                garantieButton.setColorFilter(R.color.colorPrimary);
+            }
 
             if(bon.getPath() != null && bon.getPath().contains(".")) {
                 this.fillMask(bon.getPath(), bon.getShopName(), bon.getAdress(), bon.getDate(), bon.getOtherInformations(), bon.getArticles());
@@ -1067,36 +1077,42 @@ public class A_OCR_Manuell extends AppCompatActivity {
      */
     public C_Bon saveBon(){
 
-        String guaranteeEnd = "";
+        String guaranteeEnd = "NA";
+        C_Bon saveBon;
 
-        if(this.bonGarantie){
+        if(this.bon.getGuarantee()){
             guaranteeEnd = this.dateTextView.getText().toString().split("\\.")[0] + "." +
                     this.dateTextView.getText().toString().split("\\.")[1] + "." +
                     (Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[2]) + valuePicked);
         }
 
         if(getState().equals("edit")){
+
+            if(garantieChanged){
+                bon.setGuaranteeEnd(guaranteeEnd);
+            }
+
             saveBon = new C_Bon(this.bon.getId(),
                     this.imageOCRUriString,
-                    bon.getShopName(),
+                    this.bon.getShopName(),
                     this.anschriftInput.getText().toString(),
                     this.sonstigesText,
                     this.dateTextView.getText().toString(),
-                    bon.getGuaranteeEnd(),
+                    this.bon.getGuaranteeEnd(),
                     this.totalPrice.getText().toString(),
-                    false,
-                    this.bonGarantie,
+                    this.bon.getFavourite(),
+                    this.bon.getGuarantee(),
                     this.getAllArticle());
         } else {
             saveBon = new C_Bon(this.imageOCRUriString,
-                    bon.getShopName(),
+                    this.bon.getShopName(),
                     this.anschriftInput.getText().toString(),
                     this.sonstigesText,
                     this.dateTextView.getText().toString(),
-                    bon.getGuaranteeEnd(),
+                    guaranteeEnd,
                     this.totalPrice.getText().toString(),
                     false,
-                    this.bonGarantie,
+                    this.bon.getGuarantee(),
                     this.getAllArticle());
         }
 

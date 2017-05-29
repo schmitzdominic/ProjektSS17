@@ -194,7 +194,6 @@ public class S extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         S.dbHandler.addBon(S.db, bon);
-                        beforeActivity.startActivity(intent);
                         beforeActivity.finish();
 
                     }

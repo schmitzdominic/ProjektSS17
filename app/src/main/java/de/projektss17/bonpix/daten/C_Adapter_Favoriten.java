@@ -1,5 +1,6 @@
 package de.projektss17.bonpix.daten;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.projektss17.bonpix.A_Bon_Anzeigen;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
@@ -39,6 +41,17 @@ public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favorite
             favouritePrice = (TextView) view.findViewById(R.id.favoriten_view_zusatz_favorite_price);
             deleteBtn = (ImageView) view.findViewById(R.id.favoriten_view_favoriten_delete_button);
             res = view.getResources();
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final C_Bon bon = bonListe.get(getAdapterPosition());
+                    int pos = bon.getId();
+                    Intent intent = new Intent(v.getContext(), A_Bon_Anzeigen.class);
+                    intent.putExtra("BonPos", pos);
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
 
