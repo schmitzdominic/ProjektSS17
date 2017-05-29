@@ -77,6 +77,8 @@
     <string name="a_ocr_manuell_button_add_new">Artikel hinzufügen</string>
     <string name="a_ocr_manuell_button_delete_row_description">Delete</string>
 
+    <string name="a_ocr_manuell_garantie_laenge">Garantielänge (Jahre)</string>
+
     <string name="c_ocr_kassenzettel_nicht_erkannt">Der Kassenzettel wurde leider nicht erkannt</string>
 
     <!-- A_Max_Bon_Pic -->

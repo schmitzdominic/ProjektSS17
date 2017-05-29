@@ -60,6 +60,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private Button  kameraButton, addArticleButton;
     private Spinner ladenSpinner;
     private Calendar calendar;
+    private Calendar cal;
     private TextView dateTextView, totalPrice, sonstigesView;
     private ImageView ocrImageView;
     private View mExclusiveEmptyView;
@@ -70,6 +71,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private C_OCR ocr;
     private C_Bon bon;
     private A_OCR_Manuell context = this;
+    private int valuePicked, mYear;
 
 
     @Override
@@ -117,27 +119,17 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     picker.setMinValue(1);
                     picker.setValue(2);
                     final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Garantielänge (Jahre)");
+                    builder.setTitle(view.getContext().getResources().getString(R.string.a_ocr_manuell_garantie_laenge));
                     builder.setView(dialogView);
-                    builder.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener(){
+                    builder.setPositiveButton(view.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_confirm), new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
-                            Date date = new Date();
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(date);
                             int yearPicked = picker.getValue();
-                            int year = Calendar.getInstance().get(Calendar.YEAR);
-                            year += yearPicked;
-                            calendar.set(Calendar.YEAR, year);
-                            Date newDate = calendar.getTime();
-                            String dateFormatted = new SimpleDateFormat("dd-MM-yyyy").format(newDate);
-                            bon.setGuaranteeEnd(dateFormatted);
                             bonGarantie = true;
+                            valuePicked = yearPicked;
                             garantieButton.setColorFilter(R.color.colorPrimary);
-                            S.outShort(A_OCR_Manuell.this, "Garantie wurde hinzugefügt!");
-                            Log.e("### GuaranteeEnd VALUE:", "" + dateFormatted);
                         }
                     });
-                    builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener(){
+                    builder.setNegativeButton(view.getContext().getResources().getString(R.string.a_ocr_manuell_pop_up_cancel), new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int index){
                             bonGarantie = false;
                             garantieButton.setColorFilter(Color.WHITE);
@@ -148,7 +140,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 } else {
                     bonGarantie = false;
                     garantieButton.setColorFilter(Color.WHITE);
-                    S.outShort(A_OCR_Manuell.this, "Garantie wurde entfernt!");
                 }
             }
         });
@@ -355,6 +346,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     showDate("" + getNumberWithZero(arg1),
                             "" + getNumberWithZero(arg2 + 1),
                             "" + getNumberWithZero(arg3));
+                    day = "" + getNumberWithZero(arg3);
+                    month = "" + getNumberWithZero(arg2 + 1);
+                    mYear = arg1;
+                    year = getNumberWithZero(arg1);
                 }
             };
 
@@ -366,8 +361,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
     public void createCalendar(){
         this.calendar = Calendar.getInstance();
         this.year = "" + this.calendar.get(Calendar.YEAR);
-        this.month = "" + this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
-        this.day = "" + this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
+        this.month = this.getNumberWithZero(calendar.get(Calendar.MONTH) +1);
+        this.day = this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
         this.showDate(year, month, day);
     }
 
@@ -724,7 +719,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 arrayPrices[i] += ".0";
             }
         }
-
         return arrayPrices;
     }
 
@@ -753,7 +747,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
         }
 
         finalPrice = Math.round(finalPrice * 100) / 100.00;
-
         DecimalFormat df = new DecimalFormat("#0.00");
 
         return df.format(finalPrice);
@@ -910,7 +903,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
             this.addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
         }
-
         return allRelevantFieldsFull;
     }
 
@@ -1032,7 +1024,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 articles.add(new C_Artikel(articleField.getText().toString(), price));
             }
         }
-
         return articles;
     }
 
@@ -1042,18 +1033,26 @@ public class A_OCR_Manuell extends AppCompatActivity {
      */
     public C_Bon saveBon(){
 
+        String guaranteeEnd = "";
+
+        if(this.bonGarantie){
+            guaranteeEnd = this.dateTextView.getText().toString().split("\\.")[0] + "." +
+                    this.dateTextView.getText().toString().split("\\.")[1] + "." +
+                    (Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[2]) + valuePicked);
+        }
+
         C_Bon saveBon = new C_Bon(this.imageOCRUriString,
                 bon.getShopName(),
                 this.anschriftInput.getText().toString(),
                 this.sonstigesText,
                 this.dateTextView.getText().toString(),
-                bon.getGuaranteeEnd(),
+                guaranteeEnd,
                 this.totalPrice.getText().toString(),
                 false,
                 this.bonGarantie,
                 this.getAllArticle());
 
-        Log.e("BON", saveBon.toString());
+        Log.e("LOG", saveBon.toString());
 
         return saveBon;
     }

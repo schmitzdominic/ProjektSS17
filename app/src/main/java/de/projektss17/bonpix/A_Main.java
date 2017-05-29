@@ -521,7 +521,7 @@ public class A_Main extends AppCompatActivity {
                 artikelList.add(new C_Artikel(""+i+dummyArtikel, i*dummyArtikel));
             }
 
-            Log.e("### CEATE DUMMY DATA", " "+(i+1)+" OF "+value);
+            //Log.e("### CEATE DUMMY DATA", " "+(i+1)+" OF "+value);
             if(i < 10){
                 S.dbHandler.addBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", "0"+i+".10.2016", "0"+i+".10.2018", "1337", true, true, artikelList));
             } else {
