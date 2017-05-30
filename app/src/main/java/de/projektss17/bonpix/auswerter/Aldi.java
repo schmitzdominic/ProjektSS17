@@ -30,4 +30,9 @@ public class Aldi extends Default {
     public String toString(){
         return this.name;
     }
+
+    @Override
+    public int getRecognizeArt() {
+        return 1;
+    }
 }

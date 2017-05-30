@@ -30,7 +30,7 @@
                     android:layout_marginTop="15dp"
                     android:text="Budget Titel"
                     android:textAlignment="center"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignTop="@+id/budget_jahr_von"
                     android:layout_marginTop="30dp"
-                    android:layout_toLeftOf="@+id/relativeLayout2"
+                    android:layout_toLeftOf="@+id/budget_card_relative_layout"
                     android:text="MonatVon"
                     android:textAlignment="center"
                     android:textSize="18sp"
@@ -56,8 +56,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignTop="@+id/budget_monat_von"
                     android:layout_marginTop="30dp"
-                    android:layout_toLeftOf="@+id/relativeLayout2"
-                    android:layout_toStartOf="@+id/relativeLayout2"
+                    android:layout_toLeftOf="@+id/budget_card_relative_layout"
+                    android:layout_toStartOf="@+id/budget_card_relative_layout"
                     android:text="T"
                     android:textAlignment="center"
                     android:textSize="18sp"
@@ -74,8 +74,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="90dp"
-                    android:layout_toLeftOf="@+id/relativeLayout2"
-                    android:layout_toStartOf="@+id/relativeLayout2" />
+                    android:layout_toLeftOf="@+id/budget_card_relative_layout"
+                    android:layout_toStartOf="@+id/budget_card_relative_layout" />
 
                 <TextView
                     android:id="@+id/budget_jahr_von"
@@ -85,8 +85,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="30dp"
-                    android:layout_toLeftOf="@+id/relativeLayout2"
-                    android:layout_toStartOf="@+id/relativeLayout2"
+                    android:layout_toLeftOf="@+id/budget_card_relative_layout"
+                    android:layout_toStartOf="@+id/budget_card_relative_layout"
                     android:text="Jahrvon"
                     android:textAlignment="center"
                     android:textSize="18sp"
@@ -100,7 +100,7 @@
                     android:layout_alignBottom="@+id/budget_monat_von"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/relativeLayout2"
+                    android:layout_toRightOf="@+id/budget_card_relative_layout"
                     android:text="MonatBis "
                     android:textAlignment="center"
                     android:textSize="18sp"
@@ -114,7 +114,7 @@
                     android:layout_alignBottom="@+id/budget_tag_von"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/relativeLayout2"
+                    android:layout_toRightOf="@+id/budget_card_relative_layout"
                     android:text="T"
                     android:textAlignment="center"
                     android:textSize="18sp"
@@ -128,7 +128,7 @@
                     android:layout_alignBottom="@+id/budget_von"
                     android:layout_alignEnd="@+id/budget_monat_bis"
                     android:layout_alignRight="@+id/budget_monat_bis"
-                    android:layout_toRightOf="@+id/relativeLayout2"
+                    android:layout_toRightOf="@+id/budget_card_relative_layout"
                     android:text="bis"
                     android:textAlignment="center"
                     android:textSize="14sp" />
@@ -141,14 +141,14 @@
                     android:layout_alignBottom="@+id/budget_jahr_von"
                     android:layout_alignEnd="@+id/budget_bis"
                     android:layout_alignRight="@+id/budget_bis"
-                    android:layout_toRightOf="@+id/relativeLayout2"
+                    android:layout_toRightOf="@+id/budget_card_relative_layout"
                     android:text="JahrBis "
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout2"
+                    android:id="@+id/budget_card_relative_layout"
                     android:layout_width="190dp"
                     android:layout_height="190dp"
                     android:layout_below="@+id/budget_title"
@@ -156,7 +156,7 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/budget_first_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
@@ -169,7 +169,7 @@
                         android:id="@+id/budget_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/textView2"
+                        android:layout_below="@id/budget_first_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:layout_marginTop="7dp"
@@ -179,7 +179,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView15"
+                        android:id="@+id/budget_second_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/budget_content"

@@ -42,6 +42,11 @@ public class A_Budget extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         // LAYOUT - Implementierung aller Layouts
         recyclerView = (RecyclerView) findViewById(R.id.view_budget); // Recycler Liste
@@ -94,7 +99,6 @@ public class A_Budget extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     /**
