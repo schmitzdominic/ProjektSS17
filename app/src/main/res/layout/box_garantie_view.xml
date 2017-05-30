@@ -16,7 +16,7 @@
         android:src="@drawable/common_google_signin_btn_icon_dark_focused" />
 
     <TextView
-        android:id="@+id/garantie_view_garantiebeginn"
+        android:id="@+id/garantie_view_shopname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/garantie_view_zusatz_favorite_price"
@@ -35,7 +35,7 @@
         android:textSize="14sp"
         android:layout_toLeftOf="@id/garantie_view_zusatz_favorite_price"
         android:layout_toRightOf="@+id/garantie_view_laden_bild"
-        android:layout_below="@+id/garantie_view_garantiebeginn"/>
+        android:layout_below="@+id/garantie_view_shopname"/>
 
     <TextView
         android:id="@+id/garantie_view_zusatz_favorite_price"

@@ -96,7 +96,6 @@ public class A_Main extends AppCompatActivity {
                 super.onDrawerOpened(drawerView);
                 isDrawOpen = true;
             }
-
         };
 
         // Layout
@@ -125,7 +124,6 @@ public class A_Main extends AppCompatActivity {
         this.initPersistence();
         this.initOnClickListener();
         this.onFirstStart();
-
     }
 
     /**
@@ -173,9 +171,9 @@ public class A_Main extends AppCompatActivity {
                     case R.id.menu_nav_budget:
                         S.showBudget(A_Main.this);
                         return true;
-                    case R.id.menu_nav_gruppen:
+                    /*case R.id.menu_nav_gruppen:
                         S.showGruppen(A_Main.this);
-                        return true;
+                        return true;*/
                     case R.id.menu_nav_favoriten:
                         S.showFavoriten(A_Main.this);
                         return true;
@@ -234,8 +232,6 @@ public class A_Main extends AppCompatActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -249,19 +245,10 @@ public class A_Main extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-
         // Wird ausgelöst wenn der NavigationDrawer aktiviert wird
         if (toggle.onOptionsItemSelected(item)) {
             this.isDrawOpen = true;
             return true;
-        }
-
-        // Wird ausgelöst wenn einer der (drei punkte) Optionen aufgerufen wird
-        switch (id) {
-            case R.id.menu_main_DUMMY:
-                // Rufe die Activity auf
-                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -472,7 +459,7 @@ public class A_Main extends AppCompatActivity {
         if (settings.getBoolean("first_time", true)) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
-            this.createDBDummyData(20);
+            //this.createDBDummyData(20);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);
@@ -520,15 +507,12 @@ public class A_Main extends AppCompatActivity {
             for(int dummyArtikel = 0; dummyArtikel < x; dummyArtikel++){
                 artikelList.add(new C_Artikel(""+i+dummyArtikel, i*dummyArtikel));
             }
-
             Log.e("### CEATE DUMMY DATA", " "+(i+1)+" OF "+value);
             if(i < 10){
                 S.dbHandler.addBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", "0"+i+".10.2016", "0"+i+".10.2018", "1337", true, true, artikelList));
             } else {
                 S.dbHandler.addBon(S.db, new C_Bon("PFAD", ladenList.get(i).getName(), "TestAnschrift", "SONSTIGES", i+".10.2016", i+".10.2018", "1337", true, true, artikelList));
             }
-
-
             artikelList.clear();
         }
 

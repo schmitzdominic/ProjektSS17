@@ -2,6 +2,7 @@ package de.projektss17.bonpix.daten;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 import de.projektss17.bonpix.fragments.F_Laeden_Detail;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
         public TextView shopName;
         public ImageView iconShop, editShopBtn;
         public ArrayList<String> supShops;
+        public Resources res;
 
         public MyViewHolder(View view) {
             super(view);
@@ -43,22 +46,13 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
             shopName = (TextView) view.findViewById(R.id.laeden_view_laden_name);
             editShopBtn = (ImageView) view.findViewById(R.id.laeden_view_edit_button);
             String[] shops = view.getResources().getStringArray(R.array.defaultLaeden);
+            res = view.getResources();
 
             supShops = new ArrayList<>();
 
             for(String x : shops){
                 supShops.add(x);
             }
-
-
-            // TODO: Derzeit ist das "Aldi" Icon fest eingebunden in die RecyclerViewList. Dies muss geändert werden, sobald die RecyclerViewList dynamisch befüllt wird. (derzeit feste test werte, später Aldi, Lidl etc Logo je nach Bon)
-            Bitmap imageBitmap = BitmapFactory.decodeResource(view.getResources(), R.mipmap.ic_shopping_cart_black_24dp);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(view.getResources(), imageBitmap);
-            roundedBitmapDrawable.setCircular(true);
-            roundedBitmapDrawable.setAntiAlias(true);
-            iconShop.setImageDrawable(roundedBitmapDrawable);
-            // --- END TO DO --
-
         }
     }
     /**
@@ -83,8 +77,11 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
     public void onBindViewHolder(final C_Laeden_Adapter.MyViewHolder holder, final int position) {
         this.shop = shopList.get(position);
 
-        //ToDo später Icon dynamisch zuweisbar
-        //holder.icon.setImageDrawable(rounderBitmapDrawable);
+        Bitmap imageBitmap = S.getShopIcon(holder.res, this.shop.getName());
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
+        roundedBitmapDrawable.setAntiAlias(true);
+        holder.iconShop.setImageDrawable(roundedBitmapDrawable);
+
         holder.shopName.setText(shop.getName());
 
         //Bei Supported Shops darf der Editierbutton nicht erscheinen => Wird unsichtbar gemacht
