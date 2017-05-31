@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/header_white">
+        android:background="@mipmap/header_bon">
 
         <ImageView
             android:id="@+id/bon_anzeigen_picture"
@@ -21,7 +21,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="35dp"
             android:clickable="true"
-            app:srcCompat="@mipmap/ic_shopping_cart_black_24dp" />
+            app:srcCompat="@mipmap/bonpix_big_transparent" />
 
         <TextView
             android:id="@+id/bon_anzeigen_ladenname_title"
