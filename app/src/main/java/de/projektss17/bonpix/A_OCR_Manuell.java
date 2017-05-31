@@ -280,11 +280,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                             .create().show();
                 } else if ((int) id > 1){
                     bon.setShopName(parentView.getSelectedItem().toString());
-                    ImageView imageview = (ImageView) findViewById(R.id.ocr_manuell_image_view_shop);
-                    Bitmap imageBitmap = S.getShopIcon(getResources(), bon.getShopName());
-                    RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
-                    roundedBitmapDrawable.setAntiAlias(true);
-                    imageview.setImageDrawable(roundedBitmapDrawable);
+                    ((ImageView) findViewById(R.id.ocr_manuell_image_view_shop)).setImageDrawable(RoundedBitmapDrawableFactory.create(getResources(), S.getShopIcon(getResources(), bon.getShopName())));
 
                 }
 
