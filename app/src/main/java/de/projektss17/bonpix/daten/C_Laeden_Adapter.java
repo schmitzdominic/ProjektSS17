@@ -82,6 +82,8 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
         roundedBitmapDrawable.setAntiAlias(true);
         holder.iconShop.setImageDrawable(roundedBitmapDrawable);
 
+        //holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
+
         holder.shopName.setText(shop.getName());
 
         //Bei Supported Shops darf der Editierbutton nicht erscheinen => Wird unsichtbar gemacht
