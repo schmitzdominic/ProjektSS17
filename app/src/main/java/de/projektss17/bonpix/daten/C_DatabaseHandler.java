@@ -1086,7 +1086,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-        Log.e("COUNT",""+count);
         return count;
     }
 
