@@ -1,19 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="140dp"
-android:background="@color/colorPrimary">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:background="@mipmap/header_white">
 
-<TextView
-    android:id="@+id/navigation_drawer_textView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:paddingLeft="20dp"
-    android:paddingTop="50dp"
-    android:text="Navigation"
-    android:textColor="@android:color/white"
-    android:textSize="30dp" />
+    <LinearLayout
+        android:id="@+id/navigation_drawer_header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+    <ImageView
+        android:id="@+id/navigation_drawer_picture"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        app:srcCompat="@mipmap/bonpix_big"
+        android:layout_marginBottom="8dp"/>
+
+    <!---<TextView
+        android:id="@+id/navigation_drawer_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Navigation"
+        android:gravity="bottom"
+        android:textColor="@android:color/white"
+        android:textSize="18dp" /> -->
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignBottom="@+id/navigation_drawer_header_layout">
+
+    </RelativeLayout>
+
+
 </RelativeLayout>
+
+
