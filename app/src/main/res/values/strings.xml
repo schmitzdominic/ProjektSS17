@@ -129,6 +129,9 @@
     <string name="a_budget_edit_bisdatum">Zeitraum (Ende)…</string>
     <string name="a_budget_edit_sonstiges">Sonstiges (optional)…</string>
     <string name="a_budget_edit_vonbis_error">Von-Datum liegt hinter Bis-Datum</string>
+    <string name="a_budget_edit_favorite">Budget auf Home Tab anzeigen</string>
+    <string name="a_budget_edit_home_warning_title">Budget auf Home Tab anzeigen</string>
+    <string name="a_budget_edit_home_warning">\nWollen Sie wirklich dieses Budget auf dem Home Tab anzeigen? \n\nINFO: Es kann nur ein Budget gleichzeitig auf dem Home Tab angezeigt werden!</string>
 
     <!-- Wochentage -->
     <string name="wochentag_1">Sonntag</string>
