@@ -1070,6 +1070,27 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Gibt die Anzahl der Favoriten zurück
+     * @param db Datenbank
+     * @return Anzahl der Favoriten
+     */
+    public int getFavouriteCount(SQLiteDatabase db){
+
+        int count = 0;
+        String query = "SELECT * FROM bon WHERE favoriten > 0";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                count++;
+            } while (cursor.moveToNext());
+        }
+
+        Log.e("COUNT",""+count);
+        return count;
+    }
+
+    /**
      * Gibt die Anzahl aller vorhandenen Laeden zurück
      * @param db Datenbank
      * @return Anzahl

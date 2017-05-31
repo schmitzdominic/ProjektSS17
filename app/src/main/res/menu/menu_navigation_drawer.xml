@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:id="@+id/menu_nav_drawer_gruppe_allgemein"
-        android:checkableBehavior="single">
+    <group android:id="@+id/menu_nav_drawer_gruppe_allgemein">
+
         <item
             android:id="@+id/menu_nav_budget"
             android:icon="@mipmap/ic_attach_money_black_24dp"
-            android:title="@string/nav_budget" />
+            android:title="@string/nav_budget"
+            app:actionLayout="@layout/box_navigation_drawer_item_counter"/>
 
         <!--<item
             android:id="@+id/menu_nav_gruppen"
             android:icon="@mipmap/ic_group_black_24dp"
-            android:title="@string/nav_gruppen" /> -->
+            android:title="@string/nav_gruppen"
+            app:actionLayout="@layout/box_navigation_drawer_item_counter"/> -->
 
         <item
             android:id="@+id/menu_nav_favoriten"
             android:icon="@mipmap/ic_favorite_border_black_24dp"
-            android:title="@string/nav_favoriten" />
+            android:title="@string/nav_favoriten"
+            app:actionLayout="@layout/box_navigation_drawer_item_counter"/>
 
         <item
             android:id="@+id/menu_nav_garantie"
             android:icon="@mipmap/ic_build_black_24dp"
-            android:title="@string/nav_garantie" />
+            android:title="@string/nav_garantie"
+            app:actionLayout="@layout/box_navigation_drawer_item_counter"/>
 
         <item
             android:id="@+id/menu_nav_laeden"
             android:icon="@mipmap/ic_shopping_cart_black_24dp"
-            android:title="@string/nav_laeden" />
+            android:title="@string/nav_laeden"
+            app:actionLayout="@layout/box_navigation_drawer_item_counter"/>
 
     </group>
 
-    <group android:id="@+id/menu_nav_drawer_gruppe_einstellungen"
-        android:checkableBehavior="single">
+    <group android:id="@+id/menu_nav_drawer_gruppe_einstellungen">
         <item
             android:id="@+id/menu_nav_einstellungen"
             android:icon="@mipmap/ic_settings_black_24dp"

@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.support.design.widget.NavigationView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -124,6 +125,28 @@ public class A_Main extends AppCompatActivity {
         this.initPersistence();
         this.initOnClickListener();
         this.onFirstStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        int fav = 0, warranty = 0;
+
+        for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
+            fav += bon.getFavourite() ? 1 : 0;
+            warranty += bon.getGuarantee() ? 1 : 0;
+        }
+
+        S.setMenuCounter(R.id.menu_nav_budget, S.dbHandler.getAllBudgets(S.db).size(), navigationView);
+        S.setMenuCounter(R.id.menu_nav_favoriten, fav, navigationView);
+        S.setMenuCounter(R.id.menu_nav_garantie, warranty, navigationView);
+        S.setMenuCounter(R.id.menu_nav_laeden, S.dbHandler.getAllLaedenCount(S.db), navigationView);
+
+    }
+
+    public NavigationView getNavigationView(){
+        return this.navigationView;
     }
 
     /**
@@ -459,7 +482,7 @@ public class A_Main extends AppCompatActivity {
         if (settings.getBoolean("first_time", true)) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
-            //this.createDBDummyData(20);
+            //this.createDBDummyData(100);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);
