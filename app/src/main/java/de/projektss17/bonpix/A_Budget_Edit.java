@@ -124,10 +124,10 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
                 this.budget.setFavorite(favorite.isChecked());
                 this.budget.setBons(S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString()));
 
-                S.dbHandler.updateBudget(S.db, this.budget);
+                S.dbHandler.setBudgetFavorite(S.db, this.budget);
 
             } else {
-                S.dbHandler.addBudget(S.db, new C_Budget(
+                S.dbHandler.setBudgetFavorite(S.db, new C_Budget(
                         Integer.parseInt(betrag.getText().toString()),
                         (int) S.dbHandler.getTotalPriceFromBonsSumup(S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString())),
                         zeitraumVon.getText().toString(),

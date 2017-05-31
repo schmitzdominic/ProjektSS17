@@ -1019,6 +1019,46 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Setzt ein Budget als Favorite
+     * Legt ein Budget an falls diese noch nicht vorhanden ist oder updated es entsprechend
+     * @param db Datenbank
+     * @param budget Budget
+     */
+    public void setBudgetFavorite(SQLiteDatabase db, C_Budget budget){
+
+        if(budget.getFavorite()){
+            C_Budget tempFav = this.getFavoriteBudget(db);
+            if(tempFav != null){
+                tempFav.setFavorite(false);
+                this.updateBudget(db, tempFav);
+            }
+        }
+
+        if(this.checkIfBudgetExist(db, budget.getId())){
+            this.updateBudget(db, budget);
+        } else {
+            this.addBudget(db, budget);
+        }
+
+    }
+
+    /**
+     * Gibt das Favorisierte Budget zurück
+     * @param db Datenbank
+     * @return Budget
+     */
+    public C_Budget getFavoriteBudget(SQLiteDatabase db){
+
+        for(C_Budget budget : this.getAllBudgets(db)){
+            if(budget.getFavorite()){
+                return budget;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Get all Bons with specific Store
      * @param db
      * @param name
