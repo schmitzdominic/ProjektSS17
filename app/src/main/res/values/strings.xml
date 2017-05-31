@@ -22,6 +22,7 @@
     <string name="nav_garantie">Garantie</string>
     <string name="nav_einstellungen">Einstellungen</string>
     <string name="nav_laeden">Läden</string>
+    <string name="nav_title">Menü</string>
 
     <!-- Währung (Allgemein) -->
     <string name="currency_europe">€</string>
@@ -204,5 +205,6 @@
 
     <string name="bon_anzeigen_delete_title">Bon Löschen</string>
     <string name="bon_anzeigen_delete_message">Wollen Sie wirklich diesen Bon löschen?</string>
+
 
 </resources>
