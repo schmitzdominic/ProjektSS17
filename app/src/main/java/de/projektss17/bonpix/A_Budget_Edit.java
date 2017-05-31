@@ -109,6 +109,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
                         zeitraumBis.getText().toString(),
                         title.getText().toString(),
                         info.getText().toString(),
+                        false,
                         S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString())));
             }
 

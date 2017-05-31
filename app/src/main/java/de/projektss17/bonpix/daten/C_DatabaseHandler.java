@@ -175,7 +175,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         convertFromDateISO8601(cursor.getString(3)),
                         convertFromDateISO8601(cursor.getString(4)),
                         cursor.getString(5),
-                        cursor.getString(6));
+                        cursor.getString(6),
+                        cursor.getInt(7) > 0);
 
                 budget.setBons(this.getAllBonsFromBudget(db, budget));
                 budgetList.add(budget);
@@ -630,6 +631,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("bis", this.convertToDateISO8601(budget.getZeitraumBis()));
         values.put("titel", budget.getTitle());
         values.put("sonstiges", budget.getSonstiges());
+        values.put("favorite", budget.getFavorite());
 
         db.insert("budget", null, values);
         backupDataChanged();
@@ -832,6 +834,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("bis", this.convertToDateISO8601(budget.getZeitraumBis()));
         values.put("titel", budget.getTitle());
         values.put("sonstiges", budget.getSonstiges());
+        values.put("favorite", budget.getFavorite());
 
         db.update("budget", values, "budgetid="+budget.getId(), null);
         db.delete("bonbudget", "budgetid="+budget.getId(), null);
@@ -1279,7 +1282,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 "von TEXT, " +
                 "bis TEXT, " +
                 "titel VARCHAR(255), " +
-                "sonstiges VARCHAR(255))";
+                "sonstiges VARCHAR(255), " +
+                "favorite BOOLEAN)";
 
         String CREATE_TABLE_BonArtikel = "CREATE TABLE IF NOT EXISTS bonartikel (bonid INTEGER NOT NULL, " +
                 "artikelid INTEGER NOT NULL, " +
