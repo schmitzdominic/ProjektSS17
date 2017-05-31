@@ -19,14 +19,15 @@
         app:srcCompat="@mipmap/bonpix_big"
         android:layout_marginBottom="8dp"/>
 
-    <!---<TextView
+    <TextView
         android:id="@+id/navigation_drawer_textView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="Navigation"
         android:gravity="bottom"
-        android:textColor="@android:color/white"
-        android:textSize="18dp" /> -->
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginBottom="8dp"
+        android:textSize="18dp" />
 
     </LinearLayout>
 
