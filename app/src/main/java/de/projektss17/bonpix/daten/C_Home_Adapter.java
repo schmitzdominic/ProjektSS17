@@ -154,16 +154,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         View itemView;
 
-        if(S.dbHandler.getAllBons(S.db).size()!=0)
-            bons = S.dbHandler.getNumberOfNewestBons(S.db,
-                    S.dbHandler.getAllBons(S.db).size()<3 ?  S.dbHandler.getAllBons(S.db).size() : 3);   // Holt die letzten drei Bons aus der DB
-        else
-            bons = new ArrayList<>();
-
-        budgets = new ArrayList<>();
-
-        //budgets = S.dbHandler.getAllBudgets(S.db); // Holt sich alle Budgets (HINWEIS: wir entnehmen hier erstmal nur das erste!)
-
+        proofAndCreateData();   // Prüft ob Bons & Budget in DB und setzt dementsprechend die Werte
 
         switch (viewType) {
             case 0:
@@ -379,6 +370,27 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
         return rowView;
+
+    }
+
+
+    /**
+     * Schaut in die DB und setzt die Werte entsprechend.
+     * Wenn gegeben: Dann werden die Daten in die Attribute Bons & Budget gesetzt
+     * Wenn nicht gegeben: Dann werden Default bzw. leere Daten gesetzt
+     */
+    public void proofAndCreateData(){
+
+        //Prüfen und Setzten des Bon-Array falls in DB vorhanden
+        if(S.dbHandler.getAllBonsCount(S.db)!=0)
+            bons = S.dbHandler.getNumberOfNewestBons(S.db,
+                    S.dbHandler.getAllBons(S.db).size()<3 ?  S.dbHandler.getAllBons(S.db).size() : 3);   // Holt die letzten drei Bons aus der DB
+        else
+            bons = new ArrayList<>();
+
+
+        //Prüfen und Setzten des Bon-Array falls in DB vorhanden
+        budgets = new ArrayList<>();
 
     }
 }
