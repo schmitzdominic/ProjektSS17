@@ -194,7 +194,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             case 2:
 
-                if(budgets.size()!=0){
+                if(bons.size()!=0){
 
 
                     //ToDo - Hier muss überlegt werden, was ausgewertet wird, um dementsprechend die Daten aus der DB zu ziehen!
@@ -259,7 +259,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 break;
             case 2:
 
-                if (budgets.size()!=0){
+                if (bons.size()!=0){
 
                     //ToDo - Hier muss noch überlegt werden, was genau ausgewertet werden soll!
                     ViewHolderLinechartCard holderLinechartCard = (ViewHolderLinechartCard) holder;
