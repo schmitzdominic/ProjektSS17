@@ -15,7 +15,6 @@ import de.projektss17.bonpix.S;
 
 public class F_Einstellungen extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    final public String KEY_NOTE = "pref_notifications";
     private Preference backup;
 
     @Override
