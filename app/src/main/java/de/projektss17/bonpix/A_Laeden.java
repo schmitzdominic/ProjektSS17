@@ -97,7 +97,6 @@ public class A_Laeden extends AppCompatActivity {
         //XML instaniziieren
         this.recyclerViewLaeden = (RecyclerView) findViewById(R.id.view_laeden);
 
-
         //RecyclerView in C_Laeden_Adapter
         mAdapter = new C_Laeden_Adapter(this, shopList);
         prepareShopData();
@@ -130,7 +129,6 @@ public class A_Laeden extends AppCompatActivity {
                 }
             }
         });
-
     }
     /**
      * Set Data for RecyclerView Shops

@@ -8,9 +8,8 @@
 
         <CheckBoxPreference
             android:key="pref_notifications"
-            android:summary="Enable or disable Notifications"
-            android:title="Enable Notifications"
-            android:defaultValue="true"/>
+            android:summary="@string/einstellungen_notification_text"
+            android:title="@string/einstellungen_notification_title"/>
 
     </PreferenceCategory>
 

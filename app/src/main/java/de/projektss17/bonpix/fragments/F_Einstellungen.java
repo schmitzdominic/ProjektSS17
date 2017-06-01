@@ -17,9 +17,6 @@ import de.projektss17.bonpix.S;
 public class F_Einstellungen extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     final public String KEY_NOTE = "pref_notifications";
-    final public String KEY_MAIL = "pref_email";
-    final public String KEY_NAME = "pref_name";
-    final public String KEY_SOUND = "pref_sound";
     private Preference backup;
 
     @Override
@@ -45,7 +42,7 @@ public class F_Einstellungen extends PreferenceFragment implements SharedPrefere
         backupManager.dataChanged();
 
         if (key.equals(KEY_NOTE)) {
-            Log.e("#Settings Checkbox", " ### " + sharedPreferences.getBoolean(KEY_NOTE, true));
+            S.prefs.savePrefBoolean(KEY_NOTE, sharedPreferences.getBoolean(KEY_NOTE, true));
         }
     }
 

@@ -456,6 +456,7 @@ public class A_Main extends AppCompatActivity {
         final String PREFS_NAME = C_Preferences.APP_SHARED_PREFS;
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
+
         if (settings.getBoolean("first_time", true)) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
@@ -482,7 +483,7 @@ public class A_Main extends AppCompatActivity {
      * Setzt alle Standardwerte
      */
     private void setDefaultSettings(){
-        PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, true);
         PreferenceManager.setDefaultValues(this, R.xml.box_backup_preferences, false);
     }
 
