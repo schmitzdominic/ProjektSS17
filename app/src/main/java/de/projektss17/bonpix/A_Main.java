@@ -131,15 +131,14 @@ public class A_Main extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        int fav = 0, warranty = 0;
+        int warranty = 0;
 
         for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
-            fav += bon.getFavourite() ? 1 : 0;
             warranty += bon.getGuarantee() ? 1 : 0;
         }
 
         S.setMenuCounter(R.id.menu_nav_budget, S.dbHandler.getAllBudgets(S.db).size(), navigationView);
-        S.setMenuCounter(R.id.menu_nav_favoriten, fav, navigationView);
+        S.setMenuCounter(R.id.menu_nav_favoriten, S.dbHandler.getFavouriteCount(S.db), navigationView);
         S.setMenuCounter(R.id.menu_nav_garantie, warranty, navigationView);
         S.setMenuCounter(R.id.menu_nav_laeden, S.dbHandler.getAllLaedenCount(S.db), navigationView);
 
