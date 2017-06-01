@@ -154,11 +154,19 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         View itemView;
 
+        if(S.dbHandler.getAllBons(S.db).size()!=0)
+            bons = S.dbHandler.getNumberOfNewestBons(S.db,
+                    S.dbHandler.getAllBons(S.db).size()<3 ?  S.dbHandler.getAllBons(S.db).size() : 3);   // Holt die letzten drei Bons aus der DB
+        else
+            bons = new ArrayList<>();
+
+        budgets = new ArrayList<>();
+
+        //budgets = S.dbHandler.getAllBudgets(S.db); // Holt sich alle Budgets (HINWEIS: wir entnehmen hier erstmal nur das erste!)
+
+
         switch (viewType) {
             case 0:
-
-                bons = S.dbHandler.getNumberOfNewestBons(S.db,
-                        S.dbHandler.getAllBons(S.db).size()<3 ?  S.dbHandler.getAllBons(S.db).size() : 3);   // Holt die letzten drei Bons aus der DB
 
                 if(bons.size()!=0){
 
@@ -172,13 +180,33 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 }
             case 1:
-                budgets = S.dbHandler.getAllBudgets(S.db); // Holt sich alle Budgets (HINWEIS: wir entnehmen hier erstmal nur das erste!)
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_topbudget_layout, parent, false);
-                return new ViewHolderBudgetCard(itemView);
+
+                if(budgets.size()!=0){
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_topbudget_layout, parent, false);
+                    return new ViewHolderBudgetCard(itemView);
+
+                }else{
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_default_cardview_layout, parent, false);
+                    return new ViewHolderDefault(itemView);
+
+                }
             case 2:
-                //ToDo - Hier muss überlegt werden, was ausgewertet wird, um dementsprechend die Daten aus der DB zu ziehen!
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_linechart_layout, parent, false);
-                return new ViewHolderLinechartCard(itemView);
+
+                if(budgets.size()!=0){
+
+
+                    //ToDo - Hier muss überlegt werden, was ausgewertet wird, um dementsprechend die Daten aus der DB zu ziehen!
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_linechart_layout, parent, false);
+                    return new ViewHolderLinechartCard(itemView);
+
+                }else{
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_default_cardview_layout, parent, false);
+                    return new ViewHolderDefault(itemView);
+
+                }
         }
         return null;
     }
@@ -207,6 +235,9 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 break;
             case 1:
+
+                if(budgets.size()!=0){
+
                 ViewHolderBudgetCard holderBudgetCard = (ViewHolderBudgetCard) holder;
                 holderBudgetCard.budgetCurrently.setText(getRestBudget(budgets.get(0)) + curreny);
                 holderBudgetCard.yearBefore.setText(budgets.get(0).getYearVon());
@@ -218,11 +249,28 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holderBudgetCard.tagBis.setText(budgets.get(0).getZeitraumBis().split("\\.")[0]);
                 holderBudgetCard.progressBar.setProgress((int) (100 - Double.parseDouble(getRestPercentage(budgets.get(0)))));
 
+                }else{
+
+                    final ViewHolderDefault holderBonCard = (ViewHolderDefault) holder;
+                    holderBonCard.titleDefault.setText(R.string.tab_home_budgetcard_title_content);
+                    holderBonCard.contentDefault.setText("Fügen Sie zuerst ein Budget hinzu \n...");
+                }
+
                 break;
             case 2:
-                //ToDo - Hier muss noch überlegt werden, was genau ausgewertet werden soll!
-                ViewHolderLinechartCard holderLinechartCard = (ViewHolderLinechartCard) holder;
-                holderLinechartCard.lineChart.setBackgroundColor(555885);
+
+                if (budgets.size()!=0){
+
+                    //ToDo - Hier muss noch überlegt werden, was genau ausgewertet werden soll!
+                    ViewHolderLinechartCard holderLinechartCard = (ViewHolderLinechartCard) holder;
+                    holderLinechartCard.lineChart.setBackgroundColor(555885);
+
+                }else{
+
+                    final ViewHolderDefault holderBonCard = (ViewHolderDefault) holder;
+                    holderBonCard.titleDefault.setText(R.string.tab_home_boncard_title_content);
+                    holderBonCard.contentDefault.setText("Fügen Sie zuerst weitere Bons hinzu \n...");
+                }
                 break;
         }
 

@@ -63,16 +63,12 @@ public class A_Tab1Home extends Fragment {
             }
         });
 
-        if(S.dbHandler.getAllBons(S.db).size() > 2 && S.dbHandler.getAllBudgets(S.db).size() > 0) {
-
             homeAdapter = new C_Home_Adapter(getActivity());
             layoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(homeAdapter);
             homeAdapter.notifyDataSetChanged();
-
-        }
 
     }
 }
