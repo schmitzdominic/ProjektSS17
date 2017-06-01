@@ -156,8 +156,9 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         switch (viewType) {
             case 0:
-                bons = new ArrayList<>();
-                //bons = S.dbHandler.getNumberOfNewestBons(S.db, 3);   // Holt die letzten drei Bons aus der DB
+
+                bons = S.dbHandler.getNumberOfNewestBons(S.db,
+                        S.dbHandler.getAllBons(S.db).size()<3 ?  S.dbHandler.getAllBons(S.db).size() : 3);   // Holt die letzten drei Bons aus der DB
 
                 if(bons.size()!=0){
 
