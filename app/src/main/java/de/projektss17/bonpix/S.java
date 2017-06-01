@@ -78,6 +78,13 @@ public class S extends Activity {
     }
 
     /**
+     * Ruft die Tutorial Activity auf
+     */
+    public static void showTutorial(AppCompatActivity beforeActivity){
+                S.startActivitiy(beforeActivity, A_Tutorial.class);
+    }
+
+    /**
      * Ruft die Budget Activity auf
      */
     public static void showBudget(AppCompatActivity beforeActivity){

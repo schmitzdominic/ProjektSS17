@@ -2,21 +2,24 @@ package de.projektss17.bonpix;
 
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.os.Message;
 import android.widget.TextView;
 
 
-public class A_Tutorial extends Activity {
+public class A_Tutorial extends AppCompatActivity {
 
     ImageView slide;
     TextView msg;
+    Button btn;
 
     int i=0;
-    int imgid[]={R.drawable.friends01,R.drawable.friends02,R.drawable.friends03,R.drawable.friends04,R.drawable.friends05};
+    int imgid[]={R.drawable.box_budget_circle_shape};
 
     RefreshHandler refreshHandler=new RefreshHandler();
 
@@ -53,6 +56,15 @@ public class A_Tutorial extends Activity {
         setContentView(R.layout.box_tutorial_content);
         slide = (ImageView) findViewById(R.id.slideshow);
         msg = (TextView) findViewById(R.id.message);
+
+        btn =(Button) findViewById(R.id.tutorial_skip_button);
+
+        this.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                S.startActivitiy(A_Tutorial.this, A_Favoriten.class);
+            }
+        });
 
     }
 
