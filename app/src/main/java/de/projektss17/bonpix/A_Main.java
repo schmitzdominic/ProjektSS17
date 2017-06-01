@@ -130,6 +130,7 @@ public class A_Main extends AppCompatActivity {
      * Initialisiert alle OnClickListener
      */
     private void initOnClickListener(){
+
         this.manuellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

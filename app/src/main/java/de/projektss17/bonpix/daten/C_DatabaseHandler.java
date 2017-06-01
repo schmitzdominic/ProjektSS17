@@ -14,9 +14,15 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import de.projektss17.bonpix.S;
 
@@ -28,7 +34,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "bonpix";
     private static final int DATABASE_VERSION = 1;
-    Context context;
+    private Context context;
+    private C_Laden barDataLaden;
 
 
     public C_DatabaseHandler(Context context) {
@@ -43,6 +50,14 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
+
+    public C_Laden getBarDataLaden() {
+        return barDataLaden;
+    }
+
+    public void setBarDataLaden(C_Laden barDataLaden) {
+        this.barDataLaden = barDataLaden;
     }
 
     public void backupDataChanged(){
@@ -1219,6 +1234,50 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public SortedSet<Hashtable.Entry<Integer, Float>> getExpenditureAllLaeden(SQLiteDatabase db){
+        return getExpenditureAllLaeden(db, null, null);
+    }
+
+    public SortedSet<Hashtable.Entry<Integer, Float>> getExpenditureAllLaeden(SQLiteDatabase db, String date1, String date2){
+
+        TreeMap<Integer, Float> visitList = new TreeMap<>();
+
+        for(C_Laden laden : this.getAllLaeden(db)){
+            visitList.put(laden.getId(), (float)0.0);
+        }
+
+        String query = date1 != null && date2 != null ?
+                "SELECT gesamtpreis, ladenname FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT gesamtpreis, ladenname FROM bon";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                float betrag = visitList.get(cursor.getInt(1));
+                betrag += Float.parseFloat(cursor.getString(0).replace(",","."));
+                visitList.put(cursor.getInt(1), betrag);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return entriesSortedByValues(visitList);
+
+    }
+
+    static <K,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
+        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
+                new Comparator<Map.Entry<K,V>>() {
+                    @Override public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+                        int res = e2.getValue().compareTo(e1.getValue());
+                        return res != 0 ? res : 1;
+                    }
+                }
+        );
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
+    }
+
     /**
      * Gibt alle Daten aus der DB im Log aus.
      */
@@ -1302,15 +1361,47 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public List<BarEntry> getBarDataLaedenExpenditure(SQLiteDatabase db, int number){
+        return this.getBarDataLaedenExpenditure(db, null, null, number);
+    }
+
     /**
-     * Get the Data for BarCharts
-     * @param time
-     * @return
+     * Gibt die Bar Daten für alle Laeden zurück
+     * @return Liste
      */
-    public List<BarEntry> getBarData(int time){
+    public List<BarEntry> getBarDataLaedenExpenditure(SQLiteDatabase db, String date1, String date2, int number){
         //TODO: Logic part for preparing Bar Data
+
         List<BarEntry> dataList = new ArrayList<>();
-        switch(time){
+        int count = 0;
+
+        if(date1 != null && date2 != null){
+
+            for(Hashtable.Entry<Integer, Float> entry : this.getExpenditureAllLaeden(db, date1, date2)){
+                if(count == number){
+                    dataList.add(new BarEntry(count+1, entry.getValue()));
+                    this.setBarDataLaden(this.getLaden(db, entry.getKey()));
+                    break;
+                }
+                count++;
+            }
+
+        } else {
+
+            for(Hashtable.Entry<Integer, Float> entry : this.getExpenditureAllLaeden(db)){
+
+                if(count == number){
+                    dataList.add(new BarEntry(count+1, entry.getValue()));
+                    this.setBarDataLaden(this.getLaden(db, entry.getKey()));
+                    break;
+                }
+                count++;
+            }
+        }
+
+        return dataList;
+
+        /*switch(time){
             case 1:
                 dataList.add(new BarEntry(0f, 30f));
                 dataList.add(new BarEntry(1f, 80f));
@@ -1327,7 +1418,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 dataList.add(new BarEntry(5f, 70f));
                 dataList.add(new BarEntry(6f, 60f));
                 return dataList;
-        }
+        }*/
     }
 
     /**

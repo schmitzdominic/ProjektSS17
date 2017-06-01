@@ -1,7 +1,7 @@
 package de.projektss17.bonpix.daten;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +11,11 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -35,12 +32,11 @@ import de.projektss17.bonpix.S;
 public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int count = 6;              // Gibt an wie viele Cards die RecyclerView beinhalten soll (derzeit 6 feste CARDS!)
-    private ArrayList<C_Bon> bons;      // Sammlung aller aus der DB ausgelesenen Bons
-    private ArrayList<C_Laden> laeden;  // Sammlung aller auser DB ausgelesenen Läden
     public String countBons;
     private String countLaeden;
     private String countArtikel;
     private String gesBetrag;
+    private String date[];
     private ViewHolderGeneral holderGeneral;
     private ViewHolderBar holderBar;
 
@@ -196,12 +192,60 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     holderBar = (ViewHolderBar)holder;
                 }
 
-                /*ViewHolderBar holderBar = (ViewHolderBar)holder;
-                BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
-                BarData dataBar = new BarData(dataSetBar);
-                dataBar.setBarWidth(0.9f); // set custom bar width
+                if(S.dbHandler.getAllBonsCount(S.db) == 0){
+                    break;
+                }
+
+                List<IBarDataSet> bars = new ArrayList<>();
+
+                if(date != null){
+
+                    for(int i = 0; i < 5; i++){
+                        List<BarEntry> list = S.dbHandler.getBarDataLaedenExpenditure(S.db, date[0],date[1], i);
+                        if(S.dbHandler.getBarDataLaden() != null && list.get(0).getY() != 0.0){
+                            BarDataSet set = (new BarDataSet(list, S.dbHandler.getBarDataLaden().getName()));
+
+                            switch(i){
+                                case 0:
+                                    set.setColor(ContextCompat.getColor(holderBar.itemView.getContext(), R.color.colorPrimaryDark));
+                                    break;
+                                case 1:
+                                    set.setColor(ContextCompat.getColor(holderBar.itemView.getContext(), R.color.colorAccent));
+                                    break;
+                                case 2:
+                                    set.setColor(ContextCompat.getColor(holderBar.itemView.getContext(), R.color.colorPrimary));
+                                    break;
+                                case 3:
+                                    set.setColor(ContextCompat.getColor(holderBar.itemView.getContext(), R.color.color4Bar));
+                                    break;
+                                case 4:
+                                    set.setColor(ContextCompat.getColor(holderBar.itemView.getContext(), R.color.color5Bar));
+                                    break;
+
+                            }
+
+                            bars.add(set);
+                        }
+                    }
+                }
+
+                BarData dataBar = new BarData(bars);
+                Description desc = new Description();
+                desc.setText("");
+                dataBar.setBarWidth(0.7f); // set custom bar width
                 holderBar.barChart.setData(dataBar);
+                holderBar.barChart.setDescription(desc);
+                holderBar.barChart.getXAxis().setEnabled(false);
+                holderBar.barChart.getAxisLeft().setDrawAxisLine(false);
+                holderBar.barChart.getAxisRight().setEnabled(false);
+                holderBar.barChart.setTouchEnabled(false);
+                holderBar.barChart.setDragEnabled(false);
+                holderBar.barChart.setScaleEnabled(false);
+                holderBar.barChart.setPinchZoom(false);
+                holderBar.barChart.setClickable(false);
+                holderBar.barChart.setFocusableInTouchMode(false);
                 holderBar.barChart.setFitBars(true); // make the x-axis fit exactly all bars
+                holderBar.barChart.animateY(1000);
                 holderBar.barChart.invalidate(); // refresh*/
                 break;
             case 2:
@@ -281,12 +325,14 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private void fillData(){
         this.fillGeneralData();
+        this.date = new String[]{null, null};
         this.countBons = "" + S.dbHandler.getAllBonsCount(S.db);
         this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db);
     }
 
     private void fillData(String date1, String date2){
         this.fillGeneralData();
+        this.date = new String[]{date1, date2};
         this.countBons = "" + S.dbHandler.getAllBonsCount(S.db, date1, date2);
         this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db, date1, date2);
     }

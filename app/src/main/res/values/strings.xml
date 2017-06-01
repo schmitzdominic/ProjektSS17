@@ -147,7 +147,7 @@
 
     <string name="title_a_statistik_pie_chart">Kuchendiagramm</string>
     <string name="title_a_statistik_line_chart">Liniendiagramm</string>
-    <string name="title_a_statistik_bar_chart">Bardiagramm</string>
+    <string name="title_a_statistik_bar_chart">Ausgaben pro Laden</string>
     <string name="title_a_statistik_combined_chart">Allgemein</string>
 
     <string name="statistik_card_general_title">Allgemeiner Überblick aller Bons</string>
