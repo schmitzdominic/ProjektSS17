@@ -288,6 +288,7 @@ public class S extends Activity {
             case "REWE": return BitmapFactory.decodeResource(res,  R.mipmap.ic_rewelogo);
             case "Saturn": return BitmapFactory.decodeResource(res,  R.mipmap.ic_saturnlogo);
             case "Shell": return BitmapFactory.decodeResource(res,  R.mipmap.ic_shelllogo);
+            case "Lidl": return BitmapFactory.decodeResource(res,  R.mipmap.ic_lidllogo);
             default: return BitmapFactory.decodeResource(res,  R.mipmap.bonpix);
         }
 
