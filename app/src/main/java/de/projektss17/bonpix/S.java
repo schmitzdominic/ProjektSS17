@@ -1,7 +1,6 @@
 package de.projektss17.bonpix;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
@@ -16,8 +15,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -364,7 +361,7 @@ public class S extends Activity {
         if (S.prefs.getPrefBoolean("pref_notifications")) {
             NotificationCompat.Builder builder =
                     (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                            .setSmallIcon(R.mipmap.ic_shopping_cart_black_24dp) //ToDo hier muss später unser Icon implementiert werden
+                            .setSmallIcon(R.mipmap.bonpix)
                             .setContentTitle(title)
                             .setContentText(txt)
                             .setAutoCancel(closeAfterClick);

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.util.Log;
 
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
@@ -23,9 +22,7 @@ public class F_Einstellungen extends PreferenceFragment implements SharedPrefere
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.box_einstellungen_preferences);
-
         this.backup = (Preference) findPreference("pref_backup");
-
         this.backup.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -33,17 +30,11 @@ public class F_Einstellungen extends PreferenceFragment implements SharedPrefere
                 return true;
             }
         });
-
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
         BackupManager backupManager = new BackupManager(getActivity());
         backupManager.dataChanged();
-
-        if (key.equals(KEY_NOTE)) {
-            S.prefs.savePrefBoolean(KEY_NOTE, sharedPreferences.getBoolean(KEY_NOTE, true));
-        }
     }
 
     @Override

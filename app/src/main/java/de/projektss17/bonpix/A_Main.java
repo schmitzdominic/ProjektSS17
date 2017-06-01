@@ -4,7 +4,6 @@ import android.Manifest;
 import android.animation.Animator;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -204,7 +203,7 @@ public class A_Main extends AppCompatActivity {
         S.dbArtikel = S.dbArtikelHandler.getWritableDatabase();
         S.dbHandler.checkTables(S.db);
         S.dbHandler.showLogAllDBEntries();
-        S.prefs = new C_Preferences(this);
+        S.prefs = new C_Preferences(A_Main.this);
     }
 
     /**
@@ -453,11 +452,7 @@ public class A_Main extends AppCompatActivity {
      * Wird nur beim ersten Start der App ausgeführt
      */
     private void onFirstStart(){
-        final String PREFS_NAME = C_Preferences.APP_SHARED_PREFS;
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-
-
-        if (settings.getBoolean("first_time", true)) {
+        if (S.prefs.getPrefBoolean("first_time")) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
             //this.createDBDummyData(20);
