@@ -16,6 +16,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -336,6 +337,86 @@ public class S extends Activity {
             return 0;
         }
     }
+
+    public static String[] getWeek(){
+
+        String date[] = new String[2];
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+
+        date[0] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
+                + new SimpleDateFormat("MM").format(cal.getTime()) + "."
+                + new SimpleDateFormat("yyyy").format(cal.getTime());
+
+        cal.add(Calendar.WEEK_OF_YEAR, 1);
+        cal.add(Calendar.DAY_OF_MONTH, -1);
+
+        date[1] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
+                + new SimpleDateFormat("MM").format(cal.getTime()) + "."
+                + new SimpleDateFormat("yyyy").format(cal.getTime());
+
+        return date;
+    }
+
+    public static String[] getMonth(){
+
+        String date[] = new String[2];
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+
+        date[0] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
+                + new SimpleDateFormat("MM").format(cal.getTime()) + "."
+                + new SimpleDateFormat("yyyy").format(cal.getTime());
+
+        String lastDay = getNumberWithZero(Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        date[1] = lastDay + "."
+                + new SimpleDateFormat("MM").format(cal.getTime()) + "."
+                + new SimpleDateFormat("yyyy").format(cal.getTime());
+
+        return date;
+    }
+
+    public static String[] getQuartal(){
+
+        String date[] = new String[2];
+        Calendar cal = Calendar.getInstance();
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+
+        switch((month >= Calendar.JANUARY && month <= Calendar.MARCH)     ? "Q1" :
+                (month >= Calendar.APRIL && month <= Calendar.JUNE)        ? "Q2" :
+                        (month >= Calendar.JULY && month <= Calendar.SEPTEMBER)    ? "Q3" :
+                                "Q4"){
+            case "Q1":
+                date[0] = "01.01." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                date[1] = "31.03." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                break;
+            case "Q2":
+                date[0] = "01.04." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                date[1] = "30.06." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                break;
+            case "Q3":
+                date[0] = "01.07." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                date[1] = "30.09." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                break;
+            case "Q4":
+                date[0] = "01.10." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                date[1] = "31.12." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                break;
+        }
+
+        return date;
+    }
+
+    public static String getNumberWithZero(int zahl) {
+        if (zahl > 0 && zahl < 10) {
+            return "0" + zahl;
+        } else {
+            return "" + zahl;
+        }
+    }
+
+
 
     /**
      * Notification Builder - Opens a clickable notification!

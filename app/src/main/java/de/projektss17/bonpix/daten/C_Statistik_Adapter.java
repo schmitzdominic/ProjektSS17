@@ -1,6 +1,7 @@
 package de.projektss17.bonpix.daten;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +37,12 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private int count = 6;              // Gibt an wie viele Cards die RecyclerView beinhalten soll (derzeit 6 feste CARDS!)
     private ArrayList<C_Bon> bons;      // Sammlung aller aus der DB ausgelesenen Bons
     private ArrayList<C_Laden> laeden;  // Sammlung aller auser DB ausgelesenen Läden
-    public String filter = "ALLE";      // Filter-Inforamation für die Methode createFilteredData (WICHTIG: siehe unten im Code)
-
+    public String countBons;
+    private String countLaeden;
+    private String countArtikel;
+    private String gesBetrag;
+    private ViewHolderGeneral holderGeneral;
+    private ViewHolderBar holderBar;
 
     // LAYOUT TopFacts
     public class ViewHolderTopFacts extends RecyclerView.ViewHolder {
@@ -133,6 +138,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View itemView;
 
         switch(viewType){
@@ -158,7 +164,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return null;
     }
 
-
     @Override
     public int getItemViewType(int position) {
         return position;
@@ -170,36 +175,37 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         double ausgabenGesamt=0.0;  //Gesamtausgaben des Array bons (Könnte theoretisch auch bei den oberen Attributen stehen)
         int anzahlArtikel = 0;      //Anzahl aller Artikel des Array bons (Könnte theoretisch auch bei den oberen Attributen stehen)
-        createFilteredData();       //WICHTIG: Befüllt die ArrayLists (Läden & Bons) entsprechend der Filterung zur späteren Verarbeitung
+        //createFilteredData();       //WICHTIG: Befüllt die ArrayLists (Läden & Bons) entsprechend der Filterung zur späteren Verarbeitung
 
         switch(getItemViewType(position)){
             case 0:
-                ViewHolderGeneral holderGeneral = (ViewHolderGeneral)holder;
-                holderGeneral.anzahlScans.setText(Integer.toString(bons.size()));
 
-                for(int i = 0; i < bons.size(); i++)
-                    for(int j = 0; j < bons.get(i).getArticles().size();j++)
-                        ausgabenGesamt+=bons.get(i).getArticles().get(j).getPrice();
+                if(holderGeneral == null){
+                    holderGeneral = (ViewHolderGeneral)holder;
+                }
 
-                holderGeneral.ausgabenGesamt.setText(formatDouble(ausgabenGesamt)+" €");
+                holderGeneral.anzahlScans.setText(countBons);
+                holderGeneral.anzahlLaeden.setText(countLaeden);
+                holderGeneral.anzahlArtikel.setText(countArtikel);
+                holderGeneral.ausgabenGesamt.setText(gesBetrag + holderGeneral.itemView.getResources().getString(R.string.waehrung));
 
-                for(int i = 0; i < bons.size();i++)
-                    anzahlArtikel+=bons.get(i).getArticles().size();
-
-                holderGeneral.anzahlArtikel.setText(Integer.toString(anzahlArtikel));
-                holderGeneral.anzahlLaeden.setText(Integer.toString(laeden.size()));
                 break;
             case 1:
-                ViewHolderBar holderBar = (ViewHolderBar)holder;
+
+                if(holderBar == null){
+                    holderBar = (ViewHolderBar)holder;
+                }
+
+                /*ViewHolderBar holderBar = (ViewHolderBar)holder;
                 BarDataSet dataSetBar = new BarDataSet(S.dbHandler.getBarData(1), "test");
                 BarData dataBar = new BarData(dataSetBar);
                 dataBar.setBarWidth(0.9f); // set custom bar width
                 holderBar.barChart.setData(dataBar);
                 holderBar.barChart.setFitBars(true); // make the x-axis fit exactly all bars
-                holderBar.barChart.invalidate(); // refresh
+                holderBar.barChart.invalidate(); // refresh*/
                 break;
             case 2:
-                ViewHolderTopProducts holderTopProducts = (ViewHolderTopProducts)holder;
+                /*ViewHolderTopProducts holderTopProducts = (ViewHolderTopProducts)holder;
                 holderTopProducts.produkt1.setText("Videospiele");  // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
                 holderTopProducts.produkt2.setText("Getränke");     // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
                 holderTopProducts.produkt3.setText("Steaks");       // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
@@ -208,23 +214,24 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderTopProducts.progress3.setProgress(20);        // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
                 holderTopProducts.percentage1.setText("45 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
                 holderTopProducts.percentage2.setText("35 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopProducts.percentage3.setText("20 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopProducts.percentage3.setText("20 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion*/
                 break;
             case 3:
-                ViewHolderPie holderPie = (ViewHolderPie)holder;
+                /*ViewHolderPie holderPie = (ViewHolderPie)holder;
                 PieDataSet set = new PieDataSet(S.dbHandler.getPieData(1), "Election Results");
                 PieData pieData = new PieData(set);
                 holderPie.pieChart.setData(pieData);
-                holderPie.pieChart.invalidate();
+                holderPie.pieChart.invalidate();*/
                 break;
             case 4:
-                ViewHolderTopFacts holderTopFacts = (ViewHolderTopFacts) holder;
+                /*ViewHolderTopFacts holderTopFacts = (ViewHolderTopFacts) holder;
                 holderTopFacts.fact1.setText("LIDL");                                   // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
                 holderTopFacts.fact2.setText("Max-Mustermann-Str. 4\n86161 Augsburg");  // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopFacts.fact3.setText("2585 €");                                 // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+                holderTopFacts.fact3.setText("2585 €"); */                                // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
                 break;
             case 5:
-                ViewHolderLine holderLine = (ViewHolderLine)holder;
+
+                /*ViewHolderLine holderLine = (ViewHolderLine)holder;
                 LineDataSet setComp1 = new LineDataSet(S.dbHandler.getLineData(1).get("lineOne"), "Company 1");
                 setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
                 LineDataSet setComp2 = new LineDataSet(S.dbHandler.getLineData(1).get("lineTwo"), "Company 2");
@@ -234,7 +241,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 dataSets.add(setComp2);
                 LineData data = new LineData(dataSets);
                 holderLine.lineChart.setData(data);
-                holderLine.lineChart.invalidate();
+                holderLine.lineChart.invalidate();*/
                 break;
         }
     }
@@ -252,29 +259,41 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
      *
      * Derzeit werden die ArrayLists mit DummyDaten befüllt - Bitte darauf achten!
      */
-    public void createFilteredData(){
+    public void createFilteredData(String filter){
 
-        laeden = S.dbHandler.getAllLaeden(S.db);
-
-       if(filter=="ALLE"){
-           //bons = S.dbHandler.getAllBons(S.db);   derzeit dient die createBonData zum befüllen
-           bons = createBonData(190);
+       switch(filter){
+           case "ALLE":
+               fillData();
+               break;
+           case "WOCHE":
+               fillData(S.getWeek()[0], S.getWeek()[1]);
+               break;
+           case "MONAT":
+               fillData(S.getMonth()[0], S.getMonth()[1]);
+               break;
+           case "QUARTAL":
+               fillData(S.getQuartal()[0], S.getQuartal()[1]);
+               break;
+           default:
+               break;
        }
+    }
 
-       if(filter =="TAG"){
-           //bons = S.dbHandler.getAllBons(S.db);   derzeit dient die createBonData zum befüllen
-           bons = createBonData(7);
-       }
+    private void fillData(){
+        this.fillGeneralData();
+        this.countBons = "" + S.dbHandler.getAllBonsCount(S.db);
+        this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db);
+    }
 
-        if(filter =="MONAT"){
-            //bons = S.dbHandler.getAllBons(S.db);   derzeit dient die createBonData zum befüllen
-            bons = createBonData(36);
-        }
+    private void fillData(String date1, String date2){
+        this.fillGeneralData();
+        this.countBons = "" + S.dbHandler.getAllBonsCount(S.db, date1, date2);
+        this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db, date1, date2);
+    }
 
-        if(filter =="JAHR"){
-            //bons = S.dbHandler.getAllBons(S.db);   derzeit dient die createBonData zum befüllen
-            bons = createBonData(105);
-        }
+    private void fillGeneralData(){
+        this.countLaeden = "" + S.dbHandler.getAllLaedenCount(S.db);
+        this.countArtikel = "" + S.dbHandler.getAllArticleCount(S.db);
     }
 
 
@@ -313,4 +332,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         return articles;
     }
+
+
 }

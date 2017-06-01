@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,23 +27,33 @@ public class A_Tab2Statistik extends Fragment{
     private C_Statistik_Adapter mAdapter;
     public FloatingActionButton fabPlus;
     private TabLayout tabLayout;
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
-        setHasOptionsMenu(false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
-        mAdapter = new C_Statistik_Adapter();
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+        this.rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
+        this.setHasOptionsMenu(false);
 
-        fabPlus = ((A_Main) getActivity()).getFloatingActionButtonPlus();
+        return rootView;
+    }
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        this.recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
+        this.fabPlus = ((A_Main) getActivity()).getFloatingActionButtonPlus();
+        this.tabLayout = (TabLayout)rootView.findViewById(R.id.statistik_tabs);
+
+        this.mAdapter = new C_Statistik_Adapter();
+        this.layoutManager = new LinearLayoutManager(getActivity());
+        this.recyclerView.setLayoutManager(layoutManager);
+        this.recyclerView.setItemAnimator(new DefaultItemAnimator());
+        this.recyclerView.setAdapter(mAdapter);
+        this.getTabData(this.tabLayout.getSelectedTabPosition());
+
+        this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx,int dy){
                 super.onScrolled(recyclerView, dx, dy);
@@ -67,30 +78,11 @@ public class A_Tab2Statistik extends Fragment{
         });
 
         // Click eines Tabs bewirkt eine Aktion (in diesem Fall sollen die Charts gefiltert werden)
-        tabLayout = (TabLayout)rootView.findViewById(R.id.statistik_tabs);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        this.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
-                    case 0:
-                        mAdapter.filter="ALLE";     // keine Filter, d.h. alles wird angezeigt
-                        mAdapter.notifyDataSetChanged();
-                    case 1:
-                        mAdapter.filter="TAG";      // Filterung auf den Tag, d.h. Alles des gegenwärtigen Tages wird angezeigt
-                        mAdapter.notifyDataSetChanged();
-                        break;
-                    case 2:
-                        mAdapter.filter="MONAT";    // Filterung auf den Monat, d.h. Alles des gegenwärtigen Monats wird angezeigt
-                        mAdapter.notifyDataSetChanged();
-                        break;
-                    case 3:
-                        mAdapter.filter="JAHR";     // Filterung auf den Jahr, d.h. Alles des gegenwärtigen Jahr wird angezeigt
-                        mAdapter.notifyDataSetChanged();
-                        break;
-                }
+                getTabData(tab.getPosition());
             }
-
-
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
@@ -98,7 +90,26 @@ public class A_Tab2Statistik extends Fragment{
             @Override
             public void onTabReselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
         });
-        return rootView;
     }
 
+    public void getTabData(int position){
+        switch (position){
+            case 0:
+                mAdapter.createFilteredData("ALLE");
+                mAdapter.notifyDataSetChanged();
+                break;
+            case 1:
+                mAdapter.createFilteredData("WOCHE");
+                mAdapter.notifyDataSetChanged();
+                break;
+            case 2:
+                mAdapter.createFilteredData("MONAT");
+                mAdapter.notifyDataSetChanged();
+                break;
+            case 3:
+                mAdapter.createFilteredData("QUARTAL");
+                mAdapter.notifyDataSetChanged();
+                break;
+        }
+    }
 }

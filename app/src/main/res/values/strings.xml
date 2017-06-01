@@ -141,9 +141,9 @@
 
     <!-- A_Tab2Statistik -->
     <string name="title_a_statistik_tab_all">Alle</string>
-    <string name="title_a_statistik_tab_days">Tag</string>
+    <string name="title_a_statistik_tab_days">Woche</string>
     <string name="title_a_statistik_tab_month">Monat</string>
-    <string name="title_a_statistik_tab_years">Jahr</string>
+    <string name="title_a_statistik_tab_years">Quartal</string>
 
     <string name="title_a_statistik_pie_chart">Kuchendiagramm</string>
     <string name="title_a_statistik_line_chart">Liniendiagramm</string>

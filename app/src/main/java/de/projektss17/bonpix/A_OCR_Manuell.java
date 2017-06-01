@@ -348,8 +348,11 @@ public class A_OCR_Manuell extends AppCompatActivity {
     @Override
     protected Dialog onCreateDialog(int id) {
         if (id == 999) {
+
+            this.calendar = Calendar.getInstance();
+
             return new DatePickerDialog(this,
-                    this.myDateListener, Integer.parseInt(this.year), Integer.parseInt(this.month), Integer.parseInt(this.day));
+                    this.myDateListener, Integer.parseInt(this.year), calendar.get(Calendar.MONTH), Integer.parseInt(this.day));
         }
         return null;
     }
@@ -362,10 +365,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     showDate("" + getNumberWithZero(arg1),
                             "" + getNumberWithZero(arg2 + 1),
                             "" + getNumberWithZero(arg3));
-                    day = "" + getNumberWithZero(arg3);
-                    month = "" + getNumberWithZero(arg2 + 1);
-                    mYear = arg1;
-                    year = getNumberWithZero(arg1);
                 }
             };
 
@@ -377,7 +376,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     public void createCalendar(){
         this.calendar = Calendar.getInstance();
         this.year = "" + this.calendar.get(Calendar.YEAR);
-        this.month = this.getNumberWithZero(calendar.get(Calendar.MONTH) +1);
+        this.month = this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
         this.day = this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
         this.showDate(year, month, day);
     }
