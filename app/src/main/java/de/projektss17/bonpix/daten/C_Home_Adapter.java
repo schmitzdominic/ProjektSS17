@@ -39,9 +39,23 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.percentage = context.getString(R.string.percentage);
     }
 
+
+    // DEFAULT LAYOUT
+    public class ViewHolderDefault extends RecyclerView.ViewHolder {
+
+        TextView titleDefault, contentDefault;
+
+        public ViewHolderDefault(View view) {
+            super(view);
+
+            titleDefault = (TextView) view.findViewById(R.id.default_cardview_title);
+            contentDefault = (TextView)view.findViewById(R.id.default_cardview_content);
+
+        }
+    }
+
+
     // LAYOUT BonCard
-    // (Hinweis: Drei feste Inhalte! Dynamisch würde kein Sinn machen,
-    //  da hierfür die Tab Bons bereit steht und die implementierung möglicherweise nicht funktioniert! )
     public class ViewHolderBonCard extends RecyclerView.ViewHolder {
 
         LinearLayout linearLayout;
@@ -142,9 +156,20 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         switch (viewType) {
             case 0:
-                bons = S.dbHandler.getNumberOfNewestBons(S.db, 3);   // Holt die letzten drei Bons aus der DB
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_boncard_layout, parent, false);
-                return new ViewHolderBonCard(itemView);
+                bons = new ArrayList<>();
+                //bons = S.dbHandler.getNumberOfNewestBons(S.db, 3);   // Holt die letzten drei Bons aus der DB
+
+                if(bons.size()!=0){
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_boncard_layout, parent, false);
+                    return new ViewHolderBonCard(itemView);
+
+                }else{
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_default_cardview_layout, parent, false);
+                    return new ViewHolderDefault(itemView);
+
+                }
             case 1:
                 budgets = S.dbHandler.getAllBudgets(S.db); // Holt sich alle Budgets (HINWEIS: wir entnehmen hier erstmal nur das erste!)
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_topbudget_layout, parent, false);
@@ -165,10 +190,19 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         switch (getItemViewType(position)) {
             case 0:
 
-                final ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
+                if(bons.size()!=0){
 
-                for(int i = 0; i < bons.size(); i++)
-                    holderBonCard.linearLayout.addView(inflateBonsRow(bons.get(i)),holderBonCard.linearLayout.getChildCount());
+                    final ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
+
+                    for(int i = 0; i < bons.size(); i++)
+                        holderBonCard.linearLayout.addView(inflateBonsRow(bons.get(i)),holderBonCard.linearLayout.getChildCount());
+
+                }else{
+
+                    final ViewHolderDefault holderBonCard = (ViewHolderDefault) holder;
+                    holderBonCard.titleDefault.setText(R.string.tab_home_boncard_title_content);
+                    holderBonCard.contentDefault.setText("Fügen Sie zuerst weitere Bons hinzu \n...");
+                }
 
                 break;
             case 1:
@@ -293,6 +327,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 context.startActivity(intent);
             }
         });
+
 
         return rowView;
 
