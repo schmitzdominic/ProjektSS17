@@ -184,7 +184,7 @@ public class A_Laeden extends AppCompatActivity {
         query = query.toLowerCase();
         final List<C_Laden> filteredLadenList = new ArrayList<>();
         for (C_Laden shop : shops) {
-            if(shop.getName().toLowerCase().equals(query)) {
+            if(shop.getName().toLowerCase().contains(query)) {
                 filteredLadenList.add(shop);
             }
         }
