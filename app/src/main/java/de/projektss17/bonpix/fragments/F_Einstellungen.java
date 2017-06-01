@@ -42,8 +42,10 @@ public class F_Einstellungen extends PreferenceFragment implements SharedPrefere
         backupManager.dataChanged();
 
         if (key.equals(KEY_NOTE)) {
+            Log.e("#Settings Checkbox", " ### " + sharedPreferences.getBoolean(KEY_NOTE, true));
             S.prefs.savePrefBoolean(KEY_NOTE, sharedPreferences.getBoolean(KEY_NOTE, true));
         }
+
     }
 
     @Override
