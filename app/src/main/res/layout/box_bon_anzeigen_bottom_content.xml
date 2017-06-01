@@ -20,7 +20,7 @@
             android:id="@+id/bon_anzeigen_artikel_preis_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="112dp"
+            android:layout_marginEnd="106dp"
             android:text="Preis"
             android:textStyle="bold"
             android:layout_above="@+id/bon_anzeigen_artikel_preis"
