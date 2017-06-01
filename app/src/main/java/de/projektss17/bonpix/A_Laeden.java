@@ -89,7 +89,6 @@ public class A_Laeden extends AppCompatActivity {
         //Im Folgenden wird die RecyclerView angelegt und die dazugehörigen Einstellungen verwaltet
         //XML instaniziieren
         this.recyclerViewLaeden = (RecyclerView) findViewById(R.id.view_laeden);
-
         //RecyclerView in C_Laeden_Adapter
         mAdapter = new C_Laeden_Adapter(this, shopList);
         prepareShopData();
