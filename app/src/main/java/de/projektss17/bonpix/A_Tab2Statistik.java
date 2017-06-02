@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class A_Tab2Statistik extends Fragment{
 
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
         this.fabPlus = ((A_Main) getActivity()).getFloatingActionButtonPlus();
-        this.tabLayout = (TabLayout)rootView.findViewById(R.id.statistik_tabs);
+        this.tabLayout = ((A_Main) getActivity()).getTimeTabLayout();
 
         this.mAdapter = new C_Statistik_Adapter();
         this.layoutManager = new LinearLayoutManager(getActivity());

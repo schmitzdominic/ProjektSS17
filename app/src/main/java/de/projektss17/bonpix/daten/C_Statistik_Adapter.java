@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -220,8 +219,11 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 Description desc = new Description();
                 desc.setText("");
                 dataBar.setBarWidth(0.7f); // set custom bar width
+                dataBar.setValueTextColor(ContextCompat.getColor(context, R.color.cardview_light_background));
+                dataBar.setValueTextSize(8f);
                 holderBar.barChart.setData(dataBar);
                 holderBar.barChart.setDescription(desc);
+                holderBar.barChart.setDrawValueAboveBar(false);
                 holderBar.barChart.getXAxis().setEnabled(false);
                 holderBar.barChart.getAxisLeft().setDrawAxisLine(false);
                 holderBar.barChart.getAxisRight().setEnabled(false);
@@ -262,13 +264,13 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     procent = Math.round(procent * 100) / 100.00;
                     DecimalFormat df = new DecimalFormat("#0.00");
 
-
                     switch(count){
                         case 0:
                             holderTopProducts.produkt1.setText(entry.getKey().length() > MAX_LENGTH_ARTICLE ? entry.getKey().substring(0, MAX_LENGTH_ARTICLE-2) + ".." : entry.getKey());
                             anim = new ProgressBarAnimation(holderTopProducts.progress1, 0, progress);
                             anim.setDuration(ANIMATION_TIME);
                             holderTopProducts.progress1.startAnimation(anim);
+                            if(holderTopProducts.progress1.getProgress() == 0){holderTopProducts.progress1.setProgress(progress);}
                             holderTopProducts.percentage1.setText(df.format(procent) + " " + holderTopProducts.itemView.getResources().getString(R.string.percentage));
                             break;
                         case 1:
@@ -276,6 +278,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             anim = new ProgressBarAnimation(holderTopProducts.progress2, 0, progress);
                             anim.setDuration(ANIMATION_TIME);
                             holderTopProducts.progress2.startAnimation(anim);
+                            if(holderTopProducts.progress2.getProgress() == 0){holderTopProducts.progress2.setProgress(progress);}
                             holderTopProducts.percentage2.setText(df.format(procent) + " " + holderTopProducts.itemView.getResources().getString(R.string.percentage));
                             break;
                         case 2:
@@ -283,6 +286,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             anim = new ProgressBarAnimation(holderTopProducts.progress3, 0, progress);
                             anim.setDuration(ANIMATION_TIME);
                             holderTopProducts.progress3.startAnimation(anim);
+                            if(holderTopProducts.progress3.getProgress() == 0){holderTopProducts.progress3.setProgress(progress);}
                             holderTopProducts.percentage3.setText(df.format(procent) + " " + holderTopProducts.itemView.getResources().getString(R.string.percentage));
                             break;
                     }
@@ -482,7 +486,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         int MAXVALUE_PIE_CHART = 5;
         int PIE_CHART_COUNTER = 0;
-        int PIE_CHART_USED = 0;
 
         this.bonsCountPerLaden = S.dbHandler.getBonsCountPerLaden(S.db, date[0], date[1]);
 
@@ -498,7 +501,16 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             for(Hashtable.Entry<String, Integer> entry : bonsCountPerLaden){
                 if(entry.getValue() != 0){
-                    PieEntry pieEntry = new PieEntry(entry.getValue(), entry.getKey() + " " + entry.getValue() + "  ");
+
+                    PieEntry pieEntry;
+
+                    if(PIE_CHART_COUNTER + 1 == MAXVALUE_PIE_CHART){
+                        pieEntry = new PieEntry(sizeLaedenBon, context.getResources().getString(R.string.statistik_card_rest_value));
+                    } else {
+                        sizeLaedenBon -= entry.getValue();
+                        pieEntry = new PieEntry(entry.getValue(), entry.getKey());
+                    }
+
                     pieces.add(pieEntry);
                 }
                 if(++PIE_CHART_COUNTER == MAXVALUE_PIE_CHART){break;}
