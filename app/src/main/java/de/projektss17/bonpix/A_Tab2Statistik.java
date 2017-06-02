@@ -94,19 +94,19 @@ public class A_Tab2Statistik extends Fragment{
     public void getTabData(int position){
         switch (position){
             case 0:
-                mAdapter.createFilteredData("ALLE");
+                mAdapter.createFilteredData("ALLE", this.getContext());
                 mAdapter.notifyDataSetChanged();
                 break;
             case 1:
-                mAdapter.createFilteredData("WOCHE");
+                mAdapter.createFilteredData("WOCHE", this.getContext());
                 mAdapter.notifyDataSetChanged();
                 break;
             case 2:
-                mAdapter.createFilteredData("MONAT");
+                mAdapter.createFilteredData("MONAT", this.getContext());
                 mAdapter.notifyDataSetChanged();
                 break;
             case 3:
-                mAdapter.createFilteredData("QUARTAL");
+                mAdapter.createFilteredData("QUARTAL", this.getContext());
                 mAdapter.notifyDataSetChanged();
                 break;
         }

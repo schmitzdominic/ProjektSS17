@@ -16,7 +16,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -25,11 +24,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import de.projektss17.bonpix.S;
-import de.projektss17.bonpix.auswerter.Aral;
-
-/**
- * Created by Marcus on 11.04.2017.
- */
 
 public class C_DatabaseHandler extends SQLiteOpenHelper {
 
@@ -37,6 +31,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private Context context;
     private C_Laden barDataLaden;
+    private C_Laden PieDataLaden;
 
 
     public C_DatabaseHandler(Context context) {
@@ -64,6 +59,14 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public void backupDataChanged(){
         BackupManager backupManager = new BackupManager(context);
         backupManager.dataChanged();
+    }
+
+    public C_Laden getPieDataLaden() {
+        return PieDataLaden;
+    }
+
+    public void setPieDataLaden(C_Laden pieDataLaden) {
+        PieDataLaden = pieDataLaden;
     }
 
     /**
@@ -1319,6 +1322,46 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Gibt die Anzahl sortiert der Bons pro Laden zurück
+     * @param db Datenbank
+     * @return Anzahl der Bons pro Laden
+     */
+    public SortedSet<Hashtable.Entry<String, Integer>> getBonsCountPerLaden(SQLiteDatabase db){
+        return this.getBonsCountPerLaden(db, null, null);
+    }
+
+    /**
+     * Gibt die Anzahl sortiert der Bons pro Laden zurück
+     * @param db Datenbank
+     * @param date1 Von - Datum
+     * @param date2 Bis - Datum
+     * @return Anzahl der Bons pro Laden
+     */
+    public SortedSet<Hashtable.Entry<String, Integer>> getBonsCountPerLaden(SQLiteDatabase db, String date1, String date2){
+
+        TreeMap<String, Integer> ladenList = new TreeMap<>();
+        ArrayList<C_Bon> bonList;
+
+        for(C_Laden laden : this.getAllLaeden(db)){
+            ladenList.put(laden.getName(), 0);
+        }
+
+        bonList = date1 != null && date2 != null ?
+                this.getBonsBetweenDate(db, date1, date2) :
+                this.getAllBons(db);
+
+        for(String laden : ladenList.keySet()){
+            for(C_Bon bon : bonList){
+                if(bon.getShopName().equals(laden)){
+                    ladenList.put(laden, ladenList.get(laden) + 1);
+                }
+            }
+        }
+
+        return entriesSortedByValues(ladenList);
+    }
+
+    /**
      * Sortiert eine Map
      * @param map Map die Sortiert werden soll
      * @param <K> Parameter 1
@@ -1506,30 +1549,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 lineTwo.add(c4e2);
                 map.put("lineTwo", lineTwo);
                 return map;
-        }
-    }
-
-    /**
-     * Get the Data for PieCharts
-     * @param time
-     * @return
-     */
-    public List<PieEntry> getPieData(int time){
-        List<PieEntry> dataList = new ArrayList<>();
-        //TODO: Logic part for preparing Bar Data
-        switch(time){
-            case 1:
-                dataList.add(new PieEntry(18.5f, "Green"));
-                dataList.add(new PieEntry(26.7f, "Yellow"));
-                dataList.add(new PieEntry(24.0f, "Red"));
-                dataList.add(new PieEntry(30.8f, "Blue"));
-                return dataList;
-            default:
-                dataList.add(new PieEntry(18.5f, "Green"));
-                dataList.add(new PieEntry(26.7f, "Yellow"));
-                dataList.add(new PieEntry(24.0f, "Red"));
-                dataList.add(new PieEntry(30.8f, "Blue"));
-                return dataList;
         }
     }
 }

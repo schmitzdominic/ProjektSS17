@@ -1,8 +1,8 @@
 package de.projektss17.bonpix.daten;
 
+import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +14,18 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -42,9 +49,17 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private String countArtikel;
     private String gesBetrag;
     private String date[];
+    private SortedSet<Hashtable.Entry<String, Integer>> sortedArticleList;
+    private SortedSet<Hashtable.Entry<String, Integer>> bonsCountPerLaden;
+    private List<PieEntry> pieces;
+    private ArrayList<Integer> colorsPie;
     private ViewHolderGeneral holderGeneral;
     private ViewHolderBar holderBar;
-    ViewHolderTopProducts holderTopProducts;
+    private ViewHolderTopProducts holderTopProducts;
+    private ViewHolderPie holderPie;
+    private Context context;
+    private BarData dataBar;
+
 
     // LAYOUT TopFacts
     public class ViewHolderTopFacts extends RecyclerView.ViewHolder {
@@ -194,8 +209,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
             case 1:
 
-                int MAXVALUE_BAR_CHART = 5;
-
                 if(holderBar == null){
                     holderBar = (ViewHolderBar)holder;
                 }
@@ -204,40 +217,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     break;
                 }
 
-                List<IBarDataSet> bars = new ArrayList<>();
-
-                if(date != null){
-
-                    for(int i = 0; i < MAXVALUE_BAR_CHART; i++){
-                        List<BarEntry> list = S.dbHandler.getBarDataLaedenExpenditure(S.db, date[0],date[1], i);
-                        if(S.dbHandler.getBarDataLaden() != null && list.get(0).getY() != 0.0){
-                            BarDataSet set = (new BarDataSet(list, S.dbHandler.getBarDataLaden().getName()));
-
-                            switch(i){
-                                case 0:
-                                    set.setColor(ContextCompat.getColor(holderBar.itemView.getContext(), R.color.colorPrimaryDark));
-                                    break;
-                                case 1:
-                                    set.setColor(ContextCompat.getColor(holderBar.itemView.getContext(), R.color.colorAccent));
-                                    break;
-                                case 2:
-                                    set.setColor(ContextCompat.getColor(holderBar.itemView.getContext(), R.color.colorPrimary));
-                                    break;
-                                case 3:
-                                    set.setColor(ContextCompat.getColor(holderBar.itemView.getContext(), R.color.color4Bar));
-                                    break;
-                                case 4:
-                                    set.setColor(ContextCompat.getColor(holderBar.itemView.getContext(), R.color.color5Bar));
-                                    break;
-
-                            }
-
-                            bars.add(set);
-                        }
-                    }
-                }
-
-                BarData dataBar = new BarData(bars);
                 Description desc = new Description();
                 desc.setText("");
                 dataBar.setBarWidth(0.7f); // set custom bar width
@@ -259,14 +238,13 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 2:
 
                 int ANIMATION_TIME = 1000;
+                int MAX_LENGTH_ARTICLE = 11;
 
                 if(holderTopProducts == null){
                     holderTopProducts = (ViewHolderTopProducts)holder;
                 }
 
                 holderTopProducts.progress1.animate();
-
-                SortedSet<Hashtable.Entry<String, Integer>> sortedArticleList = S.dbHandler.getTopArticles(S.db, date[0], date[1]);
 
                 int count = 0;
                 int size = 0;
@@ -287,25 +265,25 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     switch(count){
                         case 0:
-                            holderTopProducts.produkt1.setText(entry.getKey());
+                            holderTopProducts.produkt1.setText(entry.getKey().length() > MAX_LENGTH_ARTICLE ? entry.getKey().substring(0, MAX_LENGTH_ARTICLE-2) + ".." : entry.getKey());
                             anim = new ProgressBarAnimation(holderTopProducts.progress1, 0, progress);
                             anim.setDuration(ANIMATION_TIME);
                             holderTopProducts.progress1.startAnimation(anim);
-                            holderTopProducts.percentage1.setText(df.format(procent) + " %");
+                            holderTopProducts.percentage1.setText(df.format(procent) + " " + holderTopProducts.itemView.getResources().getString(R.string.percentage));
                             break;
                         case 1:
-                            holderTopProducts.produkt2.setText(entry.getKey());
+                            holderTopProducts.produkt2.setText(entry.getKey().length() > MAX_LENGTH_ARTICLE ? entry.getKey().substring(0, MAX_LENGTH_ARTICLE-2) + ".." : entry.getKey());
                             anim = new ProgressBarAnimation(holderTopProducts.progress2, 0, progress);
                             anim.setDuration(ANIMATION_TIME);
                             holderTopProducts.progress2.startAnimation(anim);
-                            holderTopProducts.percentage2.setText(df.format(procent) + " %");
+                            holderTopProducts.percentage2.setText(df.format(procent) + " " + holderTopProducts.itemView.getResources().getString(R.string.percentage));
                             break;
                         case 2:
-                            holderTopProducts.produkt3.setText(entry.getKey());
+                            holderTopProducts.produkt3.setText(entry.getKey().length() > MAX_LENGTH_ARTICLE ? entry.getKey().substring(0, MAX_LENGTH_ARTICLE-2) + ".." : entry.getKey());
                             anim = new ProgressBarAnimation(holderTopProducts.progress3, 0, progress);
                             anim.setDuration(ANIMATION_TIME);
                             holderTopProducts.progress3.startAnimation(anim);
-                            holderTopProducts.percentage3.setText(df.format(procent) + " %");
+                            holderTopProducts.percentage3.setText(df.format(procent) + " " + holderTopProducts.itemView.getResources().getString(R.string.percentage));
                             break;
                     }
 
@@ -316,11 +294,34 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 break;
             case 3:
-                /*ViewHolderPie holderPie = (ViewHolderPie)holder;
-                PieDataSet set = new PieDataSet(S.dbHandler.getPieData(1), "Election Results");
-                PieData pieData = new PieData(set);
+
+                if(holderPie == null){
+                    holderPie = (ViewHolderPie)holder;
+                }
+
+                PieDataSet pieDataSet = new PieDataSet(this.pieces , "");
+
+                pieDataSet.setValueFormatter(new PercentFormatter() {
+                    @Override
+                    public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                        return "" + (int)value;
+                    }
+                });
+
+                pieDataSet.setColors(this.colorsPie);
+                PieData pieData = new PieData(pieDataSet);
+                pieData.setValueTextSize(10f);
+                pieData.setValueTextColor(ContextCompat.getColor(context, R.color.cardview_light_background));
+                Description descPie = new Description();
+                descPie.setText("");
                 holderPie.pieChart.setData(pieData);
-                holderPie.pieChart.invalidate();*/
+                holderPie.pieChart.setDescription(descPie);
+                holderPie.pieChart.animateY(1000);
+                holderPie.pieChart.setFocusable(false);
+                holderPie.pieChart.setTouchEnabled(false);
+                holderPie.pieChart.setDrawEntryLabels(false);
+                holderPie.pieChart.setUsePercentValues(false);
+                holderPie.pieChart.invalidate();
                 break;
             case 4:
                 /*ViewHolderTopFacts holderTopFacts = (ViewHolderTopFacts) holder;
@@ -358,36 +359,44 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
      *
      * Derzeit werden die ArrayLists mit DummyDaten befüllt - Bitte darauf achten!
      */
-    public void createFilteredData(String filter){
+    public void createFilteredData(String filter, Context context){
 
-       switch(filter){
-           case "ALLE":
-               fillData();
-               break;
-           case "WOCHE":
-               fillData(S.getWeek()[0], S.getWeek()[1]);
-               break;
-           case "MONAT":
-               fillData(S.getMonth()[0], S.getMonth()[1]);
-               break;
-           case "QUARTAL":
-               fillData(S.getQuartal()[0], S.getQuartal()[1]);
-               break;
-           default:
-               break;
+        this.context = context;
+
+        switch(filter){
+            case "ALLE":
+                fillData();
+                break;
+            case "WOCHE":
+                fillData(S.getWeek()[0], S.getWeek()[1]);
+                break;
+            case "MONAT":
+                fillData(S.getMonth()[0], S.getMonth()[1]);
+                break;
+            case "QUARTAL":
+                fillData(S.getQuartal()[0], S.getQuartal()[1]);
+                break;
+            default:
+                break;
        }
     }
 
     private void fillData(){
-        this.fillGeneralData();
         this.date = new String[]{null, null};
+        this.fillGeneralData();
+        this.prepareBarData();
+        this.prepareTopThreeArticlesData();
+        this.preparePieData();
         this.countBons = "" + S.dbHandler.getAllBonsCount(S.db);
         this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db);
     }
 
     private void fillData(String date1, String date2){
-        this.fillGeneralData();
         this.date = new String[]{date1, date2};
+        this.fillGeneralData();
+        this.prepareBarData();
+        this.prepareTopThreeArticlesData();
+        this.preparePieData();
         this.countBons = "" + S.dbHandler.getAllBonsCount(S.db, date1, date2);
         this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db, date1, date2);
     }
@@ -395,6 +404,29 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private void fillGeneralData(){
         this.countLaeden = "" + S.dbHandler.getAllLaedenCount(S.db);
         this.countArtikel = "" + S.dbHandler.getAllArticleCount(S.db);
+    }
+
+    /**
+     * Gibt die Farben für die Statistiken zurück
+     * @param number Welche nummer?
+     * @return Farbe
+     */
+    private int getStatisticColor(int number){
+        switch(number){
+            case 0:
+                return ContextCompat.getColor(context,R.color.colorPrimaryDark);
+            case 1:
+                return ContextCompat.getColor(context,R.color.colorAccent);
+            case 2:
+                return ContextCompat.getColor(context,R.color.colorPrimary);
+            case 3:
+                return ContextCompat.getColor(context,R.color.color4Bar);
+            case 4:
+                return ContextCompat.getColor(context,R.color.color5Bar);
+            default:
+                return ContextCompat.getColor(context,R.color.colorPrimary);
+
+        }
     }
 
     /**
@@ -419,5 +451,65 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
             progressBar.setProgress((int) value);
         }
 
+    }
+
+    public void prepareBarData(){
+
+        List<IBarDataSet> bars = new ArrayList<>();
+
+        if(date != null){
+
+            int MAXVALUE_BAR_CHART = 5;
+
+            for(int i = 0; i < MAXVALUE_BAR_CHART; i++){
+                List<BarEntry> list = S.dbHandler.getBarDataLaedenExpenditure(S.db, date[0],date[1], i);
+                if(S.dbHandler.getBarDataLaden() != null && list.get(0).getY() != 0.0){
+                    BarDataSet set = (new BarDataSet(list, S.dbHandler.getBarDataLaden().getName()));
+                    set.setColor(this.getStatisticColor(i));
+                    bars.add(set);
+                }
+            }
+        }
+
+        this.dataBar = new BarData(bars);
+    }
+
+    public void prepareTopThreeArticlesData(){
+        this.sortedArticleList = S.dbHandler.getTopArticles(S.db, date[0], date[1]);
+    }
+
+    public void preparePieData(){
+
+        int MAXVALUE_PIE_CHART = 5;
+        int PIE_CHART_COUNTER = 0;
+        int PIE_CHART_USED = 0;
+
+        this.bonsCountPerLaden = S.dbHandler.getBonsCountPerLaden(S.db, date[0], date[1]);
+
+        this.pieces = new ArrayList<>();
+
+        int sizeLaedenBon = 0;
+
+        for(Hashtable.Entry<String, Integer> entry : bonsCountPerLaden){
+            sizeLaedenBon += entry.getValue();
+        }
+
+        if(date != null){
+
+            for(Hashtable.Entry<String, Integer> entry : bonsCountPerLaden){
+                if(entry.getValue() != 0){
+                    PieEntry pieEntry = new PieEntry(entry.getValue(), entry.getKey() + " " + entry.getValue() + "  ");
+                    pieces.add(pieEntry);
+                }
+                if(++PIE_CHART_COUNTER == MAXVALUE_PIE_CHART){break;}
+            }
+
+        }
+
+        this.colorsPie = new ArrayList<>();
+
+        for(int i = 0; i < MAXVALUE_PIE_CHART; i++){
+            this.colorsPie.add(this.getStatisticColor(i));
+        }
     }
 }
