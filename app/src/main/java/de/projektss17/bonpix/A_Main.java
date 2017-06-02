@@ -124,6 +124,7 @@ public class A_Main extends AppCompatActivity {
         this.initPersistence();
         this.initOnClickListener();
         this.onFirstStart();
+
     }
 
     /**

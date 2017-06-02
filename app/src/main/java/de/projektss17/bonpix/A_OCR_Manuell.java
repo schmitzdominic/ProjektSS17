@@ -351,6 +351,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
             this.calendar = Calendar.getInstance();
 
+            if(this.getState().equals("edit")){
+                return new DatePickerDialog(this,
+                        this.myDateListener, Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[2]),
+                        Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[1]) - 1,
+                        Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[0]));
+            }
+
             return new DatePickerDialog(this,
                     this.myDateListener, Integer.parseInt(this.year), calendar.get(Calendar.MONTH), Integer.parseInt(this.day));
         }

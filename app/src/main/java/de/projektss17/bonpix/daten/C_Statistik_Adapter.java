@@ -2,9 +2,12 @@ package de.projektss17.bonpix.daten;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,7 +22,9 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.SortedSet;
 
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
@@ -39,6 +44,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private String date[];
     private ViewHolderGeneral holderGeneral;
     private ViewHolderBar holderBar;
+    ViewHolderTopProducts holderTopProducts;
 
     // LAYOUT TopFacts
     public class ViewHolderTopFacts extends RecyclerView.ViewHolder {
@@ -188,6 +194,8 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
             case 1:
 
+                int MAXVALUE_BAR_CHART = 5;
+
                 if(holderBar == null){
                     holderBar = (ViewHolderBar)holder;
                 }
@@ -200,7 +208,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 if(date != null){
 
-                    for(int i = 0; i < 5; i++){
+                    for(int i = 0; i < MAXVALUE_BAR_CHART; i++){
                         List<BarEntry> list = S.dbHandler.getBarDataLaedenExpenditure(S.db, date[0],date[1], i);
                         if(S.dbHandler.getBarDataLaden() != null && list.get(0).getY() != 0.0){
                             BarDataSet set = (new BarDataSet(list, S.dbHandler.getBarDataLaden().getName()));
@@ -249,16 +257,63 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderBar.barChart.invalidate(); // refresh*/
                 break;
             case 2:
-                /*ViewHolderTopProducts holderTopProducts = (ViewHolderTopProducts)holder;
-                holderTopProducts.produkt1.setText("Videospiele");  // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopProducts.produkt2.setText("Getränke");     // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopProducts.produkt3.setText("Steaks");       // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopProducts.progress1.setProgress(45);        // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopProducts.progress2.setProgress(35);        // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopProducts.progress3.setProgress(20);        // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopProducts.percentage1.setText("45 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopProducts.percentage2.setText("35 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopProducts.percentage3.setText("20 %");      // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion*/
+
+                int ANIMATION_TIME = 1000;
+
+                if(holderTopProducts == null){
+                    holderTopProducts = (ViewHolderTopProducts)holder;
+                }
+
+                holderTopProducts.progress1.animate();
+
+                SortedSet<Hashtable.Entry<String, Integer>> sortedArticleList = S.dbHandler.getTopArticles(S.db, date[0], date[1]);
+
+                int count = 0;
+                int size = 0;
+
+                for(Hashtable.Entry<String, Integer> entry : sortedArticleList){
+                    size += entry.getValue();
+                }
+
+                for(Hashtable.Entry<String, Integer> entry : sortedArticleList){
+
+                    int progress = (int)((double)entry.getValue()/size*100);
+                    double procent = ((double)entry.getValue()/size)*100 > 0 ? ((double)entry.getValue()/size)*100 : 0;
+                    ProgressBarAnimation anim;
+
+                    procent = Math.round(procent * 100) / 100.00;
+                    DecimalFormat df = new DecimalFormat("#0.00");
+
+
+                    switch(count){
+                        case 0:
+                            holderTopProducts.produkt1.setText(entry.getKey());
+                            anim = new ProgressBarAnimation(holderTopProducts.progress1, 0, progress);
+                            anim.setDuration(ANIMATION_TIME);
+                            holderTopProducts.progress1.startAnimation(anim);
+                            holderTopProducts.percentage1.setText(df.format(procent) + " %");
+                            break;
+                        case 1:
+                            holderTopProducts.produkt2.setText(entry.getKey());
+                            anim = new ProgressBarAnimation(holderTopProducts.progress2, 0, progress);
+                            anim.setDuration(ANIMATION_TIME);
+                            holderTopProducts.progress2.startAnimation(anim);
+                            holderTopProducts.percentage2.setText(df.format(procent) + " %");
+                            break;
+                        case 2:
+                            holderTopProducts.produkt3.setText(entry.getKey());
+                            anim = new ProgressBarAnimation(holderTopProducts.progress3, 0, progress);
+                            anim.setDuration(ANIMATION_TIME);
+                            holderTopProducts.progress3.startAnimation(anim);
+                            holderTopProducts.percentage3.setText(df.format(procent) + " %");
+                            break;
+                    }
+
+                    if(++count == 3){
+                        break;
+                    }
+                }
+
                 break;
             case 3:
                 /*ViewHolderPie holderPie = (ViewHolderPie)holder;
@@ -342,42 +397,27 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.countArtikel = "" + S.dbHandler.getAllArticleCount(S.db);
     }
 
-
     /**
-     * ALLE 'DUMMYDATEN'-Funktionen werden gelöscht sofern DB-Anbdinung besteht!
-     * formatDoulbe nach Anbindung bitte im onBindViewHolder löschen/ersetzen!
+     * ProgressBar Animation
      */
+    public class ProgressBarAnimation extends Animation {
+        private ProgressBar progressBar;
+        private float from;
+        private float  to;
 
-    // DUMMYDATEN - Formatierung der RandomMath Doubles auf zwei Nachkommastellen
-    public static String formatDouble(double i)
-    {
-        DecimalFormat f = new DecimalFormat("#0.00");
-        double toFormat = ((double)Math.round(i*100))/100;
-        return f.format(toFormat);
+        public ProgressBarAnimation(ProgressBar progressBar, float from, float to) {
+            super();
+            this.progressBar = progressBar;
+            this.from = from;
+            this.to = to;
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            super.applyTransformation(interpolatedTime, t);
+            float value = from + (to - from) * interpolatedTime;
+            progressBar.setProgress((int) value);
+        }
+
     }
-
-    //DUMMYDATEN - BONS
-    public ArrayList<C_Bon> createBonData(int anzahl){
-
-        ArrayList<C_Bon> bons = new ArrayList<>();
-
-        for(int i = 0; i < anzahl; i++)
-            bons.add(new C_Bon(i, "Path/Bons/Test","Supermarkt "+i, "Max-Mustermann Str. XB"+i+" \n86161 Augsburg",
-                    "Das sind DUMMYBONS", "21.05.2017", "30.05.2017", "1337", false, true, createArticleData(anzahl)));
-
-        return bons;
-    }
-
-    //DUMMYDATEN - ARTIKEL
-    public ArrayList<C_Artikel> createArticleData(int anzahl){
-
-        ArrayList<C_Artikel> articles = new ArrayList<>();
-
-        for(int i = 0; i < anzahl; i++)
-            articles.add(new C_Artikel("Artikel " + i, (Math.random()*100.0)/100.0));
-
-        return articles;
-    }
-
-
 }
