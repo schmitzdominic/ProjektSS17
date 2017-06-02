@@ -13,11 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import de.projektss17.bonpix.A_Tutorial;
 import de.projektss17.bonpix.R;
 
 
 public class C_Adapter_Tutorial extends PagerAdapter {
-    private int [] imageResources ={R.drawable.picture1,R.drawable.picture2,R.drawable.picture3,R.drawable.picture4};
+    private int [] imageResources ={R.drawable.picture1,R.drawable.picture2,R.drawable.picture3,R.drawable.picture4,R.drawable.picture4};
     private Context ctx;
     private LayoutInflater layoutInflater;
 
@@ -35,13 +36,18 @@ public class C_Adapter_Tutorial extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+
         layoutInflater= (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView=layoutInflater.inflate(R.layout.box_tutorial_adapter,container,false);
-        ImageView imageView=(ImageView) itemView.findViewById(R.id.swip_image_view);
-        TextView textView=(TextView) itemView.findViewById(R.id.imageCount);
-        imageView.setImageResource(imageResources[position]);
-        textView.setText("Tipp : "+(position+1));
-        container.addView(itemView);
+
+        if(position < imageResources.length - 1){
+            ImageView imageView=(ImageView) itemView.findViewById(R.id.swip_image_view);
+            TextView textView=(TextView) itemView.findViewById(R.id.imageCount);
+            imageView.setImageResource(imageResources[position]);
+            textView.setText(ctx.getResources().getString(R.string.tutorial_tipp)+(position+1));
+            container.addView(itemView);
+        }
+
         return itemView;
     }
 

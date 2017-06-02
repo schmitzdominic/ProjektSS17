@@ -124,6 +124,7 @@ public class A_Main extends AppCompatActivity {
         this.initPersistence();
         this.initOnClickListener();
         this.onFirstStart();
+        S.showTutorial(A_Main.this);
     }
 
     /**
@@ -462,7 +463,7 @@ public class A_Main extends AppCompatActivity {
             //this.createDBDummyData(20);
 
             /*ToDo ausführen des App-Tutorials: Tutorial für Home, Statistik, Bons */
-            S.showTutorial(A_Main.this);
+            //S.showTutorial(A_Main.this);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);

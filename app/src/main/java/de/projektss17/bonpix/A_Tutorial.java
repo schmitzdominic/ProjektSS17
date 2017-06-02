@@ -1,5 +1,6 @@
 package de.projektss17.bonpix;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,7 @@ import android.widget.Button;
 
 import de.projektss17.bonpix.daten.C_Adapter_Tutorial;
 
-public class A_Tutorial extends AppCompatActivity {
+public class A_Tutorial extends Activity {
 
     ViewPager viewPager;
     C_Adapter_Tutorial customSwip;
@@ -26,7 +27,23 @@ public class A_Tutorial extends AppCompatActivity {
         this.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                S.startActivitiy(A_Tutorial.this, A_Favoriten.class);
+                finish();
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 4){
+                    finish();
+                }
             }
         });
     }

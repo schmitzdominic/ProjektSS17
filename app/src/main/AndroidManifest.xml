@@ -153,15 +153,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
+        <activity
+            android:name=".A_Tutorial"
+            android:label="@string/title_tutorial"
+            android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait">
+        </activity>
 
         <meta-data
             android:name="com.google.android.backup.api_key | com.google.android.gms.vision.DEPENDENCIES"
             android:value="AEdPqrEAAAAItopB_DbXKNWj0etOKqp-neYlFIF8IVxiNK6yjA | ocr" />
 
-        <activity
-            android:name=".A_Tutorial"
-            android:label="@string/title_activity_a__tutorial"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
