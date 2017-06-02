@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/slideshow_layout"
-    >
+    tools:context="de.projektss17.bonpix.A_Tutorial">
 
-    <ImageView android:id="@+id/slideshow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingTop="20dp"
-        ></ImageView>
-
-    <TextView android:text="10"
-        android:id="@+id/message"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"></TextView>
+    <android.support.v4.view.ViewPager
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/viewPager"
+        />
 
     <Button
         android:id="@+id/tutorial_skip_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
         android:text="Skip"
-        ></Button>
-</LinearLayout>
+        android:textColor="@color/colorAccent"
+        android:background="?android:attr/colorBackground"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>
