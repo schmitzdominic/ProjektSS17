@@ -3,6 +3,7 @@ package de.projektss17.bonpix.daten;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,15 +15,24 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ViewPortHandler;
+
 import java.util.ArrayList;
 
 import de.projektss17.bonpix.A_Bon_Anzeigen;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
+
+import static android.R.attr.data;
 
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -32,6 +42,10 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private String curreny, percentage;         // Feste String aus der String-XML (Für '€'-Zeichen und '%'-Zeichen
     private ArrayList<C_Bon> bons;              // Sammlung der Bons aus der DB zur weiteren Verarbeitung
     private C_Budget budget;                    // Favoriten-Budget aus der DB
+
+    LineDataSet dataSet;                // DataSet für das Linien-Diagramm
+    ArrayList<ILineDataSet> lineDataSet;
+    LineData lineData;
 
 
     public C_Home_Adapter(Context context) {
@@ -103,11 +117,8 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public ViewHolderLinechartCard(View view) {
             super(view);
 
-            LineDataSet dataSet;
-            ArrayList<ILineDataSet> lineDataSet;
-            LineData lineData;
-
             this.lineChart = (LineChart) view.findViewById(R.id.tab_home_chartcard_linechart);
+
             /*lineChart.animateXY(2000, 4000);
             lineChart.setPadding(30, 30, 30, 30);
 
@@ -256,9 +267,68 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
                 if (bons.size()!=0){
 
-                    //ToDo - Hier muss noch überlegt werden, was genau ausgewertet werden soll!
                     ViewHolderLinechartCard holderLinechartCard = (ViewHolderLinechartCard) holder;
-                    holderLinechartCard.lineChart.setBackgroundColor(555885);
+
+                    /*
+
+                    Description descLine = new Description();
+                    descLine.setText("");
+
+                    // Wert Design
+                    final ArrayList<String> data = prepareLineChartData();
+                    this.dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    this.dataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                    this.dataSet.setLineWidth(3);
+                    this.dataSet.setCircleRadius(8);
+
+                    this.lineDataSet.add(dataSet);
+
+                    this.lineData = new LineData(lineDataSet);
+                    this.lineData.setValueTextSize(10);
+                    this.lineData.setValueTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                    this.lineData.setHighlightEnabled(true);
+                    this.lineData.setValueFormatter(new IValueFormatter() {
+                        @Override
+                        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                            return data.get((int)entry.getX()-1).split("/")[0].substring(0,2);
+                        }
+                    });
+
+                    holderLinechartCard.lineChart.setData(this.lineData);
+
+                    // Allgemeines Design
+                    holderLinechartCard.lineChart.setDescription(descLine);
+                    holderLinechartCard.lineChart.setTouchEnabled(false);
+                    holderLinechartCard.lineChart.getXAxis().setEnabled(false);
+                    holderLinechartCard.lineChart.getXAxis().setAxisMinimum(0);
+                    holderLinechartCard.lineChart.getXAxis().setAxisMaximum(data.size()+1);
+                    holderLinechartCard.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
+                    holderLinechartCard.lineChart.animateY(1000);
+                    holderLinechartCard.lineChart.getLegend().setEnabled(false);
+                    holderLinechartCard.lineChart.getAxisLeft().setEnabled(true);
+                    holderLinechartCard.lineChart.getAxisRight().setEnabled(false);
+                    holderLinechartCard.lineChart.setViewPortOffsets(115f, 15f, 15f, 30f);
+                    holderLinechartCard.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
+                        @Override
+                        public String getFormattedValue(float value, AxisBase axis) {
+                            return value + " " + context.getResources().getString(R.string.waehrung) + "  ";
+                        }
+                    });
+
+
+
+
+                    // Starten
+                    holderLinechartCard.lineChart.invalidate();
+
+                    if (holderLinechartCard.lineChart != null) {
+                        holderLinechartCard.lineChart.setTouchEnabled(false);
+                        holderLinechartCard.lineChart.setData(lineData);
+                        holderLinechartCard.lineChart.invalidate();
+
+                    }
+
+ */
 
                 }else{
 
@@ -393,5 +463,17 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
        }else{
            budget = null;
        }
+
+    }
+
+
+    public ArrayList<String>  prepareLineChartData(){
+
+        ArrayList<String> content = new ArrayList<>();
+
+        for(int i = 0; i < bons.size(); i++)
+            content.add(bons.get(i).getTotalPrice());
+
+        return content;
     }
 }
