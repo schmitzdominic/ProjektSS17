@@ -392,7 +392,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderLine.lineChart.getLegend().setEnabled(false);
                 holderLine.lineChart.getAxisLeft().setEnabled(true);
                 holderLine.lineChart.getAxisRight().setEnabled(false);
-                holderLine.lineChart.setViewPortOffsets(115f, 15f, 15f, 30f);
+                holderLine.lineChart.setViewPortOffsets(135f, 30f, 15f, 30f);
                 holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
                     @Override
                     public String getFormattedValue(float value, AxisBase axis) {
@@ -402,7 +402,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 // Starten
                 holderLine.lineChart.invalidate();
-
 
                 break;
         }
