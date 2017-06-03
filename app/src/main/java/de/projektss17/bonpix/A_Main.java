@@ -3,6 +3,7 @@ package de.projektss17.bonpix;
 import android.Manifest;
 import android.animation.Animator;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;

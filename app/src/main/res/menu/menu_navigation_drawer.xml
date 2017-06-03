@@ -8,7 +8,7 @@
             android:id="@+id/menu_nav_budget"
             android:icon="@mipmap/ic_attach_money_black_24dp"
             android:title="@string/nav_budget"
-            app:actionLayout="@layout/box_navigation_drawer_item_counter"/>
+            app:actionLayout="@layout/box_navigation_drawer_item_counter" />
 
         <!--<item
             android:id="@+id/menu_nav_gruppen"

@@ -22,7 +22,7 @@
     <string name="nav_garantie">Garantie</string>
     <string name="nav_einstellungen">Einstellungen</string>
     <string name="nav_laeden">Läden</string>
-    <string name="nav_title">Menü</string>
+    <string name="nav_title">onPix</string>
 
     <!-- Währung (Allgemein) -->
     <string name="currency_europe">€</string>
@@ -186,11 +186,11 @@
 
     <!-- A_Bon_Anzeigen -->
     <string name="title_bon_anzeigen">Bon Anzeigen</string>
-    <string name="bon_anzeigen_laden_title">Laden</string>
-    <string name="bon_anzeigen_adresse_title">Adresse</string>
-    <string name="bon_anzeigen_datum_title">Datum</string>
-    <string name="bon_anzeigen_gesbetrag_title">Gesamtbetrag</string>
-    <string name="bon_anzeigen_garantie_title">Garantie (Ende)</string>
+    <string name="bon_anzeigen_laden_title">Laden:</string>
+    <string name="bon_anzeigen_adresse_title">Adresse:</string>
+    <string name="bon_anzeigen_datum_title">Datum:</string>
+    <string name="bon_anzeigen_gesbetrag_title">Gesamtbetrag:</string>
+    <string name="bon_anzeigen_garantie_title">Garantie (Ende):</string>
     <string name="bon_anzeigen_artikel_title">Artikel</string>
     <string name="bon_anzeigen_preis_title">Preis</string>
 
