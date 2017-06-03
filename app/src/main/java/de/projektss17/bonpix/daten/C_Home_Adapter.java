@@ -26,11 +26,11 @@ import de.projektss17.bonpix.S;
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int count = 3;                      // Anzahlt der Items in der RecyclerView - derzeit 3 feste Cards!
-    private int bonsCount = 3;                  // Anzahl wie viele Bons in der BonCard angezeigt werden (ist für die Zukunft somit dynamisch)
+    public int bonsCount = 3;                  // Anzahl wie viele Bons in der BonCard angezeigt werden (ist für die Zukunft somit dynamisch)
     private Context context;                    // Context der Hauptactivity (Tab_Home) zur weiteren Verarbeitung
     private String curreny, percentage;         // Feste String aus der String-XML (Für '€'-Zeichen und '%'-Zeichen
-    private ArrayList<C_Bon> bons;              // Sammlung der Bons die Verarbeitet werden
-    private C_Budget budget;                    // Favoriten-Budget wenn in DB
+    private ArrayList<C_Bon> bons;              // Sammlung der Bons aus der DB zur weiteren Verarbeitung
+    private C_Budget budget;                    // Favoriten-Budget aus der DB
 
 
     public C_Home_Adapter(Context context) {
