@@ -311,11 +311,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<C_Bon> getNumberOfNewestBons(SQLiteDatabase db, int anzahl){
 
         ArrayList<C_Bon> list = new ArrayList<>();
-        String query = "SELECT * FROM bon WHERE bonid = (SELECT MAX(bonid) FROM bon)";
-
-        for(int i = 1; i < anzahl; i++){
-            query += " OR bonid = (SELECT MAX(bonid)-"+i+" FROM bon)";
-        }
+        String query = "SELECT * FROM bon ORDER BY bonid DESC LIMIT " + anzahl;
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -334,10 +330,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
                 bon.setArticles(this.getAllArticleFromBon(db, bon));
                 list.add(bon);
+
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return rotateList(list);
+        return list;
 
     }
 

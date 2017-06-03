@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +108,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             LineData lineData;
 
             this.lineChart = (LineChart) view.findViewById(R.id.tab_home_chartcard_linechart);
-            lineChart.animateXY(2000, 4000);
+            /*lineChart.animateXY(2000, 4000);
             lineChart.setPadding(30, 30, 30, 30);
 
             lineDataSet = new ArrayList<>();
@@ -135,7 +136,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 this.lineChart.setData(lineData);
                 this.lineChart.invalidate();
 
-            }
+            }*/
         }
 
     }
@@ -383,18 +384,14 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      */
     public void prepareData(){
 
-        bons = new ArrayList<>();
-
-        //Holt sich die Anzahl (bonsCount) der letzten eingescannten Bons aus der DB, falls welche existieren
-        if(S.dbHandler.getAllBons(S.db).size()!=0)
-            for(int i = S.dbHandler.getAllBons(S.db).size();i > (S.dbHandler.getAllBons(S.db).size()>bonsCount ? S.dbHandler.getAllBons(S.db).size()-bonsCount : 0) ;i--)
-                bons.add(S.dbHandler.getAllBons(S.db).get(i-1));
+        this.bons = S.dbHandler.getNumberOfNewestBons(S.db, 3);
 
         // Holt sich das Budget aus der DB wenn vorhanden
-       if(S.dbHandler.getAllBonBudget(S.db).size()!=0)
+       if(S.dbHandler.getFavoriteBudget(S.db) != null){
            budget = S.dbHandler.getFavoriteBudget(S.db);
-        else
-            budget = null;
-
+           S.dbHandler.refreshBudget(S.db, budget);
+       }else{
+           budget = null;
+       }
     }
 }
