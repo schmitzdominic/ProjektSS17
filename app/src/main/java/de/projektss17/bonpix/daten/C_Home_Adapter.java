@@ -231,15 +231,15 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if(budget!=null){
 
                     ViewHolderBudgetCard holderBudgetCard = (ViewHolderBudgetCard) holder;
-                    holderBudgetCard.budgetCurrently.setText(getRestBudget(S.dbHandler.getFavoriteBudget(S.db)) + curreny);
-                    holderBudgetCard.yearBefore.setText(S.dbHandler.getFavoriteBudget(S.db).getYearVon());
-                    holderBudgetCard.monthBefore.setText(S.dbHandler.getFavoriteBudget(S.db).getMonthVon());
-                    holderBudgetCard.yearAfter.setText(S.dbHandler.getFavoriteBudget(S.db).getYearBis());
-                    holderBudgetCard.monthAfter.setText(S.dbHandler.getFavoriteBudget(S.db).getMonthBis());
-                    holderBudgetCard.progressPercentage.setText(getRestPercentage(S.dbHandler.getFavoriteBudget(S.db)) + percentage);
-                    holderBudgetCard.tagVon.setText(S.dbHandler.getFavoriteBudget(S.db).getZeitraumVon().split("\\.")[0]);
-                    holderBudgetCard.tagBis.setText(S.dbHandler.getFavoriteBudget(S.db).getZeitraumBis().split("\\.")[0]);
-                    holderBudgetCard.progressBar.setProgress((int) (100 - Double.parseDouble(getRestPercentage(S.dbHandler.getFavoriteBudget(S.db)))));
+                    holderBudgetCard.budgetCurrently.setText(getRestBudget(budget) + curreny);
+                    holderBudgetCard.yearBefore.setText(budget.getYearVon());
+                    holderBudgetCard.monthBefore.setText(budget.getMonthVon());
+                    holderBudgetCard.yearAfter.setText(budget.getYearBis());
+                    holderBudgetCard.monthAfter.setText(budget.getMonthBis());
+                    holderBudgetCard.progressPercentage.setText(getRestPercentage(budget) + percentage);
+                    holderBudgetCard.tagVon.setText(budget.getZeitraumVon().split("\\.")[0]);
+                    holderBudgetCard.tagBis.setText(budget.getZeitraumBis().split("\\.")[0]);
+                    holderBudgetCard.progressBar.setProgress((int) (100 - Double.parseDouble(getRestPercentage(budget))));
 
                 }else{
 
