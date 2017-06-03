@@ -66,7 +66,6 @@ public class A_Tab1Home extends Fragment {
             homeAdapter = new C_Home_Adapter(getActivity());
             layoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(homeAdapter);
             homeAdapter.notifyDataSetChanged();
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -24,9 +26,12 @@ import de.projektss17.bonpix.A_Bon_Anzeigen;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
+
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int count = 3;                      // Anzahlt der Items in der RecyclerView - derzeit 3 feste Cards!
+    private int bonsCount = 3;                  // Anzahl wie viele Bons in der BonCard angezeigt werden (ist für die Zukunft somit dynamisch)
     private Context context;                    // Context der Hauptactivity (Tab_Home) zur weiteren Verarbeitung
     private ArrayList<C_Bon> bons;              // Sammlung der jeweiligen ausgewählten Bons aus der DB zur weiteren Verarbeitung
     private ArrayList<C_Budget> budgets;        // Sammlung der jeweiligen ausgewählten Budgets aus der DB zur weitren Verarbeitung
@@ -37,6 +42,10 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.context = context;
         this.curreny = context.getString(R.string.currency_europe);
         this.percentage = context.getString(R.string.percentage);
+
+        bons = new ArrayList<>();
+        budgets = new ArrayList<>();
+
     }
 
 
@@ -152,14 +161,14 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemView;
+        //fillData();
 
-        proofAndCreateData();   // Prüft ob Bons & Budget in DB und setzt dementsprechend die Werte
+        View itemView;
 
         switch (viewType) {
             case 0:
 
-                if(bons.size()!=0){
+                if(S.dbHandler.getAllBons(S.db).size()!=0){
 
                     itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_boncard_layout, parent, false);
                     return new ViewHolderBonCard(itemView);
@@ -185,7 +194,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             case 2:
 
-                if(bons.size()!=0){
+                if(S.dbHandler.getAllBons(S.db).size()!=0){
 
 
                     //ToDo - Hier muss überlegt werden, was ausgewertet wird, um dementsprechend die Daten aus der DB zu ziehen!
@@ -210,18 +219,21 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         switch (getItemViewType(position)) {
             case 0:
 
-                if(bons.size()!=0){
+                if(S.dbHandler.getAllBons(S.db).size()!=0){
 
-                    final ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
+                    ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
 
-                    for(int i = 0; i < bons.size(); i++)
-                        holderBonCard.linearLayout.addView(inflateBonsRow(bons.get(i)),holderBonCard.linearLayout.getChildCount());
+
+                    //Holt sich die Anzahl (bonsCount) der letzten eingescannten Bons aus der DB
+                    for(int i = S.dbHandler.getAllBons(S.db).size();i > (S.dbHandler.getAllBons(S.db).size()>bonsCount?S.dbHandler.getAllBons(S.db).size()-bonsCount:0) ;i--)
+                            holderBonCard.linearLayout.addView(inflateBonsRow(S.dbHandler.getAllBons(S.db).get(i-1)), holderBonCard.linearLayout.getChildCount());
 
                 }else{
 
-                    final ViewHolderDefault holderBonCard = (ViewHolderDefault) holder;
-                    holderBonCard.titleDefault.setText(R.string.tab_home_boncard_title_content);
-                    holderBonCard.contentDefault.setText("Fügen Sie zuerst weitere Bons hinzu \n...");
+                    ViewHolderDefault holderDefaultCard = (ViewHolderDefault) holder;
+
+                    holderDefaultCard.titleDefault.setText(R.string.tab_home_boncard_title_content);
+                    holderDefaultCard.contentDefault.setText("Fügen Sie weitere Bons hinzu \n...");
                 }
 
                 break;
@@ -242,15 +254,16 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 }else{
 
-                    final ViewHolderDefault holderBonCard = (ViewHolderDefault) holder;
-                    holderBonCard.titleDefault.setText(R.string.tab_home_budgetcard_title_content);
-                    holderBonCard.contentDefault.setText("Fügen Sie zuerst ein Budget hinzu \n...");
+                    ViewHolderDefault holderDefaultCard = (ViewHolderDefault) holder;
+
+                    holderDefaultCard.titleDefault.setText(R.string.tab_home_budgetcard_title_content);
+                    holderDefaultCard.contentDefault.setText("Fügen Sie zuerst ein Budget hinzu \n...");
                 }
 
                 break;
             case 2:
 
-                if (bons.size()!=0){
+                if (S.dbHandler.getAllBons(S.db).size()!=0){
 
                     //ToDo - Hier muss noch überlegt werden, was genau ausgewertet werden soll!
                     ViewHolderLinechartCard holderLinechartCard = (ViewHolderLinechartCard) holder;
@@ -258,9 +271,10 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 }else{
 
-                    final ViewHolderDefault holderBonCard = (ViewHolderDefault) holder;
-                    holderBonCard.titleDefault.setText(R.string.tab_home_boncard_title_content);
-                    holderBonCard.contentDefault.setText("Fügen Sie zuerst weitere Bons hinzu \n...");
+                    ViewHolderDefault holderDefaultCard = (ViewHolderDefault) holder;
+
+                    holderDefaultCard.titleDefault.setText(R.string.tab_home_chartcard_line_title_content);
+                    holderDefaultCard.contentDefault.setText("Fügen Sie  weitere Bons hinzu \n...");
                 }
                 break;
         }
@@ -370,27 +384,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
         return rowView;
-
-    }
-
-
-    /**
-     * Schaut in die DB und setzt die Werte entsprechend.
-     * Wenn gegeben: Dann werden die Daten in die Attribute Bons & Budget gesetzt
-     * Wenn nicht gegeben: Dann werden Default bzw. leere Daten gesetzt
-     */
-    public void proofAndCreateData(){
-
-        //Prüfen und Setzten des Bon-Array falls in DB vorhanden
-        if(S.dbHandler.getAllBonsCount(S.db)!=0)
-            bons = S.dbHandler.getNumberOfNewestBons(S.db,
-                    S.dbHandler.getAllBons(S.db).size()<3 ?  S.dbHandler.getAllBons(S.db).size() : 3);   // Holt die letzten drei Bons aus der DB
-        else
-            bons = new ArrayList<>();
-
-
-        //Prüfen und Setzten des Bon-Array falls in DB vorhanden
-        budgets = new ArrayList<>();
 
     }
 }
