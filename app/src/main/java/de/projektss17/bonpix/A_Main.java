@@ -68,8 +68,8 @@ public class A_Main extends AppCompatActivity {
     private NavigationView navigationView;
     private SectionsPagerAdapter sectionsPagerAdapter;
     private TabLayout tabLayout;
-    private TabLayout tabChooseTime;
-    private AppBarLayout tabChooseTimeLayout;
+    //private TabLayout tabChooseTime;
+    //private AppBarLayout tabChooseTimeLayout;
     private Toolbar toolbar;
     private Uri mCapturedImageURI;
     private View fabBGLayout;
@@ -104,8 +104,8 @@ public class A_Main extends AppCompatActivity {
         // Layout
         this.viewPager = (ViewPager) findViewById(R.id.main_container);
         this.tabLayout = (TabLayout) findViewById(R.id.main_tabs);
-        this.tabChooseTime = (TabLayout) findViewById(R.id.statistik_tabs);
-        this.tabChooseTimeLayout = (AppBarLayout) findViewById(R.id.main_time_bar_layout);
+        //this.tabChooseTime = (TabLayout) findViewById(R.id.statistik_tabs);
+        //this.tabChooseTimeLayout = (AppBarLayout) findViewById(R.id.main_time_bar_layout);
         this.fotoLayout = (LinearLayout) findViewById(R.id.main_foto_button_layout);
         this.manuellLayout = (LinearLayout) findViewById(R.id.main_manuell_button_layout);
         this.fotoButton = (FloatingActionButton) findViewById(R.id.main_foto_button);
@@ -120,7 +120,7 @@ public class A_Main extends AppCompatActivity {
 
         // Instanziierungen und Konfigurationen
         this.toggle.syncState();
-        this.tabChooseTimeLayout.setVisibility(View.INVISIBLE);
+        //this.tabChooseTimeLayout.setVisibility(View.INVISIBLE);
         this.picturePathList = new ArrayList<>();
         this.navigationDrawerLayout.addDrawerListener(toggle);
         this.sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -141,11 +141,11 @@ public class A_Main extends AppCompatActivity {
         this.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.getPosition() == 1){
+                /*if(tab.getPosition() == 1){
                     tabChooseTimeLayout.setVisibility(View.VISIBLE);
                 } else {
                     tabChooseTimeLayout.setVisibility(View.INVISIBLE);
-                }
+                }*/
 
                 if (!plusButton.isShown()) {
                     plusButton.show();
@@ -240,9 +240,9 @@ public class A_Main extends AppCompatActivity {
      * Gibt die Time Leiste zurück
      * @return Time Leiste
      */
-    public TabLayout getTimeTabLayout(){
+    /*public TabLayout getTimeTabLayout(){
         return this.tabChooseTime;
-    }
+    }*/
 
     /**
      * Gibt den atkuellen Status des FAB Menüs zurück

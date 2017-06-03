@@ -6,6 +6,7 @@ package de.projektss17.bonpix;
  */
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -44,7 +45,7 @@ public class A_Tab2Statistik extends Fragment{
 
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.statistik_recyclerview);
         this.fabPlus = ((A_Main) getActivity()).getFloatingActionButtonPlus();
-        this.tabLayout = ((A_Main) getActivity()).getTimeTabLayout();
+        this.tabLayout = (TabLayout) rootView.findViewById(R.id.statistik_tabs);
 
         this.mAdapter = new C_Statistik_Adapter();
         this.layoutManager = new LinearLayoutManager(getActivity());
