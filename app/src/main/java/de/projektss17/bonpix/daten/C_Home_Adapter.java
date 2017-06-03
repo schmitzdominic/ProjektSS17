@@ -4,16 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -26,15 +23,11 @@ import de.projektss17.bonpix.A_Bon_Anzeigen;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
-
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int count = 3;                      // Anzahlt der Items in der RecyclerView - derzeit 3 feste Cards!
     private int bonsCount = 3;                  // Anzahl wie viele Bons in der BonCard angezeigt werden (ist für die Zukunft somit dynamisch)
     private Context context;                    // Context der Hauptactivity (Tab_Home) zur weiteren Verarbeitung
-    private ArrayList<C_Bon> bons;              // Sammlung der jeweiligen ausgewählten Bons aus der DB zur weiteren Verarbeitung
-    private ArrayList<C_Budget> budgets;        // Sammlung der jeweiligen ausgewählten Budgets aus der DB zur weitren Verarbeitung
     private String curreny, percentage;         // Feste String aus der String-XML (Für '€'-Zeichen und '%'-Zeichen
 
 
@@ -42,14 +35,10 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.context = context;
         this.curreny = context.getString(R.string.currency_europe);
         this.percentage = context.getString(R.string.percentage);
-
-        bons = new ArrayList<>();
-        budgets = new ArrayList<>();
-
     }
 
 
-    // DEFAULT LAYOUT
+    // LAYOUT Default
     public class ViewHolderDefault extends RecyclerView.ViewHolder {
 
         TextView titleDefault, contentDefault;
@@ -161,13 +150,12 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        //fillData();
-
         View itemView;
 
         switch (viewType) {
             case 0:
 
+                // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
                 if(S.dbHandler.getAllBons(S.db).size()!=0){
 
                     itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_boncard_layout, parent, false);
@@ -181,7 +169,8 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             case 1:
 
-                if(budgets.size()!=0){
+                // Wenn Budgets bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
+                if(S.dbHandler.getAllBonBudget(S.db).size()!=0){
 
                     itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_topbudget_layout, parent, false);
                     return new ViewHolderBudgetCard(itemView);
@@ -194,8 +183,8 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             case 2:
 
+                // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
                 if(S.dbHandler.getAllBons(S.db).size()!=0){
-
 
                     //ToDo - Hier muss überlegt werden, was ausgewertet wird, um dementsprechend die Daten aus der DB zu ziehen!
                     itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_linechart_layout, parent, false);
@@ -215,54 +204,53 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        //HINWEIS: Derzeit sind alle drei Cards statisch. Die Inhalte sind jedoch DYNAMISCH!
         switch (getItemViewType(position)) {
             case 0:
 
+                // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
                 if(S.dbHandler.getAllBons(S.db).size()!=0){
 
                     ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
 
-
                     //Holt sich die Anzahl (bonsCount) der letzten eingescannten Bons aus der DB
-                    for(int i = S.dbHandler.getAllBons(S.db).size();i > (S.dbHandler.getAllBons(S.db).size()>bonsCount?S.dbHandler.getAllBons(S.db).size()-bonsCount:0) ;i--)
+                    for(int i = S.dbHandler.getAllBons(S.db).size();i > (S.dbHandler.getAllBons(S.db).size()>bonsCount ? S.dbHandler.getAllBons(S.db).size()-bonsCount : 0) ;i--)
                             holderBonCard.linearLayout.addView(inflateBonsRow(S.dbHandler.getAllBons(S.db).get(i-1)), holderBonCard.linearLayout.getChildCount());
 
                 }else{
 
                     ViewHolderDefault holderDefaultCard = (ViewHolderDefault) holder;
-
                     holderDefaultCard.titleDefault.setText(R.string.tab_home_boncard_title_content);
-                    holderDefaultCard.contentDefault.setText("Fügen Sie weitere Bons hinzu \n...");
+                    holderDefaultCard.contentDefault.setText(R.string.tab_home_chartcard_boncard_default_content);
                 }
 
                 break;
             case 1:
 
-                if(budgets.size()!=0){
+                // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
+                if(S.dbHandler.getAllBonBudget(S.db).size()!=0){
 
-                ViewHolderBudgetCard holderBudgetCard = (ViewHolderBudgetCard) holder;
-                holderBudgetCard.budgetCurrently.setText(getRestBudget(budgets.get(0)) + curreny);
-                holderBudgetCard.yearBefore.setText(budgets.get(0).getYearVon());
-                holderBudgetCard.monthBefore.setText(budgets.get(0).getMonthVon());
-                holderBudgetCard.yearAfter.setText(budgets.get(0).getYearBis());
-                holderBudgetCard.monthAfter.setText(budgets.get(0).getMonthBis());
-                holderBudgetCard.progressPercentage.setText(getRestPercentage(budgets.get(0)) + percentage);
-                holderBudgetCard.tagVon.setText(budgets.get(0).getZeitraumVon().split("\\.")[0]);
-                holderBudgetCard.tagBis.setText(budgets.get(0).getZeitraumBis().split("\\.")[0]);
-                holderBudgetCard.progressBar.setProgress((int) (100 - Double.parseDouble(getRestPercentage(budgets.get(0)))));
+                    ViewHolderBudgetCard holderBudgetCard = (ViewHolderBudgetCard) holder;
+                    holderBudgetCard.budgetCurrently.setText(getRestBudget(S.dbHandler.getFavoriteBudget(S.db)) + curreny);
+                    holderBudgetCard.yearBefore.setText(S.dbHandler.getFavoriteBudget(S.db).getYearVon());
+                    holderBudgetCard.monthBefore.setText(S.dbHandler.getFavoriteBudget(S.db).getMonthVon());
+                    holderBudgetCard.yearAfter.setText(S.dbHandler.getFavoriteBudget(S.db).getYearBis());
+                    holderBudgetCard.monthAfter.setText(S.dbHandler.getFavoriteBudget(S.db).getMonthBis());
+                    holderBudgetCard.progressPercentage.setText(getRestPercentage(S.dbHandler.getFavoriteBudget(S.db)) + percentage);
+                    holderBudgetCard.tagVon.setText(S.dbHandler.getFavoriteBudget(S.db).getZeitraumVon().split("\\.")[0]);
+                    holderBudgetCard.tagBis.setText(S.dbHandler.getFavoriteBudget(S.db).getZeitraumBis().split("\\.")[0]);
+                    holderBudgetCard.progressBar.setProgress((int) (100 - Double.parseDouble(getRestPercentage(S.dbHandler.getFavoriteBudget(S.db)))));
 
                 }else{
 
                     ViewHolderDefault holderDefaultCard = (ViewHolderDefault) holder;
-
                     holderDefaultCard.titleDefault.setText(R.string.tab_home_budgetcard_title_content);
-                    holderDefaultCard.contentDefault.setText("Fügen Sie zuerst ein Budget hinzu \n...");
+                    holderDefaultCard.contentDefault.setText(R.string.tab_home_chartcard_budget_default_content);
                 }
 
                 break;
             case 2:
 
+                // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
                 if (S.dbHandler.getAllBons(S.db).size()!=0){
 
                     //ToDo - Hier muss noch überlegt werden, was genau ausgewertet werden soll!
@@ -272,13 +260,11 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }else{
 
                     ViewHolderDefault holderDefaultCard = (ViewHolderDefault) holder;
-
                     holderDefaultCard.titleDefault.setText(R.string.tab_home_chartcard_line_title_content);
-                    holderDefaultCard.contentDefault.setText("Fügen Sie  weitere Bons hinzu \n...");
+                    holderDefaultCard.contentDefault.setText(R.string.tab_home_chartcard_boncard_default_content);
                 }
                 break;
         }
-
     }
 
 
@@ -331,6 +317,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+
     /**
      * Erzeugt eine Dynamische Liste mit den aktuellsten Bons aus der DB
      * @param bon Übergabe der einzelnen Bons
@@ -345,7 +332,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         final TextView price = (TextView)rowView.findViewById(R.id.bons_price);
         final ImageView shopIcon = (ImageView)rowView.findViewById(R.id.bons_shop_image);
         final ImageView favIcon = proofFavorite(bon,(ImageView)rowView.findViewById(R.id.bons_favorite_icon));
-        //final Button wholeBon = (Button)rowView.findViewById(R.id.tab_home_boncard_bon);
 
         shopName.setText(bon.getShopName());
         date.setText(bon.getDate());
