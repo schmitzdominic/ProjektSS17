@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/cardview_light_background">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/colorSecondary"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/divider" />
+
+
+    <ImageView
+        android:id="@+id/bons_shop_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="16dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/common_google_signin_btn_icon_dark_focused"/>
+
+    <TextView
+        android:id="@+id/bons_shop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_toLeftOf="@+id/bons_price"
+        android:layout_toRightOf="@+id/bons_shop_image"
+        android:paddingTop="20dp"
+        android:gravity="bottom"
+        android:text="Default"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/bons_buying_date"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@+id/bons_shop_name"
+        android:layout_toLeftOf="@+id/bons_price"
+        android:layout_toRightOf="@+id/bons_shop_image"
+        android:paddingBottom="20dp"
+        android:gravity="top"
+        android:text="default"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/bons_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="default"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/bons_favorite_icon" />
+
+    <ImageView
+        android:id="@+id/bons_favorite_icon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/star_outline"
+        android:tint="@color/colorPrimary"/>
+</RelativeLayout>

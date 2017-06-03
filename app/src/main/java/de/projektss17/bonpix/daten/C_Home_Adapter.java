@@ -29,6 +29,8 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private int bonsCount = 3;                  // Anzahl wie viele Bons in der BonCard angezeigt werden (ist für die Zukunft somit dynamisch)
     private Context context;                    // Context der Hauptactivity (Tab_Home) zur weiteren Verarbeitung
     private String curreny, percentage;         // Feste String aus der String-XML (Für '€'-Zeichen und '%'-Zeichen
+    private ArrayList<C_Bon> bons;              // Sammlung der Bons die Verarbeitet werden
+    private C_Budget budget;                    // Favoriten-Budget wenn in DB
 
 
     public C_Home_Adapter(Context context) {
@@ -93,7 +95,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     // LAYOUT LineChartCard
-    //Diese Logik war bereits gegeben vom vorherigen Sprint! (Bei Fragen an den jeweiligen wenden!)
     public class ViewHolderLinechartCard extends RecyclerView.ViewHolder {
 
         public LineChart lineChart;
@@ -101,7 +102,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public ViewHolderLinechartCard(View view) {
             super(view);
 
-            //ToDo - Es muss noch entschieden weren, welche Daten ausgelesen und ausgewertet werden
             LineDataSet dataSet;
             ArrayList<ILineDataSet> lineDataSet;
             LineData lineData;
@@ -112,18 +112,18 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             lineDataSet = new ArrayList<>();
 
-            dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, 4), "Bon");
-            dataSet.setColor(Color.BLACK); // Linienfarbe
-            dataSet.setCircleColor(Color.BLACK); // Punktfarbe
+            dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, bonsCount+1), "Bon");
+            dataSet.setColor(R.color.colorAccent); // Linienfarbe
+            dataSet.setCircleColor(R.color.colorAccent); // Punktfarbe
             dataSet.setCircleSize(5); // Punktgröße
             dataSet.setLineWidth(3f); // Dicke der Linien
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setDrawAxisLine(true);
-            xAxis.setDrawGridLines(false);
-            xAxis.setAxisMaximum(3);
+
+            xAxis.setAxisMaximum(bonsCount+1);
             xAxis.setAxisMinimum(0);
-            xAxis.setLabelCount(3);
+            xAxis.setLabelCount(bonsCount+1);
             lineChart.getAxisRight().setEnabled(false); // no right axis
             lineDataSet.add(dataSet);
             lineData = new LineData(lineDataSet);
@@ -156,7 +156,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case 0:
 
                 // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
-                if(S.dbHandler.getAllBons(S.db).size()!=0){
+                if(bons.size()!=0){
 
                     itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_boncard_layout, parent, false);
                     return new ViewHolderBonCard(itemView);
@@ -167,10 +167,11 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     return new ViewHolderDefault(itemView);
 
                 }
+
             case 1:
 
                 // Wenn Budgets bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
-                if(S.dbHandler.getAllBonBudget(S.db).size()!=0){
+                if(budget!=null){
 
                     itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_topbudget_layout, parent, false);
                     return new ViewHolderBudgetCard(itemView);
@@ -181,12 +182,12 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     return new ViewHolderDefault(itemView);
 
                 }
+
             case 2:
 
                 // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
-                if(S.dbHandler.getAllBons(S.db).size()!=0){
+                if(bons.size()!=0){
 
-                    //ToDo - Hier muss überlegt werden, was ausgewertet wird, um dementsprechend die Daten aus der DB zu ziehen!
                     itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_linechart_layout, parent, false);
                     return new ViewHolderLinechartCard(itemView);
 
@@ -208,13 +209,12 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case 0:
 
                 // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
-                if(S.dbHandler.getAllBons(S.db).size()!=0){
+                if(bons.size()!=0){
 
                     ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
 
-                    //Holt sich die Anzahl (bonsCount) der letzten eingescannten Bons aus der DB
-                    for(int i = S.dbHandler.getAllBons(S.db).size();i > (S.dbHandler.getAllBons(S.db).size()>bonsCount ? S.dbHandler.getAllBons(S.db).size()-bonsCount : 0) ;i--)
-                            holderBonCard.linearLayout.addView(inflateBonsRow(S.dbHandler.getAllBons(S.db).get(i-1)), holderBonCard.linearLayout.getChildCount());
+                    for(int i = 0; i < bons.size(); i++)
+                            holderBonCard.linearLayout.addView(inflateBonsRow(bons.get(i)), holderBonCard.linearLayout.getChildCount());
 
                 }else{
 
@@ -224,10 +224,11 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
 
                 break;
+
             case 1:
 
                 // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
-                if(S.dbHandler.getAllBonBudget(S.db).size()!=0){
+                if(budget!=null){
 
                     ViewHolderBudgetCard holderBudgetCard = (ViewHolderBudgetCard) holder;
                     holderBudgetCard.budgetCurrently.setText(getRestBudget(S.dbHandler.getFavoriteBudget(S.db)) + curreny);
@@ -248,10 +249,11 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
 
                 break;
+
             case 2:
 
                 // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
-                if (S.dbHandler.getAllBons(S.db).size()!=0){
+                if (bons.size()!=0){
 
                     //ToDo - Hier muss noch überlegt werden, was genau ausgewertet werden soll!
                     ViewHolderLinechartCard holderLinechartCard = (ViewHolderLinechartCard) holder;
@@ -295,11 +297,11 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     /**
-     * Prüft beim erstellen des Layouts, komm der Bon ein Favorit ist oder nicht
+     * Prüft beim erstellen des Layouts, ob der Bon ein Favorit ist oder nicht
      * INFO: Wenn Favorit true dann wird die ImageView dunkel befüllt, anderfalls bleibt der Inhalt unausgefüllt
      * @param bon Übergabe eines ausgewählten Bons, welches überprüft wird
      * @param favImage Übergabe der ImageView, die geändert wird ( In diesem Fall Favoriten-Image)
-     * @return Rückgabe des übergebenen, bereits veränderten, Images
+     * @return Rückgabe des übergebenen und veränderten Images
      */
     private ImageView proofFavorite(final C_Bon bon, final ImageView favImage) {
 
@@ -321,12 +323,12 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     /**
      * Erzeugt eine Dynamische Liste mit den aktuellsten Bons aus der DB
      * @param bon Übergabe der einzelnen Bons
-     * @return Rückgabe der fertig gebauten View
+     * @return Rückgabe der fertiggebauten View
      */
     private View inflateBonsRow(final C_Bon bon){
 
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView = inflater.inflate(R.layout.box_bons_view_layout, null);
+        final View rowView = inflater.inflate(R.layout.box_home_boncard_content, null);
         final TextView shopName = (TextView)rowView.findViewById(R.id.bons_shop_name);
         final TextView date = (TextView)rowView.findViewById(R.id.bons_buying_date);
         final TextView price = (TextView)rowView.findViewById(R.id.bons_price);
@@ -358,7 +360,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         });
 
 
-        // OnClickListener zum drücken der Bons (eigener unsichtbarer Button zur besseren Performance)
+        // OnClickListener zum drücken der Bons (öffnet die Bon Anzeigen)
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -370,6 +372,29 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
         return rowView;
+
+    }
+
+
+    /**
+     * Holt die Daten aus der DB zur weiteren Verarbeitung und bereitet diese vor (Aufruf in der onResume())
+     * HINWEIS: Falls die jeweiligen Daten existieren, werden die Attribute bons & budget befüllt bzw. initialisiert.
+     *          Wenn NICHT werden die Attribute LEER initialisiert und dementsprechend verarbeitet
+     */
+    public void prepareData(){
+
+        bons = new ArrayList<>();
+
+        //Holt sich die Anzahl (bonsCount) der letzten eingescannten Bons aus der DB, falls welche existieren
+        if(S.dbHandler.getAllBons(S.db).size()!=0)
+            for(int i = S.dbHandler.getAllBons(S.db).size();i > (S.dbHandler.getAllBons(S.db).size()>bonsCount ? S.dbHandler.getAllBons(S.db).size()-bonsCount : 0) ;i--)
+                bons.add(S.dbHandler.getAllBons(S.db).get(i-1));
+
+        // Holt sich das Budget aus der DB wenn vorhanden
+       if(S.dbHandler.getAllBonBudget(S.db).size()!=0)
+           budget = S.dbHandler.getFavoriteBudget(S.db);
+        else
+            budget = null;
 
     }
 }
