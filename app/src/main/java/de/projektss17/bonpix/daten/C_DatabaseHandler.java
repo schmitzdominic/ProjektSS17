@@ -1281,6 +1281,19 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public ArrayList<String> getExpenditureLastWeek(SQLiteDatabase db){
+
+        ArrayList<String> expList = new ArrayList<>();
+
+        for(String date : S.getFullWeek()){
+            expList.add(S.getWeekday(context.getResources(), S.getWeekdayNumber(date)) + "/" + S.dbHandler.getTotalExpenditure(S.db, date, date));
+        }
+
+        return expList;
+
+    }
+
+
     /**
      * Gibt Artikel sortiert nach der Häufigkeit zurück
      * @param db Datenbank

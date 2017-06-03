@@ -342,18 +342,37 @@ public class S extends Activity {
 
         String date[] = new String[2];
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek() +1);
 
         date[0] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
                 + new SimpleDateFormat("MM").format(cal.getTime()) + "."
                 + new SimpleDateFormat("yyyy").format(cal.getTime());
 
         cal.add(Calendar.WEEK_OF_YEAR, 1);
-        cal.add(Calendar.DAY_OF_MONTH, -1);
+        cal.add(Calendar.DAY_OF_MONTH, - 1);
 
         date[1] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
                 + new SimpleDateFormat("MM").format(cal.getTime()) + "."
                 + new SimpleDateFormat("yyyy").format(cal.getTime());
+
+        return date;
+    }
+
+    public static String[] getFullWeek(){
+        String date[] = new String[7];
+        Calendar cal = Calendar.getInstance();
+
+        date[0] = getNumberWithZero(cal.get(Calendar.DAY_OF_MONTH)) + "."
+                + getNumberWithZero(cal.get(Calendar.MONTH) + 1) + "."
+                + cal.get(Calendar.YEAR);
+
+        for(int i = 1; i < 7; i++){
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+
+            date[i] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
+                    + new SimpleDateFormat("MM").format(cal.getTime()) + "."
+                    + new SimpleDateFormat("yyyy").format(cal.getTime());
+        }
 
         return date;
     }

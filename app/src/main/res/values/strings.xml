@@ -146,7 +146,7 @@
     <string name="title_a_statistik_tab_years">Quartal</string>
 
     <string name="title_a_statistik_pie_chart">Bons pro Laden</string>
-    <string name="title_a_statistik_line_chart">Liniendiagramm</string>
+    <string name="title_a_statistik_line_chart">Ausgaben pro Tag</string>
     <string name="title_a_statistik_bar_chart">Ausgaben pro Laden</string>
     <string name="title_a_statistik_combined_chart">Allgemein</string>
 

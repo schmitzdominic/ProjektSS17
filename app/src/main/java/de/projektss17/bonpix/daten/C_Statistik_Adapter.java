@@ -1,8 +1,10 @@
 package de.projektss17.bonpix.daten;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +16,33 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 
 import de.projektss17.bonpix.R;
@@ -51,11 +64,15 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private SortedSet<Hashtable.Entry<String, Integer>> sortedArticleList;
     private SortedSet<Hashtable.Entry<String, Integer>> bonsCountPerLaden;
     private List<PieEntry> pieces;
+    private LineDataSet dataSet;
+    private ArrayList<ILineDataSet> lineDataSet;
     private ArrayList<Integer> colorsPie;
     private ViewHolderGeneral holderGeneral;
     private ViewHolderBar holderBar;
     private ViewHolderTopProducts holderTopProducts;
     private ViewHolderPie holderPie;
+    private ViewHolderLine holderLine;
+    private LineData lineData;
     private Context context;
     private BarData dataBar;
 
@@ -335,17 +352,58 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
             case 5:
 
-                /*ViewHolderLine holderLine = (ViewHolderLine)holder;
-                LineDataSet setComp1 = new LineDataSet(S.dbHandler.getLineData(1).get("lineOne"), "Company 1");
-                setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
-                LineDataSet setComp2 = new LineDataSet(S.dbHandler.getLineData(1).get("lineTwo"), "Company 2");
-                setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
-                List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-                dataSets.add(setComp1);
-                dataSets.add(setComp2);
-                LineData data = new LineData(dataSets);
-                holderLine.lineChart.setData(data);
-                holderLine.lineChart.invalidate();*/
+                if(holderLine == null){
+                    holderLine = (ViewHolderLine)holder;
+                }
+
+                Description descLine = new Description();
+                descLine.setText("");
+
+                // Wert Design
+                final ArrayList<String> data = S.dbHandler.getExpenditureLastWeek(S.db);
+                this.dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorAccent));
+                this.dataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                this.dataSet.setLineWidth(3);
+                this.dataSet.setCircleRadius(8);
+
+                this.lineDataSet.add(dataSet);
+
+                this.lineData = new LineData(lineDataSet);
+                this.lineData.setValueTextSize(10);
+                this.lineData.setValueTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                this.lineData.setHighlightEnabled(true);
+                this.lineData.setValueFormatter(new IValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                        return data.get((int)entry.getX()-1).split("/")[0].substring(0,2);
+                    }
+                });
+
+                holderLine.lineChart.setData(this.lineData);
+
+                // Allgemeines Design
+                holderLine.lineChart.setDescription(descLine);
+                holderLine.lineChart.setTouchEnabled(false);
+                holderLine.lineChart.getXAxis().setEnabled(false);
+                holderLine.lineChart.getXAxis().setAxisMinimum(0);
+                holderLine.lineChart.getXAxis().setAxisMaximum(data.size()+1);
+                holderLine.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
+                holderLine.lineChart.animateY(1000);
+                holderLine.lineChart.getLegend().setEnabled(false);
+                holderLine.lineChart.getAxisLeft().setEnabled(true);
+                holderLine.lineChart.getAxisRight().setEnabled(false);
+                holderLine.lineChart.setViewPortOffsets(115f, 15f, 15f, 30f);
+                holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value, AxisBase axis) {
+                        return value + " " + context.getResources().getString(R.string.waehrung) + "  ";
+                    }
+                });
+
+                // Starten
+                holderLine.lineChart.invalidate();
+
+
                 break;
         }
     }
@@ -391,6 +449,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.prepareBarData();
         this.prepareTopThreeArticlesData();
         this.preparePieData();
+        this.prepareLineData();
         this.countBons = "" + S.dbHandler.getAllBonsCount(S.db);
         this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db);
     }
@@ -401,6 +460,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.prepareBarData();
         this.prepareTopThreeArticlesData();
         this.preparePieData();
+        this.prepareLineData();
         this.countBons = "" + S.dbHandler.getAllBonsCount(S.db, date1, date2);
         this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db, date1, date2);
     }
@@ -523,5 +583,22 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         for(int i = 0; i < MAXVALUE_PIE_CHART; i++){
             this.colorsPie.add(this.getStatisticColor(i));
         }
+    }
+
+    public void prepareLineData(){
+
+        ArrayList<String> data = S.dbHandler.getExpenditureLastWeek(S.db);
+        List<Entry> dataList = new ArrayList<>();
+        this.lineDataSet = new ArrayList<>();
+
+        int counter = 1;
+
+        for(String value : data){
+            dataList.add(new Entry((float) counter++, Float.parseFloat(value.split("/")[1].replace(",","."))));
+        }
+
+        dataSet = new LineDataSet(dataList, "Ausgaben pro Tag");
+
+
     }
 }
