@@ -44,9 +44,9 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private ArrayList<C_Bon> bons;              // Sammlung der Bons aus der DB zur weiteren Verarbeitung
     private C_Budget budget;                    // Favoriten-Budget aus der DB
 
-    LineDataSet dataSet;                // DataSet für das Linien-Diagramm
-    ArrayList<ILineDataSet> lineDataSet;
-    LineData lineData;
+    private LineDataSet dataSet;
+    private ArrayList<ILineDataSet> lineDataSet;
+    private LineData lineData;
 
 
     public C_Home_Adapter(Context context) {
