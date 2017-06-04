@@ -1432,4 +1432,18 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 return dataList;
         }
     }
+
+
+    public ArrayList<String> getExpenditureLastWeek(SQLiteDatabase db){
+
+        ArrayList<String> expList = new ArrayList<>();
+
+        for(String date : S.getFullWeek()){
+            expList.add(S.getWeekday(context.getResources(), S.getWeekdayNumber(date)) + "/" + S.dbHandler.getTotalExpenditure(S.db, date, date));
+        }
+
+        return expList;
+
+    }
+
 }

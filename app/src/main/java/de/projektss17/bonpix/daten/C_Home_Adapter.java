@@ -27,6 +27,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.projektss17.bonpix.A_Bon_Anzeigen;
 import de.projektss17.bonpix.R;
@@ -267,7 +268,59 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
                 if (bons.size()!=0){
 
-                    ViewHolderLinechartCard holderLinechartCard = (ViewHolderLinechartCard) holder;
+                    ViewHolderLinechartCard holderLine = (ViewHolderLinechartCard) holder;
+
+
+                    if(holderLine == null){
+                        holderLine = (ViewHolderLinechartCard)holder;
+                    }
+
+                    Description descLine = new Description();
+                    descLine.setText("");
+
+                    // Wert Design
+                    final ArrayList<String> data = S.dbHandler.getExpenditureLastWeek(S.db);
+                    this.dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    this.dataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                    this.dataSet.setLineWidth(3);
+                    this.dataSet.setCircleRadius(8);
+
+                    this.lineDataSet.add(dataSet);
+
+                    this.lineData = new LineData(lineDataSet);
+                    this.lineData.setValueTextSize(10);
+                    this.lineData.setValueTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                    this.lineData.setHighlightEnabled(true);
+                    this.lineData.setValueFormatter(new IValueFormatter() {
+                        @Override
+                        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                            return data.get((int)entry.getX()-1).split("/")[0].substring(0,2);
+                        }
+                    });
+
+                    holderLine.lineChart.setData(this.lineData);
+
+                    // Allgemeines Design
+                    holderLine.lineChart.setDescription(descLine);
+                    holderLine.lineChart.setTouchEnabled(false);
+                    holderLine.lineChart.getXAxis().setEnabled(false);
+                    holderLine.lineChart.getXAxis().setAxisMinimum(0);
+                    holderLine.lineChart.getXAxis().setAxisMaximum(data.size()+1);
+                    holderLine.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
+                    holderLine.lineChart.animateY(1000);
+                    holderLine.lineChart.getLegend().setEnabled(false);
+                    holderLine.lineChart.getAxisLeft().setEnabled(true);
+                    holderLine.lineChart.getAxisRight().setEnabled(false);
+                    holderLine.lineChart.setViewPortOffsets(115f, 15f, 15f, 30f);
+                    holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
+                        @Override
+                        public String getFormattedValue(float value, AxisBase axis) {
+                            return value + " " + context.getResources().getString(R.string.waehrung) + "  ";
+                        }
+                    });
+
+                    // Starten
+                    holderLine.lineChart.invalidate();
 
                     /*
 
@@ -467,13 +520,20 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-    public ArrayList<String>  prepareLineChartData(){
+    public void prepareLineData(){
 
-        ArrayList<String> content = new ArrayList<>();
+        ArrayList<String> data = S.dbHandler.getExpenditureLastWeek(S.db);
+        List<Entry> dataList = new ArrayList<>();
+        this.lineDataSet = new ArrayList<>();
 
-        for(int i = 0; i < bons.size(); i++)
-            content.add(bons.get(i).getTotalPrice());
+        int counter = 1;
 
-        return content;
+        for(String value : data){
+            dataList.add(new Entry((float) counter++, Float.parseFloat(value.split("/")[1].replace(",","."))));
+        }
+
+        dataSet = new LineDataSet(dataList, "Ausgaben pro Tag");
+
+
     }
 }
