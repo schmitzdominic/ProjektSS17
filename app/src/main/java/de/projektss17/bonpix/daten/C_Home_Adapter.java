@@ -2,10 +2,8 @@ package de.projektss17.bonpix.daten;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,26 +25,25 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.projektss17.bonpix.A_Bon_Anzeigen;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
-import static android.R.attr.data;
 
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int count = 3;                      // Anzahlt der Items in der RecyclerView - derzeit 3 feste Cards!
-    public int bonsCount = 3;                  // Anzahl wie viele Bons in der BonCard angezeigt werden (ist für die Zukunft somit dynamisch)
+    public int bonsCount = 3;                   // Anzahl der Bons die in der BonCard angezeigt werden sollen (ist für die Zukunft somit dynamisch)
     private Context context;                    // Context der Hauptactivity (Tab_Home) zur weiteren Verarbeitung
     private String curreny, percentage;         // Feste String aus der String-XML (Für '€'-Zeichen und '%'-Zeichen
     private ArrayList<C_Bon> bons;              // Sammlung der Bons aus der DB zur weiteren Verarbeitung
     private C_Budget budget;                    // Favoriten-Budget aus der DB
 
-    private LineDataSet dataSet;
-    private ArrayList<ILineDataSet> lineDataSet;
-    private LineData lineData;
+    private LineDataSet dataSet;                    // DataSet für das Linien-Diagramm
+    private ArrayList<ILineDataSet> lineDataSet;    // LineDataSet für das Linien-Diagramm
+    private LineData lineData;                      // LineData für das Linien-Diagramm
+    private Description descLine;                   // Beschreibung für das Linien-Diagramm
 
 
     public C_Home_Adapter(Context context) {
@@ -120,37 +117,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             this.lineChart = (LineChart) view.findViewById(R.id.tab_home_chartcard_linechart);
 
-            /*lineChart.animateXY(2000, 4000);
-            lineChart.setPadding(30, 30, 30, 30);
-
-            lineDataSet = new ArrayList<>();
-
-            dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, bonsCount+1), "Bon");
-            dataSet.setColor(R.color.colorAccent); // Linienfarbe
-            dataSet.setCircleColor(R.color.colorAccent); // Punktfarbe
-            dataSet.setCircleSize(5); // Punktgröße
-            dataSet.setLineWidth(3f); // Dicke der Linien
-            XAxis xAxis = lineChart.getXAxis();
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setDrawAxisLine(true);
-
-            xAxis.setAxisMaximum(bonsCount+1);
-            xAxis.setAxisMinimum(0);
-            xAxis.setLabelCount(bonsCount+1);
-            lineChart.getAxisRight().setEnabled(false); // no right axis
-            lineDataSet.add(dataSet);
-            lineData = new LineData(lineDataSet);
-
-            lineData.setValueTextSize(10f);
-
-            if (lineChart != null) {
-                this.lineChart.setTouchEnabled(false);
-                this.lineChart.setData(lineData);
-                this.lineChart.invalidate();
-
-            }*/
         }
-
     }
 
 
@@ -270,17 +237,19 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                     ViewHolderLinechartCard holderLine = (ViewHolderLinechartCard) holder;
 
-
-                    holderLine.lineChart.setTouchEnabled(false);
+                    // Befüllung des Linien-Diagramms, sowie Festlegung des allgemeinen Desings für das Linien-Diagramm
+                    holderLine.lineChart.setData(lineData);
+                    holderLine.lineChart.invalidate();
+                    holderLine.lineChart.setDescription(descLine);
                     holderLine.lineChart.getXAxis().setEnabled(false);
                     holderLine.lineChart.getXAxis().setAxisMinimum(0);
                     holderLine.lineChart.getXAxis().setAxisMaximum(bons.size()+1);
                     holderLine.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
-                    holderLine.lineChart.animateY(1000);
+                    holderLine.lineChart.animateY(1500);
                     holderLine.lineChart.getLegend().setEnabled(false);
                     holderLine.lineChart.getAxisLeft().setEnabled(true);
                     holderLine.lineChart.getAxisRight().setEnabled(false);
-                    holderLine.lineChart.setViewPortOffsets(115f, 15f, 15f, 30f);
+                    holderLine.lineChart.setViewPortOffsets(115f, 18f, 15f, 30f);
                     holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
                         @Override
                         public String getFormattedValue(float value, AxisBase axis) {
@@ -289,14 +258,14 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     });
 
 
-                    lineDataSet = new ArrayList<>();
-
-                    dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, bonsCount+1), "");
+                    // Setzt das Design für die DataSet
                     this.dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorAccent));
                     this.dataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
                     this.dataSet.setLineWidth(3);
                     this.dataSet.setCircleRadius(8);
 
+
+                    // Setzt die X-Achse im Diagramm
                     XAxis xAxis = holderLine.lineChart.getXAxis();
                     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                     xAxis.setDrawAxisLine(true);
@@ -304,10 +273,8 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     xAxis.setAxisMinimum(0);
                     xAxis.setLabelCount(bonsCount+1);
 
-                    holderLine.lineChart.getAxisRight().setEnabled(false); // no right axis
-                    lineDataSet.add(this.dataSet);
-                    this.lineData = new LineData(lineDataSet);
 
+                    // Setzt das Design für die LineData
                     this.lineData.setValueTextSize(10);
                     this.lineData.setValueTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
                     this.lineData.setHighlightEnabled(true);
@@ -317,13 +284,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             return bons.get((int)entry.getX()-1).getShopName();
                         }
                     });
-
-
-                    if (holderLine.lineChart != null) {
-                        holderLine.lineChart.setTouchEnabled(false);
-                        holderLine.lineChart.setData(lineData);
-                        holderLine.lineChart.invalidate();
-                    }
 
                 }else{
 
@@ -447,9 +407,9 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      * HINWEIS: Falls die jeweiligen Daten existieren, werden die Attribute bons & budget befüllt bzw. initialisiert.
      *          Wenn NICHT werden die Attribute LEER initialisiert und dementsprechend verarbeitet
      */
-    public void prepareData(){
+    public void prepareBonData(){
 
-        this.bons = S.dbHandler.getNumberOfNewestBons(S.db, 3);
+        this.bons = S.dbHandler.getNumberOfNewestBons(S.db,bonsCount);
 
         // Holt sich das Budget aus der DB wenn vorhanden
        if(S.dbHandler.getFavoriteBudget(S.db) != null){
@@ -459,5 +419,33 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
            budget = null;
        }
 
+
+       // Ruft die Methode auf, die die Daten für das Linien-Diagramm vorbereitet
+       prepareLineChartData(bonsCount);
+
     }
+
+
+    /**
+     * Bereitet die Daten für das Linien-Diagramm vor - Hierbei werden Daten aus der DB geholt und weiter verarbeitet
+     * @param anzahl Übergabe der Bons die angezeigt werden sollen - Standardmäßig soviele Bons wie in der BonCard angezeigt werden (bonsCount)
+     */
+    public void prepareLineChartData(int anzahl){
+
+        // Vorbeireitung der DataSet durch die Funktion im DB-Hanlder
+        this.dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, anzahl+1), "");
+
+        // Vorbereitung der LineDataSet, sowie Befüllung dieser mit der zuvor implementierten dataSet
+        this.lineDataSet = new ArrayList<>();
+        this.lineDataSet.add(this.dataSet);
+
+        // Vorbereitung der LineData, sowie Befüllung dieser mit der zuvor implementierten lineDataSet
+        this.lineData = new LineData(lineDataSet);
+
+        // Implementierung der Description für die Chart - soll jedoch KEINE Description zeigen, daher .setText("")
+        this.descLine = new Description();
+        this.descLine.setText("");
+
+    }
+
 }

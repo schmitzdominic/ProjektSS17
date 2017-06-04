@@ -1433,17 +1433,4 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-
-    public ArrayList<String> getExpenditureLastBons(ArrayList<C_Bon> bons, int anzahl){
-
-        ArrayList<String> expList = new ArrayList<>();
-
-        for(int i = 0; i < bons.size(); i++){
-            expList.add(bons.get(i).getTotalPrice());
-        }
-
-        return expList;
-
-    }
-
 }
