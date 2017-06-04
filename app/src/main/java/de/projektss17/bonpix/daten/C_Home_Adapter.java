@@ -271,117 +271,34 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     ViewHolderLinechartCard holderLine = (ViewHolderLinechartCard) holder;
 
 
-                    if(holderLine == null){
-                        holderLine = (ViewHolderLinechartCard)holder;
+                    holderLine.lineChart.animateXY(2000, 4000);
+                    holderLine.lineChart.setPadding(30, 30, 30, 30);
+
+                    lineDataSet = new ArrayList<>();
+
+                    dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, bonsCount+1), "Bon");
+                    dataSet.setColor(R.color.colorAccent); // Linienfarbe
+                    dataSet.setCircleColor(R.color.colorAccent); // Punktfarbe
+                    dataSet.setCircleSize(5); // Punktgröße
+                    dataSet.setLineWidth(3f); // Dicke der Linien
+                    XAxis xAxis = holderLine.lineChart.getXAxis();
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    xAxis.setDrawAxisLine(true);
+
+                    xAxis.setAxisMaximum(bonsCount+1);
+                    xAxis.setAxisMinimum(0);
+                    xAxis.setLabelCount(bonsCount+1);
+                    holderLine.lineChart.getAxisRight().setEnabled(false); // no right axis
+                    lineDataSet.add(dataSet);
+                    lineData = new LineData(lineDataSet);
+
+                    lineData.setValueTextSize(10f);
+
+                    if (holderLine.lineChart != null) {
+                        holderLine.lineChart.setTouchEnabled(false);
+                        holderLine.lineChart.setData(lineData);
+                        holderLine.lineChart.invalidate();
                     }
-
-                    Description descLine = new Description();
-                    descLine.setText("");
-
-                    // Wert Design
-                    final ArrayList<String> data = S.dbHandler.getExpenditureLastWeek(S.db);
-                    this.dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorAccent));
-                    this.dataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-                    this.dataSet.setLineWidth(3);
-                    this.dataSet.setCircleRadius(8);
-
-                    this.lineDataSet.add(dataSet);
-
-                    this.lineData = new LineData(lineDataSet);
-                    this.lineData.setValueTextSize(10);
-                    this.lineData.setValueTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-                    this.lineData.setHighlightEnabled(true);
-                    this.lineData.setValueFormatter(new IValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                            return data.get((int)entry.getX()-1).split("/")[0].substring(0,2);
-                        }
-                    });
-
-                    holderLine.lineChart.setData(this.lineData);
-
-                    // Allgemeines Design
-                    holderLine.lineChart.setDescription(descLine);
-                    holderLine.lineChart.setTouchEnabled(false);
-                    holderLine.lineChart.getXAxis().setEnabled(false);
-                    holderLine.lineChart.getXAxis().setAxisMinimum(0);
-                    holderLine.lineChart.getXAxis().setAxisMaximum(data.size()+1);
-                    holderLine.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
-                    holderLine.lineChart.animateY(1000);
-                    holderLine.lineChart.getLegend().setEnabled(false);
-                    holderLine.lineChart.getAxisLeft().setEnabled(true);
-                    holderLine.lineChart.getAxisRight().setEnabled(false);
-                    holderLine.lineChart.setViewPortOffsets(115f, 15f, 15f, 30f);
-                    holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value, AxisBase axis) {
-                            return value + " " + context.getResources().getString(R.string.waehrung) + "  ";
-                        }
-                    });
-
-                    // Starten
-                    holderLine.lineChart.invalidate();
-
-                    /*
-
-                    Description descLine = new Description();
-                    descLine.setText("");
-
-                    // Wert Design
-                    final ArrayList<String> data = prepareLineChartData();
-                    this.dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorAccent));
-                    this.dataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-                    this.dataSet.setLineWidth(3);
-                    this.dataSet.setCircleRadius(8);
-
-                    this.lineDataSet.add(dataSet);
-
-                    this.lineData = new LineData(lineDataSet);
-                    this.lineData.setValueTextSize(10);
-                    this.lineData.setValueTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-                    this.lineData.setHighlightEnabled(true);
-                    this.lineData.setValueFormatter(new IValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                            return data.get((int)entry.getX()-1).split("/")[0].substring(0,2);
-                        }
-                    });
-
-                    holderLinechartCard.lineChart.setData(this.lineData);
-
-                    // Allgemeines Design
-                    holderLinechartCard.lineChart.setDescription(descLine);
-                    holderLinechartCard.lineChart.setTouchEnabled(false);
-                    holderLinechartCard.lineChart.getXAxis().setEnabled(false);
-                    holderLinechartCard.lineChart.getXAxis().setAxisMinimum(0);
-                    holderLinechartCard.lineChart.getXAxis().setAxisMaximum(data.size()+1);
-                    holderLinechartCard.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
-                    holderLinechartCard.lineChart.animateY(1000);
-                    holderLinechartCard.lineChart.getLegend().setEnabled(false);
-                    holderLinechartCard.lineChart.getAxisLeft().setEnabled(true);
-                    holderLinechartCard.lineChart.getAxisRight().setEnabled(false);
-                    holderLinechartCard.lineChart.setViewPortOffsets(115f, 15f, 15f, 30f);
-                    holderLinechartCard.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
-                        @Override
-                        public String getFormattedValue(float value, AxisBase axis) {
-                            return value + " " + context.getResources().getString(R.string.waehrung) + "  ";
-                        }
-                    });
-
-
-
-
-                    // Starten
-                    holderLinechartCard.lineChart.invalidate();
-
-                    if (holderLinechartCard.lineChart != null) {
-                        holderLinechartCard.lineChart.setTouchEnabled(false);
-                        holderLinechartCard.lineChart.setData(lineData);
-                        holderLinechartCard.lineChart.invalidate();
-
-                    }
-
- */
 
                 }else{
 
@@ -516,24 +433,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
        }else{
            budget = null;
        }
-
-    }
-
-
-    public void prepareLineData(){
-
-        ArrayList<String> data = S.dbHandler.getExpenditureLastWeek(S.db);
-        List<Entry> dataList = new ArrayList<>();
-        this.lineDataSet = new ArrayList<>();
-
-        int counter = 1;
-
-        for(String value : data){
-            dataList.add(new Entry((float) counter++, Float.parseFloat(value.split("/")[1].replace(",","."))));
-        }
-
-        dataSet = new LineDataSet(dataList, "Ausgaben pro Tag");
-
 
     }
 }

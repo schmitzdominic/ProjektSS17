@@ -337,6 +337,7 @@ public class S extends Activity {
         }
     }
 
+
     /**
      * Notification Builder - Opens a clickable notification!
      * (Could be opened with S.sendNotification(context, activity.class, string, string, boolean))

@@ -1434,12 +1434,12 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<String> getExpenditureLastWeek(SQLiteDatabase db){
+    public ArrayList<String> getExpenditureLastBons(ArrayList<C_Bon> bons, int anzahl){
 
         ArrayList<String> expList = new ArrayList<>();
 
-        for(String date : S.getFullWeek()){
-            expList.add(S.getWeekday(context.getResources(), S.getWeekdayNumber(date)) + "/" + S.dbHandler.getTotalExpenditure(S.db, date, date));
+        for(int i = 0; i < bons.size(); i++){
+            expList.add(bons.get(i).getTotalPrice());
         }
 
         return expList;
