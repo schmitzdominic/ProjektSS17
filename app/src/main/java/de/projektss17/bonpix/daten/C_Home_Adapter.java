@@ -271,28 +271,53 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     ViewHolderLinechartCard holderLine = (ViewHolderLinechartCard) holder;
 
 
-                    holderLine.lineChart.animateXY(2000, 4000);
-                    holderLine.lineChart.setPadding(30, 30, 30, 30);
+                    holderLine.lineChart.setTouchEnabled(false);
+                    holderLine.lineChart.getXAxis().setEnabled(false);
+                    holderLine.lineChart.getXAxis().setAxisMinimum(0);
+                    holderLine.lineChart.getXAxis().setAxisMaximum(bons.size()+1);
+                    holderLine.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
+                    holderLine.lineChart.animateY(1000);
+                    holderLine.lineChart.getLegend().setEnabled(false);
+                    holderLine.lineChart.getAxisLeft().setEnabled(true);
+                    holderLine.lineChart.getAxisRight().setEnabled(false);
+                    holderLine.lineChart.setViewPortOffsets(115f, 15f, 15f, 30f);
+                    holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
+                        @Override
+                        public String getFormattedValue(float value, AxisBase axis) {
+                            return value + " " + context.getResources().getString(R.string.waehrung) + "  ";
+                        }
+                    });
+
 
                     lineDataSet = new ArrayList<>();
 
-                    dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, bonsCount+1), "Bon");
-                    dataSet.setColor(R.color.colorAccent); // Linienfarbe
-                    dataSet.setCircleColor(R.color.colorAccent); // Punktfarbe
-                    dataSet.setCircleSize(5); // Punktgröße
-                    dataSet.setLineWidth(3f); // Dicke der Linien
+                    dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, bonsCount+1), "");
+                    this.dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    this.dataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                    this.dataSet.setLineWidth(3);
+                    this.dataSet.setCircleRadius(8);
+
                     XAxis xAxis = holderLine.lineChart.getXAxis();
                     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                     xAxis.setDrawAxisLine(true);
-
                     xAxis.setAxisMaximum(bonsCount+1);
                     xAxis.setAxisMinimum(0);
                     xAxis.setLabelCount(bonsCount+1);
-                    holderLine.lineChart.getAxisRight().setEnabled(false); // no right axis
-                    lineDataSet.add(dataSet);
-                    lineData = new LineData(lineDataSet);
 
-                    lineData.setValueTextSize(10f);
+                    holderLine.lineChart.getAxisRight().setEnabled(false); // no right axis
+                    lineDataSet.add(this.dataSet);
+                    this.lineData = new LineData(lineDataSet);
+
+                    this.lineData.setValueTextSize(10);
+                    this.lineData.setValueTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                    this.lineData.setHighlightEnabled(true);
+                    this.lineData.setValueFormatter(new IValueFormatter() {
+                        @Override
+                        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                            return bons.get((int)entry.getX()-1).getShopName();
+                        }
+                    });
+
 
                     if (holderLine.lineChart != null) {
                         holderLine.lineChart.setTouchEnabled(false);
