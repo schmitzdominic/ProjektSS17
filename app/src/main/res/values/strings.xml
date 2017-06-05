@@ -63,7 +63,8 @@
     <string name="title_impressum_version">App Version</string>
     <string name="title_impressum_kontakt">Kontakt</string>
     <string name="title_impressum_entwickler">Entwickler</string>
-    <string name="impressum_versionnummer">Version 0.2</string>
+    <string name="impressum_version_nummer">Version 0.2</string>
+    <string name="impressum_version_stand">Stand: 05.06.2017</string>
     <string name="impressum_kontakt">Hochschule Augsburg \nAn der Hochschule 1 \n86161 Augsburg \n\nE-Mail: info@bonpix.de</string>
     <string name="impressum_entwickler">Alexander Leicher \nDaniel Königl \nDominic Schmitz \nDominik Edin \nFabian Sippel \nJohanns Varela \nMarcus Hedrich \nSascha Braun \nUli Satzger</string>
 

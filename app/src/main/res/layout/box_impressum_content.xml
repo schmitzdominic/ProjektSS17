@@ -13,12 +13,13 @@
         android:layout_width="368dp"
         android:layout_height="495dp"
         android:orientation="vertical"
+        android:background="@android:color/white"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp">
         <TextView
             android:id="@+id/impressum_version_title"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="left|center_vertical"
             android:text="@string/title_impressum_version"
             android:layout_marginLeft="24dp"
@@ -30,14 +31,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/impressum_version_title"
-            android:text="@string/impressum_versionnummer"
+            android:text="@string/impressum_version_nummer"
             android:layout_marginLeft="24dp"
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/impressum_stand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/impressum_version"
+            android:text="@string/impressum_version_stand"
+            android:layout_marginLeft="24dp"
+            android:textSize="14dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/impressum_stand"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
             android:id="@+id/impressum_kontakt_title"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/impressum_version"
             android:gravity="left|center_vertical"
             android:text="@string/title_impressum_kontakt"
@@ -56,10 +74,18 @@
             android:layout_marginLeft="24dp"
             android:textSize="16dp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/impressum_kontakt"
+            android:background="@android:color/darker_gray"/>
+
         <TextView
             android:id="@+id/impressum_entwickler_title"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/impressum_kontakt"
             android:gravity="left|center_vertical"
             android:text="@string/title_impressum_entwickler"
