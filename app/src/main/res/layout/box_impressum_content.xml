@@ -21,7 +21,6 @@
             android:layout_height="60dp"
             android:gravity="left|center_vertical"
             android:text="@string/title_impressum_version"
-            android:textAlignment="center"
             android:layout_marginLeft="24dp"
             android:textSize="18sp"
             android:textColor="@color/colorAccent"/>
@@ -32,7 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/impressum_version_title"
             android:text="@string/impressum_versionnummer"
-            android:textAlignment="center"
             android:layout_marginLeft="24dp"
             android:textSize="16dp" />
 
@@ -55,7 +53,6 @@
             android:layout_below="@+id/impressum_kontakt_title"
             android:gravity="left|center_vertical"
             android:text="@string/impressum_kontakt"
-            android:textAlignment="center"
             android:layout_marginLeft="24dp"
             android:textSize="16dp" />
 
@@ -78,7 +75,6 @@
             android:layout_below="@+id/impressum_entwickler_title"
             android:gravity="left|center_vertical"
             android:text="@string/impressum_entwickler"
-            android:textAlignment="center"
             android:layout_marginLeft="24dp"
             android:textSize="16dp" />
     </LinearLayout>
