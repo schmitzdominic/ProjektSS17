@@ -2,26 +2,32 @@ package de.projektss17.bonpix;
 
 
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
@@ -132,6 +138,59 @@ public class A_Laeden extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
+     * hinzu
+     *
+     * @param menu
+     * @return true wenn alles hinzugefügt wurde
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        super.onPrepareOptionsMenu(menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem item = menu.findItem(R.id.menu_main_search);
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        SearchView sv = (SearchView) MenuItemCompat.getActionView(item);
+        sv.setIconifiedByDefault(false);
+        sv.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        sv.setSubmitButtonEnabled(true);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String filterString){
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String pass){
+                final List<C_Laden> filteredLadenList = filter(shopList, pass);
+                mAdapter.setFilter(filteredLadenList);
+                return true;
+            }
+        });
+        MenuItemCompat.setActionView(item, sv);
+        return true;
+    }
+
+    private List<C_Laden> filter(List<C_Laden> shops, String query) {
+        query = query.toLowerCase();
+        final List<C_Laden> filteredLadenList = new ArrayList<>();
+        for (C_Laden shop : shops) {
+            if(shop.getName().toLowerCase().contains(query)) {
+                filteredLadenList.add(shop);
+            }
+        }
+        return filteredLadenList;
+    }
+
     /**
      * Set Data for RecyclerView Shops
      */
