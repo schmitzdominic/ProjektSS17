@@ -9,11 +9,14 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -277,7 +280,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
                             .create().show();
                 } else if ((int) id > 1){
                     bon.setShopName(parentView.getSelectedItem().toString());
+                    ((ImageView) findViewById(R.id.ocr_manuell_image_view_shop)).setImageDrawable(RoundedBitmapDrawableFactory.create(getResources(), S.getShopIcon(getResources(), bon.getShopName())));
+
                 }
+
             }
 
             // Wenn nichts selektiert wurde
