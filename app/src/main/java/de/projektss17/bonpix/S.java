@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceActivity;
@@ -17,6 +18,7 @@ import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -376,5 +378,15 @@ public class S extends Activity {
         // Add as notification
         NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
+    }
+
+    public static void setMenuCounter(int itemId, int count, NavigationView navigationView) {
+        TextView view = (TextView) navigationView.getMenu().findItem(itemId).getActionView();
+        if(count > 99){
+            view.setText(count > 99 ? "99+" : String.valueOf(count));
+        } else {
+            view.setText(count > 0 ? String.valueOf(count) : null);
+        }
+
     }
 }

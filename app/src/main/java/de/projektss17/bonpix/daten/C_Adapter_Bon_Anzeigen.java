@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import de.projektss17.bonpix.A_Max_Bon_Pic;
 import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 
 public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

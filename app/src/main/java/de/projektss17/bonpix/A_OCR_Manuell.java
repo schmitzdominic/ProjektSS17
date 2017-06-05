@@ -20,7 +20,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,12 +40,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Date;
 
 import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_Bon;
@@ -274,6 +270,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
                                     parentView.setSelection(0);
                                 }
                             })
+                            .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                @Override
+                                public void onCancel(DialogInterface dialog) {
+                                    parentView.setSelection(0);
+                                }
+                            })
                             .create().show();
                 } else if ((int) id > 1){
                     bon.setShopName(parentView.getSelectedItem().toString());
@@ -285,7 +287,11 @@ public class A_OCR_Manuell extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parentView) {
                 parentView.setSelection(0);
             }
+
+
         });
+
+
     }
 
     /**
