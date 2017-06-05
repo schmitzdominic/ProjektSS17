@@ -248,15 +248,15 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     holderLine.lineChart.getXAxis().setAxisMinimum(0);
                     holderLine.lineChart.getXAxis().setAxisMaximum(bons.size()+1);
                     holderLine.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
-                    holderLine.lineChart.animateY(1500);
+                    holderLine.lineChart.animateY(1000);
                     holderLine.lineChart.getLegend().setEnabled(false);
                     holderLine.lineChart.getAxisLeft().setEnabled(true);
                     holderLine.lineChart.getAxisRight().setEnabled(false);
-                    holderLine.lineChart.setViewPortOffsets(115f, 18f, 15f, 30f);
+                    holderLine.lineChart.setViewPortOffsets(125f, 18f, 15f, 30f);
                     holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
                         @Override
                         public String getFormattedValue(float value, AxisBase axis) {
-                            return value + " " + context.getResources().getString(R.string.waehrung) + "  ";
+                            return (int)value + " " + context.getResources().getString(R.string.waehrung) + "  ";
                         }
                     });
 

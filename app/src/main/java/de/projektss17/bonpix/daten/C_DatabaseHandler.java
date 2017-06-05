@@ -103,6 +103,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         ArrayList<Integer> bonIds = new ArrayList<>();
         ArrayList<C_Bon> bonsBudget = budget.getBons();
+        double used = 0;
 
         for(C_Bon bon : budget.getBons()){
             bonIds.add(bon.getId());
@@ -115,7 +116,12 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             }
         }
 
+        for(C_Bon bon : bonsBudget){
+            used += Double.parseDouble(bon.getTotalPrice().replace(",","."));
+        }
+
         budget.setBons(bonsBudget);
+        budget.setBudgetLost((int)used);
         S.dbHandler.updateBudget(db, budget);
 
     }
