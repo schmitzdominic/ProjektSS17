@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -240,6 +242,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     // Befüllung des Linien-Diagramms, sowie Festlegung des allgemeinen Desings für das Linien-Diagramm
                     holderLine.lineChart.setData(lineData);
                     holderLine.lineChart.invalidate();
+                    holderLine.lineChart.setTouchEnabled(false);
                     holderLine.lineChart.setDescription(descLine);
                     holderLine.lineChart.getXAxis().setEnabled(false);
                     holderLine.lineChart.getXAxis().setAxisMinimum(0);
@@ -272,6 +275,11 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     xAxis.setAxisMaximum(bonsCount+1);
                     xAxis.setAxisMinimum(0);
                     xAxis.setLabelCount(bonsCount+1);
+
+                    YAxis rightYAxis = holderLine.lineChart.getAxisLeft();
+                    rightYAxis.setAxisMaxValue((float)(dataSet.getYMax()*1.25));
+                    rightYAxis.setAxisMinValue(0);
+                    rightYAxis.setLabelCount(bonsCount+2);
 
 
                     // Setzt das Design für die LineData
@@ -419,7 +427,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
            budget = null;
        }
 
-
        // Ruft die Methode auf, die die Daten für das Linien-Diagramm vorbereitet
        prepareLineChartData(bonsCount);
 
@@ -447,5 +454,4 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.descLine.setText("");
 
     }
-
 }
