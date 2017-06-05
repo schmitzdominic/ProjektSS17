@@ -1,13 +1,9 @@
 package de.projektss17.bonpix;
 
-
-
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,7 +11,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -61,7 +56,6 @@ public class A_Laeden extends AppCompatActivity {
                 View alertLayoutLaeden = inflater.inflate(R.layout.box_laeden_alert_dialog, null);
                 final EditText shopTitle = (EditText) alertLayoutLaeden.findViewById(R.id.laeden_alert_dialog_title);
 
-
                 // DIALOG Fenster
                 new AlertDialog.Builder(A_Laeden.this)
                         .setTitle(R.string.a_laeden_alert_dialog_title)
@@ -84,7 +78,6 @@ public class A_Laeden extends AppCompatActivity {
                                     } else {
                                         S.outLong(A_Laeden.this, res.getString(R.string.a_laeden_alert_dialog_toast2));
                                     }
-
                             }
 
                         }).create().show();
@@ -96,8 +89,6 @@ public class A_Laeden extends AppCompatActivity {
         //Im Folgenden wird die RecyclerView angelegt und die dazugehörigen Einstellungen verwaltet
         //XML instaniziieren
         this.recyclerViewLaeden = (RecyclerView) findViewById(R.id.view_laeden);
-
-
         //RecyclerView in C_Laeden_Adapter
         mAdapter = new C_Laeden_Adapter(this, shopList);
         prepareShopData();
@@ -119,7 +110,6 @@ public class A_Laeden extends AppCompatActivity {
                     // Scroll Down
                     if (fab.isShown()) {
                         fab.hide();
-
                     }
                 }
                 else if (dy <0) {
@@ -130,8 +120,8 @@ public class A_Laeden extends AppCompatActivity {
                 }
             }
         });
-
     }
+
     /**
      * Set Data for RecyclerView Shops
      */

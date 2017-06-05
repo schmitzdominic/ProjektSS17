@@ -51,6 +51,8 @@
     <string name="einstellungen_default_email">Hubert@gmx.de</string>
     <string name="einstellungen_action_bar_desc">Einstellungen</string>
     <string name="einstellungen_action_bar_title">Einstellungen</string>
+    <string name="einstellungen_notification_title">Benachrichtigungen</string>
+    <string name="einstellungen_notification_text">Aktivieren oder Deaktivieren der Benachrichtigungen</string>
 
     <!-- A_Backup -->
     <string name="title_backup_screen">Backup</string>
