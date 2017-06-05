@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="de.projektss17.bonpix.A_Impressum"
+    tools:showIn="@layout/box_impressum_screen">
+
+    <LinearLayout
+        android:id="@+id/impressum_all"
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+        <TextView
+            android:id="@+id/impressum_version_title"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="left|center_vertical"
+            android:text="@string/title_impressum_version"
+            android:textAlignment="center"
+            android:layout_marginLeft="24dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/impressum_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/impressum_version_title"
+            android:text="@string/impressum_versionnummer"
+            android:textAlignment="center"
+            android:layout_marginLeft="24dp"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/impressum_kontakt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_below="@+id/impressum_version"
+            android:gravity="left|center_vertical"
+            android:text="@string/title_impressum_kontakt"
+            android:textAlignment="center"
+            android:layout_marginLeft="24dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/impressum_kontakt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/impressum_kontakt_title"
+            android:gravity="left|center_vertical"
+            android:text="@string/impressum_kontakt"
+            android:textAlignment="center"
+            android:layout_marginLeft="24dp"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/impressum_entwickler_title"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_below="@+id/impressum_kontakt"
+            android:gravity="left|center_vertical"
+            android:text="@string/title_impressum_entwickler"
+            android:textAlignment="center"
+            android:layout_marginLeft="24dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/impressum_entwickler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/impressum_entwickler_title"
+            android:gravity="left|center_vertical"
+            android:text="@string/impressum_entwickler"
+            android:textAlignment="center"
+            android:layout_marginLeft="24dp"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
+

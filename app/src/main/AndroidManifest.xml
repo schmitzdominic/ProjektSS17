@@ -87,7 +87,7 @@
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
         <activity
-            android:name=".A_Version"
+            android:name=".A_Impressum"
             android:label="@string/title_version_screen"
             android:parentActivityName=".A_Einstellungen"
             android:theme="@style/AppTheme.NoActionBar"
