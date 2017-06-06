@@ -267,7 +267,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<C_Bon> getBonsBetweenDate(SQLiteDatabase db, String date1, String date2){
 
         ArrayList<C_Bon> list = new ArrayList<>();
-        String query = "SELECT * FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')";
+        String query = "SELECT * FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"') ORDER BY bonid DESC";
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -289,7 +289,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return rotateList(list);
+        return list;
     }
 
     /**

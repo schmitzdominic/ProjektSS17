@@ -26,6 +26,7 @@ import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import de.projektss17.bonpix.A_Bon_Anzeigen;
@@ -245,18 +246,19 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     holderLine.lineChart.setTouchEnabled(false);
                     holderLine.lineChart.setDescription(descLine);
                     holderLine.lineChart.getXAxis().setEnabled(false);
-                    holderLine.lineChart.getXAxis().setAxisMinimum(0);
                     holderLine.lineChart.getXAxis().setAxisMaximum(bons.size()+1);
                     holderLine.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
                     holderLine.lineChart.animateY(1000);
                     holderLine.lineChart.getLegend().setEnabled(false);
                     holderLine.lineChart.getAxisLeft().setEnabled(true);
                     holderLine.lineChart.getAxisRight().setEnabled(false);
-                    holderLine.lineChart.setViewPortOffsets(125f, 18f, 15f, 30f);
+                    holderLine.lineChart.setViewPortOffsets(145f, 18f, 15f, 30f);
                     holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
                         @Override
                         public String getFormattedValue(float value, AxisBase axis) {
-                            return (int)value + " " + context.getResources().getString(R.string.waehrung) + "  ";
+                            double doubleValue = Math.round(value * 100) / 100.00;
+                            DecimalFormat df = new DecimalFormat("#0.00");
+                            return df.format(doubleValue) + " " + context.getResources().getString(R.string.waehrung) + "  ";
                         }
                     });
 
