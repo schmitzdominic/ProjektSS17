@@ -56,6 +56,13 @@ public class A_Budget extends AppCompatActivity {
 
         // FAB - Drücken öffnet ein Dialog mit Eingabefeldern
         this.fab = (FloatingActionButton) findViewById(R.id.budget_fab);    //Floating Action Button
+
+        // SWIPPER - Implementierung des Swipper-Funktion
+        swipper = new ItemTouchHelper(createHelperCallBack());      // ItemTouch -> Swipper
+        swipper.attachToRecyclerView(recyclerView);
+
+        onStartProofAndCreate();
+
         fab.setOnClickListener(new View.OnClickListener() {
 
             /**
@@ -71,13 +78,6 @@ public class A_Budget extends AppCompatActivity {
 
             }
         });
-
-
-        // SWIPPER - Implementierung des Swipper-Funktion
-        swipper = new ItemTouchHelper(createHelperCallBack());      // ItemTouch -> Swipper
-        swipper.attachToRecyclerView(recyclerView);
-
-        onStartProofAndCreate();
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -111,6 +111,7 @@ public class A_Budget extends AppCompatActivity {
             S.dbHandler.refreshBudget(S.db, budget);
         }
 
+        budgetList.clear();
         for (C_Budget budget : S.dbHandler.getAllBudgets(S.db)) {
             this.addItem(budget);
         }

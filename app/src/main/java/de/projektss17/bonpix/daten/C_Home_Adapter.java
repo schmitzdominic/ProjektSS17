@@ -1,33 +1,52 @@
 package de.projektss17.bonpix.daten;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ViewPortHandler;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import de.projektss17.bonpix.A_Bon_Anzeigen;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
+
 
 public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int count = 3;                      // Anzahlt der Items in der RecyclerView - derzeit 3 feste Cards!
+    public int bonsCount = 3;                   // Anzahl der Bons die in der BonCard angezeigt werden sollen (ist für die Zukunft somit dynamisch)
     private Context context;                    // Context der Hauptactivity (Tab_Home) zur weiteren Verarbeitung
-    private ArrayList<C_Bon> bons;              // Sammlung der jeweiligen ausgewählten Bons aus der DB zur weiteren Verarbeitung
-    private ArrayList<C_Budget> budgets;        // Sammlung der jeweiligen ausgewählten Budgets aus der DB zur weitren Verarbeitung
     private String curreny, percentage;         // Feste String aus der String-XML (Für '€'-Zeichen und '%'-Zeichen
+    private ArrayList<C_Bon> bons;              // Sammlung der Bons aus der DB zur weiteren Verarbeitung
+    private C_Budget budget;                    // Favoriten-Budget aus der DB
+
+    private LineDataSet dataSet;                    // DataSet für das Linien-Diagramm
+    private ArrayList<ILineDataSet> lineDataSet;    // LineDataSet für das Linien-Diagramm
+    private LineData lineData;                      // LineData für das Linien-Diagramm
+    private Description descLine;                   // Beschreibung für das Linien-Diagramm
 
 
     public C_Home_Adapter(Context context) {
@@ -36,53 +55,31 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.percentage = context.getString(R.string.percentage);
     }
 
+
+    // LAYOUT Default
+    public class ViewHolderDefault extends RecyclerView.ViewHolder {
+
+        TextView titleDefault, contentDefault;
+
+        public ViewHolderDefault(View view) {
+            super(view);
+
+            titleDefault = (TextView) view.findViewById(R.id.default_cardview_title);
+            contentDefault = (TextView)view.findViewById(R.id.default_cardview_content);
+
+        }
+    }
+
+
     // LAYOUT BonCard
-    // (Hinweis: Drei feste Inhalte! Dynamisch würde kein Sinn machen,
-    //  da hierfür die Tab Bons bereit steht und die implementierung möglicherweise nicht funktioniert! )
     public class ViewHolderBonCard extends RecyclerView.ViewHolder {
 
-        public Button bon1, bon2, bon3;
-
-        public TextView firstContentAbove, firstContentBelow, firstBonPrice,
-                secondContentAbove, secondContentBelow, secondBonPrice,
-                thirdContentAbove, thirdContentBelow, thirdBonPrice;
-        public ImageView firstBonImage, firstFavoriteImage, secondBonImage, secondFavoriteImage,
-                thirdBonImage, thirdFavoriteImage;
+        LinearLayout linearLayout;
 
         public ViewHolderBonCard(View view) {
             super(view);
 
-            // Implementierung des Layouts der einzelnen Objekte für die CardView
-            this.firstContentAbove = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_above_content);
-            this.firstContentBelow = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_below_content);
-            this.firstBonPrice = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_betrag);
-            this.secondContentAbove = (TextView) view.findViewById(R.id.tab_home_boncard_second_bon_above_content);
-            this.secondContentBelow = (TextView) view.findViewById(R.id.tab_home_boncard_second_bon_below_content);
-            this.secondBonPrice = (TextView) view.findViewById(R.id.tab_home_boncard_second_bon_betrag);
-            this.thirdContentAbove = (TextView) view.findViewById(R.id.tab_home_boncard_third_bon_above_content);
-            this.thirdContentBelow = (TextView) view.findViewById(R.id.tab_home_boncard_third_bon_below_content);
-            this.thirdBonPrice = (TextView) view.findViewById(R.id.tab_home_boncard_third_bon_betrag);
-
-
-            //ToDo - BonImages Rund machen (sind derzeit viereckig)
-            this.firstBonImage = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_small_image);
-            this.firstFavoriteImage = proofFavorite(bons.get(0), (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_big_image));
-            this.secondBonImage = (ImageView) view.findViewById(R.id.tab_home_boncard_second_bon_small_image);
-            this.secondFavoriteImage = proofFavorite(bons.get(1), (ImageView) view.findViewById(R.id.tab_home_boncard_second_bon_big_image));
-            this.thirdBonImage = (ImageView) view.findViewById(R.id.tab_home_boncard_third_bon_small_image);
-            this.thirdFavoriteImage = proofFavorite(bons.get(2), (ImageView) view.findViewById(R.id.tab_home_boncard_third_bon_big_image));
-
-            //Implementierung der Invisible-Buttons zum Auswählen der zuletzt eingescannten Bons
-            this.bon1 = (Button) view.findViewById(R.id.tab_home_boncard_first_bon);
-            this.bon2 = (Button) view.findViewById(R.id.tab_home_boncard_second_bon);
-            this.bon3 = (Button) view.findViewById(R.id.tab_home_boncard_third_bon);
-
-
-            //ToDo - Hier muss ein onClick-Listener für die oberen drei Buttons (bon1, ...) implementiert werden
-            // ---->> onClick bewirkt eine startActivity (Intent) an die Activity Bon_Anzeigen
-            // HINWEIS: je nachdem welchen Bon man anklickt, sollen diese Daten an die Bon_Anzeigen weitergeleitet und autom. befüllt werden
-
-            // INFO: Implementierung im nächsten Sprint, da parallel zu diesem Item Bon_Anzeigen überarbeitet wurde!!!!
+            linearLayout = (LinearLayout)view.findViewById(R.id.tab_home_boncard_linearlayout);
 
         }
     }
@@ -114,7 +111,6 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     // LAYOUT LineChartCard
-    //Diese Logik war bereits gegeben vom vorherigen Sprint! (Bei Fragen an den jeweiligen wenden!)
     public class ViewHolderLinechartCard extends RecyclerView.ViewHolder {
 
         public LineChart lineChart;
@@ -122,43 +118,9 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public ViewHolderLinechartCard(View view) {
             super(view);
 
-            //ToDo - Es muss noch entschieden weren, welche Daten ausgelesen und ausgewertet werden
-            LineDataSet dataSet;
-            ArrayList<ILineDataSet> lineDataSet;
-            LineData lineData;
-
             this.lineChart = (LineChart) view.findViewById(R.id.tab_home_chartcard_linechart);
-            lineChart.animateXY(2000, 4000);
-            lineChart.setPadding(30, 30, 30, 30);
 
-            lineDataSet = new ArrayList<>();
-
-            dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, 4), "Bon");
-            dataSet.setColor(Color.BLACK); // Linienfarbe
-            dataSet.setCircleColor(Color.BLACK); // Punktfarbe
-            dataSet.setCircleSize(5); // Punktgröße
-            dataSet.setLineWidth(3f); // Dicke der Linien
-            XAxis xAxis = lineChart.getXAxis();
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setDrawAxisLine(true);
-            xAxis.setDrawGridLines(false);
-            xAxis.setAxisMaximum(3);
-            xAxis.setAxisMinimum(0);
-            xAxis.setLabelCount(3);
-            lineChart.getAxisRight().setEnabled(false); // no right axis
-            lineDataSet.add(dataSet);
-            lineData = new LineData(lineDataSet);
-
-            lineData.setValueTextSize(10f);
-
-            if (lineChart != null) {
-                this.lineChart.setTouchEnabled(false);
-                this.lineChart.setData(lineData);
-                this.lineChart.invalidate();
-
-            }
         }
-
     }
 
 
@@ -175,17 +137,49 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         switch (viewType) {
             case 0:
-                bons = S.dbHandler.getNumberOfNewestBons(S.db, 3);   // Holt die letzten drei Bons aus der DB
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_boncard_layout, parent, false);
-                return new ViewHolderBonCard(itemView);
+
+                // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
+                if(bons.size()!=0){
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_boncard_layout, parent, false);
+                    return new ViewHolderBonCard(itemView);
+
+                }else{
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_default_cardview_layout, parent, false);
+                    return new ViewHolderDefault(itemView);
+
+                }
+
             case 1:
-                budgets = S.dbHandler.getAllBudgets(S.db); // Holt sich alle Budgets (HINWEIS: wir entnehmen hier erstmal nur das erste!)
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_topbudget_layout, parent, false);
-                return new ViewHolderBudgetCard(itemView);
+
+                // Wenn Budgets bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
+                if(budget!=null){
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_topbudget_layout, parent, false);
+                    return new ViewHolderBudgetCard(itemView);
+
+                }else{
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_default_cardview_layout, parent, false);
+                    return new ViewHolderDefault(itemView);
+
+                }
+
             case 2:
-                //ToDo - Hier muss überlegt werden, was ausgewertet wird, um dementsprechend die Daten aus der DB zu ziehen!
-                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_linechart_layout, parent, false);
-                return new ViewHolderLinechartCard(itemView);
+
+                // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
+                if(bons.size()!=0){
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_home_linechart_layout, parent, false);
+                    return new ViewHolderLinechartCard(itemView);
+
+                }else{
+
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_default_cardview_layout, parent, false);
+                    return new ViewHolderDefault(itemView);
+
+                }
         }
         return null;
     }
@@ -194,72 +188,121 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        //HINWEIS: Derzeit sind alle drei Cards statisch. Die Inhalte sind jedoch DYNAMISCH!
         switch (getItemViewType(position)) {
             case 0:
-                final ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
-                holderBonCard.firstContentAbove.setText(bons.get(0).getShopName());
-                holderBonCard.firstContentBelow.setText(bons.get(0).getDate());
-                holderBonCard.firstBonPrice.setText(bons.get(0).getTotalPrice() + curreny);
-                holderBonCard.secondContentAbove.setText(bons.get(1).getShopName());
-                holderBonCard.secondContentBelow.setText(bons.get(1).getDate());
-                holderBonCard.secondBonPrice.setText(bons.get(1).getTotalPrice() + curreny);
-                holderBonCard.thirdContentAbove.setText(bons.get(2).getShopName());
-                holderBonCard.thirdContentBelow.setText(bons.get(2).getDate());
-                holderBonCard.thirdBonPrice.setText(bons.get(2).getTotalPrice() + curreny);
-                holderBonCard.firstBonImage.setImageResource(R.mipmap.ic_edekalogo);
 
-                holderBonCard.secondBonImage.setImageResource(R.mipmap.ic_edekalogo);
-                holderBonCard.thirdBonImage.setImageResource(R.mipmap.ic_edekalogo);
+                // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
+                if(bons.size()!=0){
 
+                    ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
 
-                // Erster Favoriten-Button - Beim Drücken wird Funktion setAndChangeFavorite aufgerufen
-                holderBonCard.firstFavoriteImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        holderBonCard.firstFavoriteImage = setAndChangeFavorite(bons.get(0),holderBonCard.firstFavoriteImage);
-                    }
-                });
+                    for(int i = 0; i < bons.size(); i++)
+                            holderBonCard.linearLayout.addView(inflateBonsRow(bons.get(i)), holderBonCard.linearLayout.getChildCount());
 
+                }else{
 
-                // Zweiter Favoriten-Button - Beim Drücken wird Funktion setAndChangeFavorite aufgerufen
-                holderBonCard.secondFavoriteImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        holderBonCard.secondFavoriteImage = setAndChangeFavorite(bons.get(1),holderBonCard.secondFavoriteImage);
-                    }
-                });
-
-
-                // Dritter Favoriten-Button - Beim Drücken wird Funktion setAndChangeFavorite aufgerufen
-                holderBonCard.thirdFavoriteImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        holderBonCard.thirdFavoriteImage = setAndChangeFavorite(bons.get(2),holderBonCard.thirdFavoriteImage);
-                    }
-                });
+                    ViewHolderDefault holderDefaultCard = (ViewHolderDefault) holder;
+                    holderDefaultCard.titleDefault.setText(R.string.tab_home_boncard_title_content);
+                    holderDefaultCard.contentDefault.setText(R.string.tab_home_chartcard_boncard_default_content);
+                }
 
                 break;
+
             case 1:
-                ViewHolderBudgetCard holderBudgetCard = (ViewHolderBudgetCard) holder;
-                holderBudgetCard.budgetCurrently.setText(getRestBudget(budgets.get(0)) + curreny);
-                holderBudgetCard.yearBefore.setText(budgets.get(0).getYearVon());
-                holderBudgetCard.monthBefore.setText(budgets.get(0).getMonthVon());
-                holderBudgetCard.yearAfter.setText(budgets.get(0).getYearBis());
-                holderBudgetCard.monthAfter.setText(budgets.get(0).getMonthBis());
-                holderBudgetCard.progressPercentage.setText(getRestPercentage(budgets.get(0)) + percentage);
-                holderBudgetCard.tagVon.setText(budgets.get(0).getZeitraumVon().split("\\.")[0]);
-                holderBudgetCard.tagBis.setText(budgets.get(0).getZeitraumBis().split("\\.")[0]);
-                holderBudgetCard.progressBar.setProgress((int) (100 - Double.parseDouble(getRestPercentage(budgets.get(0)))));
+
+                // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
+                if(budget!=null){
+
+                    ViewHolderBudgetCard holderBudgetCard = (ViewHolderBudgetCard) holder;
+                    holderBudgetCard.budgetCurrently.setText(getRestBudget(budget) + curreny);
+                    holderBudgetCard.yearBefore.setText(budget.getYearVon());
+                    holderBudgetCard.monthBefore.setText(budget.getMonthVon());
+                    holderBudgetCard.yearAfter.setText(budget.getYearBis());
+                    holderBudgetCard.monthAfter.setText(budget.getMonthBis());
+                    holderBudgetCard.progressPercentage.setText(getRestPercentage(budget) + percentage);
+                    holderBudgetCard.tagVon.setText(budget.getZeitraumVon().split("\\.")[0]);
+                    holderBudgetCard.tagBis.setText(budget.getZeitraumBis().split("\\.")[0]);
+                    holderBudgetCard.progressBar.setProgress((int) (100 - Double.parseDouble(getRestPercentage(budget))));
+
+                }else{
+
+                    ViewHolderDefault holderDefaultCard = (ViewHolderDefault) holder;
+                    holderDefaultCard.titleDefault.setText(R.string.tab_home_budgetcard_title_content);
+                    holderDefaultCard.contentDefault.setText(R.string.tab_home_chartcard_budget_default_content);
+                }
 
                 break;
+
             case 2:
-                //ToDo - Hier muss noch überlegt werden, was genau ausgewertet werden soll!
-                ViewHolderLinechartCard holderLinechartCard = (ViewHolderLinechartCard) holder;
-                holderLinechartCard.lineChart.setBackgroundColor(555885);
+
+                // Wenn Bons bestehen, dann soll die geplante Card angezeigt werden, ansonsten nur die Default-Card
+                if (bons.size()!=0){
+
+                    ViewHolderLinechartCard holderLine = (ViewHolderLinechartCard) holder;
+
+                    // Befüllung des Linien-Diagramms, sowie Festlegung des allgemeinen Desings für das Linien-Diagramm
+                    holderLine.lineChart.setData(lineData);
+                    holderLine.lineChart.invalidate();
+                    holderLine.lineChart.setTouchEnabled(false);
+                    holderLine.lineChart.setDescription(descLine);
+                    holderLine.lineChart.getXAxis().setEnabled(false);
+                    holderLine.lineChart.getXAxis().setAxisMaximum(bons.size()+1);
+                    holderLine.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
+                    holderLine.lineChart.animateY(1000);
+                    holderLine.lineChart.getLegend().setEnabled(false);
+                    holderLine.lineChart.getAxisLeft().setEnabled(true);
+                    holderLine.lineChart.getAxisRight().setEnabled(false);
+                    holderLine.lineChart.setViewPortOffsets(145f, 18f, 15f, 30f);
+                    holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
+                        @Override
+                        public String getFormattedValue(float value, AxisBase axis) {
+                            double doubleValue = Math.round(value * 100) / 100.00;
+                            DecimalFormat df = new DecimalFormat("#0.00");
+                            return df.format(doubleValue) + " " + context.getResources().getString(R.string.waehrung) + "  ";
+                        }
+                    });
+
+
+                    // Setzt das Design für die DataSet
+                    this.dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    this.dataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                    this.dataSet.setLineWidth(3);
+                    this.dataSet.setCircleRadius(8);
+
+
+                    // Setzt die X-Achse im Diagramm
+                    XAxis xAxis = holderLine.lineChart.getXAxis();
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    xAxis.setDrawAxisLine(true);
+                    xAxis.setAxisMaximum(bonsCount+1);
+                    xAxis.setAxisMinimum(0);
+                    xAxis.setLabelCount(bonsCount+1);
+
+                    YAxis rightYAxis = holderLine.lineChart.getAxisLeft();
+                    rightYAxis.setAxisMaxValue((float)(dataSet.getYMax()*1.25));
+                    rightYAxis.setAxisMinValue(0);
+                    rightYAxis.setLabelCount(bonsCount+2);
+
+
+                    // Setzt das Design für die LineData
+                    this.lineData.setValueTextSize(10);
+                    this.lineData.setValueTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                    this.lineData.setHighlightEnabled(true);
+                    this.lineData.setValueFormatter(new IValueFormatter() {
+                        @Override
+                        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                            return bons.get((int)entry.getX()-1).getShopName();
+                        }
+                    });
+
+                }else{
+
+                    ViewHolderDefault holderDefaultCard = (ViewHolderDefault) holder;
+                    holderDefaultCard.titleDefault.setText(R.string.tab_home_chartcard_line_title_content);
+                    holderDefaultCard.contentDefault.setText(R.string.tab_home_chartcard_boncard_default_content);
+                }
                 break;
         }
-
     }
 
 
@@ -290,11 +333,11 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     /**
-     * Prüft beim erstellen des Layouts, komm der Bon ein Favorit ist oder nicht
+     * Prüft beim erstellen des Layouts, ob der Bon ein Favorit ist oder nicht
      * INFO: Wenn Favorit true dann wird die ImageView dunkel befüllt, anderfalls bleibt der Inhalt unausgefüllt
      * @param bon Übergabe eines ausgewählten Bons, welches überprüft wird
      * @param favImage Übergabe der ImageView, die geändert wird ( In diesem Fall Favoriten-Image)
-     * @return Rückgabe des übergebenen, bereits veränderten, Images
+     * @return Rückgabe des übergebenen und veränderten Images
      */
     private ImageView proofFavorite(final C_Bon bon, final ImageView favImage) {
 
@@ -314,28 +357,103 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     /**
-     * Wird beim onClick-Listener aufgerufen - Ändert die Farbe des ImageViews und setzt den Favoriten-Boolean entsprechend des Kriteriums
-     * INFO: Prüft ob true - wenn ja wird auf false gesetzt und die DB mit dem Bon geupdatet - Das selbe umgekehrt mit Anfangswert false !
-     * @param bon Übergabe eines ausgewählten Bons, welches überprüft wird
-     * @param favImage Übergabe der ImageView, die geändert wird ( In diesem Fall Favoriten-Image)
-     * @return Rückgabe des übergebenen, bereits veränderten, Images
+     * Erzeugt eine Dynamische Liste mit den aktuellsten Bons aus der DB
+     * @param bon Übergabe der einzelnen Bons
+     * @return Rückgabe der fertiggebauten View
      */
-    private ImageView setAndChangeFavorite(final C_Bon bon, final ImageView favImage) {
+    private View inflateBonsRow(final C_Bon bon){
 
-        if(bon.getFavourite()){
-            favImage.setImageDrawable(favImage.getContext().getResources().getDrawable(R.drawable.star_outline));
-            favImage.setColorFilter(favImage.getContext().getResources().getColor(R.color.colorPrimary));
-            bon.setFavourite(false);
-            S.dbHandler.updateBon(S.db, bon);
-            return favImage;
-        } else {
-            favImage.setImageDrawable(favImage.getContext().getResources().getDrawable(R.drawable.star));
-            favImage.setColorFilter(favImage.getContext().getResources().getColor(R.color.colorPrimary));
-            bon.setFavourite(true);
-            S.dbHandler.updateBon(S.db, bon);
-            return favImage;
-        }
+        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView = inflater.inflate(R.layout.box_home_boncard_content, null);
+        final TextView shopName = (TextView)rowView.findViewById(R.id.bons_shop_name);
+        final TextView date = (TextView)rowView.findViewById(R.id.bons_buying_date);
+        final TextView price = (TextView)rowView.findViewById(R.id.bons_price);
+        final ImageView shopIcon = (ImageView)rowView.findViewById(R.id.bons_shop_image);
+        final ImageView favIcon = proofFavorite(bon,(ImageView)rowView.findViewById(R.id.bons_favorite_icon));
 
+        shopName.setText(bon.getShopName());
+        date.setText(bon.getDate());
+        price.setText(bon.getTotalPrice() + " " + curreny);
+        shopIcon.setImageBitmap(S.getShopIcon(context.getResources(), bon.getShopName()));
+
+        // OnClickListener für den Favoriten Icon (setzt gleichzeitg true bzw. false beim drücken)
+        favIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (bon.getFavourite()) {
+                    favIcon.setImageDrawable(favIcon.getContext().getResources().getDrawable(R.drawable.star_outline));
+                    favIcon.setColorFilter(favIcon.getContext().getResources().getColor(R.color.colorPrimary));
+                    bon.setFavourite(false);
+                    S.dbHandler.updateBon(S.db, bon);
+                } else {
+                    favIcon.setImageDrawable(favIcon.getContext().getResources().getDrawable(R.drawable.star));
+                    favIcon.setColorFilter(favIcon.getContext().getResources().getColor(R.color.colorPrimary));
+                    bon.setFavourite(true);
+                    S.dbHandler.updateBon(S.db, bon);
+                }
+            }
+        });
+
+
+        // OnClickListener zum drücken der Bons (öffnet die Bon Anzeigen)
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, A_Bon_Anzeigen.class);
+                intent.putExtra("BonPos", bon.getId());
+                context.startActivity(intent);
+            }
+        });
+
+
+        return rowView;
+
+    }
+
+
+    /**
+     * Holt die Daten aus der DB zur weiteren Verarbeitung und bereitet diese vor (Aufruf in der onResume())
+     * HINWEIS: Falls die jeweiligen Daten existieren, werden die Attribute bons & budget befüllt bzw. initialisiert.
+     *          Wenn NICHT werden die Attribute LEER initialisiert und dementsprechend verarbeitet
+     */
+    public void prepareBonData(){
+
+        this.bons = S.dbHandler.getNumberOfNewestBons(S.db,bonsCount);
+
+        // Holt sich das Budget aus der DB wenn vorhanden
+       if(S.dbHandler.getFavoriteBudget(S.db) != null){
+           budget = S.dbHandler.getFavoriteBudget(S.db);
+           S.dbHandler.refreshBudget(S.db, budget);
+       }else{
+           budget = null;
+       }
+
+       // Ruft die Methode auf, die die Daten für das Linien-Diagramm vorbereitet
+       prepareLineChartData(bonsCount);
+
+    }
+
+
+    /**
+     * Bereitet die Daten für das Linien-Diagramm vor - Hierbei werden Daten aus der DB geholt und weiter verarbeitet
+     * @param anzahl Übergabe der Bons die angezeigt werden sollen - Standardmäßig soviele Bons wie in der BonCard angezeigt werden (bonsCount)
+     */
+    public void prepareLineChartData(int anzahl){
+
+        // Vorbeireitung der DataSet durch die Funktion im DB-Hanlder
+        this.dataSet = new LineDataSet(S.dbHandler.getLineData(S.db, anzahl+1), "");
+
+        // Vorbereitung der LineDataSet, sowie Befüllung dieser mit der zuvor implementierten dataSet
+        this.lineDataSet = new ArrayList<>();
+        this.lineDataSet.add(this.dataSet);
+
+        // Vorbereitung der LineData, sowie Befüllung dieser mit der zuvor implementierten lineDataSet
+        this.lineData = new LineData(lineDataSet);
+
+        // Implementierung der Description für die Chart - soll jedoch KEINE Description zeigen, daher .setText("")
+        this.descLine = new Description();
+        this.descLine.setText("");
 
     }
 }
