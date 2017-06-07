@@ -35,7 +35,7 @@
         android:layout_toLeftOf="@+id/tab_home_boncard_first_bon_betrag"
         android:layout_toRightOf="@+id/tab_home_boncard_first_bon_small_image"
         android:paddingBottom="20dp"
-        android:text="defaultfafdafafdaffafdafafasf"
+        android:text="default"
         android:maxLength="20"
         android:textSize="14sp"/>
 
