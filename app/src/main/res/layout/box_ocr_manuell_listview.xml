@@ -44,7 +44,8 @@
         android:digits="0123456789"
         android:gravity="end"
         android:hint="@string/a_ocr_manuell_hint_preis"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:maxLength="7"/>
 
     <TextView
         android:id="@+id/ocr_manuell_comma_text"
