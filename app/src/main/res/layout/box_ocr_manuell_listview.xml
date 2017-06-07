@@ -15,7 +15,8 @@
         android:layout_marginLeft="8dp"
         android:layout_weight="2.27"
         android:inputType="textAutoCorrect"
-        android:hint="@string/a_ocr_manuell_hint_artikel_name"/>
+        android:hint="@string/a_ocr_manuell_hint_artikel_name"
+        android:maxLength="30"/>
 
     <ImageButton
         android:id="@+id/ocr_manuell_negativ_positiv_button"
@@ -43,8 +44,7 @@
         android:digits="0123456789"
         android:gravity="end"
         android:hint="@string/a_ocr_manuell_hint_preis"
-        android:inputType="number"
-        android:maxLength="7" />
+        android:inputType="number"/>
 
     <TextView
         android:id="@+id/ocr_manuell_comma_text"

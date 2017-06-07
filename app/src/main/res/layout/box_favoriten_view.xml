@@ -23,6 +23,7 @@
         android:layout_toRightOf="@+id/favoriten_view_laden_bild"
         android:paddingTop="20dp"
         android:text="@string/a_favoriten_laden_name"
+        android:maxLength="20"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp" />
 
@@ -32,6 +33,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="20dp"
         android:text="@string/a_favoriten_datum"
+        android:maxLength="20"
         android:textSize="14sp"
         android:layout_toLeftOf="@+id/favoriten_view_zusatz_favorite_price"
         android:layout_toRightOf="@+id/favoriten_view_laden_bild"
@@ -47,6 +49,7 @@
         android:paddingRight="20dp"
         android:gravity="center_vertical"
         android:text="@string/a_favoriten_preis"
+        android:maxLength="10"
         android:textSize="24sp"/>
 
 

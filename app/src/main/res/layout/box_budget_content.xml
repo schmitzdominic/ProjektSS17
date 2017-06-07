@@ -29,6 +29,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
                     android:text="Budget Titel"
+                    android:maxLength="30"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp"
@@ -174,6 +175,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginTop="7dp"
                         android:text="Budget"
+                        android:maxLength="9"
                         android:textAlignment="center"
                         android:textSize="30sp"
                         android:textStyle="bold" />
