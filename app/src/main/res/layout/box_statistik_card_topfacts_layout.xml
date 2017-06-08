@@ -30,6 +30,7 @@
                 android:layout_toEndOf="@+id/statistik_card_general_costs_title"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/statistik_card_topfacts_fact_three_content"
+                android:maxLength="15"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp" />
@@ -51,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/statistik_card_topfacts_fact_one_content"
+                android:maxLength="11"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="26sp"
