@@ -1,12 +1,16 @@
 package de.projektss17.bonpix.fragments;
 
 import android.app.backup.BackupManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.annotation.XmlRes;
 import android.util.Log;
+import android.view.View;
 
+import de.projektss17.bonpix.A_Export;
 import de.projektss17.bonpix.R;
 
 /**
@@ -17,10 +21,21 @@ public class F_Backup extends PreferenceFragment implements SharedPreferences.On
 
     final public String KEY_SETTINGS = "backup_incl_settings";
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.box_backup_preferences);
+       findPreference("backup_photos");
+        Preference export = (Preference) findPreference("backup_photos");
+        export.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(getActivity() , A_Export.class);
+                startActivity(intent);
+                return false;
+           }
+        });
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

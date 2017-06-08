@@ -12,6 +12,10 @@
             android:key="backup_time"
             android:summary="Täglich"
             android:title="Auf Google Drive sichern" />
+        <Preference
+            android:key="backup_photos"
+            android:summary="Backup der Fotos"
+            android:title="Sicherung ausführen" />
 
     </PreferenceCategory>
 </PreferenceScreen>
