@@ -168,10 +168,12 @@
 
     <string name="statistik_card_topfacts_title">Top Fakten</string>
     <string name="statistik_card_topfacts_fact_one_content">Inhalt</string>
-    <string name="statistik_card_topfacts_fact_two_content">Max-Mustermann-Str. XB</string>
+    <string name="statistik_card_topfacts_fact_articles_titles">Artikel:</string>
+    <string name="statistik_card_topfacts_fact_articles_count">ARTIKELANZAHL</string>
     <string name="statistik_card_topfacts_fact_three_content">Betrag</string>
     <string name="statistik_card_topfacts_fact_one_title">Meistbesuchter \nLaden</string>
-    <string name="statistik_card_topfacts_fact_two_title">Adresse:</string>
+    <string name="statistik_card_topfacts_fact_bons_title">Bons:</string>
+    <string name="statistik_card_topfacts_fact_bons_count">BONSANZAHL</string>
     <string name="statistik_card_topfacts_fact_three_title">Durchschn. \nAusgaben:</string>
 
     <string name="statistik_card_rest_value">Sonstige</string>

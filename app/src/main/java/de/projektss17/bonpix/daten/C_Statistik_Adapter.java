@@ -1,10 +1,8 @@
 package de.projektss17.bonpix.daten;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -28,8 +25,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
-import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
@@ -39,10 +34,8 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 
 import de.projektss17.bonpix.R;
@@ -87,7 +80,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             // Implementierung des Layouts der einzelnen Objekte für die CardView
             this.fact1 = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_one_content);
-            this.fact2 = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_two_content);
+            this.fact2 = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_artikel_titel);
             this.fact3 = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_three_content);
 
         }
