@@ -38,13 +38,13 @@ public class A_Einstellungen extends PreferenceActivity {
         // ShakeDetector initialization
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        /*mShakeDetector = new C_ShakeDetector(new C_ShakeDetector.OnShakeListener() {
+        mShakeDetector = new C_ShakeDetector(new C_ShakeDetector.OnShakeListener() {
             @Override
             public void onShake() {
                 Log.e("#SHAKE DETECTOR"," ### SHAKED");
                 S.showImpressum(A_Einstellungen.this);
             }
-        });*/
+        });
     }
 
     @Override
