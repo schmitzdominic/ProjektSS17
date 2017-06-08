@@ -3,6 +3,7 @@ package de.projektss17.bonpix.daten;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,10 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private String countLaeden;
     private String countArtikel;
     private String gesBetrag;
+    private String averagePrice;
+    private String mostVisitedLaden;
+    private String mostVisitedLadenBonsCount;
+    private String getMostVisitedLadenArticleCount;
     private String date[];
     private SortedSet<Hashtable.Entry<String, Integer>> sortedArticleList;
     private SortedSet<Hashtable.Entry<String, Integer>> bonsCountPerLaden;
@@ -65,6 +70,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private ViewHolderTopProducts holderTopProducts;
     private ViewHolderPie holderPie;
     private ViewHolderLine holderLine;
+    private ViewHolderTopFacts holderTopFacts;
     private LineData lineData;
     private Context context;
     private BarData dataBar;
@@ -73,16 +79,16 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     // LAYOUT TopFacts
     public class ViewHolderTopFacts extends RecyclerView.ViewHolder {
 
-        public TextView fact1, articleCount, bonsCount, fact3;
+        public TextView mostVisitedLaden, articleCount, bonsCount, averagePrice;
 
         public ViewHolderTopFacts(View view) {
             super(view);
 
             // Implementierung des Layouts der einzelnen Objekte für die CardView
-            this.fact1 = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_one_content);
+            this.mostVisitedLaden = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_one_content);
             this.articleCount = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_artikel_anzahl);
             this.bonsCount = (TextView) view.findViewById(R.id.statistik_card_topfacts_bons_anzahl);
-            this.fact3 = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_three_content);
+            this.averagePrice = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_three_content);
 
         }
     }
@@ -339,10 +345,16 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderPie.pieChart.invalidate();
                 break;
             case 4:
-                /*ViewHolderTopFacts holderTopFacts = (ViewHolderTopFacts) holder;
-                holderTopFacts.fact1.setText("LIDL");                                   // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopFacts.articleCount.setText("Max-Mustermann-Str. 4\n86161 Augsburg");  // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
-                holderTopFacts.fact3.setText("2585 €"); */                                // DUMMYDATEN - später Inhalte aus der DB mit einer Funkktion
+
+                if(holderTopFacts == null){
+                    holderTopFacts = (ViewHolderTopFacts) holder;
+                }
+
+                holderTopFacts.mostVisitedLaden.setText(this.mostVisitedLaden);
+                holderTopFacts.averagePrice.setText(this.averagePrice + " " + context.getResources().getString(R.string.waehrung));
+                holderTopFacts.bonsCount.setText(this.mostVisitedLadenBonsCount);
+                holderTopFacts.articleCount.setText(this.getMostVisitedLadenArticleCount);
+                // TODO Bons und Artikel
                 break;
             case 5:
 
@@ -442,6 +454,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.prepareBarData();
         this.prepareTopThreeArticlesData();
         this.preparePieData();
+        this.prepareTopFacts();
         this.prepareLineData();
         this.countBons = "" + S.dbHandler.getAllBonsCount(S.db);
         this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db);
@@ -453,6 +466,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.prepareBarData();
         this.prepareTopThreeArticlesData();
         this.preparePieData();
+        this.prepareTopFacts();
         this.prepareLineData();
         this.countBons = "" + S.dbHandler.getAllBonsCount(S.db, date1, date2);
         this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db, date1, date2);
@@ -591,6 +605,17 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         dataSet = new LineDataSet(dataList, "Ausgaben pro Tag");
+
+    }
+
+    public void prepareTopFacts(){
+
+        C_Laden laden = S.dbHandler.getMostVisitedLaden(S.db, date[0], date[1]);
+
+        this.mostVisitedLaden = laden.getName();
+        this.averagePrice = S.dbHandler.averageExpenditureLaden(S.db, laden, date[0], date[1]);
+        this.mostVisitedLadenBonsCount = "" + S.dbHandler.bonsCountLaden(S.db, laden, date[0], date[1]);
+        this.getMostVisitedLadenArticleCount = "" + S.dbHandler.articleCountLaden(S.db, laden, date[0], date[1]);
 
 
     }

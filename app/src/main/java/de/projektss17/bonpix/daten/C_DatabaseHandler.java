@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -1445,6 +1446,74 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Gibt die anzahl der Bons eines ladens zurück
+     * @param db Datenbank
+     * @param laden Laden
+     * @param date1 Von-Datum
+     * @param date2 Bis-Datum
+     * @return Anzahl
+     */
+    public int bonsCountLaden(SQLiteDatabase db, C_Laden laden, String date1, String date2){
+
+        String query = date1 != null && date2 != null ?
+                "SELECT ladenname FROM bon WHERE ladenname=" + laden.getId() + " AND datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT ladenname FROM bon WHERE ladenname=" + laden.getId();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()){
+            do {
+                count++;
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return count;
+    }
+
+    /**
+     * Gibt die Anzahl der Artikel eines Ladens zurück
+     * @param db Datenbank
+     * @param laden Laden
+     * @param date1 Von-Datum
+     * @param date2 Bis-Datum
+     * @return
+     */
+    public int articleCountLaden(SQLiteDatabase db, C_Laden laden, String date1, String date2){
+
+        ArrayList<Integer> bonIdList = new ArrayList<>();
+        ArrayList<C_Bon> bonList = new ArrayList<>();
+        HashSet<String> articleCountList = new HashSet<>();
+
+        String query = date1 != null && date2 != null ?
+                "SELECT bonid, ladenname FROM bon WHERE ladenname=" + laden.getId() + " AND datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT bonid, ladenname FROM bon WHERE ladenname=" + laden.getId();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                bonIdList.add(cursor.getInt(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        for(int x : bonIdList){
+            bonList.add(this.getBon(db, x));
+        }
+
+        for(C_Bon bon : bonList){
+            for(C_Artikel artikel : bon.getArticles()){
+                articleCountList.add(artikel.getName());
+            }
+        }
+
+        return articleCountList.size();
+    }
+
+    /**
      * Gibt alle Daten aus der DB im Log aus.
      */
     public void showLogAllDBEntries(){
@@ -1525,43 +1594,5 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_BonArtikel);
         db.execSQL(CREATE_TABLE_BonBudget);
 
-    }
-
-    /**
-     * Get the Data for LineCharts
-     * @param  time
-     * @return
-     */
-    public Map<String, List<Entry>> getLineData(int time){
-        //TODO: Logic part for preparing Bar Data
-        Map<String, List<Entry>> map = new HashMap();
-        List<Entry> lineOne = new ArrayList<Entry>();
-        List<Entry> lineTwo = new ArrayList<Entry>();
-        switch(time){
-            case 1:
-                Entry c1e1 = new Entry(0f, 100000f); // 0 == quarter 1
-                lineOne.add(c1e1);
-                Entry c1e2 = new Entry(1f, 140000f); // 1 == quarter 2 ...
-                lineOne.add(c1e2);
-                map.put("lineOne", lineOne);
-                Entry c2e1 = new Entry(0f, 130000f); // 0 == quarter 1
-                lineTwo.add(c2e1);
-                Entry c2e2 = new Entry(1f, 115000f); // 1 == quarter 2 ...
-                lineTwo.add(c2e2);
-                map.put("lineTwo", lineTwo);
-                return map;
-            default:
-                Entry c3e1 = new Entry(0f, 100000f); // 0 == quarter 1
-                lineOne.add(c3e1);
-                Entry c3e2 = new Entry(1f, 140000f); // 1 == quarter 2 ...
-                lineOne.add(c3e2);
-                map.put("lineOne", lineOne);
-                Entry c4e1 = new Entry(0f, 130000f); // 0 == quarter 1
-                lineTwo.add(c4e1);
-                Entry c4e2 = new Entry(1f, 115000f); // 1 == quarter 2 ...
-                lineTwo.add(c4e2);
-                map.put("lineTwo", lineTwo);
-                return map;
-        }
     }
 }
