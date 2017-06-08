@@ -15,8 +15,7 @@
         android:layout_marginLeft="8dp"
         android:layout_weight="2.27"
         android:inputType="textAutoCorrect"
-        android:hint="@string/a_ocr_manuell_hint_artikel_name"
-        android:maxLength="30"/>
+        android:hint="@string/a_ocr_manuell_hint_artikel_name"/>
 
     <ImageButton
         android:id="@+id/ocr_manuell_negativ_positiv_button"
