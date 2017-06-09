@@ -3,41 +3,22 @@ package de.projektss17.bonpix.daten;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.SortedSet;
 
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
@@ -50,30 +31,15 @@ import de.projektss17.bonpix.S;
 public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int count = 6;              // Gibt an wie viele Cards die RecyclerView beinhalten soll (derzeit 6 feste CARDS!)
-    public String countBons;
-    private String countLaeden;
-    private String countArtikel;
-    private String gesBetrag;
-    private String averagePrice;
-    private String mostVisitedLaden;
-    private String mostVisitedLadenBonsCount;
-    private String getMostVisitedLadenArticleCount;
-    private String date[];
-    private SortedSet<Hashtable.Entry<String, Integer>> sortedArticleList;
-    private SortedSet<Hashtable.Entry<String, Integer>> bonsCountPerLaden;
-    private List<PieEntry> pieces;
-    private LineDataSet dataSet;
-    private ArrayList<ILineDataSet> lineDataSet;
-    private ArrayList<Integer> colorsPie;
+
     private ViewHolderGeneral holderGeneral;
     private ViewHolderBar holderBar;
     private ViewHolderTopProducts holderTopProducts;
     private ViewHolderPie holderPie;
     private ViewHolderLine holderLine;
     private ViewHolderTopFacts holderTopFacts;
-    private LineData lineData;
     private Context context;
-    private BarData dataBar;
+    private C_Statistik statistik;
 
 
     // LAYOUT TopFacts
@@ -206,121 +172,85 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        double ausgabenGesamt=0.0;  //Gesamtausgaben des Array bons (Könnte theoretisch auch bei den oberen Attributen stehen)
-        int anzahlArtikel = 0;      //Anzahl aller Artikel des Array bons (Könnte theoretisch auch bei den oberen Attributen stehen)
-        //createFilteredData();       //WICHTIG: Befüllt die ArrayLists (Läden & Bons) entsprechend der Filterung zur späteren Verarbeitung
-
         switch(getItemViewType(position)){
             case 0:
 
-                if(holderGeneral == null){
-                    holderGeneral = (ViewHolderGeneral)holder;
+                if(this.holderGeneral == null){
+                    this.holderGeneral = (ViewHolderGeneral) holder;
                 }
 
-                holderGeneral.anzahlScans.setText(countBons);
-                holderGeneral.anzahlLaeden.setText(countLaeden);
-                holderGeneral.anzahlArtikel.setText(countArtikel);
-                holderGeneral.ausgabenGesamt.setText(gesBetrag + holderGeneral.itemView.getResources().getString(R.string.waehrung));
+                this.holderGeneral.anzahlScans.setText(this.statistik.getCountBons());
+                this.holderGeneral.anzahlLaeden.setText(this.statistik.getCountLaeden());
+                this.holderGeneral.anzahlArtikel.setText(this.statistik.getCountArtikel());
+                this.holderGeneral.ausgabenGesamt.setText(this.statistik.getGesBetrag() + holderGeneral.itemView.getResources().getString(R.string.waehrung));
 
                 break;
             case 1:
 
-                if(holderBar == null){
-                    holderBar = (ViewHolderBar)holder;
+                if(this.holderBar == null){
+                    this.holderBar = (ViewHolderBar) holder;
                 }
 
-                if(S.dbHandler.getAllBonsCount(S.db) == 0){
-                    break;
-                }
+                if(S.dbHandler.getAllBonsCount(S.db) == 0){break;}
 
-                Description desc = new Description();
-                desc.setText("");
-                dataBar.setBarWidth(0.7f); // set custom bar width
-                dataBar.setValueTextColor(ContextCompat.getColor(context, R.color.cardview_light_background));
-                dataBar.setValueTextSize(8f);
-                holderBar.barChart.setData(dataBar);
-                holderBar.barChart.setDescription(desc);
-                holderBar.barChart.setDrawValueAboveBar(false);
-                holderBar.barChart.getXAxis().setEnabled(false);
-                holderBar.barChart.getAxisLeft().setDrawAxisLine(false);
-                holderBar.barChart.getAxisRight().setEnabled(false);
-                holderBar.barChart.setTouchEnabled(false);
-                holderBar.barChart.setDragEnabled(false);
-                holderBar.barChart.setScaleEnabled(false);
-                holderBar.barChart.setPinchZoom(false);
-                holderBar.barChart.setClickable(false);
-                holderBar.barChart.setFocusableInTouchMode(false);
-                holderBar.barChart.setFitBars(true); // make the x-axis fit exactly all bars
-                holderBar.barChart.animateY(1000);
-                holderBar.barChart.invalidate(); // refresh*/
+                this.statistik.getBarData().setBarWidth(0.7f); // set custom bar width
+                this.statistik.getBarData().setValueTextColor(ContextCompat.getColor(context, R.color.cardview_light_background));
+                this.statistik.getBarData().setValueTextSize(8f);
+
+                this.holderBar.barChart.setData(this.statistik.getBarData());
+                this.holderBar.barChart = this.statistik.setBarChartSettings(holderBar.barChart);
+                this.holderBar.barChart.invalidate();
+
                 break;
             case 2:
 
-                int ANIMATION_TIME = 1000;
-                int MAX_LENGTH_ARTICLE = 11;
-
-                if(holderTopProducts == null){
-                    holderTopProducts = (ViewHolderTopProducts)holder;
+                if(this.holderTopProducts == null){
+                    this.holderTopProducts = (ViewHolderTopProducts) holder;
                 }
 
-                holderTopProducts.progress1.animate();
+                this.setTopThreeArticleInvisible();
 
                 int count = 0;
                 int size = 0;
 
-                for(Hashtable.Entry<String, Integer> entry : sortedArticleList){
+                for(Hashtable.Entry<String, Integer> entry : this.statistik.getSortedArticleList()){
                     size += entry.getValue();
                 }
 
-                for(Hashtable.Entry<String, Integer> entry : sortedArticleList){
+                for(Hashtable.Entry<String, Integer> entry : this.statistik.getSortedArticleList()){
 
                     int progress = (int)((double)entry.getValue()/size*100);
                     double procent = ((double)entry.getValue()/size)*100 > 0 ? ((double)entry.getValue()/size)*100 : 0;
-                    ProgressBarAnimation anim;
-
-                    procent = Math.round(procent * 100) / 100.00;
-                    DecimalFormat df = new DecimalFormat("#0.00");
 
                     switch(count){
                         case 0:
-                            holderTopProducts.produkt1.setText(entry.getKey().length() > MAX_LENGTH_ARTICLE ? entry.getKey().substring(0, MAX_LENGTH_ARTICLE-2) + ".." : entry.getKey());
-                            anim = new ProgressBarAnimation(holderTopProducts.progress1, 0, progress);
-                            anim.setDuration(ANIMATION_TIME);
-                            holderTopProducts.progress1.startAnimation(anim);
-                            if(holderTopProducts.progress1.getProgress() == 0){holderTopProducts.progress1.setProgress(progress);}
-                            holderTopProducts.percentage1.setText(df.format(procent) + " " + holderTopProducts.itemView.getResources().getString(R.string.percentage));
+                            this.holderTopProducts.produkt1 = this.statistik.setTopThreeArticleText(this.holderTopProducts.produkt1, entry);
+                            this.holderTopProducts.progress1 = this.statistik.setTopThreeArticleProgress(this.holderTopProducts.progress1, progress);
+                            this.holderTopProducts.percentage1 = this.statistik.setTopThreeArticleProcent(this.holderTopProducts.percentage1, procent);
                             break;
                         case 1:
-                            holderTopProducts.produkt2.setText(entry.getKey().length() > MAX_LENGTH_ARTICLE ? entry.getKey().substring(0, MAX_LENGTH_ARTICLE-2) + ".." : entry.getKey());
-                            anim = new ProgressBarAnimation(holderTopProducts.progress2, 0, progress);
-                            anim.setDuration(ANIMATION_TIME);
-                            holderTopProducts.progress2.startAnimation(anim);
-                            if(holderTopProducts.progress2.getProgress() == 0){holderTopProducts.progress2.setProgress(progress);}
-                            holderTopProducts.percentage2.setText(df.format(procent) + " " + holderTopProducts.itemView.getResources().getString(R.string.percentage));
+                            this.holderTopProducts.produkt2 = this.statistik.setTopThreeArticleText(this.holderTopProducts.produkt2, entry);
+                            this.holderTopProducts.progress2 = this.statistik.setTopThreeArticleProgress(this.holderTopProducts.progress2, progress);
+                            this.holderTopProducts.percentage2 = this.statistik.setTopThreeArticleProcent(this.holderTopProducts.percentage2, procent);
                             break;
                         case 2:
-                            holderTopProducts.produkt3.setText(entry.getKey().length() > MAX_LENGTH_ARTICLE ? entry.getKey().substring(0, MAX_LENGTH_ARTICLE-2) + ".." : entry.getKey());
-                            anim = new ProgressBarAnimation(holderTopProducts.progress3, 0, progress);
-                            anim.setDuration(ANIMATION_TIME);
-                            holderTopProducts.progress3.startAnimation(anim);
-                            if(holderTopProducts.progress3.getProgress() == 0){holderTopProducts.progress3.setProgress(progress);}
-                            holderTopProducts.percentage3.setText(df.format(procent) + " " + holderTopProducts.itemView.getResources().getString(R.string.percentage));
+                            this.holderTopProducts.produkt3 = this.statistik.setTopThreeArticleText(this.holderTopProducts.produkt3, entry);
+                            this.holderTopProducts.progress3 = this.statistik.setTopThreeArticleProgress(this.holderTopProducts.progress3, progress);
+                            this.holderTopProducts.percentage3 = this.statistik.setTopThreeArticleProcent(this.holderTopProducts.percentage3, procent);
                             break;
                     }
 
-                    if(++count == 3){
-                        break;
-                    }
+                    if(++count == 3){break;}
                 }
 
                 break;
             case 3:
 
-                if(holderPie == null){
-                    holderPie = (ViewHolderPie)holder;
+                if(this.holderPie == null){
+                    this.holderPie = (ViewHolderPie) holder;
                 }
 
-                PieDataSet pieDataSet = new PieDataSet(this.pieces , "");
+                PieDataSet pieDataSet = new PieDataSet(this.statistik.getPieces() , "");
 
                 pieDataSet.setValueFormatter(new PercentFormatter() {
                     @Override
@@ -329,85 +259,40 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
                 });
 
-                pieDataSet.setColors(this.colorsPie);
+                pieDataSet.setColors(this.statistik.getColorsPie());
                 PieData pieData = new PieData(pieDataSet);
                 pieData.setValueTextSize(10f);
                 pieData.setValueTextColor(ContextCompat.getColor(context, R.color.cardview_light_background));
-                Description descPie = new Description();
-                descPie.setText("");
-                holderPie.pieChart.setData(pieData);
-                holderPie.pieChart.setDescription(descPie);
-                holderPie.pieChart.animateY(1000);
-                holderPie.pieChart.setFocusable(false);
-                holderPie.pieChart.setTouchEnabled(false);
-                holderPie.pieChart.setDrawEntryLabels(false);
-                holderPie.pieChart.setUsePercentValues(false);
-                holderPie.pieChart.invalidate();
+
+                this.holderPie.pieChart.setData(pieData);
+                this.holderPie.pieChart = this.statistik.setPieChartSettings(this.holderPie.pieChart);
+                this.holderPie.pieChart.invalidate();
+
                 break;
             case 4:
 
-                if(holderTopFacts == null){
-                    holderTopFacts = (ViewHolderTopFacts) holder;
+                if(this.holderTopFacts == null){
+                    this.holderTopFacts = (ViewHolderTopFacts) holder;
                 }
 
-                holderTopFacts.mostVisitedLaden.setText(this.mostVisitedLaden);
-                holderTopFacts.averagePrice.setText(this.averagePrice + " " + context.getResources().getString(R.string.waehrung));
-                holderTopFacts.bonsCount.setText(this.mostVisitedLadenBonsCount);
-                holderTopFacts.articleCount.setText(this.getMostVisitedLadenArticleCount);
-                // TODO Bons und Artikel
+                this.holderTopFacts.mostVisitedLaden.setText(this.statistik.getMostVisitedLaden());
+                this.holderTopFacts.averagePrice.setText(this.statistik.getAveragePrice() + " " + context.getResources().getString(R.string.waehrung));
+                this.holderTopFacts.bonsCount.setText(this.statistik.getMostVisitedLadenBonsCount());
+                this.holderTopFacts.articleCount.setText(this.statistik.getGetMostVisitedLadenArticleCount());
+
                 break;
             case 5:
 
-                if(holderLine == null){
-                    holderLine = (ViewHolderLine)holder;
+                if(this.holderLine == null){
+                    this.holderLine = (ViewHolderLine) holder;
                 }
 
-                Description descLine = new Description();
-                descLine.setText("");
+                this.statistik.setLineDataSetSettings();
+                this.statistik.setLineDataSettings(this.statistik.getLineDataList());
 
-                // Wert Design
-                final ArrayList<String> data = S.dbHandler.getExpenditureLastWeek(S.db);
-                this.dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorAccent));
-                this.dataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-                this.dataSet.setLineWidth(3);
-                this.dataSet.setCircleRadius(8);
-
-                this.lineDataSet.add(dataSet);
-
-                this.lineData = new LineData(lineDataSet);
-                this.lineData.setValueTextSize(10);
-                this.lineData.setValueTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-                this.lineData.setHighlightEnabled(true);
-                this.lineData.setValueFormatter(new IValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                        return data.get((int)entry.getX()-1).split("/")[0].substring(0,2);
-                    }
-                });
-
-                holderLine.lineChart.setData(this.lineData);
-
-                // Allgemeines Design
-                holderLine.lineChart.setDescription(descLine);
-                holderLine.lineChart.setTouchEnabled(false);
-                holderLine.lineChart.getXAxis().setEnabled(false);
-                holderLine.lineChart.getXAxis().setAxisMinimum(0);
-                holderLine.lineChart.getXAxis().setAxisMaximum(data.size()+1);
-                holderLine.lineChart.getAxisLeft().setAxisLineColor(ContextCompat.getColor(context, R.color.cardview_light_background));
-                holderLine.lineChart.animateY(1000);
-                holderLine.lineChart.getLegend().setEnabled(false);
-                holderLine.lineChart.getAxisLeft().setEnabled(true);
-                holderLine.lineChart.getAxisRight().setEnabled(false);
-                holderLine.lineChart.setViewPortOffsets(135f, 30f, 15f, 30f);
-                holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value, AxisBase axis) {
-                        return value + " " + context.getResources().getString(R.string.waehrung) + "  ";
-                    }
-                });
-
-                // Starten
-                holderLine.lineChart.invalidate();
+                this.holderLine.lineChart.setData(this.statistik.getLineData());
+                this.holderLine.lineChart = this.statistik.setLineChartSettings(this.holderLine.lineChart);
+                this.holderLine.lineChart.invalidate();
 
                 break;
         }
@@ -430,193 +315,39 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         this.context = context;
 
+        this.statistik = new C_Statistik(context);
+
         switch(filter){
             case "ALLE":
-                fillData();
+                this.statistik.fillData("ALLE");
                 break;
             case "WOCHE":
-                fillData(S.getWeek()[0], S.getWeek()[1]);
+                this.statistik.fillData(S.getWeek()[0], S.getWeek()[1], "WOCHE");
                 break;
             case "MONAT":
-                fillData(S.getMonth()[0], S.getMonth()[1]);
+                this.statistik.fillData(S.getMonth()[0], S.getMonth()[1], "MONAT");
                 break;
             case "QUARTAL":
-                fillData(S.getQuartal()[0], S.getQuartal()[1]);
+                this.statistik.fillData(S.getQuartal()[0], S.getQuartal()[1], "QUARTAL");
                 break;
             default:
                 break;
-       }
-    }
+        }
 
-    private void fillData(){
-        this.date = new String[]{null, null};
-        this.fillGeneralData();
-        this.prepareBarData();
-        this.prepareTopThreeArticlesData();
-        this.preparePieData();
-        this.prepareTopFacts();
-        this.prepareLineData();
-        this.countBons = "" + S.dbHandler.getAllBonsCount(S.db);
-        this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db);
-    }
-
-    private void fillData(String date1, String date2){
-        this.date = new String[]{date1, date2};
-        this.fillGeneralData();
-        this.prepareBarData();
-        this.prepareTopThreeArticlesData();
-        this.preparePieData();
-        this.prepareTopFacts();
-        this.prepareLineData();
-        this.countBons = "" + S.dbHandler.getAllBonsCount(S.db, date1, date2);
-        this.gesBetrag = "" + S.dbHandler.getTotalExpenditure(S.db, date1, date2);
-    }
-
-    private void fillGeneralData(){
-        this.countLaeden = "" + S.dbHandler.getAllLaedenCount(S.db);
-        this.countArtikel = "" + S.dbHandler.getAllArticleCount(S.db);
     }
 
     /**
-     * Gibt die Farben für die Statistiken zurück
-     * @param number Welche nummer?
-     * @return Farbe
+     * Macht alle TopThreeArticles unsichtbar
      */
-    private int getStatisticColor(int number){
-        switch(number){
-            case 0:
-                return ContextCompat.getColor(context,R.color.colorPrimaryDark);
-            case 1:
-                return ContextCompat.getColor(context,R.color.colorAccent);
-            case 2:
-                return ContextCompat.getColor(context,R.color.colorPrimary);
-            case 3:
-                return ContextCompat.getColor(context,R.color.color4Bar);
-            case 4:
-                return ContextCompat.getColor(context,R.color.color5Bar);
-            default:
-                return ContextCompat.getColor(context,R.color.colorPrimary);
-
-        }
-    }
-
-    /**
-     * ProgressBar Animation
-     */
-    public class ProgressBarAnimation extends Animation {
-        private ProgressBar progressBar;
-        private float from;
-        private float  to;
-
-        public ProgressBarAnimation(ProgressBar progressBar, float from, float to) {
-            super();
-            this.progressBar = progressBar;
-            this.from = from;
-            this.to = to;
-        }
-
-        @Override
-        protected void applyTransformation(float interpolatedTime, Transformation t) {
-            super.applyTransformation(interpolatedTime, t);
-            float value = from + (to - from) * interpolatedTime;
-            progressBar.setProgress((int) value);
-        }
-
-    }
-
-    public void prepareBarData(){
-
-        List<IBarDataSet> bars = new ArrayList<>();
-
-        if(date != null){
-
-            int MAXVALUE_BAR_CHART = 5;
-
-            for(int i = 0; i < MAXVALUE_BAR_CHART; i++){
-                List<BarEntry> list = S.dbHandler.getBarDataLaedenExpenditure(S.db, date[0],date[1], i);
-                if(S.dbHandler.getBarDataLaden() != null && list.get(0).getY() != 0.0){
-                    BarDataSet set = (new BarDataSet(list, S.dbHandler.getBarDataLaden().getName()));
-                    set.setColor(this.getStatisticColor(i));
-                    bars.add(set);
-                }
-            }
-        }
-
-        this.dataBar = new BarData(bars);
-    }
-
-    public void prepareTopThreeArticlesData(){
-        this.sortedArticleList = S.dbHandler.getTopArticles(S.db, date[0], date[1]);
-    }
-
-    public void preparePieData(){
-
-        int MAXVALUE_PIE_CHART = 5;
-        int PIE_CHART_COUNTER = 0;
-
-        this.bonsCountPerLaden = S.dbHandler.getBonsCountPerLaden(S.db, date[0], date[1]);
-
-        this.pieces = new ArrayList<>();
-
-        int sizeLaedenBon = 0;
-
-        for(Hashtable.Entry<String, Integer> entry : bonsCountPerLaden){
-            sizeLaedenBon += entry.getValue();
-        }
-
-        if(date != null){
-
-            for(Hashtable.Entry<String, Integer> entry : bonsCountPerLaden){
-                if(entry.getValue() != 0){
-
-                    PieEntry pieEntry;
-
-                    if(PIE_CHART_COUNTER + 1 == MAXVALUE_PIE_CHART){
-                        pieEntry = new PieEntry(sizeLaedenBon, context.getResources().getString(R.string.statistik_card_rest_value));
-                    } else {
-                        sizeLaedenBon -= entry.getValue();
-                        pieEntry = new PieEntry(entry.getValue(), entry.getKey());
-                    }
-
-                    pieces.add(pieEntry);
-                }
-                if(++PIE_CHART_COUNTER == MAXVALUE_PIE_CHART){break;}
-            }
-
-        }
-
-        this.colorsPie = new ArrayList<>();
-
-        for(int i = 0; i < MAXVALUE_PIE_CHART; i++){
-            this.colorsPie.add(this.getStatisticColor(i));
-        }
-    }
-
-    public void prepareLineData(){
-
-        ArrayList<String> data = S.dbHandler.getExpenditureLastWeek(S.db);
-        List<Entry> dataList = new ArrayList<>();
-        this.lineDataSet = new ArrayList<>();
-
-        int counter = 1;
-
-        for(String value : data){
-            dataList.add(new Entry((float) counter++, Float.parseFloat(value.split("/")[1].replace(",","."))));
-        }
-
-        dataSet = new LineDataSet(dataList, "Ausgaben pro Tag");
-
-    }
-
-    public void prepareTopFacts(){
-
-        C_Laden laden = S.dbHandler.getMostVisitedLaden(S.db, date[0], date[1]);
-
-        this.mostVisitedLaden = laden.getName();
-        this.averagePrice = S.dbHandler.averageExpenditureLaden(S.db, laden, date[0], date[1]);
-        this.mostVisitedLadenBonsCount = "" + S.dbHandler.bonsCountLaden(S.db, laden, date[0], date[1]);
-        this.getMostVisitedLadenArticleCount = "" + S.dbHandler.articleCountLaden(S.db, laden, date[0], date[1]);
-
-
+    private void setTopThreeArticleInvisible(){
+        this.holderTopProducts.produkt1.setVisibility(View.INVISIBLE);
+        this.holderTopProducts.progress1.setVisibility(View.INVISIBLE);
+        this.holderTopProducts.percentage1.setVisibility(View.INVISIBLE);
+        this.holderTopProducts.produkt2.setVisibility(View.INVISIBLE);
+        this.holderTopProducts.progress2.setVisibility(View.INVISIBLE);
+        this.holderTopProducts.percentage2.setVisibility(View.INVISIBLE);
+        this.holderTopProducts.produkt3.setVisibility(View.INVISIBLE);
+        this.holderTopProducts.progress3.setVisibility(View.INVISIBLE);
+        this.holderTopProducts.percentage3.setVisibility(View.INVISIBLE);
     }
 }

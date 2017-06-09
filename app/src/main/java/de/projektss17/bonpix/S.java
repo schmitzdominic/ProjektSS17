@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -342,14 +343,14 @@ public class S extends Activity {
 
         String date[] = new String[2];
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek() +1);
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
 
         date[0] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
                 + new SimpleDateFormat("MM").format(cal.getTime()) + "."
                 + new SimpleDateFormat("yyyy").format(cal.getTime());
 
         cal.add(Calendar.WEEK_OF_YEAR, 1);
-        cal.add(Calendar.DAY_OF_MONTH, - 1);
+        cal.add(Calendar.DAY_OF_MONTH, -1);
 
         date[1] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
                 + new SimpleDateFormat("MM").format(cal.getTime()) + "."
@@ -476,5 +477,17 @@ public class S extends Activity {
         // Add as notification
         NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
+    }
+
+
+    /**
+     * Gibt einen Preis gerundet wieder
+     * @param price
+     * @return
+     */
+    public static String roundPrice(Double price){
+        price = Math.round(price * 100) / 100.00;
+        DecimalFormat df = new DecimalFormat("#0.00");
+        return df.format(price);
     }
 }
