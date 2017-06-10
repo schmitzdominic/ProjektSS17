@@ -1101,6 +1101,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
                             finish();
                         }
                     }).create().show();
+        } else {
+            finish();
         }
     }
 
