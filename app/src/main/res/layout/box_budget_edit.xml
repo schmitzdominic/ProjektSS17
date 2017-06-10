@@ -64,8 +64,9 @@
                 android:id="@+id/budget_alert_dialog_title_symbol"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.21"
-                app:srcCompat="@mipmap/ic_title_24dp" />
+                android:layout_weight="0.13"
+                android:tint="@color/colorMenueIcon"
+                app:srcCompat="@mipmap/ic_comment_black_24dp" />
 
             <EditText
                 android:id="@+id/budget_alert_dialog_title"
@@ -87,7 +88,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/budget_alert_dialog_title_layout"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="35dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -96,8 +97,9 @@
                 android:id="@+id/budget_alert_dialog_betrag_symbol"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.21"
-                app:srcCompat="@mipmap/ic_cash_24dp" />
+                android:layout_weight="0.13"
+                android:tint="@color/colorMenueIcon"
+                app:srcCompat="@mipmap/ic_attach_money_black_24dp" />
 
             <EditText
                 android:id="@+id/budget_alert_dialog_betrag"
@@ -117,7 +119,7 @@
             android:id="@+id/budget_alert_dialog_jahr_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="35dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:layout_below="@+id/budget_alert_dialog_budget_layout"
@@ -128,8 +130,9 @@
                 android:id="@+id/budget_alert_dialog_jahr_symbol"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.21"
-                app:srcCompat="@mipmap/ic_calender_24dp" />
+                android:layout_weight="0.13"
+                android:tint="@color/colorMenueIcon"
+                app:srcCompat="@mipmap/ic_date_range_black_24dp" />
 
             <TextView
                 android:id="@+id/budget_alert_dialog_zeitraum_von"
@@ -159,8 +162,9 @@
                 android:id="@+id/budget_alert_dialog_monat_symbol"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".21"
-                app:srcCompat="@mipmap/ic_calender_24dp" />
+                android:layout_weight=".13"
+                android:tint="@color/colorMenueIcon"
+                app:srcCompat="@mipmap/ic_date_range_black_24dp" />
 
             <TextView
                 android:id="@+id/budget_alert_dialog_zeitraum_bis"
@@ -178,7 +182,7 @@
             android:id="@+id/budget_alert_dialog_info_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="35dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:layout_below="@+id/budget_alert_dialog_monat_layout"
@@ -189,8 +193,9 @@
                 android:id="@+id/budget_alert_dialog_info_symbol"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".21"
-                app:srcCompat="@mipmap/ic_information_24dp" />
+                android:layout_weight=".13"
+                android:tint="@color/colorMenueIcon"
+                app:srcCompat="@mipmap/ic_info_outline_black_24dp" />
 
             <EditText
                 android:id="@+id/budget_alert_dialog_info"
@@ -200,6 +205,37 @@
                 android:layout_weight=".7"
                 android:hint="@string/a_budget_edit_sonstiges"
                 android:inputType="textAutoComplete" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/budget_alert_dialog_is_favorite_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/budget_alert_dialog_info_layout"
+            android:layout_marginTop="35dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/budget_alert_dialog_is_favorite_symbol"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.13"
+                android:tint="@color/colorMenueIcon"
+                app:srcCompat="@mipmap/ic_home_black_24dp" />
+
+            <Switch
+                android:id="@+id/budget_alert_dialog_is_favorite"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight=".7"
+                android:textSize="18sp"
+                android:textColor="@color/colorMenueIcon"
+                android:text="@string/a_budget_edit_favorite" />
         </LinearLayout>
 
     </RelativeLayout>

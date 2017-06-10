@@ -14,6 +14,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 import java.util.ArrayList;
@@ -36,18 +37,12 @@ public class A_Garantie extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Im Folgenden wird die RecyclerView angelegt und die dazugehörigen Einstellungen verwaltet
-        //XML instaniziieren
-        this.recyclerViewGarantie = (RecyclerView) findViewById(R.id.garantie_view);
-
-        mAdapter = new C_Adapter_Garantie(bonListe);
-        prepareBonData();
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerViewGarantie.setLayoutManager(mLayoutManager);
-        recyclerViewGarantie.addItemDecoration(
-                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        recyclerViewGarantie.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewGarantie.setAdapter(mAdapter);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
@@ -109,11 +104,30 @@ public class A_Garantie extends AppCompatActivity {
      */
     private void prepareBonData(){
 
-        for(C_Bon bon : (ArrayList<C_Bon>) S.dbHandler.rotateList(S.dbHandler.getAllBons(S.db))){
+        this.bonListe.clear();
+
+        for(C_Bon bon : S.dbHandler.getNumberOfNewestBons(S.db, S.dbHandler.getAllBonsCount(S.db))){
             if(bon.getGuarantee()){
                 this.bonListe.add(bon);
             }
         }
-        mAdapter.notifyDataSetChanged();
+
+        this.mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        this.recyclerViewGarantie = (RecyclerView) findViewById(R.id.garantie_view);
+
+        this.mAdapter = new C_Adapter_Garantie(bonListe);
+        this.prepareBonData();
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerViewGarantie.setLayoutManager(mLayoutManager);
+        recyclerViewGarantie.addItemDecoration(
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerViewGarantie.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewGarantie.setAdapter(mAdapter);
     }
 }
