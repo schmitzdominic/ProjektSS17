@@ -61,22 +61,6 @@ public class A_Laeden extends AppCompatActivity {
         });
 
     }
-    /**
-     * Set Data for RecyclerView Shops
-     */
-    public void prepareShopData(){
-
-        this.shopList.clear();
-
-        for(C_Laden shop : S.dbHandler.getAllLaeden(S.db)){
-            this.shopList.add(shop);
-        }
-
-        this.mAdapter.notifyDataSetChanged();
-
-        //Sortierung der Recycler View
-        Collections.sort(this.shopList);
-    }
 
     @Override
     protected void onResume() {
@@ -215,11 +199,15 @@ public class A_Laeden extends AppCompatActivity {
      * Set Data for RecyclerView Shops
      */
     public void prepareShopData(){
+
         shopList.clear();
+
         for(C_Laden shop : S.dbHandler.getAllLaeden(S.db)){
             this.shopList.add(shop);
         }
+
         mAdapter.notifyDataSetChanged();
+
         //Sortierung der Recycler View
         Collections.sort(shopList);
     }
