@@ -24,6 +24,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
@@ -72,6 +73,7 @@ public class C_Statistik {
 
     public void fillData(String date1, String date2, String state){
 
+        Utils.init(context);
         this.state = state;
         this.date = new String[]{date1, date2};
 
@@ -372,7 +374,7 @@ public class C_Statistik {
         lineChart.getLegend().setEnabled(false);
         lineChart.getAxisLeft().setEnabled(true);
         lineChart.getAxisRight().setEnabled(false);
-        lineChart.setViewPortOffsets(200f, 30f, 15f, 30f);
+        //lineChart.setViewPortOffsets(200f, 30f, 15f, 30f);
         lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {

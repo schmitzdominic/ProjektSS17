@@ -164,7 +164,7 @@
     <string name="statistik_card_general_productamount_title">Artikel</string>
     <string name="statistik_card_general_productamount_content">Anzahl</string>
 
-    <string name="statistik_card_topproducts_title">Top Artikel</string>
+    <string name="statistik_card_topproducts_title">Meist gekaufte Artikel</string>
     <string name="statistik_card_topproducts_article_one">Artikel 1</string>
     <string name="statistik_card_topproducts_article_two">Artikel 2</string>
     <string name="statistik_card_topproducts_article_three">Artikel 3</string>
