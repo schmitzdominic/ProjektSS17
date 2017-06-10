@@ -10,8 +10,8 @@
     <string name="title_tab1">HOME</string>
     <string name="title_tab2">STATISTIK</string>
     <string name="title_tab3">BONS</string>
-    <string name="foto_button">Foto</string>
-    <string name="manuell_button">Manuell</string>
+    <string name="foto_button"> Foto </string>
+    <string name="manuell_button"> Manuell </string>
 
     <!-- Navigation Drawer -->
     <string name="open">Open</string>

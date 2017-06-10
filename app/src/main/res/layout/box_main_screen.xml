@@ -66,10 +66,35 @@
             android:visibility="gone"
             app:layout_behavior="de.projektss17.bonpix.utils.MoveUpwardBehavior">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/manuell_button" />
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="72dp"
+                        android:layout_height="27dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/drawbutton" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_alignParentTop="true"
+                        android:textStyle="bold"
+                        android:text="@string/manuell_button"/>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/main_manuell_button"
@@ -93,10 +118,33 @@
             android:visibility="gone"
             app:layout_behavior="de.projektss17.bonpix.utils.MoveUpwardBehavior">
 
-            <TextView
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/foto_button" />
+                android:layout_gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="52dp"
+                    android:layout_height="27dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/drawbutton" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_alignParentTop="true"
+                    android:textStyle="bold"
+                    android:text="@string/foto_button" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/main_foto_button"
@@ -105,6 +153,7 @@
                 android:layout_marginLeft="10dp"
                 app:fabSize="mini"
                 app:srcCompat="@mipmap/ic_linked_camera_white_24dp" />
+
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
