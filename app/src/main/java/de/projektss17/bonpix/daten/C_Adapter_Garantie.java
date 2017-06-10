@@ -78,10 +78,8 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
     public void onBindViewHolder(final C_Adapter_Garantie.MyViewHolder holder, final int position) {
 
         this.bon = bonListe.get(position);
-        Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
-        roundedBitmapDrawable.setAntiAlias(true);
-        holder.icon.setImageDrawable(roundedBitmapDrawable);
+        
+        holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
         holder.warrantyShop.setText(bon.getShopName());
         holder.warrantyEnd.setText(holder.res.getString(R.string.a_garantie_garantie_bis) + " " + bon.getGuaranteeEnd());
 

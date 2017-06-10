@@ -77,10 +77,7 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
     public void onBindViewHolder(final ViewHolder holder, final int position){
         final C_Bon bon = bonsList.get(position);
 
-        Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
-        roundedBitmapDrawable.setAntiAlias(true);
-        holder.icon.setImageDrawable(roundedBitmapDrawable);
+        holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
 
         holder.title.setText(bon.getShopName());
         holder.content.setText(S.getWeekday(holder.res, S.getWeekdayNumber(bon.getDate())) + "\n" + bon.getDate());
