@@ -29,7 +29,7 @@ public class C_Preferences {
      * Get Boolean Preference
      */
     public Boolean getPrefBoolean(String key){
-        return sharedPrefs.getBoolean(key, false);
+        return sharedPrefs.getBoolean(key, true);
     }
 
     /**
