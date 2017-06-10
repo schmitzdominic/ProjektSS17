@@ -76,7 +76,7 @@ public class C_Statistik {
         this.date = new String[]{date1, date2};
 
         this.countLaeden = "" + S.dbHandler.getAllLaedenCount(S.db);
-        this.countArtikel = "" + S.dbHandler.getAllArticleCount(S.db);
+        this.countArtikel = this.getAllArticleCount();
 
         this.countBons = date1 != null && date2 != null ?
                 "" + S.dbHandler.getAllBonsCount(S.db, date1, date2) :
@@ -91,6 +91,29 @@ public class C_Statistik {
         this.preparePieData();
         this.prepareTopFacts();
         this.prepareLineData();
+    }
+
+    /**
+     * Gibt die Anzahl der Artikel innerhalb des Zeitraums
+     * @return Anzahl
+     */
+    private String getAllArticleCount(){
+
+        ArrayList<C_Bon> bonList;
+
+        if(date[0] != null && date[1] != null){
+            bonList = S.dbHandler.getBonsBetweenDate(S.db, date[0], date[1]);
+        } else {
+            bonList = S.dbHandler.getAllBons(S.db);
+        }
+
+        int counter = 0;
+
+        for(C_Bon bon : bonList){
+            counter += bon.getArticles().size();
+        }
+
+        return "" + counter;
     }
 
     /**
