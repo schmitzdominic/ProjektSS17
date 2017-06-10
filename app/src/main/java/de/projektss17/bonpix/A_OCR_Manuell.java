@@ -1091,6 +1091,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
         return articles;
     }
 
+    /**
+     * Zurück Verhalten
+     */
     private void backBehavior(){
         if(!this.getState().equals("edit")){
             new AlertDialog.Builder(A_OCR_Manuell.this)
@@ -1128,19 +1131,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
         }
     }
 
+    /**
+     * Prüft ob der vorherige Bon mit dem Editieren übereinstimmt
+     * @return true - Value Changed, false - Value not Changed
+     */
     private boolean proofIfValuesChanged(){
 
         C_Bon saveBon = this.saveBon();
-
-        Log.e("OLD", oldBon.toString());
-
-        Log.e("SAVE", saveBon.toString());
-
-        if(saveBon.toString().replace("null","").equals(this.oldBon.toString().replace("null",""))){
-            return false;
-        } else {
-            return true;
-        }
+        return !saveBon.toString().replace("null","").equals(this.oldBon.toString().replace("null",""));
     }
 
     /**
