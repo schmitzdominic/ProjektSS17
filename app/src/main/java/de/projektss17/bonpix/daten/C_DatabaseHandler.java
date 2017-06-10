@@ -123,6 +123,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         ArrayList<Integer> bonIds = new ArrayList<>();
         ArrayList<C_Bon> bonsBudget = budget.getBons();
+        double used = 0;
 
         for(C_Bon bon : budget.getBons()){
             bonIds.add(bon.getId());
@@ -135,7 +136,12 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             }
         }
 
+        for(C_Bon bon : bonsBudget){
+            used += Double.parseDouble(bon.getTotalPrice().replace(",","."));
+        }
+
         budget.setBons(bonsBudget);
+        budget.setBudgetLost((int)used);
         S.dbHandler.updateBudget(db, budget);
 
     }
@@ -195,7 +201,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         convertFromDateISO8601(cursor.getString(3)),
                         convertFromDateISO8601(cursor.getString(4)),
                         cursor.getString(5),
-                        cursor.getString(6));
+                        cursor.getString(6),
+                        cursor.getInt(7) > 0);
 
                 budget.setBons(this.getAllBonsFromBudget(db, budget));
                 budgetList.add(budget);
@@ -280,7 +287,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<C_Bon> getBonsBetweenDate(SQLiteDatabase db, String date1, String date2){
 
         ArrayList<C_Bon> list = new ArrayList<>();
-        String query = "SELECT * FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')";
+        String query = "SELECT * FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"') ORDER BY bonid DESC";
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -302,7 +309,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return rotateList(list);
+        return list;
     }
 
     /**
@@ -330,11 +337,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<C_Bon> getNumberOfNewestBons(SQLiteDatabase db, int anzahl){
 
         ArrayList<C_Bon> list = new ArrayList<>();
-        String query = "SELECT * FROM bon WHERE bonid = (SELECT MAX(bonid) FROM bon)";
-
-        for(int i = 1; i < anzahl; i++){
-            query += " OR bonid = (SELECT MAX(bonid)-"+i+" FROM bon)";
-        }
+        String query = "SELECT * FROM bon ORDER BY bonid DESC LIMIT " + anzahl;
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -353,10 +356,11 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
                 bon.setArticles(this.getAllArticleFromBon(db, bon));
                 list.add(bon);
+
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return rotateList(list);
+        return list;
 
     }
 
@@ -650,6 +654,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("bis", this.convertToDateISO8601(budget.getZeitraumBis()));
         values.put("titel", budget.getTitle());
         values.put("sonstiges", budget.getSonstiges());
+        values.put("favorite", budget.getFavorite());
 
         db.insert("budget", null, values);
         backupDataChanged();
@@ -852,6 +857,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("bis", this.convertToDateISO8601(budget.getZeitraumBis()));
         values.put("titel", budget.getTitle());
         values.put("sonstiges", budget.getSonstiges());
+        values.put("favorite", budget.getFavorite());
 
         db.update("budget", values, "budgetid="+budget.getId(), null);
         db.delete("bonbudget", "budgetid="+budget.getId(), null);
@@ -1033,6 +1039,46 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             db.delete("budget", "budgetid="+id, null);
             db.delete("bonbudget", "budgetid="+id, null);
         }
+    }
+
+    /**
+     * Setzt ein Budget als Favorite
+     * Legt ein Budget an falls diese noch nicht vorhanden ist oder updated es entsprechend
+     * @param db Datenbank
+     * @param budget Budget
+     */
+    public void setBudgetFavorite(SQLiteDatabase db, C_Budget budget){
+
+        if(budget.getFavorite()){
+            C_Budget tempFav = this.getFavoriteBudget(db);
+            if(tempFav != null){
+                tempFav.setFavorite(false);
+                this.updateBudget(db, tempFav);
+            }
+        }
+
+        if(this.checkIfBudgetExist(db, budget.getId())){
+            this.updateBudget(db, budget);
+        } else {
+            this.addBudget(db, budget);
+        }
+
+    }
+
+    /**
+     * Gibt das Favorisierte Budget zurück
+     * @param db Datenbank
+     * @return Budget
+     */
+    public C_Budget getFavoriteBudget(SQLiteDatabase db){
+
+        for(C_Budget budget : this.getAllBudgets(db)){
+            if(budget.getFavorite()){
+                return budget;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -1573,7 +1619,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 "von TEXT, " +
                 "bis TEXT, " +
                 "titel VARCHAR(255), " +
-                "sonstiges VARCHAR(255))";
+                "sonstiges VARCHAR(255), " +
+                "favorite BOOLEAN)";
 
         String CREATE_TABLE_BonArtikel = "CREATE TABLE IF NOT EXISTS bonartikel (bonid INTEGER NOT NULL, " +
                 "artikelid INTEGER NOT NULL, " +
@@ -1595,4 +1642,5 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_BonBudget);
 
     }
+
 }

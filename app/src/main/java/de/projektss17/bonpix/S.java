@@ -339,6 +339,7 @@ public class S extends Activity {
         }
     }
 
+
     /**
      * Gibt das von und bis Datum einer Woche wieder
      * @return Array mit 0 - Von Datum und 1 - Bis Datum

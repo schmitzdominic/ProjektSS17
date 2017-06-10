@@ -138,6 +138,9 @@
     <string name="a_budget_edit_bisdatum">Zeitraum (Ende)…</string>
     <string name="a_budget_edit_sonstiges">Sonstiges (optional)…</string>
     <string name="a_budget_edit_vonbis_error">Von-Datum liegt hinter Bis-Datum</string>
+    <string name="a_budget_edit_favorite">Auf Home Tab anzeigen</string>
+    <string name="a_budget_edit_home_warning_title">Budget auf Home Tab anzeigen</string>
+    <string name="a_budget_edit_home_warning">\nWollen Sie wirklich dieses Budget auf dem Home Tab anzeigen? \n\nINFO: Es kann nur ein Budget gleichzeitig auf dem Home Tab angezeigt werden!</string>
 
     <!-- Wochentage -->
     <string name="wochentag_1">Sonntag</string>
@@ -193,7 +196,11 @@
     <!-- A_Tab1Home -->
     <string name="tab_home_boncard_title_content">Letzte eingescannte Bons</string>
     <string name="tab_home_budgetcard_title_content">Wichtigste Budgetplanung</string>
-    <string name="tab_home_chartcard_line_title_content">Überblick aller eingescannter Bons</string>
+    <string name="tab_home_chartcard_line_title_content">Ausgaben letzter eingescannter Bons</string>
+    <string name="tab_home_chartcard_budget_default_content"> Fügen sie zuerst ein Budget hinzu ...</string>
+    <string name="tab_home_chartcard_boncard_default_content"> Fügen Sie  weitere Bons hinzu ...</string>
+
+
 
     <string name="tab_home_boncard_bon_content">default</string>
 

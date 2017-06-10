@@ -556,8 +556,11 @@ public class A_Main extends AppCompatActivity {
             artikelList.clear();
         }
 
+        boolean isFavorite = true;
+
         for(int i = 1; i < 3; i++){
-            S.dbHandler.addBudget(S.db, new C_Budget(i*1000, i*100, "0"+i+".01.2020", "0"+i+".01.2020", "TESTBUDGET"+i, "LALALALA", S.dbHandler.getNumberOfNewestBons(S.db, i)));
+            S.dbHandler.addBudget(S.db, new C_Budget(i*1000, i*100, "0"+i+".01.2020", "0"+i+".01.2020", "TESTBUDGET"+i, "LALALALA", isFavorite, S.dbHandler.getNumberOfNewestBons(S.db, i)));
+            isFavorite = false;
         }
     }
 }
