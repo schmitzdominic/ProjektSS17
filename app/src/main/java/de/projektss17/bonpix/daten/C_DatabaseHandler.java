@@ -14,21 +14,25 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import de.projektss17.bonpix.S;
-
-/**
- * Created by Marcus on 11.04.2017.
- */
 
 public class C_DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "bonpix";
     private static final int DATABASE_VERSION = 1;
-    Context context;
+    private Context context;
+    private C_Laden barDataLaden;
+    private C_Laden PieDataLaden;
 
 
     public C_DatabaseHandler(Context context) {
@@ -45,9 +49,25 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
+    public C_Laden getBarDataLaden() {
+        return barDataLaden;
+    }
+
+    public void setBarDataLaden(C_Laden barDataLaden) {
+        this.barDataLaden = barDataLaden;
+    }
+
     public void backupDataChanged(){
         BackupManager backupManager = new BackupManager(context);
         backupManager.dataChanged();
+    }
+
+    public C_Laden getPieDataLaden() {
+        return PieDataLaden;
+    }
+
+    public void setPieDataLaden(C_Laden pieDataLaden) {
+        PieDataLaden = pieDataLaden;
     }
 
     /**
@@ -1266,6 +1286,280 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Gibt eine Sortierte Liste der Läden mit deren Ausgaben zurück hohe Ausgabe > niedrige Ausgabe
+     * @param db Datenbank
+     * @return Sortierte Liste
+     */
+    public SortedSet<Hashtable.Entry<Integer, Float>> getExpenditureAllLaeden(SQLiteDatabase db){
+        return getExpenditureAllLaeden(db, null, null);
+    }
+
+    /**
+     * Gibt eine Sortierte Liste der Läden mit deren Ausgaben zurück hohe Ausgabe > niedrige Ausgabe
+     * @param db Datenbank
+     * @param date1 Von - Datum
+     * @param date2 Bis - Datum
+     * @return Sortierte Liste
+     */
+    public SortedSet<Hashtable.Entry<Integer, Float>> getExpenditureAllLaeden(SQLiteDatabase db, String date1, String date2){
+
+        TreeMap<Integer, Float> visitList = new TreeMap<>();
+
+        for(C_Laden laden : this.getAllLaeden(db)){
+            visitList.put(laden.getId(), (float)0.0);
+        }
+
+        String query = date1 != null && date2 != null ?
+                "SELECT gesamtpreis, ladenname FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT gesamtpreis, ladenname FROM bon";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                float betrag = visitList.get(cursor.getInt(1));
+                betrag += Float.parseFloat(cursor.getString(0).replace(",","."));
+                visitList.put(cursor.getInt(1), betrag);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return entriesSortedByValues(visitList);
+
+    }
+
+    public ArrayList<String> getExpenditureLastWeek(SQLiteDatabase db){
+
+        ArrayList<String> expList = new ArrayList<>();
+
+        for(String date : S.getFullWeek()){
+            expList.add(S.getWeekday(context.getResources(), S.getWeekdayNumber(date)) + "/" + S.dbHandler.getTotalExpenditure(S.db, date, date));
+        }
+
+        return expList;
+
+    }
+
+
+    /**
+     * Gibt Artikel sortiert nach der Häufigkeit zurück
+     * @param db Datenbank
+     * @return sortierte Liste
+     */
+    public SortedSet<Hashtable.Entry<String, Integer>> getTopArticles(SQLiteDatabase db){
+        return getTopArticles(db, null, null);
+    }
+
+    /**
+     * Gibt Artikel sortiert nach der Häufigkeit zurück
+     * @param db Datenbank
+     * @param date1 Von - Datum
+     * @param date2 Bis - Datum
+     * @return sortierte Liste
+     */
+    public SortedSet<Hashtable.Entry<String, Integer>> getTopArticles(SQLiteDatabase db, String date1, String date2){
+
+        TreeMap<String, Integer> buyList = new TreeMap<>();
+        ArrayList<C_Bon> bonList;
+        ArrayList<C_Artikel> articleList;
+
+        for(C_Artikel article : this.getAllArticle(db)){
+            buyList.put(article.getName(), 0);
+        }
+
+        bonList = date1 != null && date2 != null ?
+                this.getBonsBetweenDate(db, date1, date2) :
+                this.getAllBons(db);
+
+        for(C_Bon bon : bonList){
+            articleList = this.getAllArticleFromBon(db, bon);
+            for(C_Artikel article : articleList){
+                buyList.put(article.getName(), buyList.get(article.getName()) + 1);
+            }
+        }
+
+        return entriesSortedByValues(buyList);
+    }
+
+    /**
+     * Gibt die Anzahl sortiert der Bons pro Laden zurück
+     * @param db Datenbank
+     * @return Anzahl der Bons pro Laden
+     */
+    public SortedSet<Hashtable.Entry<String, Integer>> getBonsCountPerLaden(SQLiteDatabase db){
+        return this.getBonsCountPerLaden(db, null, null);
+    }
+
+    /**
+     * Gibt die Anzahl sortiert der Bons pro Laden zurück
+     * @param db Datenbank
+     * @param date1 Von - Datum
+     * @param date2 Bis - Datum
+     * @return Anzahl der Bons pro Laden
+     */
+    public SortedSet<Hashtable.Entry<String, Integer>> getBonsCountPerLaden(SQLiteDatabase db, String date1, String date2){
+
+        TreeMap<String, Integer> ladenList = new TreeMap<>();
+        ArrayList<C_Bon> bonList;
+
+        for(C_Laden laden : this.getAllLaeden(db)){
+            ladenList.put(laden.getName(), 0);
+        }
+
+        bonList = date1 != null && date2 != null ?
+                this.getBonsBetweenDate(db, date1, date2) :
+                this.getAllBons(db);
+
+        for(String laden : ladenList.keySet()){
+            for(C_Bon bon : bonList){
+                if(bon.getShopName().equals(laden)){
+                    ladenList.put(laden, ladenList.get(laden) + 1);
+                }
+            }
+        }
+
+        return entriesSortedByValues(ladenList);
+    }
+
+    /**
+     * Sortiert eine Map
+     * @param map Map die Sortiert werden soll
+     * @param <K> Parameter 1
+     * @param <V> Parameter 2
+     * @return Sortierte Liste
+     */
+    static <K,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
+        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
+                new Comparator<Map.Entry<K,V>>() {
+                    @Override public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+                        int res = e2.getValue().compareTo(e1.getValue());
+                        return res != 0 ? res : 1;
+                    }
+                }
+        );
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
+    }
+
+    /**
+     * Gibt die Bar Daten für alle Laeden zurück
+     * @param db Datenbank
+     * @param number Den wievielten Wert aus der Plazierung
+     * @return Liste mit BarEntrys
+     */
+    public List<BarEntry> getBarDataLaedenExpenditure(SQLiteDatabase db, int number){
+        return this.getBarDataLaedenExpenditure(db, null, null, number);
+    }
+
+    /**
+     * Gibt die Bar Daten für alle Laeden zurück
+     * @param db Datenbank
+     * @param date1 Von - Datum
+     * @param date2 Bis - Datum
+     * @param number Den wievielten Wert aus der Plazierung
+     * @return Liste mit BarEntrys
+     */
+    public List<BarEntry> getBarDataLaedenExpenditure(SQLiteDatabase db, String date1, String date2, int number){
+
+        List<BarEntry> dataList = new ArrayList<>();
+        int count = 0;
+
+        if(date1 != null && date2 != null){
+
+            for(Hashtable.Entry<Integer, Float> entry : this.getExpenditureAllLaeden(db, date1, date2)){
+                if(count == number){
+                    dataList.add(new BarEntry(count+1, entry.getValue()));
+                    this.setBarDataLaden(this.getLaden(db, entry.getKey()));
+                    break;
+                }
+                count++;
+            }
+
+        } else {
+
+            for(Hashtable.Entry<Integer, Float> entry : this.getExpenditureAllLaeden(db)){
+
+                if(count == number){
+                    dataList.add(new BarEntry(count+1, entry.getValue()));
+                    this.setBarDataLaden(this.getLaden(db, entry.getKey()));
+                    break;
+                }
+                count++;
+            }
+        }
+
+        return dataList;
+    }
+
+    /**
+     * Gibt die anzahl der Bons eines ladens zurück
+     * @param db Datenbank
+     * @param laden Laden
+     * @param date1 Von-Datum
+     * @param date2 Bis-Datum
+     * @return Anzahl
+     */
+    public int bonsCountLaden(SQLiteDatabase db, C_Laden laden, String date1, String date2){
+
+        String query = date1 != null && date2 != null ?
+                "SELECT ladenname FROM bon WHERE ladenname=" + laden.getId() + " AND datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT ladenname FROM bon WHERE ladenname=" + laden.getId();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()){
+            do {
+                count++;
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return count;
+    }
+
+    /**
+     * Gibt die Anzahl der Artikel eines Ladens zurück
+     * @param db Datenbank
+     * @param laden Laden
+     * @param date1 Von-Datum
+     * @param date2 Bis-Datum
+     * @return
+     */
+    public int articleCountLaden(SQLiteDatabase db, C_Laden laden, String date1, String date2){
+
+        ArrayList<Integer> bonIdList = new ArrayList<>();
+        ArrayList<C_Bon> bonList = new ArrayList<>();
+        HashSet<String> articleCountList = new HashSet<>();
+
+        String query = date1 != null && date2 != null ?
+                "SELECT bonid, ladenname FROM bon WHERE ladenname=" + laden.getId() + " AND datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT bonid, ladenname FROM bon WHERE ladenname=" + laden.getId();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                bonIdList.add(cursor.getInt(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        for(int x : bonIdList){
+            bonList.add(this.getBon(db, x));
+        }
+
+        for(C_Bon bon : bonList){
+            for(C_Artikel artikel : bon.getArticles()){
+                articleCountList.add(artikel.getName());
+            }
+        }
+
+        return articleCountList.size();
+    }
+
+    /**
      * Gibt alle Daten aus der DB im Log aus.
      */
     public void showLogAllDBEntries(){
@@ -1347,96 +1641,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_BonArtikel);
         db.execSQL(CREATE_TABLE_BonBudget);
 
-    }
-
-    /**
-     * Get the Data for BarCharts
-     * @param time
-     * @return
-     */
-    public List<BarEntry> getBarData(int time){
-        //TODO: Logic part for preparing Bar Data
-        List<BarEntry> dataList = new ArrayList<>();
-        switch(time){
-            case 1:
-                dataList.add(new BarEntry(0f, 30f));
-                dataList.add(new BarEntry(1f, 80f));
-                dataList.add(new BarEntry(2f, 60f));
-                dataList.add(new BarEntry(3f, 50f));
-                dataList.add(new BarEntry(5f, 70f));
-                dataList.add(new BarEntry(6f, 60f));
-                return dataList;
-            default:
-                dataList.add(new BarEntry(0f, 30f));
-                dataList.add(new BarEntry(1f, 80f));
-                dataList.add(new BarEntry(2f, 60f));
-                dataList.add(new BarEntry(3f, 50f));
-                dataList.add(new BarEntry(5f, 70f));
-                dataList.add(new BarEntry(6f, 60f));
-                return dataList;
-        }
-    }
-
-    /**
-     * Get the Data for LineCharts
-     * @param  time
-     * @return
-     */
-    public Map<String, List<Entry>> getLineData(int time){
-        //TODO: Logic part for preparing Bar Data
-        Map<String, List<Entry>> map = new HashMap();
-        List<Entry> lineOne = new ArrayList<Entry>();
-        List<Entry> lineTwo = new ArrayList<Entry>();
-        switch(time){
-            case 1:
-                Entry c1e1 = new Entry(0f, 100000f); // 0 == quarter 1
-                lineOne.add(c1e1);
-                Entry c1e2 = new Entry(1f, 140000f); // 1 == quarter 2 ...
-                lineOne.add(c1e2);
-                map.put("lineOne", lineOne);
-                Entry c2e1 = new Entry(0f, 130000f); // 0 == quarter 1
-                lineTwo.add(c2e1);
-                Entry c2e2 = new Entry(1f, 115000f); // 1 == quarter 2 ...
-                lineTwo.add(c2e2);
-                map.put("lineTwo", lineTwo);
-                return map;
-            default:
-                Entry c3e1 = new Entry(0f, 100000f); // 0 == quarter 1
-                lineOne.add(c3e1);
-                Entry c3e2 = new Entry(1f, 140000f); // 1 == quarter 2 ...
-                lineOne.add(c3e2);
-                map.put("lineOne", lineOne);
-                Entry c4e1 = new Entry(0f, 130000f); // 0 == quarter 1
-                lineTwo.add(c4e1);
-                Entry c4e2 = new Entry(1f, 115000f); // 1 == quarter 2 ...
-                lineTwo.add(c4e2);
-                map.put("lineTwo", lineTwo);
-                return map;
-        }
-    }
-
-    /**
-     * Get the Data for PieCharts
-     * @param time
-     * @return
-     */
-    public List<PieEntry> getPieData(int time){
-        List<PieEntry> dataList = new ArrayList<>();
-        //TODO: Logic part for preparing Bar Data
-        switch(time){
-            case 1:
-                dataList.add(new PieEntry(18.5f, "Green"));
-                dataList.add(new PieEntry(26.7f, "Yellow"));
-                dataList.add(new PieEntry(24.0f, "Red"));
-                dataList.add(new PieEntry(30.8f, "Blue"));
-                return dataList;
-            default:
-                dataList.add(new PieEntry(18.5f, "Green"));
-                dataList.add(new PieEntry(26.7f, "Yellow"));
-                dataList.add(new PieEntry(24.0f, "Red"));
-                dataList.add(new PieEntry(30.8f, "Blue"));
-                return dataList;
-        }
     }
 
 }

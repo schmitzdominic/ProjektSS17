@@ -30,6 +30,7 @@
             android:layout_marginStart="38dp"
             android:layout_toEndOf="@+id/bon_anzeigen_picture"
             android:text="@string/bon_anzeigen_laden_title"
+            android:maxLength="25"
             android:textStyle="bold"/>
 
         <TextView
@@ -39,6 +40,7 @@
             android:layout_alignStart="@+id/bon_anzeigen_ladenname_title"
             android:layout_below="@+id/bon_anzeigen_ladenname_title"
             android:text="@string/bon_anzeigen_laden"
+            android:maxLength="25"
             android:textSize="14sp"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"/>
@@ -51,6 +53,7 @@
             android:layout_below="@+id/bon_anzeigen_ladenname"
             android:layout_marginTop="8dp"
             android:text="@string/bon_anzeigen_datum_title"
+            android:maxLength="25"
             android:textStyle="bold"/>
 
         <TextView
@@ -60,6 +63,7 @@
             android:layout_alignStart="@+id/bon_anzeigen_ladenname"
             android:layout_below="@+id/bon_anzeigen_datum_title"
             android:text="@string/bon_anzeigen_datum"
+            android:maxLength="25"
             android:textSize="14sp"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"/>
@@ -72,6 +76,7 @@
             android:layout_below="@+id/bon_anzeigen_datum"
             android:layout_marginTop="8dp"
             android:text="@string/bon_anzeigen_adresse_title"
+            android:maxLength="25"
             android:textStyle="bold"/>
 
         <TextView
@@ -81,6 +86,7 @@
             android:layout_alignStart="@+id/bon_anzeigen_adresse_title"
             android:layout_below="@+id/bon_anzeigen_adresse_title"
             android:text="@string/bon_anzeigen_adresse"
+            android:maxLength="50"
             android:textSize="14sp"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"/>
@@ -92,6 +98,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="5dp"
             android:text="@string/bon_anzeigen_gesbetrag_title"
+            android:maxLength="15"
             android:textStyle="bold"
             android:layout_below="@+id/bon_anzeigen_picture"
             android:layout_alignStart="@+id/bon_anzeigen_picture" />
@@ -103,6 +110,7 @@
             android:layout_alignStart="@+id/bon_anzeigen_gesbetrag_title"
             android:layout_below="@+id/bon_anzeigen_gesbetrag_title"
             android:text="@string/bon_anzeigen_gesbetrag"
+            android:maxLength="15"
             android:textColor="@color/cardview_light_background"
             android:textSize="19sp"
             android:textStyle="bold" />
@@ -114,6 +122,7 @@
             android:layout_alignStart="@+id/bon_anzeigen_datum"
             android:layout_alignTop="@+id/bon_anzeigen_gesbetrag_title"
             android:text="@string/bon_anzeigen_garantie_title"
+            android:maxLength="15"
             android:textStyle="bold"/>
 
         <TextView
@@ -123,6 +132,7 @@
             android:layout_alignStart="@+id/bon_anzeigen_garantie_title"
             android:layout_below="@+id/bon_anzeigen_garantie_title"
             android:text="@string/bon_anzeigen_garantie"
+            android:maxLength="10"
             android:textSize="19sp"
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"/>

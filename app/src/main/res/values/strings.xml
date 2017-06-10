@@ -10,8 +10,8 @@
     <string name="title_tab1">HOME</string>
     <string name="title_tab2">STATISTIK</string>
     <string name="title_tab3">BONS</string>
-    <string name="foto_button">Foto</string>
-    <string name="manuell_button">Manuell</string>
+    <string name="foto_button"> Foto </string>
+    <string name="manuell_button"> Manuell </string>
 
     <!-- Navigation Drawer -->
     <string name="open">Open</string>
@@ -85,6 +85,15 @@
 
     <string name="a_ocr_manuell_garantie_laenge">Garantielänge (Jahre)</string>
 
+    <string name="a_ocr_manuell_back_behavior_title">Bon anlegen verlassen?</string>
+    <string name="a_ocr_manuell_back_behavior_message">Wollen Sie wirklich diese Maske verlassen ohne zu speichern?\n\nWARNUNG: Es gehen alle eingaben verloren!</string>
+    <string name="a_ocr_manuell_back_behavior_ok_button">Verlassen</string>
+
+    <string name="a_ocr_manuell_back_behavior_edit_title">Bon wurde editiert</string>
+    <string name="a_ocr_manuell_back_behavior_edit_message">Wollen Sie den Bon speichern vor dem verlassen?</string>
+    <string name="a_ocr_manuell_back_behavior_edit_dont_save_button">Verlassen</string>
+    <string name="a_ocr_manuell_back_behavior_edit_save_button">Speichern</string>
+
     <string name="c_ocr_kassenzettel_nicht_erkannt">Der Kassenzettel wurde leider nicht erkannt</string>
 
     <!-- A_Max_Bon_Pic -->
@@ -144,13 +153,13 @@
 
     <!-- A_Tab2Statistik -->
     <string name="title_a_statistik_tab_all">Alle</string>
-    <string name="title_a_statistik_tab_days">Tag</string>
+    <string name="title_a_statistik_tab_days">Woche</string>
     <string name="title_a_statistik_tab_month">Monat</string>
-    <string name="title_a_statistik_tab_years">Jahr</string>
+    <string name="title_a_statistik_tab_years">Quartal</string>
 
-    <string name="title_a_statistik_pie_chart">Kuchendiagramm</string>
-    <string name="title_a_statistik_line_chart">Liniendiagramm</string>
-    <string name="title_a_statistik_bar_chart">Bardiagramm</string>
+    <string name="title_a_statistik_pie_chart">Bons pro Laden</string>
+    <string name="title_a_statistik_line_chart">Ausgaben pro Tag</string>
+    <string name="title_a_statistik_bar_chart">Ausgaben pro Laden</string>
     <string name="title_a_statistik_combined_chart">Allgemein</string>
 
     <string name="statistik_card_general_title">Allgemeiner Überblick aller Bons</string>
@@ -163,7 +172,7 @@
     <string name="statistik_card_general_productamount_title">Artikel</string>
     <string name="statistik_card_general_productamount_content">Anzahl</string>
 
-    <string name="statistik_card_topproducts_title">Top 3 Artikel</string>
+    <string name="statistik_card_topproducts_title">Meist gekaufte Artikel</string>
     <string name="statistik_card_topproducts_article_one">Artikel 1</string>
     <string name="statistik_card_topproducts_article_two">Artikel 2</string>
     <string name="statistik_card_topproducts_article_three">Artikel 3</string>
@@ -171,11 +180,17 @@
 
     <string name="statistik_card_topfacts_title">Top Fakten</string>
     <string name="statistik_card_topfacts_fact_one_content">Inhalt</string>
-    <string name="statistik_card_topfacts_fact_two_content">Max-Mustermann-Str. XB</string>
+    <string name="statistik_card_topfacts_fact_articles_titles">Artikel:</string>
+    <string name="statistik_card_topfacts_fact_articles_count">ARTIKELANZAHL</string>
     <string name="statistik_card_topfacts_fact_three_content">Betrag</string>
     <string name="statistik_card_topfacts_fact_one_title">Meistbesuchter \nLaden</string>
-    <string name="statistik_card_topfacts_fact_two_title">Adresse:</string>
+    <string name="statistik_card_topfacts_fact_bons_title">Bons:</string>
+    <string name="statistik_card_topfacts_fact_bons_count">BONSANZAHL</string>
     <string name="statistik_card_topfacts_fact_three_title">Durchschn. \nAusgaben:</string>
+
+    <string name="statistik_card_rest_value">Sonstige</string>
+
+    <string name="statistik_card_line_chart_title">Ausgaben pro Tag</string>
 
 
     <!-- A_Tab1Home -->
