@@ -85,6 +85,10 @@
 
     <string name="a_ocr_manuell_garantie_laenge">Garantielänge (Jahre)</string>
 
+    <string name="a_ocr_manuell_back_behavior_title">Bon anlegen verlassen?</string>
+    <string name="a_ocr_manuell_back_behavior_message">Wollen Sie wirklich diese Maske verlassen ohne zu speichern?\n\nWARNUNG: Es gehen alle eingaben verloren!</string>
+    <string name="a_ocr_manuell_back_behavior_ok_button">Verlassen</string>
+
     <string name="c_ocr_kassenzettel_nicht_erkannt">Der Kassenzettel wurde leider nicht erkannt</string>
 
     <!-- A_Max_Bon_Pic -->

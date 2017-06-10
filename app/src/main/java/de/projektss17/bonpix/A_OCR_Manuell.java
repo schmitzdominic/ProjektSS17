@@ -66,7 +66,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private Button  kameraButton, addArticleButton;
     private Spinner ladenSpinner;
     private Calendar calendar;
-    private Calendar cal;
     private TextView dateTextView, totalPrice, sonstigesView;
     private ImageView ocrImageView;
     private View mExclusiveEmptyView;
@@ -77,7 +76,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private C_OCR ocr;
     private C_Bon bon;
     private A_OCR_Manuell context = this;
-    private int valuePicked, mYear;
+    private int valuePicked;
 
 
     @Override
@@ -91,7 +90,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                backBehavior();
             }
         });
 
@@ -292,6 +291,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 parentView.setSelection(0);
             }
         });
+    }
+
+    /**
+     * Zurück Button überschrieben
+     */
+    @Override
+    public void onBackPressed() {
+        backBehavior();
     }
 
     /**
@@ -1080,6 +1087,21 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         }
         return articles;
+    }
+
+    private void backBehavior(){
+        if(!this.getState().equals("edit")){
+            new AlertDialog.Builder(A_OCR_Manuell.this)
+                    .setTitle(R.string.a_ocr_manuell_back_behavior_title)
+                    .setMessage(R.string.a_ocr_manuell_back_behavior_message)
+                    .setNegativeButton(R.string.a_laeden_alert_dialog_cancel, null)
+                    .setPositiveButton(R.string.a_ocr_manuell_back_behavior_ok_button, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).create().show();
+        }
     }
 
     /**

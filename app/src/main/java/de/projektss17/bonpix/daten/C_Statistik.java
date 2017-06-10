@@ -372,7 +372,7 @@ public class C_Statistik {
         lineChart.getLegend().setEnabled(false);
         lineChart.getAxisLeft().setEnabled(true);
         lineChart.getAxisRight().setEnabled(false);
-        lineChart.setViewPortOffsets(135f, 30f, 15f, 30f);
+        lineChart.setViewPortOffsets(200f, 30f, 15f, 30f);
         lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
