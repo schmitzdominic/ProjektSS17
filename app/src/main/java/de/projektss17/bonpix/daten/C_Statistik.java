@@ -217,14 +217,14 @@ public class C_Statistik {
             dataList.add(new Entry((float) counter++, Float.parseFloat(value.split("/")[1].replace(",","."))));
         }
 
-        this.dataSet = new LineDataSet(dataList, context.getString(R.string.statistik_card_line_chart_title));
+        this.dataSet = new LineDataSet(dataList, this.context.getString(R.string.statistik_card_line_chart_title));
 
         /*if(this.state.equals("ALLE") || this.state.equals("WOCHE")){
-            // TODO Have to be implemented!
+            // TODO Have to be implemented! BITTE NICHT ANMERKEN DA DAS SPÄTER IMPLEMENTIERT WIRD!!
         } else if (this.state.equals("MONAT")){
-            //TODO
+            //TODO BITTE NICHT ANMERKEN DA DAS SPÄTER IMPLEMENTIERT WIRD!!
         } else {
-            // TODO
+            // TODO BITTE NICHT ANMERKEN DA DAS SPÄTER IMPLEMENTIERT WIRD!!
         }*/
 
         this.lineDataList = S.dbHandler.getExpenditureLastWeek(S.db);
