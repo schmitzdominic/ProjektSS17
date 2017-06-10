@@ -23,6 +23,7 @@ import de.projektss17.bonpix.S;
 import de.projektss17.bonpix.fragments.F_Laeden_Detail;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyViewHolder> {
@@ -111,5 +112,11 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
     @Override
     public int getItemCount() {
         return this.shopList.size();
+    }
+
+    public void setFilter(List<C_Laden> passedList) {
+        shopList = new ArrayList<>();
+        shopList.addAll(passedList);
+        notifyDataSetChanged();
     }
 }
