@@ -1,7 +1,6 @@
 package de.projektss17.bonpix;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
@@ -290,6 +289,7 @@ public class S extends Activity {
             case "REWE": return BitmapFactory.decodeResource(res,  R.mipmap.ic_rewelogo);
             case "Saturn": return BitmapFactory.decodeResource(res,  R.mipmap.ic_saturnlogo);
             case "Shell": return BitmapFactory.decodeResource(res,  R.mipmap.ic_shelllogo);
+            case "Lidl": return BitmapFactory.decodeResource(res,  R.mipmap.ic_lidllogo);
             default: return BitmapFactory.decodeResource(res,  R.mipmap.bonpix);
         }
 
@@ -481,24 +481,26 @@ public class S extends Activity {
      * @param txt Text der Notification
      * @param closeAfterClick Soll die Notification geschlossen werden nach dem klick
      */
-    public static void sendNotification(Context context, Class<?> cls, String title, String txt, boolean closeAfterClick){
-        NotificationCompat.Builder builder =
-                (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.mipmap.ic_shopping_cart_black_24dp) //ToDo hier muss später unser Icon implementiert werden
-                        .setContentTitle(title)
-                        .setContentText(txt)
-                        .setAutoCancel(closeAfterClick);
+    public static void sendNotification(Context context, Class<?> cls, String title, String txt, boolean closeAfterClick) {
+        if (S.prefs.getPrefBoolean("pref_notifications")) {
+            NotificationCompat.Builder builder =
+                    (NotificationCompat.Builder) new NotificationCompat.Builder(context)
+                            .setSmallIcon(R.mipmap.bonpix)
+                            .setContentTitle(title)
+                            .setContentText(txt)
+                            .setAutoCancel(closeAfterClick);
 
-        Intent notificationIntent = new Intent(context, cls);
+            Intent notificationIntent = new Intent(context, cls);
 
-        //Defines the action inside the notification
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(contentIntent);
+            //Defines the action inside the notification
+            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(contentIntent);
 
-        // Add as notification
-        NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        manager.notify(0, builder.build());
+            // Add as notification
+            NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+            manager.notify(0, builder.build());
+        }
     }
 
 
