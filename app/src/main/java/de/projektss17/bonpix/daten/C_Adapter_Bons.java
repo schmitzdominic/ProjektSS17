@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.A_Bon_Anzeigen;
+import de.projektss17.bonpix.A_Main;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
@@ -110,12 +111,14 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
                                 holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
                                 bon.setFavourite(false);
                                 S.dbHandler.updateBon(S.db, bon);
+                                S.setMenuCounter(R.id.menu_nav_favoriten, S.dbHandler.getFavouriteCount(S.db), ((A_Main) holder.itemView.getContext()).getNavigationView());
                             } else {
                                 if (row_index == position) {
                                     holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
                                     holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
                                     bon.setFavourite(true);
                                     S.dbHandler.updateBon(S.db, bon);
+                                    S.setMenuCounter(R.id.menu_nav_favoriten, S.dbHandler.getFavouriteCount(S.db), ((A_Main) holder.itemView.getContext()).getNavigationView());
                                 }
                             }
                         }

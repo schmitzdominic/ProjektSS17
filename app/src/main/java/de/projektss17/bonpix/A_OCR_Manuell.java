@@ -275,6 +275,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
                                     parentView.setSelection(0);
                                 }
                             })
+                            .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                @Override
+                                public void onCancel(DialogInterface dialog) {
+                                    parentView.setSelection(0);
+                                }
+                            })
                             .create().show();
                 } else if ((int) id > 1){
                     bon.setShopName(parentView.getSelectedItem().toString());
@@ -286,7 +292,11 @@ public class A_OCR_Manuell extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parentView) {
                 parentView.setSelection(0);
             }
+
+
         });
+
+
     }
 
     /**
