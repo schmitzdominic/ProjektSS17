@@ -37,6 +37,14 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         Intent mIntent = getIntent();
         this.pos = mIntent.getIntExtra("BonPos", pos);
         this.delete = (ImageButton) findViewById(R.id.bon_anzeigen_delete);

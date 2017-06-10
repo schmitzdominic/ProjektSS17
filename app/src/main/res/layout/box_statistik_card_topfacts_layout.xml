@@ -115,23 +115,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="165dp"
-            android:text="@string/statistik_card_topfacts_fact_two_title"
+            android:text="@string/statistik_card_topfacts_fact_bons_title"
             android:layout_below="@+id/statistik_card_general_title"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:textSize="14sp"/>
 
         <TextView
-            android:id="@+id/statistik_card_topfacts_fact_two_content"
+            android:id="@+id/statistik_card_topfacts_bons_anzahl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:text="@string/statistik_card_topfacts_fact_bons_count"
+            android:layout_alignStart="@+id/statistik_card_topfacts_adresse_title"
+            android:layout_below="@+id/statistik_card_general_title"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="70dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/statistik_card_topfacts_fact_artikel_titel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignStart="@+id/statistik_card_topfacts_adresse_title"
             android:layout_below="@+id/statistik_card_topfacts_adresse_title"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="1dp"
-            android:text="@string/statistik_card_topfacts_fact_two_content"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            android:layout_marginTop="8dp"
+            android:text="@string/statistik_card_topfacts_fact_articles_titles"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/statistik_card_topfacts_fact_artikel_anzahl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/statistik_card_topfacts_fact_artikel_titel"
+            android:layout_below="@+id/statistik_card_topfacts_adresse_title"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="70dp"
+            android:textColor="@color/colorAccent"
+            android:text="@string/statistik_card_topfacts_fact_articles_count"
+            android:textSize="14sp" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
