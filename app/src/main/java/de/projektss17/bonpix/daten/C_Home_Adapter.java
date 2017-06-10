@@ -196,8 +196,9 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                     ViewHolderBonCard holderBonCard = (ViewHolderBonCard) holder;
 
-                    for(int i = 0; i < bons.size(); i++)
-                            holderBonCard.linearLayout.addView(inflateBonsRow(bons.get(i)), holderBonCard.linearLayout.getChildCount());
+                    for(int i = 0; i < bons.size(); i++){
+                        holderBonCard.linearLayout.addView(inflateBonsRow(bons.get(i)), holderBonCard.linearLayout.getChildCount());
+                    }
 
                 }else{
 
@@ -348,6 +349,7 @@ public class C_Home_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             return favImage;
         } else {
+
             favImage.setImageDrawable(favImage.getContext().getResources().getDrawable(R.drawable.star_outline));
             favImage.setColorFilter(favImage.getContext().getResources().getColor(R.color.colorPrimary));
 
