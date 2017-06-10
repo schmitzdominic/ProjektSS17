@@ -162,6 +162,7 @@ public class A_Main extends AppCompatActivity {
         this.manuellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                closeFABMenu();
                 S.showManuell(A_Main.this,"new");
             }
         });
@@ -447,6 +448,8 @@ public class A_Main extends AppCompatActivity {
      * Ruft die Standard Android Kamera Anwendung auf
      */
     public void activeTakePhoto() {
+
+        this.closeFABMenu();
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 

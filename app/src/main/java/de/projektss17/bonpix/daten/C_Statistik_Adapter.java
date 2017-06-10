@@ -173,7 +173,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         switch(getItemViewType(position)){
-            case 0:
+            case 0: // General
 
                 if(this.holderGeneral == null){
                     this.holderGeneral = (ViewHolderGeneral) holder;
@@ -185,7 +185,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 this.holderGeneral.ausgabenGesamt.setText(this.statistik.getGesBetrag() + holderGeneral.itemView.getResources().getString(R.string.waehrung));
 
                 break;
-            case 1:
+            case 1: // Bar Chart
 
                 if(this.holderBar == null){
                     this.holderBar = (ViewHolderBar) holder;
@@ -202,7 +202,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 this.holderBar.barChart.invalidate();
 
                 break;
-            case 2:
+            case 2: // Top Products
 
                 if(this.holderTopProducts == null){
                     this.holderTopProducts = (ViewHolderTopProducts) holder;
@@ -244,7 +244,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 break;
-            case 3:
+            case 3: // Pie Chart
 
                 if(this.holderPie == null){
                     this.holderPie = (ViewHolderPie) holder;
@@ -269,7 +269,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 this.holderPie.pieChart.invalidate();
 
                 break;
-            case 4:
+            case 4: // Top Facts
 
                 if(this.holderTopFacts == null){
                     this.holderTopFacts = (ViewHolderTopFacts) holder;
@@ -281,7 +281,7 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 this.holderTopFacts.articleCount.setText(this.statistik.getGetMostVisitedLadenArticleCount());
 
                 break;
-            case 5:
+            case 5: // LineChart
 
                 if(this.holderLine == null){
                     this.holderLine = (ViewHolderLine) holder;
