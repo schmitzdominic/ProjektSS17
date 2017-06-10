@@ -51,6 +51,9 @@
     <string name="einstellungen_default_email">Hubert@gmx.de</string>
     <string name="einstellungen_action_bar_desc">Einstellungen</string>
     <string name="einstellungen_action_bar_title">Einstellungen</string>
+    <string name="einstellungen_hilfe_titel">Hilfe</string>
+    <string name="einstellungen_hilfe_tutorial_titel">Apptutorial</string>
+    <string name="einstellungen_hilfe_tutorial_beschreibung">Hier kannst du das Apptutorial starten</string>
 
     <!-- A_Backup -->
     <string name="title_backup_screen">Backup</string>

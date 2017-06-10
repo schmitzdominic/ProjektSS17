@@ -18,7 +18,7 @@ import de.projektss17.bonpix.R;
 
 
 public class C_Adapter_Tutorial extends PagerAdapter {
-    private int [] imageResources ={R.drawable.picture1,R.drawable.picture2,R.drawable.picture3,R.drawable.picture4,R.drawable.picture4};
+    private int [] imageResources ={R.drawable.picture1,R.drawable.picture2,R.drawable.picture3,R.drawable.picture4,R.drawable.picture5,R.drawable.picture6,R.drawable.picture7,R.drawable.picture7};
     private Context ctx;
     private LayoutInflater layoutInflater;
 

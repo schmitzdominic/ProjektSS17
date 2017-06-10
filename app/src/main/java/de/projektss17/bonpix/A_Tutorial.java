@@ -41,7 +41,7 @@ public class A_Tutorial extends Activity {
 
             @Override
             public void onPageSelected(int position) {
-                if(position == 4){
+                if(position == 7){
                     finish();
                 }
             }

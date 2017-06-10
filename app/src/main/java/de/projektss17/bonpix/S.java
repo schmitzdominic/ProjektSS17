@@ -80,8 +80,9 @@ public class S extends Activity {
     /**
      * Ruft die Tutorial Activity auf
      */
-    public static void showTutorial(AppCompatActivity beforeActivity){
-                S.startActivitiy(beforeActivity, A_Tutorial.class);
+    public static void showTutorial(Context beforeActivity){
+        Intent intent = new Intent(beforeActivity, A_Tutorial.class);
+        beforeActivity.startActivity(intent);
     }
 
     /**

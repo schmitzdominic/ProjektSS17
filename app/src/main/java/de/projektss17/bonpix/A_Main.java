@@ -3,6 +3,7 @@ package de.projektss17.bonpix;
 import android.Manifest;
 import android.animation.Animator;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -124,7 +125,6 @@ public class A_Main extends AppCompatActivity {
         this.initPersistence();
         this.initOnClickListener();
         this.onFirstStart();
-        S.showTutorial(A_Main.this);
     }
 
     /**
@@ -460,10 +460,8 @@ public class A_Main extends AppCompatActivity {
         if (settings.getBoolean("first_time", true)) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
+            S.showTutorial(this);
             //this.createDBDummyData(20);
-
-            /*ToDo ausführen des App-Tutorials: Tutorial für Home, Statistik, Bons */
-            //S.showTutorial(A_Main.this);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);
