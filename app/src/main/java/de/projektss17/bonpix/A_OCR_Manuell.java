@@ -74,7 +74,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private ImageButton garantieButton, saveButton;
     private boolean garantieChanged = false;
     private C_OCR ocr;
-    private C_Bon bon;
+    private C_Bon bon, oldBon;
     private A_OCR_Manuell context = this;
     private int valuePicked;
 
@@ -1004,6 +1004,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
             bonId = mIntent.getIntExtra("bonId", bonId);
             C_Bon bon = S.dbHandler.getBon(db, bonId);
 
+            this.oldBon = bon;
+
             this.bon.setId(bonId);
             this.bon.setFavourite(bon.getFavourite());
             this.bon.setGuarantee(bon.getGuarantee());
@@ -1102,7 +1104,42 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         }
                     }).create().show();
         } else {
-            finish();
+
+            if(this.proofIfValuesChanged()){
+                new AlertDialog.Builder(A_OCR_Manuell.this)
+                        .setTitle(R.string.a_ocr_manuell_back_behavior_edit_title)
+                        .setMessage(R.string.a_ocr_manuell_back_behavior_edit_message)
+                        .setNegativeButton(R.string.a_ocr_manuell_back_behavior_edit_dont_save_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+                        .setPositiveButton(R.string.a_ocr_manuell_back_behavior_edit_save_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                S.dbHandler.updateBon(S.db, saveBon());
+                                finish();
+                            }
+                        }).create().show();
+            } else {
+                finish();
+            }
+        }
+    }
+
+    private boolean proofIfValuesChanged(){
+
+        C_Bon saveBon = this.saveBon();
+
+        Log.e("OLD", oldBon.toString());
+
+        Log.e("SAVE", saveBon.toString());
+
+        if(saveBon.toString().replace("null","").equals(this.oldBon.toString().replace("null",""))){
+            return false;
+        } else {
+            return true;
         }
     }
 
