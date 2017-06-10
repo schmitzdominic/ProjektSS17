@@ -82,6 +82,7 @@
                 android:text="@string/statistik_card_general_costs_content"
                 android:maxLength="15"
                 android:textAlignment="center"
+                android:maxLength="10"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp" />
 

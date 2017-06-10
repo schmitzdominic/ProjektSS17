@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -67,6 +68,8 @@ public class A_Main extends AppCompatActivity {
     private NavigationView navigationView;
     private SectionsPagerAdapter sectionsPagerAdapter;
     private TabLayout tabLayout;
+    private TabLayout tabChooseTime;
+    private AppBarLayout tabChooseTimeLayout;
     private Toolbar toolbar;
     private Uri mCapturedImageURI;
     private View fabBGLayout;
@@ -101,6 +104,8 @@ public class A_Main extends AppCompatActivity {
         // Layout
         this.viewPager = (ViewPager) findViewById(R.id.main_container);
         this.tabLayout = (TabLayout) findViewById(R.id.main_tabs);
+        this.tabChooseTime = (TabLayout) findViewById(R.id.statistik_tabs);
+        this.tabChooseTimeLayout = (AppBarLayout) findViewById(R.id.main_time_bar_layout);
         this.fotoLayout = (LinearLayout) findViewById(R.id.main_foto_button_layout);
         this.manuellLayout = (LinearLayout) findViewById(R.id.main_manuell_button_layout);
         this.fotoButton = (FloatingActionButton) findViewById(R.id.main_foto_button);
@@ -115,6 +120,7 @@ public class A_Main extends AppCompatActivity {
 
         // Instanziierungen und Konfigurationen
         this.toggle.syncState();
+        this.tabChooseTimeLayout.setVisibility(View.INVISIBLE);
         this.picturePathList = new ArrayList<>();
         this.navigationDrawerLayout.addDrawerListener(toggle);
         this.sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -124,15 +130,39 @@ public class A_Main extends AppCompatActivity {
         this.initPersistence();
         this.initOnClickListener();
         this.onFirstStart();
+
     }
 
     /**
      * Initialisiert alle OnClickListener
      */
     private void initOnClickListener(){
+
+        this.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getPosition() == 1){
+                    tabChooseTimeLayout.setVisibility(View.VISIBLE);
+                } else {
+                    tabChooseTimeLayout.setVisibility(View.INVISIBLE);
+                }
+
+                if (!plusButton.isShown()) {
+                    plusButton.show();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
+        });
+
         this.manuellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                closeFABMenu();
                 S.showManuell(A_Main.this,"new");
             }
         });
@@ -205,6 +235,14 @@ public class A_Main extends AppCompatActivity {
         S.dbHandler.checkTables(S.db);
         S.dbHandler.showLogAllDBEntries();
         S.prefs = new C_Preferences(this);
+    }
+
+    /**
+     * Gibt die Time Leiste zurück
+     * @return Time Leiste
+     */
+    public TabLayout getTimeTabLayout(){
+        return this.tabChooseTime;
     }
 
     /**
@@ -410,6 +448,8 @@ public class A_Main extends AppCompatActivity {
      * Ruft die Standard Android Kamera Anwendung auf
      */
     public void activeTakePhoto() {
+
+        this.closeFABMenu();
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 

@@ -11,13 +11,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/bonpix"
+        android:icon="@mipmap/bonpix_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/bonpix_round"
+        android:roundIcon="@mipmap/bonpix_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:backupAgent=".daten.C_BackupAgent_DB"
         android:fullBackupContent="@xml/auto_backup_rules"
+        android:screenOrientation="portrait"
         android:fullBackupOnly="true">
         <activity
             android:name=".A_Main"
@@ -130,7 +131,8 @@
             android:name=".A_Bon_Anzeigen"
             android:label="@string/title_bon_anzeigen"
             android:parentActivityName=".A_Main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
@@ -151,7 +153,8 @@
             android:name=".A_Laeden"
             android:label="@string/title_activity_a__laeden"
             android:parentActivityName=".A_Main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />

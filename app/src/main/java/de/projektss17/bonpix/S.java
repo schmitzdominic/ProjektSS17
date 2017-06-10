@@ -16,10 +16,12 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -338,6 +340,126 @@ public class S extends Activity {
     }
 
     /**
+     * Gibt das von und bis Datum einer Woche wieder
+     * @return Array mit 0 - Von Datum und 1 - Bis Datum
+     */
+    public static String[] getWeek(){
+
+        String date[] = new String[2];
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+
+        date[0] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
+                + new SimpleDateFormat("MM").format(cal.getTime()) + "."
+                + new SimpleDateFormat("yyyy").format(cal.getTime());
+
+        cal.add(Calendar.WEEK_OF_YEAR, 1);
+        cal.add(Calendar.DAY_OF_MONTH, -1);
+
+        date[1] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
+                + new SimpleDateFormat("MM").format(cal.getTime()) + "."
+                + new SimpleDateFormat("yyyy").format(cal.getTime());
+
+        return date;
+    }
+
+    /**
+     * Gibt ein Array mit jedem Datum der letzten 7 Tage zurück
+     * @return Array mit den letzten 7 Tagen
+     */
+    public static String[] getFullWeek(){
+        String date[] = new String[7];
+        Calendar cal = Calendar.getInstance();
+
+        date[0] = getNumberWithZero(cal.get(Calendar.DAY_OF_MONTH)) + "."
+                + getNumberWithZero(cal.get(Calendar.MONTH) + 1) + "."
+                + cal.get(Calendar.YEAR);
+
+        for(int i = 1; i < 7; i++){
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+
+            date[i] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
+                    + new SimpleDateFormat("MM").format(cal.getTime()) + "."
+                    + new SimpleDateFormat("yyyy").format(cal.getTime());
+        }
+
+        return date;
+    }
+
+    /**
+     * Gibt das von und bis Datum eines Monats wieder
+     * @return Array mit 0 - Von Datum und 1 - Bis Datum
+     */
+    public static String[] getMonth(){
+
+        String date[] = new String[2];
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+
+        date[0] = new SimpleDateFormat("dd").format(cal.getTime()) + "."
+                + new SimpleDateFormat("MM").format(cal.getTime()) + "."
+                + new SimpleDateFormat("yyyy").format(cal.getTime());
+
+        String lastDay = getNumberWithZero(Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        date[1] = lastDay + "."
+                + new SimpleDateFormat("MM").format(cal.getTime()) + "."
+                + new SimpleDateFormat("yyyy").format(cal.getTime());
+
+        return date;
+    }
+
+    /**
+     * Gibt das von und bis Datum eines Quartals wieder
+     * @return Array mit 0 - Von Datum und 1 - Bis Datum
+     */
+    public static String[] getQuartal(){
+
+        String date[] = new String[2];
+        Calendar cal = Calendar.getInstance();
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+
+        switch((month >= Calendar.JANUARY && month <= Calendar.MARCH)     ? "Q1" :
+                (month >= Calendar.APRIL && month <= Calendar.JUNE)        ? "Q2" :
+                        (month >= Calendar.JULY && month <= Calendar.SEPTEMBER)    ? "Q3" :
+                                "Q4"){
+            case "Q1":
+                date[0] = "01.01." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                date[1] = "31.03." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                break;
+            case "Q2":
+                date[0] = "01.04." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                date[1] = "30.06." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                break;
+            case "Q3":
+                date[0] = "01.07." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                date[1] = "30.09." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                break;
+            case "Q4":
+                date[0] = "01.10." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                date[1] = "31.12." + new SimpleDateFormat("yyyy").format(cal.getTime());
+                break;
+        }
+
+        return date;
+    }
+
+    /**
+     * Gibt eine Int Zahl mit einer 0 davor zurück (sofern kleiner als 10)
+     * @param zahl Zahl
+     * @return String Zahl mit 0
+     */
+    public static String getNumberWithZero(int zahl) {
+        if (zahl > 0 && zahl < 10) {
+            return "0" + zahl;
+        } else {
+            return "" + zahl;
+        }
+    }
+
+
+
+    /**
      * Notification Builder - Opens a clickable notification!
      * (Could be opened with S.sendNotification(context, activity.class, string, string, boolean))
      * @param context Context
@@ -376,5 +498,17 @@ public class S extends Activity {
         // Add as notification
         NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
+    }
+
+
+    /**
+     * Gibt einen Preis gerundet wieder
+     * @param price
+     * @return
+     */
+    public static String roundPrice(Double price){
+        price = Math.round(price * 100) / 100.00;
+        DecimalFormat df = new DecimalFormat("#0.00");
+        return df.format(price);
     }
 }
