@@ -10,8 +10,8 @@
     <string name="title_tab1">HOME</string>
     <string name="title_tab2">STATISTIK</string>
     <string name="title_tab3">BONS</string>
-    <string name="foto_button">Foto</string>
-    <string name="manuell_button">Manuell</string>
+    <string name="foto_button"> Foto </string>
+    <string name="manuell_button"> Manuell </string>
 
     <!-- Navigation Drawer -->
     <string name="open">Open</string>
@@ -22,6 +22,7 @@
     <string name="nav_garantie">Garantie</string>
     <string name="nav_einstellungen">Einstellungen</string>
     <string name="nav_laeden">Läden</string>
+    <string name="nav_title">onPix</string>
 
     <!-- Währung (Allgemein) -->
     <string name="currency_europe">€</string>
@@ -51,6 +52,8 @@
     <string name="einstellungen_default_email">Hubert@gmx.de</string>
     <string name="einstellungen_action_bar_desc">Einstellungen</string>
     <string name="einstellungen_action_bar_title">Einstellungen</string>
+    <string name="einstellungen_notification_title">Benachrichtigungen</string>
+    <string name="einstellungen_notification_text">Aktivieren oder Deaktivieren der Benachrichtigungen</string>
 
     <!-- A_Backup -->
     <string name="title_backup_screen">Backup</string>
@@ -84,6 +87,15 @@
     <string name="a_ocr_manuell_button_delete_row_description">Delete</string>
 
     <string name="a_ocr_manuell_garantie_laenge">Garantielänge (Jahre)</string>
+
+    <string name="a_ocr_manuell_back_behavior_title">Bon anlegen verlassen?</string>
+    <string name="a_ocr_manuell_back_behavior_message">Wollen Sie wirklich diese Maske verlassen ohne zu speichern?\n\nWARNUNG: Es gehen alle eingaben verloren!</string>
+    <string name="a_ocr_manuell_back_behavior_ok_button">Verlassen</string>
+
+    <string name="a_ocr_manuell_back_behavior_edit_title">Bon wurde editiert</string>
+    <string name="a_ocr_manuell_back_behavior_edit_message">Wollen Sie den Bon speichern vor dem verlassen?</string>
+    <string name="a_ocr_manuell_back_behavior_edit_dont_save_button">Verlassen</string>
+    <string name="a_ocr_manuell_back_behavior_edit_save_button">Speichern</string>
 
     <string name="c_ocr_kassenzettel_nicht_erkannt">Der Kassenzettel wurde leider nicht erkannt</string>
 
@@ -129,6 +141,9 @@
     <string name="a_budget_edit_bisdatum">Zeitraum (Ende)…</string>
     <string name="a_budget_edit_sonstiges">Sonstiges (optional)…</string>
     <string name="a_budget_edit_vonbis_error">Von-Datum liegt hinter Bis-Datum</string>
+    <string name="a_budget_edit_favorite">Auf Home Tab anzeigen</string>
+    <string name="a_budget_edit_home_warning_title">Budget auf Home Tab anzeigen</string>
+    <string name="a_budget_edit_home_warning">\nWollen Sie wirklich dieses Budget auf dem Home Tab anzeigen? \n\nINFO: Es kann nur ein Budget gleichzeitig auf dem Home Tab angezeigt werden!</string>
 
     <!-- Wochentage -->
     <string name="wochentag_1">Sonntag</string>
@@ -141,13 +156,13 @@
 
     <!-- A_Tab2Statistik -->
     <string name="title_a_statistik_tab_all">Alle</string>
-    <string name="title_a_statistik_tab_days">Tag</string>
+    <string name="title_a_statistik_tab_days">Woche</string>
     <string name="title_a_statistik_tab_month">Monat</string>
-    <string name="title_a_statistik_tab_years">Jahr</string>
+    <string name="title_a_statistik_tab_years">Quartal</string>
 
-    <string name="title_a_statistik_pie_chart">Kuchendiagramm</string>
-    <string name="title_a_statistik_line_chart">Liniendiagramm</string>
-    <string name="title_a_statistik_bar_chart">Bardiagramm</string>
+    <string name="title_a_statistik_pie_chart">Bons pro Laden</string>
+    <string name="title_a_statistik_line_chart">Ausgaben pro Tag</string>
+    <string name="title_a_statistik_bar_chart">Ausgaben pro Laden</string>
     <string name="title_a_statistik_combined_chart">Allgemein</string>
 
     <string name="statistik_card_general_title">Allgemeiner Überblick aller Bons</string>
@@ -160,7 +175,7 @@
     <string name="statistik_card_general_productamount_title">Artikel</string>
     <string name="statistik_card_general_productamount_content">Anzahl</string>
 
-    <string name="statistik_card_topproducts_title">Top 3 Artikel</string>
+    <string name="statistik_card_topproducts_title">Meist gekaufte Artikel</string>
     <string name="statistik_card_topproducts_article_one">Artikel 1</string>
     <string name="statistik_card_topproducts_article_two">Artikel 2</string>
     <string name="statistik_card_topproducts_article_three">Artikel 3</string>
@@ -168,28 +183,38 @@
 
     <string name="statistik_card_topfacts_title">Top Fakten</string>
     <string name="statistik_card_topfacts_fact_one_content">Inhalt</string>
-    <string name="statistik_card_topfacts_fact_two_content">Max-Mustermann-Str. XB</string>
+    <string name="statistik_card_topfacts_fact_articles_titles">Artikel:</string>
+    <string name="statistik_card_topfacts_fact_articles_count">ARTIKELANZAHL</string>
     <string name="statistik_card_topfacts_fact_three_content">Betrag</string>
     <string name="statistik_card_topfacts_fact_one_title">Meistbesuchter \nLaden</string>
-    <string name="statistik_card_topfacts_fact_two_title">Adresse:</string>
+    <string name="statistik_card_topfacts_fact_bons_title">Bons:</string>
+    <string name="statistik_card_topfacts_fact_bons_count">BONSANZAHL</string>
     <string name="statistik_card_topfacts_fact_three_title">Durchschn. \nAusgaben:</string>
+
+    <string name="statistik_card_rest_value">Sonstige</string>
+
+    <string name="statistik_card_line_chart_title">Ausgaben pro Tag</string>
 
 
     <!-- A_Tab1Home -->
     <string name="tab_home_boncard_title_content">Letzte eingescannte Bons</string>
     <string name="tab_home_budgetcard_title_content">Wichtigste Budgetplanung</string>
-    <string name="tab_home_chartcard_line_title_content">Überblick aller eingescannter Bons</string>
+    <string name="tab_home_chartcard_line_title_content">Ausgaben letzter eingescannter Bons</string>
+    <string name="tab_home_chartcard_budget_default_content"> Fügen sie zuerst ein Budget hinzu ...</string>
+    <string name="tab_home_chartcard_boncard_default_content"> Fügen Sie  weitere Bons hinzu ...</string>
+
+
 
     <string name="tab_home_boncard_bon_content">default</string>
 
 
     <!-- A_Bon_Anzeigen -->
     <string name="title_bon_anzeigen">Bon Anzeigen</string>
-    <string name="bon_anzeigen_laden_title">Laden</string>
-    <string name="bon_anzeigen_adresse_title">Adresse</string>
-    <string name="bon_anzeigen_datum_title">Datum</string>
-    <string name="bon_anzeigen_gesbetrag_title">Gesamtbetrag</string>
-    <string name="bon_anzeigen_garantie_title">Garantie (Ende)</string>
+    <string name="bon_anzeigen_laden_title">Laden:</string>
+    <string name="bon_anzeigen_adresse_title">Adresse:</string>
+    <string name="bon_anzeigen_datum_title">Datum:</string>
+    <string name="bon_anzeigen_gesbetrag_title">Gesamtbetrag:</string>
+    <string name="bon_anzeigen_garantie_title">Garantie (Ende):</string>
     <string name="bon_anzeigen_artikel_title">Artikel</string>
     <string name="bon_anzeigen_preis_title">Preis</string>
 
@@ -204,5 +229,6 @@
 
     <string name="bon_anzeigen_delete_title">Bon Löschen</string>
     <string name="bon_anzeigen_delete_message">Wollen Sie wirklich diesen Bon löschen?</string>
+
 
 </resources>

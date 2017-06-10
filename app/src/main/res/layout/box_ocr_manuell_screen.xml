@@ -41,8 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_toLeftOf="@+id/ocr_manuell_save_button"
                     android:background="@color/colorPrimary"
                     app:srcCompat="@mipmap/ic_verified_user_white_24dp" />
@@ -54,8 +53,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="15dp"
                     android:background="@color/colorPrimary"
                     app:srcCompat="@mipmap/ic_save_white_24dp" />
 
