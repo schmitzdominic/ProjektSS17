@@ -62,7 +62,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private Button  kameraButton, addArticleButton;
     private Spinner ladenSpinner;
     private Calendar calendar;
-    private Calendar cal;
     private TextView dateTextView, totalPrice, sonstigesView;
     private ImageView ocrImageView;
     private View mExclusiveEmptyView;
@@ -71,9 +70,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private ImageButton garantieButton, saveButton;
     private boolean garantieChanged = false;
     private C_OCR ocr;
-    private C_Bon bon;
+    private C_Bon bon, oldBon;
     private A_OCR_Manuell context = this;
-    private int valuePicked, mYear;
+    private int valuePicked;
 
 
     @Override
@@ -82,8 +81,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
         setContentView(R.layout.box_ocr_manuell_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                backBehavior();
+            }
+        });
 
         // XML Instanziieren
         this.garantieButton = (ImageButton) findViewById(R.id.ocr_manuell_garantie_button); // Garantie Button
@@ -295,6 +300,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
     }
 
     /**
+     * Zurück Button überschrieben
+     */
+    @Override
+    public void onBackPressed() {
+        backBehavior();
+    }
+
+    /**
      * Standard
      */
     @Override
@@ -348,8 +361,18 @@ public class A_OCR_Manuell extends AppCompatActivity {
     @Override
     protected Dialog onCreateDialog(int id) {
         if (id == 999) {
+
+            this.calendar = Calendar.getInstance();
+
+            if(this.getState().equals("edit")){
+                return new DatePickerDialog(this,
+                        this.myDateListener, Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[2]),
+                        Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[1]) - 1,
+                        Integer.parseInt(this.dateTextView.getText().toString().split("\\.")[0]));
+            }
+
             return new DatePickerDialog(this,
-                    this.myDateListener, Integer.parseInt(this.year), Integer.parseInt(this.month), Integer.parseInt(this.day));
+                    this.myDateListener, Integer.parseInt(this.year), calendar.get(Calendar.MONTH), Integer.parseInt(this.day));
         }
         return null;
     }
@@ -362,10 +385,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     showDate("" + getNumberWithZero(arg1),
                             "" + getNumberWithZero(arg2 + 1),
                             "" + getNumberWithZero(arg3));
-                    day = "" + getNumberWithZero(arg3);
-                    month = "" + getNumberWithZero(arg2 + 1);
-                    mYear = arg1;
-                    year = getNumberWithZero(arg1);
                 }
             };
 
@@ -377,7 +396,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     public void createCalendar(){
         this.calendar = Calendar.getInstance();
         this.year = "" + this.calendar.get(Calendar.YEAR);
-        this.month = this.getNumberWithZero(calendar.get(Calendar.MONTH) +1);
+        this.month = this.getNumberWithZero(calendar.get(Calendar.MONTH) + 1);
         this.day = this.getNumberWithZero(calendar.get(Calendar.DAY_OF_MONTH));
         this.showDate(year, month, day);
     }
@@ -991,6 +1010,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
             bonId = mIntent.getIntExtra("bonId", bonId);
             C_Bon bon = S.dbHandler.getBon(db, bonId);
 
+            this.oldBon = bon;
+
             this.bon.setId(bonId);
             this.bon.setFavourite(bon.getFavourite());
             this.bon.setGuarantee(bon.getGuarantee());
@@ -1069,11 +1090,60 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 } else {
                     price = Double.parseDouble(priceField.getText().toString() + "." + centField.getText().toString());
                 }
-
                 articles.add(new C_Artikel(articleField.getText().toString(), price));
             }
         }
         return articles;
+    }
+
+    /**
+     * Zurück Verhalten
+     */
+    private void backBehavior(){
+        if(!this.getState().equals("edit")){
+            new AlertDialog.Builder(A_OCR_Manuell.this)
+                    .setTitle(R.string.a_ocr_manuell_back_behavior_title)
+                    .setMessage(R.string.a_ocr_manuell_back_behavior_message)
+                    .setNegativeButton(R.string.a_laeden_alert_dialog_cancel, null)
+                    .setPositiveButton(R.string.a_ocr_manuell_back_behavior_ok_button, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).create().show();
+        } else {
+
+            if(this.proofIfValuesChanged()){
+                new AlertDialog.Builder(A_OCR_Manuell.this)
+                        .setTitle(R.string.a_ocr_manuell_back_behavior_edit_title)
+                        .setMessage(R.string.a_ocr_manuell_back_behavior_edit_message)
+                        .setNegativeButton(R.string.a_ocr_manuell_back_behavior_edit_dont_save_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+                        .setPositiveButton(R.string.a_ocr_manuell_back_behavior_edit_save_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                S.dbHandler.updateBon(S.db, saveBon());
+                                finish();
+                            }
+                        }).create().show();
+            } else {
+                finish();
+            }
+        }
+    }
+
+    /**
+     * Prüft ob der vorherige Bon mit dem Editieren übereinstimmt
+     * @return true - Value Changed, false - Value not Changed
+     */
+    private boolean proofIfValuesChanged(){
+
+        C_Bon saveBon = this.saveBon();
+        return !saveBon.toString().replace("null","").equals(this.oldBon.toString().replace("null",""));
     }
 
     /**

@@ -13,21 +13,22 @@ public class C_Budget{
     private String zeitraumBis;
     private String title;
     private String sonstiges;
+    private boolean favorite;
     private ArrayList<C_Bon> bons;       // Array-List für alle Kassenbons zu diesem Budget
 
-    public C_Budget(int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges, ArrayList<C_Bon> bons){
-        this(0, budgetMax, budgetLost, zeitraumVon, zeitraumBis, title, sonstiges, bons);
+    public C_Budget(int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges, boolean favorite , ArrayList<C_Bon> bons){
+        this(0, budgetMax, budgetLost, zeitraumVon, zeitraumBis, title, sonstiges, favorite, bons);
     }
 
-    public C_Budget(int id, int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges){
-        this(id, budgetMax, budgetLost, zeitraumVon, zeitraumBis, title, sonstiges, null);
+    public C_Budget(int id, int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges, boolean favorite){
+        this(id, budgetMax, budgetLost, zeitraumVon, zeitraumBis, title, sonstiges, favorite, null);
     }
 
-    public C_Budget(int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges){
-        this(0, budgetMax, budgetLost, zeitraumVon, zeitraumBis, title, sonstiges, null);
+    public C_Budget(int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges, boolean favorite){
+        this(0, budgetMax, budgetLost, zeitraumVon, zeitraumBis, title, sonstiges, favorite,  null);
     }
 
-    public C_Budget(int id, int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges, ArrayList<C_Bon> bons){
+    public C_Budget(int id, int budgetMax, int budgetLost, String zeitraumVon, String zeitraumBis, String title, String sonstiges, boolean favorite, ArrayList<C_Bon> bons){
         this.id = id;
         this.budgetMax = budgetMax;
         this.budgetLost = budgetLost;
@@ -35,6 +36,7 @@ public class C_Budget{
         this.zeitraumBis = zeitraumBis;
         this.title = title;
         this.sonstiges = sonstiges;
+        this.favorite = favorite;
         this.bons = bons;
 
     }
@@ -102,6 +104,14 @@ public class C_Budget{
 
     public void setBons(ArrayList<C_Bon> bonBons) {
         this.bons = bonBons;
+    }
+
+    public boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public String getMonthVon(){

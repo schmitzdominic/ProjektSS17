@@ -5,13 +5,13 @@ import android.animation.Animator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -69,6 +69,8 @@ public class A_Main extends AppCompatActivity {
     private NavigationView navigationView;
     private SectionsPagerAdapter sectionsPagerAdapter;
     private TabLayout tabLayout;
+    private TabLayout tabChooseTime;
+    private AppBarLayout tabChooseTimeLayout;
     private Toolbar toolbar;
     private Uri mCapturedImageURI;
     private View fabBGLayout;
@@ -103,6 +105,8 @@ public class A_Main extends AppCompatActivity {
         // Layout
         this.viewPager = (ViewPager) findViewById(R.id.main_container);
         this.tabLayout = (TabLayout) findViewById(R.id.main_tabs);
+        this.tabChooseTime = (TabLayout) findViewById(R.id.statistik_tabs);
+        this.tabChooseTimeLayout = (AppBarLayout) findViewById(R.id.main_time_bar_layout);
         this.fotoLayout = (LinearLayout) findViewById(R.id.main_foto_button_layout);
         this.manuellLayout = (LinearLayout) findViewById(R.id.main_manuell_button_layout);
         this.fotoButton = (FloatingActionButton) findViewById(R.id.main_foto_button);
@@ -117,6 +121,7 @@ public class A_Main extends AppCompatActivity {
 
         // Instanziierungen und Konfigurationen
         this.toggle.syncState();
+        this.tabChooseTimeLayout.setVisibility(View.INVISIBLE);
         this.picturePathList = new ArrayList<>();
         this.navigationDrawerLayout.addDrawerListener(toggle);
         this.sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -126,6 +131,7 @@ public class A_Main extends AppCompatActivity {
         this.initPersistence();
         this.initOnClickListener();
         this.onFirstStart();
+
     }
 
     @Override
@@ -153,9 +159,32 @@ public class A_Main extends AppCompatActivity {
      * Initialisiert alle OnClickListener
      */
     private void initOnClickListener(){
+
+        this.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getPosition() == 1){
+                    tabChooseTimeLayout.setVisibility(View.VISIBLE);
+                } else {
+                    tabChooseTimeLayout.setVisibility(View.INVISIBLE);
+                }
+
+                if (!plusButton.isShown()) {
+                    plusButton.show();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
+        });
+
         this.manuellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                closeFABMenu();
                 S.showManuell(A_Main.this,"new");
             }
         });
@@ -227,7 +256,15 @@ public class A_Main extends AppCompatActivity {
         S.dbArtikel = S.dbArtikelHandler.getWritableDatabase();
         S.dbHandler.checkTables(S.db);
         S.dbHandler.showLogAllDBEntries();
-        S.prefs = new C_Preferences(this);
+        S.prefs = new C_Preferences(A_Main.this);
+    }
+
+    /**
+     * Gibt die Time Leiste zurück
+     * @return Time Leiste
+     */
+    public TabLayout getTimeTabLayout(){
+        return this.tabChooseTime;
     }
 
     /**
@@ -434,6 +471,8 @@ public class A_Main extends AppCompatActivity {
      */
     public void activeTakePhoto() {
 
+        this.closeFABMenu();
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -476,10 +515,7 @@ public class A_Main extends AppCompatActivity {
      * Wird nur beim ersten Start der App ausgeführt
      */
     private void onFirstStart(){
-        final String PREFS_NAME = C_Preferences.APP_SHARED_PREFS;
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-
-        if (settings.getBoolean("first_time", true)) {
+        if (S.prefs.getPrefBoolean("first_time")) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
             //this.createDBDummyData(100);
@@ -505,7 +541,7 @@ public class A_Main extends AppCompatActivity {
      * Setzt alle Standardwerte
      */
     private void setDefaultSettings(){
-        PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.box_einstellungen_preferences, true);
         PreferenceManager.setDefaultValues(this, R.xml.box_backup_preferences, false);
     }
 
@@ -539,8 +575,11 @@ public class A_Main extends AppCompatActivity {
             artikelList.clear();
         }
 
+        boolean isFavorite = true;
+
         for(int i = 1; i < 3; i++){
-            S.dbHandler.addBudget(S.db, new C_Budget(i*1000, i*100, "0"+i+".01.2020", "0"+i+".01.2020", "TESTBUDGET"+i, "LALALALA", S.dbHandler.getNumberOfNewestBons(S.db, i)));
+            S.dbHandler.addBudget(S.db, new C_Budget(i*1000, i*100, "0"+i+".01.2020", "0"+i+".01.2020", "TESTBUDGET"+i, "LALALALA", isFavorite, S.dbHandler.getNumberOfNewestBons(S.db, i)));
+            isFavorite = false;
         }
     }
 }
