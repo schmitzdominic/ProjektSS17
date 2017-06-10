@@ -339,6 +339,10 @@ public class S extends Activity {
         }
     }
 
+    /**
+     * Gibt das von und bis Datum einer Woche wieder
+     * @return Array mit 0 - Von Datum und 1 - Bis Datum
+     */
     public static String[] getWeek(){
 
         String date[] = new String[2];
@@ -359,6 +363,10 @@ public class S extends Activity {
         return date;
     }
 
+    /**
+     * Gibt ein Array mit jedem Datum der letzten 7 Tage zurück
+     * @return Array mit den letzten 7 Tagen
+     */
     public static String[] getFullWeek(){
         String date[] = new String[7];
         Calendar cal = Calendar.getInstance();
@@ -378,6 +386,10 @@ public class S extends Activity {
         return date;
     }
 
+    /**
+     * Gibt das von und bis Datum eines Monats wieder
+     * @return Array mit 0 - Von Datum und 1 - Bis Datum
+     */
     public static String[] getMonth(){
 
         String date[] = new String[2];
@@ -397,6 +409,10 @@ public class S extends Activity {
         return date;
     }
 
+    /**
+     * Gibt das von und bis Datum eines Quartals wieder
+     * @return Array mit 0 - Von Datum und 1 - Bis Datum
+     */
     public static String[] getQuartal(){
 
         String date[] = new String[2];
@@ -428,6 +444,11 @@ public class S extends Activity {
         return date;
     }
 
+    /**
+     * Gibt eine Int Zahl mit einer 0 davor zurück (sofern kleiner als 10)
+     * @param zahl Zahl
+     * @return String Zahl mit 0
+     */
     public static String getNumberWithZero(int zahl) {
         if (zahl > 0 && zahl < 10) {
             return "0" + zahl;
