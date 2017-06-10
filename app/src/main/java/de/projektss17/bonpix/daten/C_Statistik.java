@@ -206,25 +206,26 @@ public class C_Statistik {
      */
     private void prepareLineData(){
 
-        if(this.state.equals("ALLE") || this.state.equals("WOCHE")){
 
-            int counter = 1;
+        int counter = 1;
 
-            ArrayList<String> data = S.dbHandler.getExpenditureLastWeek(S.db);
-            List<Entry> dataList = new ArrayList<>();
-            this.lineDataSet = new ArrayList<>();
+        ArrayList<String> data = S.dbHandler.getExpenditureLastWeek(S.db);
+        List<Entry> dataList = new ArrayList<>();
+        this.lineDataSet = new ArrayList<>();
 
-            for(String value : data){
-                dataList.add(new Entry((float) counter++, Float.parseFloat(value.split("/")[1].replace(",","."))));
-            }
+        for(String value : data){
+            dataList.add(new Entry((float) counter++, Float.parseFloat(value.split("/")[1].replace(",","."))));
+        }
 
-            this.dataSet = new LineDataSet(dataList, context.getString(R.string.statistik_card_line_chart_title));
+        this.dataSet = new LineDataSet(dataList, context.getString(R.string.statistik_card_line_chart_title));
 
+        /*if(this.state.equals("ALLE") || this.state.equals("WOCHE")){
+            // TODO Have to be implemented!
         } else if (this.state.equals("MONAT")){
             //TODO
         } else {
             // TODO
-        }
+        }*/
 
         this.lineDataList = S.dbHandler.getExpenditureLastWeek(S.db);
 
