@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.projektss17.bonpix.A_Tutorial">
+    tools:context="de.projektss17.bonpix.A_Tutorial"
+    android:background="@android:color/white">
 
     <android.support.v4.view.ViewPager
         android:layout_height="match_parent"
@@ -20,8 +21,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
-        android:background="@color/colorPrimary"
+        android:background="@android:color/white"
         android:text="@string/tutorial_skip_button"
-        android:textColor="@color/cardview_light_background"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp" />
 </RelativeLayout>

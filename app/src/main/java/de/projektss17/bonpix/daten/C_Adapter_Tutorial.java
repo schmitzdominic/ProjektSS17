@@ -44,7 +44,7 @@ public class C_Adapter_Tutorial extends PagerAdapter {
             ImageView imageView=(ImageView) itemView.findViewById(R.id.swip_image_view);
             TextView textView=(TextView) itemView.findViewById(R.id.imageCount);
             imageView.setImageResource(imageResources[position]);
-            textView.setText(ctx.getResources().getString(R.string.tutorial_tipp)+(position+1));
+            textView.setText(ctx.getResources().getString(R.string.tutorial_tipp)+ " " + (position+1) + " von 7");
             container.addView(itemView);
         }
 
