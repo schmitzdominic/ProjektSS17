@@ -16,11 +16,15 @@ import android.widget.TextView;
 import de.projektss17.bonpix.A_Tutorial;
 import de.projektss17.bonpix.R;
 
+import static de.projektss17.bonpix.R.id.textView;
+
 
 public class C_Adapter_Tutorial extends PagerAdapter {
     private int [] imageResources ={R.drawable.picture1,R.drawable.picture2,R.drawable.picture3,R.drawable.picture4,R.drawable.picture5,R.drawable.picture6,R.drawable.picture7,R.drawable.picture7};
     private Context ctx;
     private LayoutInflater layoutInflater;
+    private TextView textView, content;
+    private ImageView imageView;
 
     public C_Adapter_Tutorial(Context c) {
         ctx=c;
@@ -41,10 +45,39 @@ public class C_Adapter_Tutorial extends PagerAdapter {
         View itemView=layoutInflater.inflate(R.layout.box_tutorial_adapter,container,false);
 
         if(position < imageResources.length - 1){
-            ImageView imageView=(ImageView) itemView.findViewById(R.id.swip_image_view);
-            TextView textView=(TextView) itemView.findViewById(R.id.imageCount);
-            imageView.setImageResource(imageResources[position]);
-            textView.setText(ctx.getResources().getString(R.string.tutorial_tipp)+ " " + (position+1) + " von 7");
+            this.imageView=(ImageView) itemView.findViewById(R.id.swip_image_view);
+            this.textView=(TextView) itemView.findViewById(R.id.imageCount);
+            this.content = (TextView) itemView.findViewById(R.id.tutorial_text_content);
+
+
+            this.imageView.setImageResource(imageResources[position]);
+            this.textView.setText(ctx.getResources().getString(R.string.tutorial_tipp)+ " " + (position+1) + " von 7");
+
+            switch (position){
+                case 0:
+                    this.content.setText(ctx.getResources().getString((R.string.tutorial_text1)));
+                    break;
+                case 1:
+                    this.content.setText(ctx.getResources().getString((R.string.tutorial_text2)));
+                    break;
+                case 2:
+                    this.content.setText(ctx.getResources().getString((R.string.tutorial_text3)));
+                    break;
+                case 3:
+                    this.content.setText(ctx.getResources().getString((R.string.tutorial_text4)));
+                    break;
+                case 4:
+                    this.content.setText(ctx.getResources().getString((R.string.tutorial_text5)));
+                    break;
+                case 5:
+                    this.content.setText(ctx.getResources().getString((R.string.tutorial_text6)));
+                    break;
+                case 6:
+                    this.content.setText(ctx.getResources().getString((R.string.tutorial_text7)));
+                    break;
+            }
+
+
             container.addView(itemView);
         }
 

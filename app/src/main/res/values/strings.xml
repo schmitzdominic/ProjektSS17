@@ -212,5 +212,12 @@
     <string name="title_tutorial">Tutorial</string>
     <string name="tutorial_skip_button">Skip</string>
     <string name="tutorial_tipp">Tipp: </string>
+    <string name="tutorial_text1">Im Homereiter werden die wichtigsten Daten angezeigt.</string>
+    <string name="tutorial_text2">Im Statistikreiter werden Daten und Auswertungen angezeigt.</string>
+    <string name="tutorial_text3">Über den Filter kann der Zeitraum ausgewählt werden.</string>
+    <string name="tutorial_text4">Im Bonsreiter werden alle Bons angezeigt. Bons sind anklickbar und können favorisiert werden.</string>
+    <string name="tutorial_text5">Über Button können Bons per Foto oder manuell hinzugefügt werden. Funktion ist ebenfalls in Home- und Statistikscreen verfügbar.</string>
+    <string name="tutorial_text6">Bons können manuell hinzugefügt werden. Es kann der Laden ausgewählt und Artikel hinzugefügt werden.</string>
+    <string name="tutorial_text7">Über den linken Button kann eine Garantie hinzugefügt werden. Der linke Button speichert den Bon.</string>
 
 </resources>
