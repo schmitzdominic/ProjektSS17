@@ -78,6 +78,14 @@ public class S extends Activity {
     }
 
     /**
+     * Ruft die Tutorial Activity auf
+     */
+    public static void showTutorial(Context beforeActivity){
+        Intent intent = new Intent(beforeActivity, A_Tutorial.class);
+        beforeActivity.startActivity(intent);
+    }
+
+    /**
      * Ruft die Budget Activity auf
      */
     public static void showBudget(AppCompatActivity beforeActivity){

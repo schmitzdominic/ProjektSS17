@@ -3,6 +3,7 @@ package de.projektss17.bonpix;
 import android.Manifest;
 import android.animation.Animator;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -459,6 +460,7 @@ public class A_Main extends AppCompatActivity {
         if (settings.getBoolean("first_time", true)) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
+            S.showTutorial(this);
             //this.createDBDummyData(20);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
