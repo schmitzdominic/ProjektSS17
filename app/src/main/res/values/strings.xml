@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BonPix</string>
-    <string name="impressum_version_nummer">Version 0.2</string>
-    <string name="impressum_version_stand">Stand: 05.06.2017</string>
+    <string name="impressum_version_nummer">Version 0.5 BETA</string>
+    <string name="impressum_version_stand">Stand: 12.06.2017</string>
 
     <!-- Allgemein -->
     <string name="waehrung">€</string>
@@ -54,6 +54,9 @@
     <string name="einstellungen_default_email">Hubert@gmx.de</string>
     <string name="einstellungen_action_bar_desc">Einstellungen</string>
     <string name="einstellungen_action_bar_title">Einstellungen</string>
+    <string name="einstellungen_hilfe_titel">Hilfe</string>
+    <string name="einstellungen_hilfe_tutorial_titel">Apptutorial</string>
+    <string name="einstellungen_hilfe_tutorial_beschreibung">Hier kannst du das Apptutorial starten</string>
     <string name="einstellungen_notification_title">Benachrichtigungen</string>
     <string name="einstellungen_notification_text">Aktivieren oder Deaktivieren der Benachrichtigungen</string>
 
@@ -120,17 +123,17 @@
     <string name="a_laeden_alert_dialog_toast2">Leere Eingabe! Bitte erneut versuchen.</string>
 
     <!-- Laeden Detail -->
-    <string name ="f_laeden_detail_titel_hint">Laden eingeben ...</string>
-    <string name ="f_laeden_detail_delete_titel">Achtung </string>
-    <string name ="f_laeden_detail_delete_message"> wird GELÖSCHT! \n\nWenn Sie Bestätigen werden alle zugeordneten Bons entfernt!</string>
-    <string name ="f_laeden_detail_cancel">ABBRUCH</string>
-    <string name ="f_laeden_detail_ok">BESTÄTIGEN</string>
-    <string name ="f_laeden_detail_delete_toast1">Laden</string>
-    <string name ="f_laeden_detail_delete_toast2">wurde gelöscht!</string>
-    <string name ="f_laeden_detail_save_titel">Ladenname ändern</string>
-    <string name ="f_laeden_detail_save_message">Sollen Ihre Eingaben übernommen werden?</string>
-    <string name ="f_laeden_detail_save_toast">Laden bereits vorhanden! Bitte geben Sie einen anderen Wert ein.</string>
-    <string name ="f_laeden_detail_save_save_toast">Laden geändert</string>
+    <string name="f_laeden_detail_titel_hint">Laden eingeben ...</string>
+    <string name="f_laeden_detail_delete_titel">Achtung </string>
+    <string name="f_laeden_detail_delete_message"> wird GELÖSCHT! \n\nWenn Sie Bestätigen werden alle zugeordneten Bons entfernt!</string>
+    <string name="f_laeden_detail_cancel">ABBRUCH</string>
+    <string name="f_laeden_detail_ok">BESTÄTIGEN</string>
+    <string name="f_laeden_detail_delete_toast1">Laden</string>
+    <string name="f_laeden_detail_delete_toast2">wurde gelöscht!</string>
+    <string name="f_laeden_detail_save_titel">Ladenname ändern</string>
+    <string name="f_laeden_detail_save_message">Sollen Ihre Eingaben übernommen werden?</string>
+    <string name="f_laeden_detail_save_toast">Laden bereits vorhanden! Bitte geben Sie einen anderen Wert ein.</string>
+    <string name="f_laeden_detail_save_save_toast">Laden geändert</string>
 
     <!-- Momentan Dummy aber kann später noch gebraucht werden! -->
     <string name="action_settings_search">Suchen</string>
@@ -234,5 +237,17 @@
 
     <string name="bon_anzeigen_delete_title">Bon Löschen</string>
     <string name="bon_anzeigen_delete_message">Wollen Sie wirklich diesen Bon löschen?</string>
+
+    <!-- A_Tutorial -->
+    <string name="title_tutorial">Tutorial</string>
+    <string name="tutorial_skip_button">Skip</string>
+    <string name="tutorial_tipp">Tipp: </string>
+    <string name="tutorial_text1">Im Hometab werden die wichtigsten Daten angezeigt. Unter anderem die letzten eingescannten Bons, sowie die wichtigste Budgetplanung.</string>
+    <string name="tutorial_text2">Im Statistikreiter werden alle relevanten Daten und Auswertungen angezeigt.</string>
+    <string name="tutorial_text3">Über diese Tabs können verschiedene Zeiträume ausgewählt werden. Hierbei werden die Daten dementsprechend gefiltert und angezeigt.</string>
+    <string name="tutorial_text4">Im Bonsreiter werden alle Bons angezeigt. Alle Bons sind anklickbar und können favorisiert werden.</string>
+    <string name="tutorial_text5">Über den Plus-Button können Bons per Foto oder manuell hinzugefügt werden. Diese Funktion ist ebenfalls im Home-, wie auch im Statistikreiter verfügbar.</string>
+    <string name="tutorial_text6">Alle Bons können ebenfalls manuell hinzugefügt werden. Hierzu wählt man einen Laden und mindestens einen Artikel aus.</string>
+    <string name="tutorial_text7">Über den linken Button kann eine Garantie hinzugefügt werden. Mit dem rechten Button können alle Eingaben gespeichert werden.</string>
 
 </resources>

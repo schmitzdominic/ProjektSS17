@@ -20,6 +20,7 @@
         android:fullBackupContent="@xml/auto_backup_rules"
         android:screenOrientation="portrait"
         android:fullBackupOnly="true">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".A_Main"
             android:label="@string/title_a_main"
@@ -137,7 +138,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
         </activity>
-
         <activity
             android:name=".A_Budget_Edit"
             android:label="@string/title_budget_edit"
@@ -146,8 +146,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.projektss17.bonpix.A_Budget"/>
-
+                android:value="de.projektss17.bonpix.A_Budget" />
         </activity>
         <activity
             android:name=".A_Laeden"
@@ -158,6 +157,12 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.projektss17.bonpix.A_Main" />
+        </activity>
+        <activity
+            android:name=".A_Tutorial"
+            android:label="@string/title_tutorial"
+            android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait">
         </activity>
 
         <meta-data

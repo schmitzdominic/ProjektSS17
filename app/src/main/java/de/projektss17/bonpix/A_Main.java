@@ -3,7 +3,6 @@ package de.projektss17.bonpix;
 import android.Manifest;
 import android.animation.Animator;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -518,13 +517,11 @@ public class A_Main extends AppCompatActivity {
      * Wird nur beim ersten Start der App ausgeführt
      */
     private void onFirstStart(){
-
-        Log.e("PREF BOOLEAN", S.prefs.getPrefBoolean("first_time") + "");
-
         if (S.prefs.getPrefBoolean("first_time")) {
             this.setDefaultSettings();
             this.setDefaultDBValues();
-            //this.createDBDummyData(100);
+            S.showTutorial(this);
+            //this.createDBDummyData(20);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);

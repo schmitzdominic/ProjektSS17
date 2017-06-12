@@ -50,7 +50,7 @@
             android:id="@+id/main_fabBGLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorTransBg"
+            android:background="@color/colorShadowFloatingButton"
             android:visibility="gone" />
 
         <LinearLayout

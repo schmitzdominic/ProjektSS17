@@ -22,6 +22,15 @@
         <Preference android:title="Backup"
             android:key="pref_backup"
             android:summary="Hier kannst du backups machen"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@+string/einstellungen_hilfe_titel"
+        android:key="category_data">
+
+        <Preference android:title="@+string/einstellungen_hilfe_tutorial_titel"
+            android:key="category_tutorial"
+            android:summary="@+string/einstellungen_hilfe_tutorial_beschreibung"/>
 
     </PreferenceCategory>
 </PreferenceScreen>
