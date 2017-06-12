@@ -8,7 +8,7 @@
     android:background="@color/cardview_light_background">
 
     <ImageView
-        android:id="@+id/tab_home_boncard_first_bon_small_image"
+        android:id="@+id/bons_shop_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
@@ -17,39 +17,42 @@
         android:src="@drawable/common_google_signin_btn_icon_dark_focused"/>
 
     <TextView
-        android:id="@+id/tab_home_boncard_first_bon_above_content"
+        android:id="@+id/bons_shop_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/tab_home_boncard_first_bon_betrag"
-        android:layout_toRightOf="@+id/tab_home_boncard_first_bon_small_image"
+        android:layout_toLeftOf="@+id/bons_price"
+        android:layout_toRightOf="@+id/bons_shop_image"
         android:paddingTop="20dp"
         android:text="Default"
+        android:maxLength="20"
         android:textSize="16sp"/>
 
     <TextView
-        android:id="@+id/tab_home_boncard_first_bon_below_content"
+        android:id="@+id/bons_buying_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tab_home_boncard_first_bon_above_content"
-        android:layout_toLeftOf="@+id/tab_home_boncard_first_bon_betrag"
-        android:layout_toRightOf="@+id/tab_home_boncard_first_bon_small_image"
+        android:layout_below="@+id/bons_shop_name"
+        android:layout_toLeftOf="@+id/bons_price"
+        android:layout_toRightOf="@+id/bons_shop_image"
         android:paddingBottom="20dp"
         android:text="default"
+        android:maxLength="20"
         android:textSize="14sp"/>
 
     <TextView
-        android:id="@+id/tab_home_boncard_first_bon_betrag"
+        android:id="@+id/bons_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/tab_home_boncard_first_bon_big_image"
+        android:layout_toLeftOf="@+id/bons_favorite_icon"
         android:paddingTop="30dp"
         android:paddingBottom="20dp"
         android:paddingRight="20dp"
         android:text="default"
+        android:maxLength="10"
         android:textSize="24sp"/>
 
     <ImageView
-        android:id="@+id/tab_home_boncard_first_bon_big_image"
+        android:id="@+id/bons_favorite_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

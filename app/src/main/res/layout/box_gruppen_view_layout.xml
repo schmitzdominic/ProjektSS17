@@ -24,6 +24,7 @@
         android:layout_toRightOf="@+id/recyclergruppen_picture"
         android:paddingTop="20dp"
         android:text="Default"
+        android:maxLength="20"
         android:textSize="16sp"/>
 
     <TextView
@@ -35,6 +36,7 @@
         android:layout_toRightOf="@+id/recyclergruppen_picture"
         android:paddingBottom="20dp"
         android:text="default"
+        android:maxLength="20"
         android:textSize="14sp"/>
 
     <ImageView
