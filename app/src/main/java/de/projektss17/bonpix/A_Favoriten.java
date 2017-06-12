@@ -11,8 +11,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,18 +35,12 @@ public class A_Favoriten extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Im Folgenden wird die RecyclerView angelegt und die dazugehörigen Einstellungen verwaltet
-        //XML instaniziieren
-        this.recyclerViewFavoriten = (RecyclerView) findViewById(R.id.favoriten_view);
-
-        mAdapter = new C_Adapter_Favoriten(bonListe);
-        prepareBonData();
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerViewFavoriten.setLayoutManager(mLayoutManager);
-        recyclerViewFavoriten.addItemDecoration(
-                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        recyclerViewFavoriten.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewFavoriten.setAdapter(mAdapter);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     /**
@@ -52,12 +48,15 @@ public class A_Favoriten extends AppCompatActivity {
      */
     private void prepareBonData(){
 
-        for(C_Bon bon : (ArrayList<C_Bon>) S.dbHandler.rotateList(S.dbHandler.getAllBons(S.db))){
+        this.bonListe.clear();
+
+        for(C_Bon bon : S.dbHandler.getNumberOfNewestBons(S.db, S.dbHandler.getAllBonsCount(S.db))){
             if(bon.getFavourite()){
                 this.bonListe.add(bon);
             }
         }
-        mAdapter.notifyDataSetChanged();
+
+        this.mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -113,4 +112,19 @@ public class A_Favoriten extends AppCompatActivity {
         return filteredBonsList;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        this.recyclerViewFavoriten = (RecyclerView) findViewById(R.id.favoriten_view);
+        this.mAdapter = new C_Adapter_Favoriten(bonListe);
+        this.prepareBonData();
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerViewFavoriten.setLayoutManager(mLayoutManager);
+        recyclerViewFavoriten.addItemDecoration(
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerViewFavoriten.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewFavoriten.setAdapter(mAdapter);
+    }
 }

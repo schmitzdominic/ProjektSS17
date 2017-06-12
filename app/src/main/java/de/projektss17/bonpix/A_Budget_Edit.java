@@ -2,16 +2,19 @@ package de.projektss17.bonpix;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -32,6 +35,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
     Button saveButton;
     EditText title, betrag, info;
     TextView zeitraumVon, zeitraumBis;
+    Switch favorite;
     int year, month, day;
     C_Budget budget;
 
@@ -50,12 +54,12 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
         this.zeitraumVon = (TextView) findViewById(R.id.budget_alert_dialog_zeitraum_von);
         this.zeitraumBis = (TextView) findViewById(R.id.budget_alert_dialog_zeitraum_bis);
         this.info = (EditText) findViewById(R.id.budget_alert_dialog_info);
+        this.favorite = (Switch) findViewById(R.id.budget_alert_dialog_is_favorite);
 
         // Setzen des Befehls zum klicken der Edit Text
         saveButton.setOnClickListener(this);
         zeitraumVon.setOnClickListener(this);
         zeitraumBis.setOnClickListener(this);
-
 
         if("edit".equals(getIntent().getStringExtra("state"))){
 
@@ -65,7 +69,27 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
             this.zeitraumVon.setText(this.budget.getZeitraumVon());
             this.zeitraumBis.setText(this.budget.getZeitraumBis());
             this.info.setText(this.budget.getSonstiges());
+            this.favorite.setChecked(this.budget.getFavorite());
         }
+
+        this.favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked){
+                    new AlertDialog.Builder(A_Budget_Edit.this)
+                            .setTitle(R.string.a_budget_edit_home_warning_title)
+                            .setMessage(R.string.a_budget_edit_home_warning)
+                            .setNegativeButton(R.string.a_laeden_alert_dialog_cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    favorite.setChecked(false);
+                                }
+                            })
+                            .setPositiveButton(R.string.a_laeden_alert_dialog_ok, null).create().show();
+
+                }
+            }
+        });
     }
 
 
@@ -97,18 +121,20 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
                 this.budget.setZeitraumBis(zeitraumBis.getText().toString());
                 this.budget.setTitle(title.getText().toString());
                 this.budget.setSonstiges(info.getText().toString());
+                this.budget.setFavorite(favorite.isChecked());
                 this.budget.setBons(S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString()));
 
-                S.dbHandler.updateBudget(S.db, this.budget);
+                S.dbHandler.setBudgetFavorite(S.db, this.budget);
 
             } else {
-                S.dbHandler.addBudget(S.db, new C_Budget(
+                S.dbHandler.setBudgetFavorite(S.db, new C_Budget(
                         Integer.parseInt(betrag.getText().toString()),
                         (int) S.dbHandler.getTotalPriceFromBonsSumup(S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString())),
                         zeitraumVon.getText().toString(),
                         zeitraumBis.getText().toString(),
                         title.getText().toString(),
                         info.getText().toString(),
+                        favorite.isChecked(),
                         S.dbHandler.getBonsBetweenDate(S.db, zeitraumVon.getText().toString(), zeitraumBis.getText().toString())));
             }
 

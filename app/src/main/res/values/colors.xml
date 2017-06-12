@@ -27,4 +27,8 @@
     <!-- Standard Farben -->
     <color name="positiv">#388e3c</color>
 
+    <!-- BarColors -->
+    <color name="color4Bar">#d32f2f</color>
+    <color name="color5Bar">#607d8b</color>
+
 </resources>
