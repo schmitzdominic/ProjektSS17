@@ -212,12 +212,12 @@
     <string name="title_tutorial">Tutorial</string>
     <string name="tutorial_skip_button">Skip</string>
     <string name="tutorial_tipp">Tipp: </string>
-    <string name="tutorial_text1">Im Homereiter werden die wichtigsten Daten angezeigt.</string>
-    <string name="tutorial_text2">Im Statistikreiter werden Daten und Auswertungen angezeigt.</string>
-    <string name="tutorial_text3">Über den Filter kann ein Zeitraum ausgewählt werden.</string>
-    <string name="tutorial_text4">Im Bonsreiter werden alle Bons angezeigt. Bons sind anklickbar und können favorisiert werden.</string>
-    <string name="tutorial_text5">Über den Plus-Button können Bons per Foto oder manuell hinzugefügt werden. Funktion ist ebenfalls in Home- und Statistikscreen verfügbar.</string>
-    <string name="tutorial_text6">Bons können manuell hinzugefügt werden. Es kann ein Laden ausgewählt und Artikel hinzugefügt werden.</string>
-    <string name="tutorial_text7">Über den linken Button kann eine Garantie hinzugefügt werden. Der rechte Button speichert den Bon.</string>
+    <string name="tutorial_text1">Im Hometab werden die wichtigsten Daten angezeigt. Unter anderem die letzten eingescannten Bons, sowie die wichtigste Budgetplanung.</string>
+    <string name="tutorial_text2">Im Statistikreiter werden alle relevanten Daten und Auswertungen angezeigt.</string>
+    <string name="tutorial_text3">Über diese Tabs können verschiedene Zeiträume ausgewählt werden. Hierbei werden die Daten dementsprechend gefiltert und angezeigt.</string>
+    <string name="tutorial_text4">Im Bonsreiter werden alle Bons angezeigt. Alle Bons sind anklickbar und können favorisiert werden.</string>
+    <string name="tutorial_text5">Über den Plus-Button können Bons per Foto oder manuell hinzugefügt werden. Diese Funktion ist ebenfalls im Home-, wie auch im Statistikreiter verfügbar.</string>
+    <string name="tutorial_text6">Alle Bons können ebenfalls manuell hinzugefügt werden. Hierzu wählt man einen Laden und mindestens einen Artikel aus.</string>
+    <string name="tutorial_text7">Über den linken Button kann eine Garantie hinzugefügt werden. Mit dem rechten Button können alle Eingaben gespeichert werden.</string>
 
 </resources>
