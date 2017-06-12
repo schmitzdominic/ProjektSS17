@@ -238,6 +238,9 @@ public class A_Main extends AppCompatActivity {
                     case R.id.menu_nav_einstellungen:
                         S.showEinstellungen(A_Main.this);
                         return true;
+                    case R.id.menu_nav_impressum:
+                        S.showImpressum(A_Main.this);
+                        return true;
                     default:
                         return true;
                 }

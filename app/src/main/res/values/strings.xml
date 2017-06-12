@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BonPix</string>
-    <string name="built_nr">0.8</string>
+    <string name="impressum_version_nummer">Version 0.2</string>
+    <string name="impressum_version_stand">Stand: 05.06.2017</string>
 
     <!-- Allgemein -->
     <string name="waehrung">€</string>
@@ -23,6 +24,7 @@
     <string name="nav_einstellungen">Einstellungen</string>
     <string name="nav_laeden">Läden</string>
     <string name="nav_title">onPix</string>
+    <string name="nav_impressum">App Informationen</string>
 
     <!-- Währung (Allgemein) -->
     <string name="currency_europe">€</string>
@@ -60,8 +62,11 @@
     <string name="backup_action_bar_desc">Backup</string>
     <string name="backup_action_bar_title">Backup</string>
 
-    <!-- A_Version -->
-    <string name="title_version_screen">Version</string>
+    <!-- A_Impressum -->
+    <string name="title_version_screen">App Informationen</string>
+    <string name="title_impressum_version">BonPix</string>
+    <string name="title_impressum_kontakt">Kontakt</string>
+    <string name="impressum_kontakt">Hochschule Augsburg \nAn der Hochschule 1 \n86161 Augsburg</string>
 
     <!-- A_OCR_Manuell - ACTIVITY -->
     <string name="title_manuell_screen">Bon hinzufügen</string>
@@ -229,6 +234,5 @@
 
     <string name="bon_anzeigen_delete_title">Bon Löschen</string>
     <string name="bon_anzeigen_delete_message">Wollen Sie wirklich diesen Bon löschen?</string>
-
 
 </resources>
