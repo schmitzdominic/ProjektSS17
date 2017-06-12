@@ -31,5 +31,10 @@
         android:icon="@mipmap/ic_settings_black_24dp"
         android:title="@string/nav_einstellungen" />
 
+    <item
+        android:id="@+id/menu_nav_impressum"
+        android:icon="@mipmap/ic_info_outline_black_24dp"
+        android:title="@string/nav_impressum" />
+
 
 </menu>

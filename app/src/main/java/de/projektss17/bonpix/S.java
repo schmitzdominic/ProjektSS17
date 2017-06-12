@@ -1,7 +1,6 @@
 package de.projektss17.bonpix;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
@@ -16,7 +15,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
-import android.view.View;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -128,10 +126,18 @@ public class S extends Activity {
     }
 
     /**
-     * Ruft die Versions Activity auf
+     * Ruft die Impressum Activity auf
      */
-    public static void showVersion(PreferenceActivity context){
-        Intent intent = new Intent(context, A_Version.class);
+    public static void showImpressum(AppCompatActivity context){
+        Intent intent = new Intent(context, A_Impressum.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Ruft die Impressum Activity auf (durch shaken des Smartphones in der Einstellungs Activity)
+     */
+    public static void showImpressum(PreferenceActivity context){
+        Intent intent = new Intent(context, A_Impressum.class);
         context.startActivity(intent);
     }
 

@@ -22,6 +22,7 @@
     <string name="nav_garantie">Garantie</string>
     <string name="nav_einstellungen">Einstellungen</string>
     <string name="nav_laeden">Läden</string>
+    <string name="nav_impressum">Impressum</string>
 
     <!-- Währung (Allgemein) -->
     <string name="currency_europe">€</string>
@@ -57,8 +58,13 @@
     <string name="backup_action_bar_desc">Backup</string>
     <string name="backup_action_bar_title">Backup</string>
 
-    <!-- A_Version -->
-    <string name="title_version_screen">Version</string>
+    <!-- A_Impressum -->
+    <string name="title_version_screen">Impressum</string>
+    <string name="title_impressum_version">BonPix</string>
+    <string name="title_impressum_kontakt">Kontakt</string>
+    <string name="impressum_version_nummer">Version 0.2</string>
+    <string name="impressum_version_stand">Stand: 05.06.2017</string>
+    <string name="impressum_kontakt">Hochschule Augsburg \nAn der Hochschule 1 \n86161 Augsburg</string>
 
     <!-- A_OCR_Manuell - ACTIVITY -->
     <string name="title_manuell_screen">Bon hinzufügen</string>
