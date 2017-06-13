@@ -6,11 +6,14 @@
     <color name="colorAccent">#ff5722</color>
     <color name="colorSecondary">#bdbdbd</color>
 
-    <!-- Transparenz für die Floating buttons -->
-    <color name="colorTransBg">#26000000</color>
+    <!-- Schatten für die Floating buttons -->
+    <color name="colorShadowFloatingButton">#26000000</color>
 
     <!-- Transparenz -->
     <color name="colorTransparent">#00000000</color>
+
+    <!-- Dunke Transparenz -->
+    <color name="colorDarkTransparent">#F2212121</color>
 
     <!-- Menü icon farbe -->
     <color name="colorMenueIcon">#757575</color>
@@ -23,5 +26,9 @@
 
     <!-- Standard Farben -->
     <color name="positiv">#388e3c</color>
+
+    <!-- BarColors -->
+    <color name="color4Bar">#d32f2f</color>
+    <color name="color5Bar">#607d8b</color>
 
 </resources>

@@ -3,7 +3,6 @@ package de.projektss17.bonpix.daten;
 import android.content.res.Resources;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.A_Bon_Anzeigen;
+import de.projektss17.bonpix.A_Main;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 
@@ -39,11 +39,11 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
 
         public ViewHolder(final View view){
             super(view);
-            icon = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_small_image);
-            title = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_above_content);
-            content = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_below_content);
-            price = (TextView) view.findViewById(R.id.tab_home_boncard_first_bon_betrag);
-            button = (ImageView) view.findViewById(R.id.tab_home_boncard_first_bon_big_image);
+            icon = (ImageView) view.findViewById(R.id.bons_shop_image);
+            title = (TextView) view.findViewById(R.id.bons_shop_name);
+            content = (TextView) view.findViewById(R.id.bons_buying_date);
+            price = (TextView) view.findViewById(R.id.bons_price);
+            button = (ImageView) view.findViewById(R.id.bons_favorite_icon);
             res = view.getResources();
             view.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -77,10 +77,7 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
     public void onBindViewHolder(final ViewHolder holder, final int position){
         final C_Bon bon = bonsList.get(position);
 
-        Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
-        roundedBitmapDrawable.setAntiAlias(true);
-        holder.icon.setImageDrawable(roundedBitmapDrawable);
+        holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
 
         holder.title.setText(bon.getShopName());
         holder.content.setText(S.getWeekday(holder.res, S.getWeekdayNumber(bon.getDate())) + "\n" + bon.getDate());
@@ -105,18 +102,20 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
 
                     // Put the onClick cases here
                     switch (v.getId()) {
-                        case R.id.tab_home_boncard_first_bon_big_image: {
+                        case R.id.bons_favorite_icon: {
                             if (bon.getFavourite()){
                                 holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star_outline));
                                 holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
                                 bon.setFavourite(false);
                                 S.dbHandler.updateBon(S.db, bon);
+                                S.setMenuCounter(R.id.menu_nav_favoriten, S.dbHandler.getFavouriteCount(S.db), ((A_Main) holder.itemView.getContext()).getNavigationView());
                             } else {
                                 if (row_index == position) {
                                     holder.button.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.star));
                                     holder.button.setColorFilter(v.getContext().getResources().getColor(R.color.colorPrimary));
                                     bon.setFavourite(true);
                                     S.dbHandler.updateBon(S.db, bon);
+                                    S.setMenuCounter(R.id.menu_nav_favoriten, S.dbHandler.getFavouriteCount(S.db), ((A_Main) holder.itemView.getContext()).getNavigationView());
                                 }
                             }
                         }

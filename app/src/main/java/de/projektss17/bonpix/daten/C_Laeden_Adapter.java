@@ -23,6 +23,7 @@ import de.projektss17.bonpix.S;
 import de.projektss17.bonpix.fragments.F_Laeden_Detail;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyViewHolder> {
@@ -77,11 +78,7 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
     public void onBindViewHolder(final C_Laeden_Adapter.MyViewHolder holder, final int position) {
         this.shop = shopList.get(position);
 
-        Bitmap imageBitmap = S.getShopIcon(holder.res, this.shop.getName());
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
-        roundedBitmapDrawable.setAntiAlias(true);
-        holder.iconShop.setImageDrawable(roundedBitmapDrawable);
-
+        holder.iconShop.setImageBitmap(S.getShopIcon(holder.res, shop.getName()));
         holder.shopName.setText(shop.getName());
 
         //Bei Supported Shops darf der Editierbutton nicht erscheinen => Wird unsichtbar gemacht
@@ -111,5 +108,11 @@ public class C_Laeden_Adapter extends RecyclerView.Adapter<C_Laeden_Adapter.MyVi
     @Override
     public int getItemCount() {
         return this.shopList.size();
+    }
+
+    public void setFilter(List<C_Laden> passedList) {
+        shopList = new ArrayList<>();
+        shopList.addAll(passedList);
+        notifyDataSetChanged();
     }
 }

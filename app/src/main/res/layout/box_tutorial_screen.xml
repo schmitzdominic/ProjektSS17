@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.projektss17.bonpix.A_Version">
+    tools:context="de.projektss17.bonpix.A_Tutorial">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/box_version_content" />
+    <include layout="@layout/box_tutorial_content"
+        android:id="@+id/include" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

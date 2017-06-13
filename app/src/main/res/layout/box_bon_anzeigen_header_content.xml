@@ -8,28 +8,31 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@mipmap/header_bon">
 
         <ImageView
             android:id="@+id/bon_anzeigen_picture"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="145dp"
+            android:layout_height="145dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="12dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="35dp"
             android:clickable="true"
-            app:srcCompat="@mipmap/ic_shopping_cart_black_24dp" />
+            app:srcCompat="@mipmap/bonpix_big_transparent" />
 
         <TextView
             android:id="@+id/bon_anzeigen_ladenname_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/bon_anzeigen_picture"
-            android:layout_marginStart="38dp"
+            android:layout_marginStart="61dp"
             android:layout_toEndOf="@+id/bon_anzeigen_picture"
+            android:textColor="@color/cardview_light_background"
             android:text="@string/bon_anzeigen_laden_title"
+            android:maxLength="25"
             android:textStyle="bold"/>
 
         <TextView
@@ -38,10 +41,10 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_ladenname_title"
             android:layout_below="@+id/bon_anzeigen_ladenname_title"
-            android:text="@string/bon_anzeigen_laden"
-            android:textSize="14sp"
             android:textColor="@color/cardview_light_background"
-            android:textStyle="bold"/>
+            android:maxLength="25"
+            android:text="@string/bon_anzeigen_laden"
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/bon_anzeigen_datum_title"
@@ -50,7 +53,9 @@
             android:layout_alignStart="@+id/bon_anzeigen_ladenname"
             android:layout_below="@+id/bon_anzeigen_ladenname"
             android:layout_marginTop="8dp"
+            android:textColor="@color/cardview_light_background"
             android:text="@string/bon_anzeigen_datum_title"
+            android:maxLength="25"
             android:textStyle="bold"/>
 
         <TextView
@@ -59,10 +64,10 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_ladenname"
             android:layout_below="@+id/bon_anzeigen_datum_title"
-            android:text="@string/bon_anzeigen_datum"
-            android:textSize="14sp"
             android:textColor="@color/cardview_light_background"
-            android:textStyle="bold"/>
+            android:text="@string/bon_anzeigen_datum"
+            android:maxLength="25"
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/bon_anzeigen_adresse_title"
@@ -71,7 +76,9 @@
             android:layout_alignStart="@+id/bon_anzeigen_ladenname"
             android:layout_below="@+id/bon_anzeigen_datum"
             android:layout_marginTop="8dp"
+            android:textColor="@color/cardview_light_background"
             android:text="@string/bon_anzeigen_adresse_title"
+            android:maxLength="25"
             android:textStyle="bold"/>
 
         <TextView
@@ -80,10 +87,10 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_adresse_title"
             android:layout_below="@+id/bon_anzeigen_adresse_title"
-            android:text="@string/bon_anzeigen_adresse"
-            android:textSize="14sp"
             android:textColor="@color/cardview_light_background"
-            android:textStyle="bold"/>
+            android:text="@string/bon_anzeigen_adresse"
+            android:maxLength="50"
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/bon_anzeigen_gesbetrag_title"
@@ -92,6 +99,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="5dp"
             android:text="@string/bon_anzeigen_gesbetrag_title"
+            android:maxLength="15"
             android:textStyle="bold"
             android:layout_below="@+id/bon_anzeigen_picture"
             android:layout_alignStart="@+id/bon_anzeigen_picture" />
@@ -103,8 +111,8 @@
             android:layout_alignStart="@+id/bon_anzeigen_gesbetrag_title"
             android:layout_below="@+id/bon_anzeigen_gesbetrag_title"
             android:text="@string/bon_anzeigen_gesbetrag"
-            android:textColor="@color/cardview_light_background"
             android:textSize="19sp"
+            android:maxLength="15"
             android:textStyle="bold" />
 
         <TextView
@@ -113,7 +121,9 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_datum"
             android:layout_alignTop="@+id/bon_anzeigen_gesbetrag_title"
+            android:textColor="@color/cardview_light_background"
             android:text="@string/bon_anzeigen_garantie_title"
+            android:maxLength="15"
             android:textStyle="bold"/>
 
         <TextView
@@ -122,10 +132,10 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/bon_anzeigen_garantie_title"
             android:layout_below="@+id/bon_anzeigen_garantie_title"
-            android:text="@string/bon_anzeigen_garantie"
-            android:textSize="19sp"
             android:textColor="@color/cardview_light_background"
-            android:textStyle="bold"/>
+            android:text="@string/bon_anzeigen_garantie"
+            android:maxLength="10"
+            android:textSize="19sp"/>
 
     </RelativeLayout>
 

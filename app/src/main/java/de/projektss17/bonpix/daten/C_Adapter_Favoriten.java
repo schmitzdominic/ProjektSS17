@@ -75,10 +75,7 @@ public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favorite
     public void onBindViewHolder(final C_Adapter_Favoriten.MyViewHolder holder, final int position) {
         this.bon = bonListe.get(position);
 
-        Bitmap imageBitmap = S.getShopIcon(holder.res, bon.getShopName());
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(holder.res, imageBitmap);
-        roundedBitmapDrawable.setAntiAlias(true);
-        holder.icon.setImageDrawable(roundedBitmapDrawable);
+        holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
         holder.favoriteShopName.setText(bon.getShopName());
         holder.favouritePrice.setText(bon.getTotalPrice() + " €");
         holder.favoriteDate.setText(S.getWeekday(holder.res, S.getWeekdayNumber(bon.getDate())) + "\n" + bon.getDate());

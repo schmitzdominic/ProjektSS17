@@ -1,8 +1,8 @@
 package de.projektss17.bonpix.daten;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 /**
  * Created by Marcus on 14.04.2017.
@@ -14,7 +14,7 @@ public class C_Preferences {
     private SharedPreferences.Editor prefsEditor;
 
     public C_Preferences(Context context) {
-        this.sharedPrefs = context.getSharedPreferences(APP_SHARED_PREFS, Activity.MODE_PRIVATE);
+        this.sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.prefsEditor = sharedPrefs.edit();
     }
 
@@ -29,7 +29,7 @@ public class C_Preferences {
      * Get Boolean Preference
      */
     public Boolean getPrefBoolean(String key){
-        return sharedPrefs.getBoolean(key, false);
+        return sharedPrefs.getBoolean(key, true);
     }
 
     /**

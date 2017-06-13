@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:key="settings_screen">
 
     <PreferenceCategory
         android:title="Notifications"
@@ -8,9 +9,9 @@
 
         <CheckBoxPreference
             android:key="pref_notifications"
-            android:summary="Enable or disable Notifications"
-            android:title="Enable Notifications"
-            android:defaultValue="true"/>
+            android:summary="@string/einstellungen_notification_text"
+            android:title="@string/einstellungen_notification_title"
+            android:defaultValue="false"/>
 
     </PreferenceCategory>
 
@@ -21,6 +22,15 @@
         <Preference android:title="Backup"
             android:key="pref_backup"
             android:summary="Hier kannst du backups machen"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@+string/einstellungen_hilfe_titel"
+        android:key="category_data">
+
+        <Preference android:title="@+string/einstellungen_hilfe_tutorial_titel"
+            android:key="category_tutorial"
+            android:summary="@+string/einstellungen_hilfe_tutorial_beschreibung"/>
 
     </PreferenceCategory>
 </PreferenceScreen>

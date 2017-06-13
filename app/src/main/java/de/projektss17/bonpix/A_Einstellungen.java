@@ -6,6 +6,7 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.preference.PreferenceActivity;
 import android.os.Bundle;
+import android.support.v7.preference.Preference;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -24,6 +25,7 @@ public class A_Einstellungen extends PreferenceActivity {
     private C_ShakeDetector mShakeDetector;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
+    private Preference tutorial;
 
 
     @Override
@@ -42,7 +44,7 @@ public class A_Einstellungen extends PreferenceActivity {
             @Override
             public void onShake() {
                 Log.e("#SHAKE DETECTOR"," ### SHAKED");
-                S.showVersion(A_Einstellungen.this);
+                S.showImpressum(A_Einstellungen.this);
             }
         });
     }
