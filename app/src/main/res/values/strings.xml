@@ -241,7 +241,7 @@
     <!-- A_Tutorial -->
     <string name="title_tutorial">Tutorial</string>
     <string name="tutorial_skip_button">Skip</string>
-    <string name="tutorial_tipp">Tipp: </string>
+    <!--<string name="tutorial_tipp">Tipp: </string>-->
     <string name="tutorial_text1">Im Hometab werden die wichtigsten Daten angezeigt. Unter anderem die letzten eingescannten Bons, sowie die wichtigste Budgetplanung.</string>
     <string name="tutorial_text2">Im Statistikreiter werden alle relevanten Daten und Auswertungen angezeigt.</string>
     <string name="tutorial_text3">Über diese Tabs können verschiedene Zeiträume ausgewählt werden. Hierbei werden die Daten dementsprechend gefiltert und angezeigt.</string>

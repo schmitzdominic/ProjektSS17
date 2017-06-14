@@ -51,7 +51,8 @@ public class C_Adapter_Tutorial extends PagerAdapter {
 
 
             this.imageView.setImageResource(imageResources[position]);
-            this.textView.setText(ctx.getResources().getString(R.string.tutorial_tipp)+ " " + (position+1) + " von 7");
+            //this.textView.setText(ctx.getResources().getString(R.string.tutorial_tipp)+ " " + (position+1) + " von 7");
+            this.textView.setText((position+1) + " von 7");
 
             switch (position){
                 case 0:
