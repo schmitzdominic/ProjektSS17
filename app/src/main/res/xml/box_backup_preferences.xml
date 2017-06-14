@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory
+        android:icon="@mipmap/ic_google_drive_black_24dp"
+        android:key="backup_drive_settings_categorie"
+        android:title="Letztes Backup"/>
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="edit_text_preference_1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="date" />
 
     <PreferenceCategory
         android:icon="@mipmap/ic_google_drive_black_24dp"
@@ -16,6 +30,11 @@
             android:key="backup_photos"
             android:summary="Backup der Fotos"
             android:title="Sicherung ausführen" />
+        <Preference
+            android:key="backup_account"
+            android:summary="default"
+            android:title="Konto" />
 
     </PreferenceCategory>
+
 </PreferenceScreen>

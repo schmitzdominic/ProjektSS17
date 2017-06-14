@@ -1220,6 +1220,28 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         return this.getMostVisitedLaden(db, null, null);
     }
 
+
+    /**
+     *
+     * Gibt den Pfad aller Bons aus
+     *
+     */
+    public ArrayList<String> getAllBonsPath(SQLiteDatabase db) {
+        ArrayList<String> pathList = new ArrayList<>();
+        String query = "SELECT bildpfad FROM bon";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String path = cursor.getString(0);
+                if (path != null || !path.equals("null")) {
+                    pathList.add(path);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return pathList;
+    }
+
     /**
      * Gibt den meistbesuchten Laden zurück
      * @param db Datenbank

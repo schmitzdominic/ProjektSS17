@@ -26,7 +26,7 @@ public class F_Backup extends PreferenceFragment implements SharedPreferences.On
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.box_backup_preferences);
-       findPreference("backup_photos");
+        findPreference("backup_photos");
         Preference export = (Preference) findPreference("backup_photos");
         export.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
