@@ -5,6 +5,9 @@ package de.projektss17.bonpix.daten;
  */
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +29,7 @@ public class C_Adapter_Tutorial extends PagerAdapter {
     private LayoutInflater layoutInflater;
     private TextView content;
     private ImageView imageView;
-    private ProgressBar progressBar;
+    private ProgressBar progressBar, progressBarBackground;
 
     public C_Adapter_Tutorial(Context c) {
         ctx=c;
@@ -50,8 +53,10 @@ public class C_Adapter_Tutorial extends PagerAdapter {
             this.imageView=(ImageView) itemView.findViewById(R.id.swip_image_view);
             this.content = (TextView) itemView.findViewById(R.id.tutorial_text_content);
             this.progressBar = (ProgressBar) itemView.findViewById(R.id.tutorial_imageCount);
+            this.progressBarBackground = (ProgressBar)itemView.findViewById(R.id.tutorial_imageCountBackground);
 
             this.imageView.setImageResource(imageResources[position]);
+            this.progressBarBackground.setProgress(7);
 
             switch (position){
                 case 0:
