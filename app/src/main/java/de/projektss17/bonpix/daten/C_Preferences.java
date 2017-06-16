@@ -4,12 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-/**
- * Created by Marcus on 14.04.2017.
- */
-
 public class C_Preferences {
-    public static final String APP_SHARED_PREFS = C_Preferences.class.getSimpleName();
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor prefsEditor;
 

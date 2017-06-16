@@ -1,6 +1,5 @@
 package de.projektss17.bonpix.fragments;
 
-
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -34,7 +33,6 @@ public class F_Laeden_Detail extends DialogFragment {
     private Button deleteButton;
     private Button saveButton;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,20 +41,19 @@ public class F_Laeden_Detail extends DialogFragment {
         RecyclerView recyclerViewDetailLaeden = (RecyclerView) rootView.findViewById(R.id.laeden_detail_view);
         C_Adapter_Laeden_Detail mAdapter = new C_Adapter_Laeden_Detail(bonsList);
 
-        //Erhalt des shopnamen von C_Adapter_Laeden
         this.name = getArguments().getString("ShopName");
         prepareBonData(name);
 
-        //Instanziieren EditText für Ladenname und Lösch sowie Speicher Button
         shopName = (EditText)rootView.findViewById(R.id.laeden_detail_shop_name);
         deleteButton = (Button)rootView.findViewById(R.id.laeden_detail_delete);
         saveButton = (Button)rootView.findViewById(R.id.laeden_detail_speichern);
 
-        //Delete Button Funktion
+        /**
+         * Triggers Dialog (if user really wants to delete)
+         */
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // DIALOG Fenster
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                         alert.setTitle(R.string.f_laeden_detail_delete_titel);
                         alert.setMessage(name + " " + v.getContext().getResources().getString(R.string.f_laeden_detail_delete_message));
@@ -71,14 +68,14 @@ public class F_Laeden_Detail extends DialogFragment {
                             };
                         });alert.show();
             }
-
         });
 
-        //Save Button Funktion
+        /**
+         * Triggers the AlertDialog
+         */
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // DIALOG Fenster
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 alert.setTitle(R.string.f_laeden_detail_save_titel);
                 alert.setMessage(R.string.f_laeden_detail_save_message);
@@ -86,7 +83,6 @@ public class F_Laeden_Detail extends DialogFragment {
                 alert.setPositiveButton(v.getContext().getResources().getString(R.string.f_laeden_detail_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         if(!S.dbHandler.checkIfLadenExist(S.db, shopName.getText().toString())){
                             C_Laden ladenInst = S.dbHandler.getLaden(S.db, name);
                             ladenInst.setName(shopName.getText().toString());
@@ -103,8 +99,6 @@ public class F_Laeden_Detail extends DialogFragment {
                 });alert.show();
             }
         });
-
-        //Recycler View in C_Adapter_Laeden_Detail
         recyclerViewDetailLaeden.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDetailLaeden.addItemDecoration(
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
@@ -130,6 +124,5 @@ public class F_Laeden_Detail extends DialogFragment {
         for(C_Bon bon : S.dbHandler.getBonsOfStore(db, name)){
             this.bonsList.add(bon);
         }
-
     }
 }

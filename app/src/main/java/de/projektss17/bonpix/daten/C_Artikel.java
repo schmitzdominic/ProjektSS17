@@ -1,23 +1,37 @@
 package de.projektss17.bonpix.daten;
 
-/**
- * Created by Domi on 20.04.2017.
- */
-
 public class C_Artikel {
 
     private int id;
     private double price;
     private String name, category;
 
+    /**
+     * Standard Constructor
+     * @param name
+     * @param price
+     */
     public C_Artikel(String name, double price){
         this(0, name, price, null);
     }
 
+    /**
+     * 2nd Constructor for category as extra parameter
+     * @param name
+     * @param price
+     * @param category
+     */
     public C_Artikel(String name, double price, String category){
         this(0, name, price, category);
     }
 
+    /**
+     * 3rd Constructor for category and id as extra parameter
+     * @param id
+     * @param name
+     * @param price
+     * @param category
+     */
     public C_Artikel(int id, String name, double price, String category){
         this.id = id;
         this.name = name;

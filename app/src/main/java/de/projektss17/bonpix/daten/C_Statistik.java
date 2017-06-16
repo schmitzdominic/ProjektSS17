@@ -63,14 +63,28 @@ public class C_Statistik {
     private LineData lineData;
     private BarData barData;
 
+    /**
+     * Standard Constructor
+     * @param context
+     */
     public C_Statistik(Context context){
         this.context = context;
     }
 
+    /**
+     * Fill Data of Statistics
+     * @param state
+     */
     public void fillData(String state){
         this.fillData(null, null, state);
     }
 
+    /**
+     * Fill Data of Statistics with range of date
+     * @param date1
+     * @param date2
+     * @param state
+     */
     public void fillData(String date1, String date2, String state){
 
         Utils.init(context);
@@ -114,7 +128,6 @@ public class C_Statistik {
         for(C_Bon bon : bonList){
             counter += bon.getArticles().size();
         }
-
         return "" + counter;
     }
 
@@ -137,7 +150,6 @@ public class C_Statistik {
                 }
             }
         }
-
         this.barData = new BarData(bars);
     }
 
@@ -145,7 +157,6 @@ public class C_Statistik {
      * Bereitet die Top 3 Artikel vor
      */
     private void prepareTopThreeArticlesData(){
-
         this.sortedArticleList = S.dbHandler.getTopArticles(S.db, this.date[0], this.date[1]);
     }
 
@@ -175,7 +186,6 @@ public class C_Statistik {
                         sizeLaedenBon -= entry.getValue();
                         pieEntry = new PieEntry(entry.getValue(), entry.getKey());
                     }
-
                     this.pieces.add(pieEntry);
                 }
                 if(++counter == MAXVALUE_PIE_CHART){break;}
@@ -193,21 +203,17 @@ public class C_Statistik {
      * Bereitet die TopFacts vor
      */
     private void prepareTopFacts(){
-
         C_Laden laden = S.dbHandler.getMostVisitedLaden(S.db, this.date[0], this.date[1]);
-
         this.mostVisitedLaden = laden.getName();
         this.averagePrice = S.dbHandler.averageExpenditureLaden(S.db, laden, this.date[0], this.date[1]);
         this.mostVisitedLadenBonsCount = "" + S.dbHandler.bonsCountLaden(S.db, laden, this.date[0], this.date[1]);
         this.getMostVisitedLadenArticleCount = "" + S.dbHandler.articleCountLaden(S.db, laden, this.date[0], this.date[1]);
-
     }
 
     /**
      * Bereitet die Line Data vor
      */
     private void prepareLineData(){
-
 
         int counter = 1;
 
@@ -221,16 +227,13 @@ public class C_Statistik {
 
         this.dataSet = new LineDataSet(dataList, this.context.getString(R.string.statistik_card_line_chart_title));
 
+        // TODO: Have to be implemented! BITTE NICHT ANMERKEN DA DAS SPÄTER IMPLEMENTIERT WIRD!!
         /*if(this.state.equals("ALLE") || this.state.equals("WOCHE")){
-            // TODO Have to be implemented! BITTE NICHT ANMERKEN DA DAS SPÄTER IMPLEMENTIERT WIRD!!
         } else if (this.state.equals("MONAT")){
-            //TODO BITTE NICHT ANMERKEN DA DAS SPÄTER IMPLEMENTIERT WIRD!!
         } else {
-            // TODO BITTE NICHT ANMERKEN DA DAS SPÄTER IMPLEMENTIERT WIRD!!
         }*/
 
         this.lineDataList = S.dbHandler.getExpenditureLastWeek(S.db);
-
     }
 
     /**
@@ -240,10 +243,8 @@ public class C_Statistik {
      * @return TextView
      */
     public TextView setTopThreeArticleText(TextView product, Hashtable.Entry<String, Integer> entry){
-
-        product.setText(entry.getKey().length() > MAX_LENGTH_ARTICLE ? entry.getKey().substring(0, MAX_LENGTH_ARTICLE-2) + ".." : entry.getKey());
+        product.setText(entry.getKey().length() > MAX_LENGTH_ARTICLE ? entry.getKey().substring(0, MAX_LENGTH_ARTICLE - 2) + ".." : entry.getKey());
         product.setVisibility(View.VISIBLE);
-
         return product;
     }
 
@@ -260,8 +261,8 @@ public class C_Statistik {
         progressBar.startAnimation(anim);
 
         if(progressBar.getProgress() == 0){progressBar.setProgress(progress);}
-        progressBar.setVisibility(View.VISIBLE);
 
+        progressBar.setVisibility(View.VISIBLE);
         return progressBar;
     }
 
@@ -272,10 +273,8 @@ public class C_Statistik {
      * @return TextView
      */
     public TextView setTopThreeArticleProcent(TextView percentage, double procent){
-
         percentage.setText(S.roundPrice(procent) + " " + this.context.getResources().getString(R.string.percentage));
         percentage.setVisibility(View.VISIBLE);
-
         return percentage;
     }
 
@@ -285,7 +284,6 @@ public class C_Statistik {
      * @return gesetztes BarChart
      */
     public BarChart setBarChartSettings(BarChart barChart){
-
         barChart.setDescription(this.getEmptyDescription());
         barChart.setDrawValueAboveBar(false);
         barChart.getXAxis().setEnabled(false);
@@ -305,7 +303,6 @@ public class C_Statistik {
                 return S.roundPrice((double) value) + " " + context.getResources().getString(R.string.waehrung) + "  ";
             }
         });
-
         return barChart;
     }
 
@@ -315,14 +312,12 @@ public class C_Statistik {
      * @return gesetztes PieChart
      */
     public PieChart setPieChartSettings(PieChart pieChart){
-
         pieChart.setDescription(this.getEmptyDescription());
         pieChart.animateY(ANIMATION_TIME);
         pieChart.setFocusable(false);
         pieChart.setTouchEnabled(false);
         pieChart.setDrawEntryLabels(false);
         pieChart.setUsePercentValues(false);
-
         return pieChart;
     }
 
@@ -330,12 +325,10 @@ public class C_Statistik {
      * Setzt die LineDataSet Settings
      */
     public void setLineDataSetSettings(){
-
         this.dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorAccent));
         this.dataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
         this.dataSet.setLineWidth(3);
         this.dataSet.setCircleRadius(8);
-
         this.lineDataSet.add(dataSet);
     }
 
@@ -344,7 +337,6 @@ public class C_Statistik {
      * @param data Daten
      */
     public void setLineDataSettings(final ArrayList<String> data){
-
         this.lineData = new LineData(this.lineDataSet);
         this.lineData.setValueTextSize(10);
         this.lineData.setValueTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
@@ -352,7 +344,7 @@ public class C_Statistik {
         this.lineData.setValueFormatter(new IValueFormatter() {
             @Override
             public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                return data.get((int)entry.getX()-1).split("/")[0].substring(0,2);
+                return data.get((int) entry.getX() - 1).split("/")[0].substring(0,2);
             }
         });
     }
@@ -363,7 +355,6 @@ public class C_Statistik {
      * @return LineChart
      */
     public LineChart setLineChartSettings(LineChart lineChart){
-
         lineChart.setDescription(this.getEmptyDescription());
         lineChart.setTouchEnabled(false);
         lineChart.getXAxis().setEnabled(false);
@@ -381,7 +372,6 @@ public class C_Statistik {
                 return S.roundPrice((double) value) + " " + context.getResources().getString(R.string.waehrung) + "  ";
             }
         });
-
         return lineChart;
     }
 
@@ -390,10 +380,8 @@ public class C_Statistik {
      * @return Leere Description
      */
     public Description getEmptyDescription(){
-
         Description desc = new Description();
         desc.setText("");
-
         return desc;
     }
 
@@ -515,7 +503,6 @@ public class C_Statistik {
      * @return Farbe
      */
     private int getStatisticColor(int number){
-
         switch(number){
             case 0:
                 return ContextCompat.getColor(this.context,R.color.colorPrimaryDark);
@@ -553,6 +540,5 @@ public class C_Statistik {
             float value = from + (to - from) * interpolatedTime;
             progressBar.setProgress((int) value);
         }
-
     }
 }
