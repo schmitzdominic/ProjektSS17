@@ -2,16 +2,11 @@ package de.projektss17.bonpix.fragments;
 
 import android.app.backup.BackupManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
-import de.projektss17.bonpix.A_Export;
-import de.projektss17.bonpix.A_Main;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 

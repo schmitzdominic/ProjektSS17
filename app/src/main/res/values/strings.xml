@@ -212,7 +212,6 @@
     <string name="tab_home_chartcard_boncard_default_content"> Fügen Sie  weitere Bons hinzu ...</string>
 
 
-
     <string name="tab_home_boncard_bon_content">default</string>
 
 
@@ -253,5 +252,6 @@
 
     <!-- A_Export -->
     <string name="a_export_aktuelles_konto">default</string>
+    <string name="title_activity_a__export__drive">A_Export_Drive</string>
 
 </resources>

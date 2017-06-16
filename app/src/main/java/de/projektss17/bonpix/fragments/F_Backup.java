@@ -6,11 +6,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.annotation.XmlRes;
 import android.util.Log;
-import android.view.View;
 
-import de.projektss17.bonpix.A_Export;
+import de.projektss17.bonpix.A_Export_Drive;
 import de.projektss17.bonpix.R;
 
 /**
@@ -31,11 +29,24 @@ public class F_Backup extends PreferenceFragment implements SharedPreferences.On
         export.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(getActivity() , A_Export.class);
+                Intent intent = new Intent(getActivity() , A_Export_Drive.class);
                 startActivity(intent);
                 return false;
            }
         });
+
+
+        findPreference("backup_account");
+        Preference backupAccount = (Preference) findPreference("backup_account");
+        backupAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(getActivity() , A_Export_Drive.class);
+                startActivity(intent);
+                return false;
+            }
+        });
+
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

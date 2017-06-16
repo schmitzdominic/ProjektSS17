@@ -1,20 +1,22 @@
 package de.projektss17.bonpix;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.utils.Utils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,40 +30,61 @@ import com.google.android.gms.drive.MetadataChangeSet;
 import com.google.android.gms.drive.query.Filters;
 import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.drive.query.SearchableField;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import de.projektss17.bonpix.S;
 
-public class A_Export extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
-    private Button button_import;
+
+
+public class A_Export_Drive extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    private String email;
+    private Button button_create_file;
     private Button button_upload_to_google_drive;
-    public GoogleApiClient mGoogleApiClient;
-    public DriveId driveId;
+    private TextView selectAccount;
+    private GoogleApiClient mGoogleApiClient;
     private static final String TAG = "<< DRIVE >>";
     protected static final int REQUEST_CODE_RESOLUTION = 1337;
     private String FOLDER_NAME = "BonPix";
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    public DriveId driveId;
+    public ArrayList pathlist;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.box_export_content);
+        setContentView(R.layout.box_export_drive_content);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        button_import = (Button) findViewById(R.id.button_import_to_google_drive);
-        button_upload_to_google_drive = (Button) findViewById(R.id.button_upload_to_google_drive);
+        button_create_file = (Button) findViewById(R.id.button_import_to_google_drive);
+        button_upload_to_google_drive = (Button) findViewById(R.id.button_export_to_google_drive);
+        selectAccount = (TextView) findViewById(R.id.google_konto_verwaltung);
+
         //---- use this to get the fucking SHA1 for the fucking google project....
-       // Log.v(">SHA > ", Utils.getCertificateSHA1Fingerprint(A_Export.this));
-        button_import.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+        //Log.v(">SHA > ", Utils.getCertificateSHA1Fingerprint(A_Export_Images.this));
+        button_create_file.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 //WRITE A SIMPLE TEXT FILE IN SDCARD. BE CAREFUL TO GRANT PERMISSION IN ANDROID 6+
                 writeToFile("tehfile", " fuck google...");
             }
         });
+        selectAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               changeAccount();
+            }
+        });
         button_upload_to_google_drive.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-
+            @Override
+            public void onClick(View v) {
                 if (mGoogleApiClient != null) {
                     upload_to_drive();
                 } else {
@@ -70,16 +93,61 @@ public class A_Export extends AppCompatActivity implements GoogleApiClient.Conne
             }
         });
     }
+
+    public void getAllBons(){
+        pathlist = S.dbHandler.getAllBonsPath(S.db);
+    }
+
+
+    public void imageUpload(String path){
+        String[] separated = path.split("/");
+        final String title = separated[separated.length - 1];
+        final Bitmap image = BitmapFactory.decodeFile(path);
+        Drive.DriveApi.newDriveContents(mGoogleApiClient).setResultCallback(
+                new ResultCallback<DriveApi.DriveContentsResult>() {
+                    @Override
+                    public void onResult(DriveApi.DriveContentsResult result) {
+                        if (!result.getStatus().isSuccess()) {
+                            Log.i(TAG, "Failed to create new contents.");
+                            return;
+                        }
+                        OutputStream outputStream = result.getDriveContents().getOutputStream();
+                        // Write the bitmap data from it.
+                        ByteArrayOutputStream bitmapStream = new ByteArrayOutputStream();
+                        image.compress(Bitmap.CompressFormat.JPEG, 80, bitmapStream);
+                        try {
+                            outputStream.write(bitmapStream.toByteArray());
+                        } catch (IOException e1) {
+                            Log.i(TAG, "Unable to write file contents.");
+                        }
+                        image.recycle();
+                        outputStream = null;
+                        MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
+                                .setMimeType("image/jpeg").setTitle(title)
+                                .build();
+                        Log.i(TAG, "Creating new pic on Drive (" + title + ")");
+                        Drive.DriveApi.getFolder(mGoogleApiClient,
+                                driveId).createFile(mGoogleApiClient,
+                                metadataChangeSet, result.getDriveContents());
+                    }
+                });
+    }
+
+
+
+
     private void upload_to_drive() {
         //async check if folder exists... if not, create it. continue after with create_file_in_folder(driveId);
         check_folder_exists();
     }
+
     private void check_folder_exists() {
         Query query =
                 new Query.Builder().addFilter(Filters.and(Filters.eq(SearchableField.TITLE, FOLDER_NAME), Filters.eq(SearchableField.TRASHED, false)))
                         .build();
         Drive.DriveApi.query(mGoogleApiClient, query).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
-            @Override public void onResult(DriveApi.MetadataBufferResult result) {
+            @Override
+            public void onResult(DriveApi.MetadataBufferResult result) {
                 if (!result.getStatus().isSuccess()) {
                     Log.e(TAG, "Cannot create folder in the root.");
                 } else {
@@ -99,7 +167,8 @@ public class A_Export extends AppCompatActivity implements GoogleApiClient.Conne
                         Drive.DriveApi.getRootFolder(mGoogleApiClient)
                                 .createFolder(mGoogleApiClient, changeSet)
                                 .setResultCallback(new ResultCallback<DriveFolder.DriveFolderResult>() {
-                                    @Override public void onResult(DriveFolder.DriveFolderResult result) {
+                                    @Override
+                                    public void onResult(DriveFolder.DriveFolderResult result) {
                                         if (!result.getStatus().isSuccess()) {
                                             Log.e(TAG, "U AR A MORON! Error while trying to create the folder");
                                         } else {
@@ -114,9 +183,11 @@ public class A_Export extends AppCompatActivity implements GoogleApiClient.Conne
             }
         });
     }
+
     private void create_file_in_folder(final DriveId driveId) {
         Drive.DriveApi.newDriveContents(mGoogleApiClient).setResultCallback(new ResultCallback<DriveApi.DriveContentsResult>() {
-            @Override public void onResult(@NonNull DriveApi.DriveContentsResult driveContentsResult) {
+            @Override
+            public void onResult(@NonNull DriveApi.DriveContentsResult driveContentsResult) {
                 if (!driveContentsResult.getStatus().isSuccess()) {
                     Log.e(TAG, "U AR A MORON! Error while trying to create new file contents");
                     return;
@@ -135,7 +206,7 @@ public class A_Export extends AppCompatActivity implements GoogleApiClient.Conne
                 //MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
                 //    .setMimeType("image/jpeg").setTitle("Android Photo.png").build();
                 //------ THIS IS AN EXAMPLE FOR FILE --------
-                Toast.makeText(A_Export.this, "Uploading to drive. If you didn't fucked up something like usual you should see it there", Toast.LENGTH_LONG).show();
+                Toast.makeText(A_Export_Drive.this, "Uploading to drive. If you didn't fucked up something like usual you should see it there", Toast.LENGTH_LONG).show();
                 final File theFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/xtests/tehfile.txt"); //>>>>>> WHAT FILE ?
                 try {
                     FileInputStream fileInputStream = new FileInputStream(theFile);
@@ -151,7 +222,8 @@ public class A_Export extends AppCompatActivity implements GoogleApiClient.Conne
                 DriveFolder folder = driveId.asDriveFolder();
                 folder.createFile(mGoogleApiClient, changeSet, driveContentsResult.getDriveContents())
                         .setResultCallback(new ResultCallback<DriveFolder.DriveFileResult>() {
-                            @Override public void onResult(@NonNull DriveFolder.DriveFileResult driveFileResult) {
+                            @Override
+                            public void onResult(@NonNull DriveFolder.DriveFileResult driveFileResult) {
                                 if (!driveFileResult.getStatus().isSuccess()) {
                                     Log.e(TAG, "U AR A MORON!  Error while trying to create the file");
                                     return;
@@ -162,10 +234,42 @@ public class A_Export extends AppCompatActivity implements GoogleApiClient.Conne
             }
         });
     }
-    @Override protected void onResume() {
+
+
+    public void changeAccount() {
+
+        mGoogleApiClient.clearDefaultAccountAndReconnect();
+        String accountName = getAccountName();
+        Log.e("##########TEST", "Accountname:"+accountName);
+        selectAccount.setText(accountName);
+
+    }
+
+
+
+
+    private String getAccountName() {
+
+        String accountName = "test";
+        AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+        Account[] list = manager.getAccounts();
+
+        for (Account account : list) {
+            if (account.type.equalsIgnoreCase("com.google")) {
+                accountName = account.name;
+            }
+        }
+        return accountName;
+    }
+
+
+
+    @Override
+    protected void onResume() {
         super.onResume();
         if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Drive.API)
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addApi(Drive.API)
                     .addScope(Drive.SCOPE_FILE)
                     .addScope(Drive.SCOPE_APPFOLDER) // required for App Folder sample
                     .addConnectionCallbacks(this)
@@ -174,6 +278,7 @@ public class A_Export extends AppCompatActivity implements GoogleApiClient.Conne
         }
         mGoogleApiClient.connect();
     }
+
     public void writeToFile(String fileName, String body) {
         FileOutputStream fos = null;
         try {
@@ -190,19 +295,25 @@ public class A_Export extends AppCompatActivity implements GoogleApiClient.Conne
             fos = new FileOutputStream(myFile);
             fos.write(body.getBytes());
             fos.close();
-            Toast.makeText(A_Export.this, "File created ok! Let me give you a fucking congratulations!", Toast.LENGTH_LONG).show();
+            Toast.makeText(A_Export_Drive.this, "File created ok! Let me give you a fucking congratulations!", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    @Override public void onConnected(@Nullable Bundle bundle) {
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
         Log.v(TAG, "+++++++++++++++++++ onConnected +++++++++++++++++++");
     }
-    @Override public void onConnectionSuspended(int i) {
+
+    @Override
+    public void onConnectionSuspended(int i) {
         Log.e(TAG, "onConnectionSuspended [" + String.valueOf(i) + "]");
     }
-    @Override public void onConnectionFailed(@NonNull ConnectionResult result) {
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult result) {
         Log.i(TAG, "GoogleApiClient connection failed: " + result.toString());
         if (!result.hasResolution()) {
             // show the localized error dialog.
@@ -215,30 +326,22 @@ public class A_Export extends AppCompatActivity implements GoogleApiClient.Conne
             Log.e(TAG, "U AR A MORON! Exception while starting resolution activity", e);
         }
     }
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_RESOLUTION && resultCode == RESULT_OK) {
+            //String email = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+
             mGoogleApiClient.connect();
         }
     }
-    @Override protected void onPause() {
+
+    @Override
+    protected void onPause() {
         if (mGoogleApiClient != null) {
             mGoogleApiClient.disconnect();
         }
         super.onPause();
-    }
-
-    private String getAccountName() {
-
-        String accountName = null;
-        AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
-        Account[] list = manager.getAccounts();
-        for (Account account : list) {
-            if (account.type.equalsIgnoreCase("com.google")) {
-                accountName = account.name;
-                break;
-            }
-        }
-        return accountName;
     }
 }
