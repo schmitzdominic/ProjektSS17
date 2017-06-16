@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:textSize="20sp"
-        android:text="Tutorial"
+        android:text="@string/tutorial_title"
         android:textStyle="bold"
         android:textColor="@color/colorPrimary"/>
 

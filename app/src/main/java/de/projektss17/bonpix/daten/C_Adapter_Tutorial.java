@@ -25,6 +25,7 @@ import static de.projektss17.bonpix.R.id.textView;
 
 public class C_Adapter_Tutorial extends PagerAdapter {
     private int [] imageResources ={R.drawable.picture1,R.drawable.picture2,R.drawable.picture3,R.drawable.picture4,R.drawable.picture5,R.drawable.picture6,R.drawable.picture7,R.drawable.picture7};
+    private int progressCount = imageResources.length;
     private Context ctx;
     private LayoutInflater layoutInflater;
     private TextView content;
@@ -56,7 +57,7 @@ public class C_Adapter_Tutorial extends PagerAdapter {
             this.progressBarBackground = (ProgressBar)itemView.findViewById(R.id.tutorial_imageCountBackground);
 
             this.imageView.setImageResource(imageResources[position]);
-            this.progressBarBackground.setProgress(7);
+            this.progressBarBackground.setProgress(progressCount);
 
             switch (position){
                 case 0:

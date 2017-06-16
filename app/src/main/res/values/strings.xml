@@ -252,5 +252,7 @@
     <string name="tutorial_text5">Über den Plus-Button können Bons per Foto oder manuell hinzugefügt werden. Diese Funktion ist ebenfalls im Home-, wie auch im Statistikreiter verfügbar.</string>
     <string name="tutorial_text6">Alle Bons können ebenfalls manuell hinzugefügt werden. Hierzu wählt man einen Laden und mindestens einen Artikel aus.</string>
     <string name="tutorial_text7">Über den linken Button kann eine Garantie hinzugefügt werden. Mit dem rechten Button können alle Eingaben gespeichert werden.</string>
+    <string name="tutorial_title">Tutorial</string>
+
 
 </resources>
