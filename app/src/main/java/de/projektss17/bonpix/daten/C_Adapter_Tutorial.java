@@ -24,22 +24,25 @@ import static de.projektss17.bonpix.R.id.textView;
 
 
 public class C_Adapter_Tutorial extends PagerAdapter {
-    private int [] imageResources ={R.drawable.picture1,R.drawable.picture2,R.drawable.picture3,R.drawable.picture4,R.drawable.picture5,R.drawable.picture6,R.drawable.picture7,R.drawable.picture7};
+    private int [] imageResources ={R.drawable.picture1,R.drawable.picture2,R.drawable.picture3,R.drawable.picture4,R.drawable.picture5,R.drawable.picture6,R.drawable.picture7,R.drawable.picture7, R.drawable.check};
     private int progressCount = imageResources.length;
+    private int slideCount;
     private Context ctx;
     private LayoutInflater layoutInflater;
     private TextView content;
     private ImageView imageView;
     private ProgressBar progressBar, progressBarBackground;
+    private View itemView;
 
-    public C_Adapter_Tutorial(Context c) {
-        ctx=c;
+    public C_Adapter_Tutorial(Context c, int slideCount) {
+        this.ctx=c;
+        this.slideCount = slideCount;
 
     }
 
     @Override
     public int getCount() {
-        return imageResources.length;
+        return slideCount;
     }
 
 
@@ -48,7 +51,7 @@ public class C_Adapter_Tutorial extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
 
         layoutInflater= (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView=layoutInflater.inflate(R.layout.box_tutorial_adapter,container,false);
+        this.itemView=layoutInflater.inflate(R.layout.box_tutorial_adapter,container,false);
 
         if(position < imageResources.length - 1){
             this.imageView=(ImageView) itemView.findViewById(R.id.swip_image_view);
@@ -88,6 +91,11 @@ public class C_Adapter_Tutorial extends PagerAdapter {
                     this.content.setText(ctx.getResources().getString((R.string.tutorial_text7)));
                     this.progressBar.setProgress(position+1);
                     break;
+                case 7:
+                    this.imageView.setImageResource(R.drawable.check);
+                    this.content.setText(ctx.getResources().getString((R.string.tutorial_text8)));
+                    this.progressBar.setBackgroundColor(Color.WHITE);
+                    this.progressBarBackground.setBackgroundColor(Color.WHITE);
             }
 
 

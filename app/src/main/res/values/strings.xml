@@ -253,6 +253,6 @@
     <string name="tutorial_text6">Alle Bons können ebenfalls manuell hinzugefügt werden. Hierzu wählt man einen Laden und mindestens einen Artikel aus.</string>
     <string name="tutorial_text7">Über den linken Button kann eine Garantie hinzugefügt werden. Mit dem rechten Button können alle Eingaben gespeichert werden.</string>
     <string name="tutorial_title">Tutorial</string>
-
+    <string name="tutorial_text8">Das Tutorial wurde erfolgreich abgeschlossen. Viel Spaß mit der APP!</string>
 
 </resources>
