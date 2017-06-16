@@ -22,6 +22,10 @@ public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favorite
     private List<C_Bon> bonListe;
     private C_Bon bon;
 
+    /**
+     * Standard Constructor
+     * @param bonListe
+     */
     public C_Adapter_Favoriten(List<C_Bon> bonListe){
         this.bonListe = bonListe;
     }

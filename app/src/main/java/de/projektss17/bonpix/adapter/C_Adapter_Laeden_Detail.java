@@ -18,6 +18,10 @@ public class C_Adapter_Laeden_Detail extends RecyclerView.Adapter<C_Adapter_Laed
     private ArrayList<C_Bon> bonListe;
     private C_Bon bon;
 
+    /**
+     * Standard constructor
+     * @param bonListe
+     */
     public C_Adapter_Laeden_Detail(ArrayList<C_Bon> bonListe){
         this.bonListe = bonListe;
     }

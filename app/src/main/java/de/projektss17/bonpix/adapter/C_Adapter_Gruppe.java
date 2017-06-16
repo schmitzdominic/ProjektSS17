@@ -21,6 +21,10 @@ public class C_Adapter_Gruppe extends RecyclerView.Adapter<C_Adapter_Gruppe.MyVi
     private List<C_Gruppe> gruppenListe;
     private C_Gruppe gruppe;
 
+    /**
+     * Standard Constructor
+     * @param gruppenListe
+     */
     public C_Adapter_Gruppe(List<C_Gruppe> gruppenListe){
         this.gruppenListe = gruppenListe;
     }

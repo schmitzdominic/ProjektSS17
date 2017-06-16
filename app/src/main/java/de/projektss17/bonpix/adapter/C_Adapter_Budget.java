@@ -19,6 +19,10 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
 
     private List<C_Budget> budgetList;
 
+    /**
+     * Standard Constructor
+     * @param budgetList
+     */
     public C_Adapter_Budget(List<C_Budget> budgetList) {
         this.budgetList = budgetList;
     }
@@ -75,10 +79,20 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
         });
     }
 
+    /**
+     * Get rest of budget
+     * @param budget
+     * @return
+     */
     private String getRestBudget(C_Budget budget){
         return "" + ((double) budget.getBudgetMax() - budget.getBudgetLost());
     }
 
+    /**
+     * Get rest of budget in percent
+     * @param budget
+     * @return
+     */
     private String getRestPercentage(C_Budget budget){
         return "" + (Math.round(((Double.parseDouble(this.getRestBudget(budget)) / budget.getBudgetMax()) * 100) * 100) / 100.00);
     }

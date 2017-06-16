@@ -26,6 +26,10 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.Vi
     public int recycled = 0;
     private ArrayList<C_Artikel> artikel = new ArrayList<>();
 
+    /**
+     * Standard Constructor
+     * @param bon
+     */
     public C_Adapter_Bon_Anzeigen(C_Bon bon){
         this.bon = bon;
         artikel = bon.getArticles();

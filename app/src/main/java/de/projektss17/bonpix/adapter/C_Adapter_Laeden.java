@@ -31,6 +31,11 @@ public class C_Adapter_Laeden extends RecyclerView.Adapter<C_Adapter_Laeden.MyVi
     private FragmentManager fm;
     private Bundle args;
 
+    /**
+     * Standard Constructor
+     * @param context
+     * @param shopList
+     */
     public C_Adapter_Laeden(Context context, ArrayList<C_Laden> shopList) {
         this.context = context;
         this.shopList = shopList;

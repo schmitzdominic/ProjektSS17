@@ -18,6 +18,10 @@ public class C_Adapter_Tutorial extends PagerAdapter {
     private TextView textView, content;
     private ImageView imageView;
 
+    /**
+     * Standard constructor
+     * @param context
+     */
     public C_Adapter_Tutorial(Context context) {
         ctx = context;
     }

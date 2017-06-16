@@ -24,6 +24,10 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
     private int row_index = -1;
     private Intent intent;
 
+    /**
+     * Standard Constructor
+     * @param bonsList
+     */
     public C_Adapter_Bons(List<C_Bon> bonsList){
         this.bonsList = bonsList;
     }
@@ -78,6 +82,9 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
             holder.button.setColorFilter(holder.button.getContext().getResources().getColor(R.color.colorPrimary));
         }
 
+        /**
+         * Set Favorite true / false and change Icon
+         */
         holder.button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

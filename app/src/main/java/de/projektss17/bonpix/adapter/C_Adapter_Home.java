@@ -47,6 +47,10 @@ public class C_Adapter_Home extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private LineData lineData;
     private Description descLine;
 
+    /**
+     * Standard constructor
+     * @param context
+     */
     public C_Adapter_Home(Context context) {
         this.context = context;
         this.curreny = context.getString(R.string.currency_europe);

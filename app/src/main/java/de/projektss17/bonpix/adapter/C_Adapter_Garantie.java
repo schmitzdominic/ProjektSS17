@@ -22,6 +22,10 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
     private List<C_Bon> bonListe;
     private C_Bon bon;
 
+    /**
+     * Standard Constructor
+     * @param bonListe
+     */
     public C_Adapter_Garantie(List<C_Bon> bonListe){
         this.bonListe = bonListe;
     }
