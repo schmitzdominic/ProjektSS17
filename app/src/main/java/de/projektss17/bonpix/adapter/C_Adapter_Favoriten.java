@@ -1,12 +1,8 @@
-package de.projektss17.bonpix.daten;
+package de.projektss17.bonpix.adapter;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,29 +15,29 @@ import java.util.List;
 import de.projektss17.bonpix.A_Bon_Anzeigen;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
+import de.projektss17.bonpix.daten.C_Bon;
 
-/**
- * Created by Fabian on 25.04.2017.
- */
-
-public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.MyViewHolder> {
+public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favoriten.MyViewHolder> {
 
     private List<C_Bon> bonListe;
-    private List<C_Bon> filteredList;
     private C_Bon bon;
 
+    public C_Adapter_Favoriten(List<C_Bon> bonListe){
+        this.bonListe = bonListe;
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView warrantyShop, warrantyEnd, warrantyPrice;
+        public TextView favoriteShopName, favoriteDate, favouritePrice;
         public ImageView icon, deleteBtn;
         public Resources res;
 
         public MyViewHolder(View view){
             super(view);
-            icon = (ImageView) view.findViewById(R.id.garantie_view_laden_bild);
-            warrantyShop = (TextView) view.findViewById(R.id.garantie_view_shopname);
-            warrantyEnd = (TextView) view.findViewById(R.id.garantie_view_zusatz_garantieende);
-            warrantyPrice = (TextView) view.findViewById(R.id.garantie_view_zusatz_favorite_price);
-            deleteBtn = (ImageView) view.findViewById(R.id.garantie_view_garantie_delete_button);
+            icon = (ImageView) view.findViewById(R.id.favoriten_view_laden_bild);
+            favoriteShopName = (TextView) view.findViewById(R.id.favoriten_view_favorite_shopname);
+            favoriteDate = (TextView) view.findViewById(R.id.favoriten_view_zusatz_favorite_date);
+            favouritePrice = (TextView) view.findViewById(R.id.favoriten_view_zusatz_favorite_price);
+            deleteBtn = (ImageView) view.findViewById(R.id.favoriten_view_favoriten_delete_button);
             res = view.getResources();
 
             view.setOnClickListener(new View.OnClickListener() {
@@ -54,47 +50,27 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
                     v.getContext().startActivity(intent);
                 }
             });
-
         }
     }
 
-    /**
-     * returned Liste
-     * @param bonListe
-     */
-    public C_Adapter_Garantie(List<C_Bon> bonListe){
-        this.filteredList = new ArrayList<>();
-        this.bonListe = bonListe;
-    }
-
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public C_Adapter_Favoriten.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.box_garantie_view, parent, false);
-        return new MyViewHolder(itemView);
+                .inflate(R.layout.box_favoriten_view, parent, false);
+        return new C_Adapter_Favoriten.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final C_Adapter_Garantie.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final C_Adapter_Favoriten.MyViewHolder holder, final int position) {
 
         this.bon = bonListe.get(position);
-        
         holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
-        holder.warrantyShop.setText(bon.getShopName());
-        holder.warrantyEnd.setText(holder.res.getString(R.string.a_garantie_garantie_bis) + " " + bon.getGuaranteeEnd());
-
-        // TODO: € is hardcoded. Has to be implement as Value String in strings.xml or another solution
-        holder.warrantyPrice.setText(bon.getTotalPrice() + " €");
-
+        holder.favoriteShopName.setText(bon.getShopName());
+        holder.favouritePrice.setText(bon.getTotalPrice() + " €");
+        holder.favoriteDate.setText(S.getWeekday(holder.res, S.getWeekdayNumber(bon.getDate())) + "\n" + bon.getDate());
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
-
-
-            /**
-             * On Click Methode für onClickListener
-             * @param v
-             */
             public void onClick(View v) {
-                bonListe.get(position).setGuarantee(false);
+                bonListe.get(position).setFavourite(false);
                 S.dbHandler.updateBon(S.db, bonListe.get(position));
                 bonListe.remove(position);
                 notifyItemRemoved(position);
@@ -108,6 +84,11 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
         return this.bonListe.size();
     }
 
+    /**
+     * Set the Adapter List to the passed List
+     * Passed List contains the search objects
+     * @param passedList
+     */
     public void setFilter(List<C_Bon> passedList) {
         bonListe = new ArrayList<>();
         bonListe.addAll(passedList);

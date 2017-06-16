@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +29,7 @@ import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
-import de.projektss17.bonpix.daten.C_Laeden_Adapter;
+import de.projektss17.bonpix.adapter.C_Adapter_Laeden;
 
 
 public class A_Laeden extends AppCompatActivity {
@@ -38,7 +37,7 @@ public class A_Laeden extends AppCompatActivity {
     private ArrayList<C_Bon> bonsList = new ArrayList<>();
     private ArrayList<C_Laden> shopList = new ArrayList<>();
     private RecyclerView recyclerViewLaeden;
-    private C_Laeden_Adapter mAdapter;
+    private C_Adapter_Laeden mAdapter;
     private FloatingActionButton fab;
     private Resources res;
 
@@ -67,7 +66,7 @@ public class A_Laeden extends AppCompatActivity {
         super.onResume();
 
         this.recyclerViewLaeden = (RecyclerView) findViewById(R.id.view_laeden);
-        this.mAdapter = new C_Laeden_Adapter(this, shopList);
+        this.mAdapter = new C_Adapter_Laeden(this, shopList);
         this.prepareShopData();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());

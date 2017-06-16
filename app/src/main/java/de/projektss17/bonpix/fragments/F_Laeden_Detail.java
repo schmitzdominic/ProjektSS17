@@ -9,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,7 @@ import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
-import de.projektss17.bonpix.daten.C_Laeden_Detail_Adapter;
+import de.projektss17.bonpix.adapter.C_Adapter_Laeden_Detail;
 
 import static de.projektss17.bonpix.S.db;
 
@@ -42,9 +41,9 @@ public class F_Laeden_Detail extends DialogFragment {
 
         View rootView = inflater.inflate(R.layout.box_laeden_detail_content, container, false);
         RecyclerView recyclerViewDetailLaeden = (RecyclerView) rootView.findViewById(R.id.laeden_detail_view);
-        C_Laeden_Detail_Adapter mAdapter = new C_Laeden_Detail_Adapter(bonsList);
+        C_Adapter_Laeden_Detail mAdapter = new C_Adapter_Laeden_Detail(bonsList);
 
-        //Erhalt des shopnamen von C_Laeden_Adapter
+        //Erhalt des shopnamen von C_Adapter_Laeden
         this.name = getArguments().getString("ShopName");
         prepareBonData(name);
 
@@ -105,7 +104,7 @@ public class F_Laeden_Detail extends DialogFragment {
             }
         });
 
-        //Recycler View in C_Laeden_Detail_Adapter
+        //Recycler View in C_Adapter_Laeden_Detail
         recyclerViewDetailLaeden.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDetailLaeden.addItemDecoration(
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));

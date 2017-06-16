@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
-import de.projektss17.bonpix.daten.C_Adapter_Bons;
+import de.projektss17.bonpix.adapter.C_Adapter_Bons;
 
 
 public class A_Tab3Bons extends Fragment{

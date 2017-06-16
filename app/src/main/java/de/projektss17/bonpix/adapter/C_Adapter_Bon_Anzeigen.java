@@ -1,9 +1,8 @@
-package de.projektss17.bonpix.daten;
+package de.projektss17.bonpix.adapter;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,21 +15,21 @@ import java.util.ArrayList;
 
 import de.projektss17.bonpix.A_Max_Bon_Pic;
 import de.projektss17.bonpix.R;
-import de.projektss17.bonpix.S;
+import de.projektss17.bonpix.daten.C_Artikel;
+import de.projektss17.bonpix.daten.C_Bon;
 
 public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private C_Bon bon;     // Zwischenspeicher für die Bons
-    public int count;     // Count für die Inhalte der RecyclerView
+    private C_Bon bon;
+    public int count;
     public int counter = 0;
     public int recycled = 0;
     private ArrayList<C_Artikel> artikel = new ArrayList<>();
 
-
     public C_Adapter_Bon_Anzeigen(C_Bon bon){
         this.bon = bon;
         artikel = bon.getArticles();
-        count = artikel.size()+1;
+        count = artikel.size() + 1;
     }
 
     @Override
@@ -73,10 +72,8 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.Vi
                     }
                 }
             });
-
         }
     }
-
 
     public class ViewHolderBottom extends RecyclerView.ViewHolder{
         public TextView artikel, preis;
@@ -111,7 +108,6 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.Vi
 
         switch (getItemViewType(position)){
             case 0:
-
                 ViewHolderHeader holderHeader = (ViewHolderHeader)holder;
 
                 if(bon.getPath() != null && bon.getPath().contains(".")){
@@ -135,7 +131,6 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.Vi
                     holderHeader.adresse.setText("");
                 }
 
-
                 if(bon.getGuaranteeEnd().contains(".")){
                     holderHeader.garantieTitle.setVisibility(View.VISIBLE);
                     holderHeader.garantie.setText(bon.getGuaranteeEnd());
@@ -148,18 +143,14 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.Vi
                 counter++;
 
             case 1:
-
                 try{
-
                     ViewHolderBottom holderBottom = (ViewHolderBottom)holder;
-
                     if(getArticleIndex() < this.artikel.size()){
                         holderBottom.artikel.setText(artikel.get(getArticleIndex()).getName());
                         holderBottom.preis.setText(artikel.get(getArticleIndex()).getPrice() + " " + holderBottom.v.getContext().getResources().getString(R.string.waehrung));
                     }
-
                 } catch(ClassCastException e){
-
+                    e.printStackTrace();
                 }
             counter++;
         }
@@ -170,16 +161,20 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.Vi
         return count;
     }
 
+    /**
+     * Get the Index of the Article which is shown in the List
+     * @return ArticleIndex
+     */
     public int getArticleIndex(){
 
         if (counter > count){
-            counter = count - this.recycled+1;
+            counter = count - this.recycled + 1;
             this.recycled = 0;
-            return counter-2;
+            return counter - 2;
         }
         else {
             this.recycled = 0;
-            return counter-2;
+            return counter - 2;
         }
     }
 

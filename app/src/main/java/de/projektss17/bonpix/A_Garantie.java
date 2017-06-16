@@ -3,7 +3,6 @@ package de.projektss17.bonpix;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
-import de.projektss17.bonpix.daten.C_Adapter_Garantie;
+import de.projektss17.bonpix.adapter.C_Adapter_Garantie;
 
 public class A_Garantie extends AppCompatActivity {
 
