@@ -44,7 +44,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Implementierung der Objekte in dieser Activity
+        /** Implementierung der Objekte in dieser Activity */
         this.saveButton = (Button) findViewById(R.id.budget_save_button);
         this.betrag = (EditText) findViewById(R.id.budget_alert_dialog_betrag);
         this.title = (EditText) findViewById(R.id.budget_alert_dialog_title);
@@ -53,7 +53,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
         this.info = (EditText) findViewById(R.id.budget_alert_dialog_info);
         this.favorite = (Switch) findViewById(R.id.budget_alert_dialog_is_favorite);
 
-        // Setzen des Befehls zum klicken der Edit Text
+        /** Setzen des Befehls zum klicken der Edit Text */
         saveButton.setOnClickListener(this);
         zeitraumVon.setOnClickListener(this);
         zeitraumBis.setOnClickListener(this);
@@ -91,7 +91,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        // Je nachdem welche EditText angeklickt wird,so wird die Methode createDatePicker ausgeführt
+        /** Je nachdem welche EditText angeklickt wird,so wird die Methode createDatePicker ausgeführt */
         if(v==saveButton)
             prepareAndSave();
         else if(v==zeitraumVon)
