@@ -3,11 +3,12 @@ package de.projektss17.bonpix;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import de.projektss17.bonpix.daten.C_Adapter_Tutorial;
+
+
 
 public class A_Tutorial extends Activity {
 
@@ -23,7 +24,6 @@ public class A_Tutorial extends Activity {
         viewPager.setAdapter(customSwip);
 
         btn =(Button) findViewById(R.id.tutorial_skip_button);
-
         this.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
