@@ -1,14 +1,11 @@
 package de.projektss17.bonpix;
 
-
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,14 +25,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.daten.C_Laeden_Adapter;
 
 
+
 public class A_Laeden extends AppCompatActivity {
 
-    private ArrayList<C_Bon> bonsList = new ArrayList<>();
     private ArrayList<C_Laden> shopList = new ArrayList<>();
     private RecyclerView recyclerViewLaeden;
     private C_Laeden_Adapter mAdapter;
@@ -134,9 +130,7 @@ public class A_Laeden extends AppCompatActivity {
                                 } else {
                                     S.outLong(A_Laeden.this, res.getString(R.string.a_laeden_alert_dialog_toast2));
                                 }
-
                             }
-
                         }).create().show();
             }
 
@@ -146,16 +140,12 @@ public class A_Laeden extends AppCompatActivity {
     /**
      * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
-     *
-     * @param menu
-     * @return true wenn alles hinzugefügt wurde
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
