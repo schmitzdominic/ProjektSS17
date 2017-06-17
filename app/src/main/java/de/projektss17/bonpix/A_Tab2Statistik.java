@@ -25,7 +25,8 @@ public class A_Tab2Statistik extends Fragment{
     private View rootView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         this.rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
         this.setHasOptionsMenu(false);
 
@@ -53,9 +54,7 @@ public class A_Tab2Statistik extends Fragment{
                 super.onScrolled(recyclerView, dx, dy);
 
                 if (dy >0) {
-                    // Scroll Down
-                    if (fabPlus.isShown()) {
-
+                    if (fabPlus.isShown()) { // Scroll Down
                         if (((A_Main) getActivity()).getFabState()) {
                             ((A_Main) getActivity()).closeFABMenu();
                         }
@@ -63,15 +62,14 @@ public class A_Tab2Statistik extends Fragment{
                     }
                 }
                 else if (dy <0) {
-                    // Scroll Up
-                    if (!fabPlus.isShown()) {
+                    if (!fabPlus.isShown()) { // Scroll Up
                         fabPlus.show();
                     }
                 }
             }
         });
 
-        // Click eines Tabs bewirkt eine Aktion (in diesem Fall sollen die Charts gefiltert werden)
+        /** Click eines Tabs bewirkt eine Aktion (in diesem Fall sollen die Charts gefiltert werden) */
         this.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -79,10 +77,10 @@ public class A_Tab2Statistik extends Fragment{
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
+            public void onTabUnselected(TabLayout.Tab tab) {}// MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts!
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
+            public void onTabReselected(TabLayout.Tab tab) {}// MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts!
         });
     }
 
