@@ -10,19 +10,16 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Adapter_Bon_Anzeigen;
-import de.projektss17.bonpix.daten.C_Laden;
-
 import static de.projektss17.bonpix.S.db;
 
-public class A_Bon_Anzeigen extends AppCompatActivity {
 
+
+public class A_Bon_Anzeigen extends AppCompatActivity {
 
     private C_Adapter_Bon_Anzeigen mAdapter;
     private RecyclerView recyclerView;
