@@ -25,6 +25,7 @@ import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Adapter_Bons;
 
 
+
 public class A_Tab3Bons extends Fragment{
 
     private List<C_Bon> bonsList = new ArrayList<>();
@@ -34,8 +35,7 @@ public class A_Tab3Bons extends Fragment{
     private ViewGroup container;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.box_bons_content, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.view_bons);
@@ -88,8 +88,7 @@ public class A_Tab3Bons extends Fragment{
         prepareBonData();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(container.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(
-                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
