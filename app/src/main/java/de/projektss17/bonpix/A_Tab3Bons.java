@@ -49,8 +49,8 @@ public class A_Tab3Bons extends Fragment{
                 super.onScrolled(recyclerView, dx, dy);
 
                 if (dy >0) {
-                    // Scroll Down
-                    if (fabPlus.isShown()) {
+
+                    if (fabPlus.isShown()) { // Scroll Down
 
                         if (((A_Main) getActivity()).getFabState()) {
                             ((A_Main) getActivity()).closeFABMenu();
@@ -59,8 +59,8 @@ public class A_Tab3Bons extends Fragment{
                     }
                 }
                 else if (dy <0) {
-                    // Scroll Up
-                    if (!fabPlus.isShown()) {
+
+                    if (!fabPlus.isShown()) { // Scroll Up
                         fabPlus.show();
                     }
                 }
