@@ -44,7 +44,7 @@ public class C_Adapter_Tutorial extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
-        layoutInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.layoutInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemView = layoutInflater.inflate(R.layout.box_tutorial_adapter, container, false);
 
         this.imageView = (ImageView) itemView.findViewById(R.id.swip_image_view);

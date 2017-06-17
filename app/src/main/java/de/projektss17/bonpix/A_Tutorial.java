@@ -15,15 +15,16 @@ public class A_Tutorial extends Activity {
     private ViewPager viewPager;
     private C_Adapter_Tutorial customSwip;
     private Button skipButton;
-    private int slideCount = 9;     // Anzahl der Slides
+    private int slideCount = 8;     // Anzahl der Slides
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.box_tutorial_content);
-        viewPager=(ViewPager)findViewById(R.id.viewPager);
-        customSwip = new C_Adapter_Tutorial(this, slideCount);
-        viewPager.setAdapter(customSwip);
+
+        this.viewPager=(ViewPager)findViewById(R.id.viewPager);
+        this.customSwip = new C_Adapter_Tutorial(this, slideCount);
+        this.viewPager.setAdapter(customSwip);
 
         this.skipButton =(Button) findViewById(R.id.tutorial_skip_button);
         this.skipButton.setOnClickListener(new View.OnClickListener() {
@@ -33,7 +34,7 @@ public class A_Tutorial extends Activity {
             }
         });
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        this.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageScrollStateChanged(int state) {}
@@ -43,7 +44,7 @@ public class A_Tutorial extends Activity {
 
             @Override
             public void onPageSelected(int position) {
-                if(position == slideCount-1){
+                if(position == slideCount){
                     finish();
                 }
             }
