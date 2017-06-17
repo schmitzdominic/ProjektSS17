@@ -1,24 +1,18 @@
 package de.projektss17.bonpix;
 
-/**
- * Created by Domi on 28.03.2017.
- * Hier bitte die Logik des zweiten Tabs
- */
-
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import de.projektss17.bonpix.daten.C_Statistik_Adapter;
+
 
 
 public class A_Tab2Statistik extends Fragment{
@@ -31,8 +25,7 @@ public class A_Tab2Statistik extends Fragment{
     private View rootView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.rootView = inflater.inflate(R.layout.box_tab2_statistik_content, container, false);
         this.setHasOptionsMenu(false);
 
@@ -95,7 +88,6 @@ public class A_Tab2Statistik extends Fragment{
 
     /**
      * Triggert Statistken je nach Position
-     * @param position Position
      */
     public void getTabData(int position){
         switch (position){
