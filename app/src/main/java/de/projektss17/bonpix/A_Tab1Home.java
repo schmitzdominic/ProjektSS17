@@ -1,10 +1,5 @@
 package de.projektss17.bonpix;
 
-/**
- * ReCreated by Johanns on 27.05.2017.
- * Hier bitte die Logik des ersten Tabs
- */
-
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -17,6 +12,7 @@ import android.view.ViewGroup;
 import de.projektss17.bonpix.daten.C_Home_Adapter;
 
 
+
 public class A_Tab1Home extends Fragment {
 
     private RecyclerView recyclerView;
@@ -24,7 +20,6 @@ public class A_Tab1Home extends Fragment {
     private C_Home_Adapter homeAdapter;
     public FloatingActionButton fabPlus;
     private View rootView;
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.rootView = inflater.inflate(R.layout.box_tab1_home_content, container, false);
@@ -68,6 +63,5 @@ public class A_Tab1Home extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(homeAdapter);
         homeAdapter.notifyDataSetChanged();
-
     }
 }
