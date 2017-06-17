@@ -54,7 +54,7 @@ public class A_Budget extends AppCompatActivity {
 
         this.fab = (FloatingActionButton) findViewById(R.id.budget_fab);    //Floating Action Button
 
-        // SWIPPER - Implementierung des Swipper-Funktion
+        /** SWIPPER - Implementierung des Swipper-Funktion */
         swipper = new ItemTouchHelper(createHelperCallBack());      // ItemTouch -> Swipper
         swipper.attachToRecyclerView(recyclerView);
 
@@ -118,7 +118,7 @@ public class A_Budget extends AppCompatActivity {
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
                                   RecyclerView.ViewHolder target) {
 
-                // CARD VIEW - Items können bewegt werden (oben nach unten und umgekehrt)
+                /** CARD VIEW - Items können bewegt werden (oben nach unten und umgekehrt) */
                 moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;    // true wenn geswipped wird, ansonsten false
             }
@@ -126,7 +126,7 @@ public class A_Budget extends AppCompatActivity {
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
 
-                // CARD VIEW - Items werden gelöscht (nach Rechts oder Links)
+                /** CARD VIEW - Items werden gelöscht (nach Rechts oder Links) */
                 deleteItem(viewHolder.getAdapterPosition());
                 S.outShort(A_Budget.this, "Budget wurde gelöscht!");
             }
