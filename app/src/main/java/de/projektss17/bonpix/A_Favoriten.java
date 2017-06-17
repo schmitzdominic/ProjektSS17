@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,10 @@ import java.util.List;
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Adapter_Favoriten;
 
+
+
 public class A_Favoriten extends AppCompatActivity {
+
     private List<C_Bon> bonListe = new ArrayList<>();
     private RecyclerView recyclerViewFavoriten;
     private C_Adapter_Favoriten mAdapter;
@@ -55,16 +57,12 @@ public class A_Favoriten extends AppCompatActivity {
                 this.bonListe.add(bon);
             }
         }
-
         this.mAdapter.notifyDataSetChanged();
     }
 
     /**
      * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
-     *
-     * @param menu
-     * @return true wenn alles hinzugefügt wurde
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
