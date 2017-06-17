@@ -50,14 +50,14 @@ import de.projektss17.bonpix.daten.C_Preferences;
 
 public class A_Main extends AppCompatActivity {
 
-    // Primitive Datentypen
+    /** Primitive Datentypen */
     private boolean isFABOpen = false;
     private boolean isDrawOpen = false;
     private boolean cameraPermissions;
     private String fileNameTakenPhoto;
     public ArrayList<String> picturePathList;
 
-    // Layout
+    /** Layout */
     private ActionBarDrawerToggle toggle;
     private DrawerLayout navigationDrawerLayout;
     private FloatingActionButton plusButton;
@@ -75,7 +75,7 @@ public class A_Main extends AppCompatActivity {
     private View fabBGLayout;
     private ViewPager viewPager;
 
-    // Statischer Bereich
+    /** Statischer Bereich */
     private static final int REQUEST_IMAGE_CAPTURE = 2;
 
 
@@ -87,7 +87,7 @@ public class A_Main extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Navigation Drawer
+        /** Navigation Drawer */
         this.navigationDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         this.toggle = new ActionBarDrawerToggle(this, this.navigationDrawerLayout, R.string.open, R.string.close){
             public void onDrawerClosed(View view) {
@@ -101,7 +101,7 @@ public class A_Main extends AppCompatActivity {
             }
         };
 
-        // Layout
+        /** Layout */
         this.viewPager = (ViewPager) findViewById(R.id.main_container);
         this.tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         this.tabChooseTime = (TabLayout) findViewById(R.id.statistik_tabs);
@@ -114,11 +114,11 @@ public class A_Main extends AppCompatActivity {
         this.navigationView = (NavigationView) findViewById(R.id.main_nav_menu);
         this.fabBGLayout = findViewById(R.id.main_fabBGLayout);
 
-        // Berechtigungen
+        /** Berechtigungen */
         this.requestPermissions(new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE});
 
-        // Instanziierungen und Konfigurationen
+        /** Instanziierungen und Konfigurationen */
         this.toggle.syncState();
         this.tabChooseTimeLayout.setVisibility(View.INVISIBLE);
         this.picturePathList = new ArrayList<>();
@@ -211,7 +211,7 @@ public class A_Main extends AppCompatActivity {
             }
         });
 
-        // Wenn ein Menüitem (NavigationDrawer) geklickt wird
+        /** Wenn ein Menüitem (NavigationDrawer) geklickt wird */
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -499,7 +499,7 @@ public class A_Main extends AppCompatActivity {
             this.setDefaultDBValues();
             S.showTutorial(this);
 
-            // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
+            /** Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird. */
             S.prefs.savePrefBoolean("first_time", false);
         }
     }
