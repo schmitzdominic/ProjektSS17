@@ -74,22 +74,22 @@ public class A_Laeden extends AppCompatActivity {
         recyclerViewLaeden.setAdapter(mAdapter);
         this.mAdapter.notifyDataSetChanged();
 
-        //Damit der Floating Button beim Scrollen verschwindet
+        /**Damit der Floating Button beim Scrollen verschwindet */
         this.recyclerViewLaeden.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx,int dy){
                 super.onScrolled(recyclerView, dx, dy);
 
                 if (dy >0) {
-                    // Scroll Down
-                    if (fab.isShown()) {
+
+                    if (fab.isShown()) { // Scroll Down
                         fab.hide();
 
                     }
                 }
                 else if (dy <0) {
-                    // Scroll Up
-                    if (!fab.isShown()) {
+
+                    if (!fab.isShown()) { // Scroll Up
                         fab.show();
                     }
                 }
@@ -108,7 +108,7 @@ public class A_Laeden extends AppCompatActivity {
                 View alertLayoutLaeden = inflater.inflate(R.layout.box_laeden_alert_dialog, null);
                 final EditText shopTitle = (EditText) alertLayoutLaeden.findViewById(R.id.laeden_alert_dialog_title);
 
-                // DIALOG Fenster
+                /** DIALOG Fenster */
                 new AlertDialog.Builder(A_Laeden.this)
                         .setTitle(R.string.a_laeden_alert_dialog_title)
                         .setView(alertLayoutLaeden)
@@ -121,7 +121,7 @@ public class A_Laeden extends AppCompatActivity {
 
                                 if(shopTitle.getText() != null && !shopTitle.getText().toString().isEmpty() ){
                                     if(!S.dbHandler.checkIfLadenExist(S.db, shopTitle.getText().toString())){
-                                        //Hinzufügen Laden zur Datenbank
+                                        /**Hinzufügen Laden zur Datenbank */
                                         S.dbHandler.addLaden(S.db, new C_Laden(shopTitle.getText().toString()));
                                         prepareShopData();
                                     } else {
@@ -198,7 +198,6 @@ public class A_Laeden extends AppCompatActivity {
 
         mAdapter.notifyDataSetChanged();
 
-        //Sortierung der Recycler View
-        Collections.sort(shopList);
+        Collections.sort(shopList); //Sortierung der Recycler View
     }
 }
