@@ -18,7 +18,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -30,7 +29,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.support.design.widget.NavigationView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -47,6 +45,8 @@ import de.projektss17.bonpix.daten.C_Budget;
 import de.projektss17.bonpix.daten.C_DatabaseHandler;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.daten.C_Preferences;
+
+
 
 public class A_Main extends AppCompatActivity {
 
@@ -130,7 +130,6 @@ public class A_Main extends AppCompatActivity {
         this.initPersistence();
         this.initOnClickListener();
         this.onFirstStart();
-
     }
 
     @Override
@@ -147,7 +146,6 @@ public class A_Main extends AppCompatActivity {
         S.setMenuCounter(R.id.menu_nav_favoriten, S.dbHandler.getFavouriteCount(S.db), navigationView);
         S.setMenuCounter(R.id.menu_nav_garantie, warranty, navigationView);
         S.setMenuCounter(R.id.menu_nav_laeden, S.dbHandler.getAllLaedenCount(S.db), navigationView);
-
     }
 
     public NavigationView getNavigationView(){
@@ -222,9 +220,6 @@ public class A_Main extends AppCompatActivity {
                     case R.id.menu_nav_budget:
                         S.showBudget(A_Main.this);
                         return true;
-                    /*case R.id.menu_nav_gruppen:
-                        S.showGruppen(A_Main.this);
-                        return true;*/
                     case R.id.menu_nav_favoriten:
                         S.showFavoriten(A_Main.this);
                         return true;
@@ -263,7 +258,6 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Gibt die Time Leiste zurück
-     * @return Time Leiste
      */
     public TabLayout getTimeTabLayout(){
         return this.tabChooseTime;
@@ -271,7 +265,6 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Gibt den atkuellen Status des FAB Menüs zurück
-     * @return boolean
      */
     public boolean getFabState(){
         return this.isFABOpen;
@@ -279,7 +272,6 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Gibt den FAB zurück
-     * @return FloatingActionButton
      */
     public FloatingActionButton getFloatingActionButtonPlus(){
         return this.plusButton;
@@ -288,9 +280,6 @@ public class A_Main extends AppCompatActivity {
     /**
      * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
-     *
-     * @param menu
-     * @return true wenn alles hinzugefügt wurde
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -300,9 +289,6 @@ public class A_Main extends AppCompatActivity {
     /**
      * Ruft Items die vorher über die onCreateOptionsMenu inflatet wurden auf.
      * Zur Info: settings button sind die drei punkte oben rechts
-     *
-     * @param item
-     * @return true wenn die Activity aufgerufen wurde
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -312,7 +298,6 @@ public class A_Main extends AppCompatActivity {
             this.isDrawOpen = true;
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -339,7 +324,6 @@ public class A_Main extends AppCompatActivity {
         isFABOpen = true;
         this.fotoLayout.setVisibility(View.VISIBLE);
         this.manuellLayout.setVisibility(View.VISIBLE);
-
         this.plusButton.animate().rotationBy(90);
         this.fotoLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         this.manuellLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
@@ -376,6 +360,8 @@ public class A_Main extends AppCompatActivity {
         });
     }
 
+
+
     /**
      * Diese Klasse Managed die Tabs der Main Seite.
      */
@@ -389,9 +375,6 @@ public class A_Main extends AppCompatActivity {
          * Gibt das Fragment Item für die jeweilige Position der Tableiste zurück
          * Zur Info: Alle Tab Klassen erben von Fragment daher können die Instanzen
          * zurück gegeben werden
-         *
-         * @param position int Position des Fragment Items
-         * @return Fragment Instanz
          */
         @Override
         public Fragment getItem(int position) {
@@ -447,9 +430,6 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Frägt nach den noch benötigten Permissions
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
      */
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -495,9 +475,6 @@ public class A_Main extends AppCompatActivity {
     /**
      * Nachdem ein Bild geschossen wurde, wird die S.showRecognition aufgerufen und
      * der Pfad zu dem eben geschossenen Bild übergeben.
-     * @param requestCode
-     * @param resultCode
-     * @param data
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -521,7 +498,6 @@ public class A_Main extends AppCompatActivity {
             this.setDefaultSettings();
             this.setDefaultDBValues();
             S.showTutorial(this);
-            //this.createDBDummyData(20);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);
@@ -550,7 +526,6 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Erstellt Dummy Daten
-     * @param value Wie viele Daten generiert werden
      */
     private void createDBDummyData(int value){
 
