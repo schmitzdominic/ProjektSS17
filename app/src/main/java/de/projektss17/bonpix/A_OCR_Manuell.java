@@ -9,13 +9,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -51,14 +49,13 @@ import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.recognition.C_OCR;
-
 import static de.projektss17.bonpix.S.db;
+
 
 
 public class A_OCR_Manuell extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMAGE = 1;
-    private int bonId;
     private String year, month, day, imageOCRUriString, sonstigesText;
     private boolean setFocusOnLine = true, negPos;
     private ArrayAdapter<String> spinnerAdapter;
@@ -77,7 +74,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private A_OCR_Manuell context = this;
     private int valuePicked;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +89,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // XML Instanziieren
         this.garantieButton = (ImageButton) findViewById(R.id.ocr_manuell_garantie_button); // Garantie Button
         this.saveButton = (ImageButton) findViewById(R.id.ocr_manuell_save_button); // Speichern Button
         this.linearLayout = (LinearLayout) findViewById(R.id.ocr_manuell_linear_layout); // Linear Layout
@@ -112,7 +107,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.refreshSpinner(); // Spinner Refresh
         this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
-
 
         /**
          * Guarantee Listener - Triggers Dialog (NumberPicker)
@@ -156,7 +150,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 }
             }
         });
-
 
         // Save Button onClickListener
         this.saveButton.setOnClickListener(new View.OnClickListener() {
@@ -288,9 +281,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 } else if ((int) id > 1){
                     bon.setShopName(parentView.getSelectedItem().toString());
                     ((ImageView) findViewById(R.id.ocr_manuell_image_view_shop)).setImageDrawable(RoundedBitmapDrawableFactory.create(getResources(), S.getShopIcon(getResources(), bon.getShopName())));
-
                 }
-
             }
 
             // Wenn nichts selektiert wurde
@@ -299,10 +290,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 parentView.setSelection(0);
             }
 
-
         });
-
-
     }
 
     /**
@@ -323,7 +311,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Standard
-     * @param savedInstanceState Status
      */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -333,7 +320,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
     /**
      * öffnet den Kalender
      * onClickHandler für dateTextView
-     * @param view standard
      */
     public void setDate(View view) {
         this.showDialog(999);
@@ -341,7 +327,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * onClickHandler für den addArticleButton
-     * @param v Standard
      */
     public void onAddNewClicked(View v) {
         this.inflateEditRow(null, null);
@@ -350,7 +335,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * onClickHandler für den artikel Löschen button (Mülleimer)
-     * @param v Standard
      */
     public void onDeleteClicked(View v) {
         this.linearLayout.removeView((View) v.getParent());
@@ -396,8 +380,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Erzeugt eine Calendar Instanz
-     * Weißt year, month, day einen aktuellen wert zu
-     * Setzt über showDate die werte in die TextView
+     * Weist year, month, day einen aktuellen Wert zu
+     * Setzt über showDate die Werte in die TextView
      */
     public void createCalendar(){
         this.calendar = Calendar.getInstance();
@@ -409,9 +393,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Setzt das Aktuelle Datum in die TextView
-     * @param year Das ausgewählte Jahr
-     * @param month Der ausgewählte Monat
-     * @param day Der ausgewählte Tag
      */
     private void showDate(String year, String month, String day) {
         String sepa = ".";
@@ -421,8 +402,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Gibt eine Zahl wenn sie kleiner 10 ist mit einer 0 davor aus
-     * @param zahl Zahl die ggf mit einer 0 vorne zurück gegeben wird
-     * @return Zahl mit ggf 0 vorne
      */
     public String getNumberWithZero(int zahl) {
         if (zahl > 0 && zahl < 10) {
@@ -474,9 +453,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Was passiert wenn das Bild ausgewählt wurde
-     * @param requestCode Standard
-     * @param resultCode Standard
-     * @param data Bild daten
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -496,12 +472,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Erzeugt eine neue Artikel Reihe
-     * @param name Name des Artikels
-     * @param preis Preis des Artikels WICHTIG Preis muss ein , enthalten!
      */
     private void inflateEditRow(String name, String preis) {
 
-        // XML Instanziieren
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.box_ocr_manuell_listview, null);
         final ImageButton deleteAticleButton = (ImageButton) rowView
@@ -728,7 +701,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Gibt alle Preise als String Array zurück
-     * @return String Array mit allen Preisen
      */
     private String[] getAllPrices(){
 
@@ -773,7 +745,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Summiert alle Preise und gibt die Summe als double zurück
-     * @return Alle Preise summiert als double
      */
     private String getFinalPrice(){
 
@@ -803,12 +774,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Befüllt alle Werte
-     * @param path Pfad zum Bild
-     * @param ladenName Ladenname
-     * @param anschrift Anschrift
-     * @param datum Datum
-     * @param sonstiges Sonstiges
-     * @param articles Array mit Articles
      */
     private void fillMask(String path, String ladenName, String anschrift, String datum, String sonstiges, ArrayList<C_Artikel> articles){
 
@@ -874,7 +839,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Versucht anhand eines Bitmaps über OCR die Maske zu befüllen!
-     * @param path Pfad
      */
     private void fillMaskOCR(String path){
 
@@ -897,13 +861,11 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 this.fillMask(path, null, null, null, null, null);
             }
         }
-
     }
 
     /**
      * Prüft ob alle relevanten Felder befüllt wurden
      * Zeigt über die Rote Farbe an ob das Feld befüllt wurde oder nicht
-     * @return true, alles wurde befüllt. false ein wert fehlt
      */
     public boolean checkAllRelevantValues(){
 
@@ -957,28 +919,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Bekommt die Uri aus einem Bitmap zurück
-     * @param inImage Bitmap
-     * @return Uri des Bitmap
      */
     public Uri getImageUri(Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
-    }
-
-    /**
-     * Gibt ein Bitmap bei Angabe der Uri zurück
-     * @param uri Uri
-     * @return Bitmap aus der Uri
-     */
-    public Bitmap getBitmapFromUri(Uri uri){
-        try {
-            return MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-        } catch (IOException e) {
-            Log.e("### getBitmapFromUri", e.toString());
-        }
-        return null;
     }
 
     public Bitmap getBitmapFromPath(String path){
@@ -990,7 +936,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Prüft nochmal expliziet den Status und gibt diesen wieder
-     * @return Status der Maske
      */
     public String getState(){
 
@@ -1006,7 +951,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Handle, jeh nach state
-     * @param state Status der Maske
      */
     public void doState(String state){
 
@@ -1068,7 +1012,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Gibt alle Artikel zurück die in die Maske eingetragen wurden
-     * @return ArrayList mit allen Artikeln aus der Maske
      */
     public ArrayList<C_Artikel> getAllArticle(){
 
@@ -1144,7 +1087,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Prüft ob der vorherige Bon mit dem Editieren übereinstimmt
-     * @return true - Value Changed, false - Value not Changed
      */
     private boolean proofIfValuesChanged(){
 
@@ -1154,7 +1096,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Baut einen Bon der abgespeichert werden kann
-     * @return Bon mit allen werten aus der Maske
      */
     public C_Bon saveBon(){
 
