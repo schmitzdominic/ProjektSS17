@@ -34,7 +34,7 @@ public class A_Einstellungen extends PreferenceActivity {
                 .replace(android.R.id.content, new F_Einstellungen())
                 .commit();
 
-        // ShakeDetector initialization
+        /** ShakeDetector initialization */
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mShakeDetector = new C_ShakeDetector(new C_ShakeDetector.OnShakeListener() {
