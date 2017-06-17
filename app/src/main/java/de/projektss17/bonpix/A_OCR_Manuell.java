@@ -21,7 +21,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +38,6 @@ import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -151,7 +149,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // Save Button onClickListener
+        /** Save Button onClickListener */
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,7 +163,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         finish();
 
                     } else {
-                        // Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet
+                        /** Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet */
                         S.popUpDialogSaveBon(A_OCR_Manuell.this, upIntent,
                                 R.string.a_ocr_manuell_pop_up_title,
                                 R.string.a_ocr_manuell_pop_up_message,
@@ -177,7 +175,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // OCR Image onClickListener
+        /** OCR Image onClickListener */
         this.ocrImageView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -188,7 +186,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // kamera Button onClickListener
+        /** kamera Button onClickListener */
         this.kameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,7 +196,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         });
 
 
-        // Sonstiges Eingabe onClickListener
+        /** Sonstiges Eingabe onClickListener */
         this.sonstigesView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -230,13 +228,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        //laden Spinner onClickListener
+        /** laden Spinner onClickListener */
         ladenSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final AdapterView<?> parentView, final View selectedItemView, int position, long id) {
 
-                // Itemid == 1 = Benutzerdefiniert, d.h. Wenn manuell eine Marke eingegeben werden soll
-                if ((int) id == 1) {
+
+                if ((int) id == 1) { // Itemid == 1 = Benutzerdefiniert, d.h. Wenn manuell eine Marke eingegeben werden soll
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(A_OCR_Manuell.this);
                     final EditText input = new EditText(A_OCR_Manuell.this);
@@ -284,7 +282,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 }
             }
 
-            // Wenn nichts selektiert wurde
+            /** Wenn nichts selektiert wurde */
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 parentView.setSelection(0);
@@ -494,7 +492,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         String preisArray[];
 
-        // Wenn der Preis nicht leer ist dann setze ihn
+        /** Wenn der Preis nicht leer ist dann setze ihn */
         if (preis != null && !preis.isEmpty()){
 
             if(Double.parseDouble(preis.replace(",",".")) < 0){
@@ -519,7 +517,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             centText.setText(preisArray[1]);
         }
 
-        // Wenn der Name nicht leer ist dann setze ihn
+        /** Wenn der Name nicht leer ist dann setze ihn */
         if (name != null && !name.isEmpty()) {
             articleText.setText(name);
         } else {
@@ -546,15 +544,15 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // Artikel Text changeListener
+        /** Artikel Text changeListener*/
         articleText.addTextChangedListener(new TextWatcher() {
 
-            // Wenn der Text geändert wird
+            /** Wenn der Text geändert wird */
             @Override
             public void afterTextChanged(Editable s) {
 
-                // Wenn der Text leer ist
-                if (s.toString().isEmpty()) {
+
+                if (s.toString().isEmpty()) { // Wenn der Text leer ist
 
                     if (mExclusiveEmptyView != null
                             && mExclusiveEmptyView != rowView) {
@@ -564,8 +562,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     addArticleButton.setVisibility(View.INVISIBLE);
                     addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
 
-                // Wenn etwas eingegeben wurde
-                } else {
+
+                } else { // Wenn etwas eingegeben wurde
 
                     if (mExclusiveEmptyView == rowView) {
                         mExclusiveEmptyView = null;
@@ -590,17 +588,17 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // Preis Text changeListener
+        /** Preis Text changeListener */
         priceText.addTextChangedListener(new TextWatcher() {
 
-            // Wenn der Text geändert wird
+            /** Wenn der Text geändert wird */
             @Override
             public void afterTextChanged(Editable s) {
 
                 int inputType = priceText.getInputType();
 
-                // Wenn der Text leer ist
-                if (s.toString().isEmpty()) {
+
+                if (s.toString().isEmpty()) { // Wenn der Text leer ist
                     addArticleButton.setVisibility(View.GONE);
 
                     if (mExclusiveEmptyView != null
@@ -611,8 +609,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     totalPrice.setText(getFinalPrice());
                     mExclusiveEmptyView = rowView;
 
-                // Wenn etwas eingegeben wurde
-                } else {
+
+                } else { // Wenn etwas eingegeben wurde
 
                     if (mExclusiveEmptyView == rowView) {
                         mExclusiveEmptyView = null;
@@ -639,15 +637,15 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // Preis Text changeListener
+        /** Preis Text changeListener */
         centText.addTextChangedListener(new TextWatcher() {
 
-            // Wenn der Text geändert wird
+            /** Wenn der Text geändert wird */
             @Override
             public void afterTextChanged(Editable s) {
 
-                // Wenn der Text leer ist
-                if (s.toString().isEmpty()) {
+
+                if (s.toString().isEmpty()) { // Wenn der Text leer ist
                     addArticleButton.setVisibility(View.GONE);
 
                     if (mExclusiveEmptyView != null
@@ -657,8 +655,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     totalPrice.setText(getFinalPrice());
                     mExclusiveEmptyView = rowView;
 
-                    // Wenn etwas eingegeben wurde
-                } else {
+
+                } else { // Wenn etwas eingegeben wurde
 
                     if (mExclusiveEmptyView == rowView) {
                         mExclusiveEmptyView = null;
@@ -871,7 +869,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         boolean allRelevantFieldsFull = true;
 
-        // Prüft ob ein Laden ausgewählt wurde
+        /** Prüft ob ein Laden ausgewählt wurde */
         if(this.ladenSpinner.getSelectedItemPosition() == 0){
             this.ladenSpinner.setSelection(0,true);
             View v = this.ladenSpinner.getSelectedView();
@@ -882,7 +880,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             ((TextView)v).setTextColor(Color.BLACK);
         }
 
-        // Prüft ob noch kein Artikel angegeben wurde
+        /** Prüft ob noch kein Artikel angegeben wurde */
         if(this.linearLayout.getChildCount() == 2){
             this.addArticleButton.setTextColor(Color.RED);
             allRelevantFieldsFull = false;
@@ -1137,8 +1135,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     this.bon.getGuarantee(),
                     this.getAllArticle());
         }
-
-        Log.e("BON", saveBon.toString());
 
         return saveBon;
     }
