@@ -3,7 +3,6 @@ package de.projektss17.bonpix;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,12 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Adapter_Garantie;
+
+
 
 public class A_Garantie extends AppCompatActivity {
 
@@ -43,15 +43,11 @@ public class A_Garantie extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     /**
      * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
-     *
-     * @param menu
-     * @return true wenn alles hinzugefügt wurde
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
