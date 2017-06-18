@@ -882,13 +882,14 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         if(status){
             this.removeAllArticles();
-            this.fillMask(path,
+            this.fillMask(path, //path
                     this.ocr.getLadenName(),
                     this.ocr.getAdresse(),
                     null,  // TODO Datum über OCR suchen!
                     this.ocr.getTel(),
                     this.ocr.getArticles());
         } else {
+
             this.removeAllArticles();
 
             if(this.ocr.getLadenName() != null && !this.ocr.getLadenName().isEmpty()){

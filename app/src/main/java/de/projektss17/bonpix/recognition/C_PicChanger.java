@@ -92,11 +92,11 @@ public class C_PicChanger {
         for(int i = 0; i < iterations; i++){
 
             if(i == 0){
-                list.add(this.cropBitmap(bitmap, 0, i*height, bitmap.getWidth(), bitHeight - (bitHeight-height)));
+                list.add(this.cropBitmap(bitmap, 0, 0, bitmap.getWidth(), bitHeight - (bitHeight-height)));
             } else if (i == iterations - 1){
-                list.add(this.cropBitmap(bitmap, 0, (int)(double)(i*height*0.95), bitmap.getWidth(), (int)(double)((bitHeight - (bitHeight-height))*1.05)));
+                list.add(this.cropBitmap(bitmap, 0, i*height, bitmap.getWidth(), bitHeight - (bitHeight-height)));
             } else {
-                list.add(this.cropBitmap(bitmap, 0, (int)(double)(i*height*0.9), bitmap.getWidth(), (int)(double)((bitHeight - (bitHeight-height))*1.3)));
+                list.add(this.cropBitmap(bitmap, 0, i*height, bitmap.getWidth(),  bitHeight - (bitHeight-height)));
             }
         }
 

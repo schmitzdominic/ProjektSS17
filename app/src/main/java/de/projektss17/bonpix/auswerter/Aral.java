@@ -4,10 +4,6 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-/**
- * Created by Domi on 15.04.2017.
- */
-
 public class Aral extends Default {
 
     private String name = "Aral";
@@ -23,7 +19,16 @@ public class Aral extends Default {
 
     @Override
     public ArrayList<String> getPrices(String txt) {
-        return super.getPrices(txt);
+
+        ArrayList<String> prices = super.getPrices(txt);
+        ArrayList<String> onePrice = new ArrayList<>();
+
+        if(prices.size() == 2){
+            onePrice.add(prices.get(1));
+            return onePrice;
+        } else {
+            return prices;
+        }
     }
 
     @Override
@@ -38,6 +43,6 @@ public class Aral extends Default {
 
     @Override
     public double getDefaultSize(){
-        return 1.0;
+        return 1;
     }
 }

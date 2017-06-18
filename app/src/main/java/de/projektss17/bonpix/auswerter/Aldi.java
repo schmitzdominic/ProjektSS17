@@ -18,6 +18,9 @@ public class Aldi extends Default {
 
     @Override
     public ArrayList<String> getProducts(String txt) {
+
+        txt = txt.replaceAll("Sofortstorno","");
+
         return super.getProducts(txt);
     }
 

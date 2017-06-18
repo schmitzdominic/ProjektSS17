@@ -13,6 +13,8 @@ import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
@@ -248,11 +250,7 @@ public class C_OCR {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: POINTLIST=" + this.getPointList().size());
             }
 
-            this.recognizedText = this.recognizer(cropedBitmap);
-
-            int lines = (this.ladenInstanz.getProducts(this.recognizedText).size() < this.ladenInstanz.getPrices(this.recognizedText).size()) ?
-                    this.ladenInstanz.getProducts(this.recognizedText).size() :
-                    this.ladenInstanz.getPrices(this.recognizedText).size();
+            int lines = this.lineCounter(cropedBitmap);
 
             articleStripes = this.picChanger.getLineList(cropedBitmap, (int) ((cropedBitmap.getHeight() / lines)*this.ladenInstanz.getDefaultSize()));
 
@@ -344,5 +342,27 @@ public class C_OCR {
      */
     public String getTel() {
         return tel;
+    }
+
+    /**
+     * Gibt die Anzahl der Zeilen eines Bons zurück
+     * @param bitmap Artikelbereich
+     * @return Anzahl
+     */
+    public int lineCounter(Bitmap bitmap){
+
+        String text = this.recognizer(bitmap);
+
+        int count = 0;
+
+        for(int i = 0; i < text.length(); i++){
+            if(text.charAt(i) == '\n'){
+                count++;
+            }
+        }
+
+        Log.e("CONTAINS", count + "");
+
+        return count/2;
     }
 }
