@@ -173,11 +173,6 @@
         <meta-dat
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <activity
-            android:name=".A_Export_Drive"
-            android:label="@string/title_activity_a__export__drive"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
