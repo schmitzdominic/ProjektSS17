@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <PreferenceCategory
         android:icon="@mipmap/ic_google_drive_black_24dp"
         android:key="backup_drive_settings_categorie"
