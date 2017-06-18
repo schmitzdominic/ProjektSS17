@@ -27,11 +27,15 @@
             android:summary="Täglich"
             android:title="Auf Google Drive sichern" />
         <Preference
-            android:key="backup_photos"
-            android:summary="Backup der Fotos"
-            android:title="Sicherung ausführen" />
+            android:key="export_photos"
+            android:summary="export der Fotos"
+            android:title="Export ausführen" />
         <Preference
-            android:key="backup_account"
+            android:key="import_photos"
+            android:summary="import der Fotos"
+            android:title="Import ausführen" />
+        <Preference
+            android:key="change_account"
             android:summary="default"
             android:title="Konto" />
 

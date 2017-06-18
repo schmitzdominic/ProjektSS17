@@ -78,9 +78,7 @@ public class A_Einstellungen extends PreferenceActivity {
             content.setPadding(0, height, 0, 0);
             root.addView(content);
             root.addView(bar);
-
         }
-
         bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

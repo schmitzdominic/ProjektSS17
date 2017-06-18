@@ -43,5 +43,6 @@ dependencies {
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     compile 'com.google.android.gms:play-services-drive:10.2.6'
+    compile 'com.google.android.gms:play-services-auth:10.2.6'
     testCompile 'junit:junit:4.12'
 }
