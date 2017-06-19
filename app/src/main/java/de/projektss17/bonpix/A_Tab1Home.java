@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 
 import de.projektss17.bonpix.daten.C_Home_Adapter;
 
-
-
 public class A_Tab1Home extends Fragment {
 
     private RecyclerView recyclerView;

@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 
 import de.projektss17.bonpix.daten.C_Statistik_Adapter;
 
-
-
 public class A_Tab2Statistik extends Fragment{
 
     private RecyclerView recyclerView;
@@ -69,7 +67,7 @@ public class A_Tab2Statistik extends Fragment{
             }
         });
 
-        /** Click eines Tabs bewirkt eine Aktion (in diesem Fall sollen die Charts gefiltert werden) */
+        // Click eines Tabs bewirkt eine Aktion (in diesem Fall sollen die Charts gefiltert werden)
         this.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -77,15 +75,16 @@ public class A_Tab2Statistik extends Fragment{
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}// MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts!
+            public void onTabUnselected(TabLayout.Tab tab) {} // MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts!
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}// MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts!
+            public void onTabReselected(TabLayout.Tab tab) {} // MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts!
         });
     }
 
     /**
      * Triggert Statistken je nach Position
+     * @param position Position
      */
     public void getTabData(int position){
         switch (position){
