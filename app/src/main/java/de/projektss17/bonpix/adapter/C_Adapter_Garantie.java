@@ -71,7 +71,7 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
         holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
         holder.warrantyShop.setText(bon.getShopName());
         holder.warrantyEnd.setText(holder.res.getString(R.string.a_garantie_garantie_bis) + " " + bon.getGuaranteeEnd());
-        holder.warrantyPrice.setText(bon.getTotalPrice() + " €");   // TODO: € is hardcoded. Has to be implement as Value String in strings.xml or another solution
+        holder.warrantyPrice.setText(bon.getTotalPrice() + holder.res.getString(R.string.eurozeichen));
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 bonListe.get(position).setGuarantee(false);

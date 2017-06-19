@@ -45,6 +45,7 @@
     <!-- A_Garantie -->
     <string name="title_garantie_screen">Garantie</string>
     <string name="a_garantie_garantie_bis">Garantie bis</string>
+    <string name="eurozeichen">€</string>
 
 
     <!-- A_Einstellungen -->
