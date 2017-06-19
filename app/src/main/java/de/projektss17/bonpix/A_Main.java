@@ -46,18 +46,16 @@ import de.projektss17.bonpix.daten.C_DatabaseHandler;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.daten.C_Preferences;
 
-
-
 public class A_Main extends AppCompatActivity {
 
-    /** Primitive Datentypen */
+    // Primitive Datentypen
     private boolean isFABOpen = false;
     private boolean isDrawOpen = false;
     private boolean cameraPermissions;
     private String fileNameTakenPhoto;
     public ArrayList<String> picturePathList;
 
-    /** Layout */
+    // Layout
     private ActionBarDrawerToggle toggle;
     private DrawerLayout navigationDrawerLayout;
     private FloatingActionButton plusButton;
@@ -75,7 +73,7 @@ public class A_Main extends AppCompatActivity {
     private View fabBGLayout;
     private ViewPager viewPager;
 
-    /** Statischer Bereich */
+    // Statischer Bereich
     private static final int REQUEST_IMAGE_CAPTURE = 2;
 
 
@@ -87,7 +85,7 @@ public class A_Main extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /** Navigation Drawer */
+        // Navigation Drawer
         this.navigationDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         this.toggle = new ActionBarDrawerToggle(this, this.navigationDrawerLayout, R.string.open, R.string.close){
             public void onDrawerClosed(View view) {
@@ -101,7 +99,7 @@ public class A_Main extends AppCompatActivity {
             }
         };
 
-        /** Layout */
+        // Layout
         this.viewPager = (ViewPager) findViewById(R.id.main_container);
         this.tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         this.tabChooseTime = (TabLayout) findViewById(R.id.statistik_tabs);
@@ -114,11 +112,11 @@ public class A_Main extends AppCompatActivity {
         this.navigationView = (NavigationView) findViewById(R.id.main_nav_menu);
         this.fabBGLayout = findViewById(R.id.main_fabBGLayout);
 
-        /** Berechtigungen */
+        // Berechtigungen
         this.requestPermissions(new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE});
 
-        /** Instanziierungen und Konfigurationen */
+        // Instanziierungen und Konfigurationen
         this.toggle.syncState();
         this.tabChooseTimeLayout.setVisibility(View.INVISIBLE);
         this.picturePathList = new ArrayList<>();
@@ -211,12 +209,15 @@ public class A_Main extends AppCompatActivity {
             }
         });
 
-        /** Wenn ein Menüitem (NavigationDrawer) geklickt wird */
+        // Wenn ein Menüitem (NavigationDrawer) geklickt wird
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 int id = item.getItemId();
                 switch (id) {
+                    /*case R.id.menu_nav_gruppen:
+                        S.showBudget(A_Main.this);
+                        return true;*/
                     case R.id.menu_nav_budget:
                         S.showBudget(A_Main.this);
                         return true;
@@ -258,6 +259,7 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Gibt die Time Leiste zurück
+     * @return Time Leiste
      */
     public TabLayout getTimeTabLayout(){
         return this.tabChooseTime;
@@ -265,6 +267,7 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Gibt den atkuellen Status des FAB Menüs zurück
+     * @ return boolean
      */
     public boolean getFabState(){
         return this.isFABOpen;
@@ -272,6 +275,7 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Gibt den FAB zurück
+     * @return FloatingActionButton
      */
     public FloatingActionButton getFloatingActionButtonPlus(){
         return this.plusButton;
@@ -280,6 +284,9 @@ public class A_Main extends AppCompatActivity {
     /**
      * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
+     *
+     * @param menu
+     * @return true wenn alles hinzugefügt wurde
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -289,6 +296,9 @@ public class A_Main extends AppCompatActivity {
     /**
      * Ruft Items die vorher über die onCreateOptionsMenu inflatet wurden auf.
      * Zur Info: settings button sind die drei punkte oben rechts
+     *
+     * @param item
+     * @return true wenn die Activity aufgerufen wurde
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -360,8 +370,6 @@ public class A_Main extends AppCompatActivity {
         });
     }
 
-
-
     /**
      * Diese Klasse Managed die Tabs der Main Seite.
      */
@@ -370,11 +378,13 @@ public class A_Main extends AppCompatActivity {
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         /**
          * Gibt das Fragment Item für die jeweilige Position der Tableiste zurück
          * Zur Info: Alle Tab Klassen erben von Fragment daher können die Instanzen
          * zurück gegeben werden
+         *
+         * @param position int Position des Fragment Items
+         * @return Fragment Instanz
          */
         @Override
         public Fragment getItem(int position) {
@@ -430,6 +440,9 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Frägt nach den noch benötigten Permissions
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
      */
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -475,6 +488,9 @@ public class A_Main extends AppCompatActivity {
     /**
      * Nachdem ein Bild geschossen wurde, wird die S.showRecognition aufgerufen und
      * der Pfad zu dem eben geschossenen Bild übergeben.
+     * @param requestCode
+     * @param resultCode
+     * @param data
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -499,7 +515,7 @@ public class A_Main extends AppCompatActivity {
             this.setDefaultDBValues();
             S.showTutorial(this);
 
-            /** Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird. */
+            // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);
         }
     }
@@ -526,6 +542,7 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Erstellt Dummy Daten
+     * @param value Wie viele Daten erstellt wurden
      */
     private void createDBDummyData(int value){
 

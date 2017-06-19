@@ -16,8 +16,6 @@ import java.util.List;
 import de.projektss17.bonpix.daten.C_Budget;
 import de.projektss17.bonpix.daten.C_Adapter_Budget;
 
-
-
 public class A_Budget extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -51,10 +49,8 @@ public class A_Budget extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.view_budget); // Recycler Liste
         bAdapter = new C_Adapter_Budget(budgetList);          // CardView Adapter
         card = (CardView) findViewById(R.id.budget_card_view);
-
         this.fab = (FloatingActionButton) findViewById(R.id.budget_fab);    //Floating Action Button
 
-        /** SWIPPER - Implementierung des Swipper-Funktion */
         swipper = new ItemTouchHelper(createHelperCallBack());      // ItemTouch -> Swipper
         swipper.attachToRecyclerView(recyclerView);
 
@@ -97,6 +93,9 @@ public class A_Budget extends AppCompatActivity {
         });
     }
 
+    /**
+     * Methode soll die Daten aus der DB lesen und die RecyclerView damit befüllen
+     */
     public void onStartProofAndCreate() {
 
         for (C_Budget budget : S.dbHandler.getAllBudgets(S.db)) {
@@ -118,15 +117,12 @@ public class A_Budget extends AppCompatActivity {
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
                                   RecyclerView.ViewHolder target) {
 
-                /** CARD VIEW - Items können bewegt werden (oben nach unten und umgekehrt) */
                 moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;    // true wenn geswipped wird, ansonsten false
             }
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-
-                /** CARD VIEW - Items werden gelöscht (nach Rechts oder Links) */
                 deleteItem(viewHolder.getAdapterPosition());
                 S.outShort(A_Budget.this, "Budget wurde gelöscht!");
             }

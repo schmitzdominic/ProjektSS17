@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
-
-
 public class A_Max_Bon_Pic extends AppCompatActivity {
 
     @Override

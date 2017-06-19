@@ -21,8 +21,6 @@ import java.util.List;
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Adapter_Favoriten;
 
-
-
 public class A_Favoriten extends AppCompatActivity {
 
     private List<C_Bon> bonListe = new ArrayList<>();

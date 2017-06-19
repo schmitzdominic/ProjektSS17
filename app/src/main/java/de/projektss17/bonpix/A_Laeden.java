@@ -28,8 +28,6 @@ import java.util.List;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.daten.C_Laeden_Adapter;
 
-
-
 public class A_Laeden extends AppCompatActivity {
 
     private ArrayList<C_Laden> shopList = new ArrayList<>();
@@ -74,7 +72,7 @@ public class A_Laeden extends AppCompatActivity {
         recyclerViewLaeden.setAdapter(mAdapter);
         this.mAdapter.notifyDataSetChanged();
 
-        /**Damit der Floating Button beim Scrollen verschwindet */
+        //Damit der Floating Button beim Scrollen verschwindet
         this.recyclerViewLaeden.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx,int dy){
@@ -108,7 +106,7 @@ public class A_Laeden extends AppCompatActivity {
                 View alertLayoutLaeden = inflater.inflate(R.layout.box_laeden_alert_dialog, null);
                 final EditText shopTitle = (EditText) alertLayoutLaeden.findViewById(R.id.laeden_alert_dialog_title);
 
-                /** DIALOG Fenster */
+                // DIALOG Fenster
                 new AlertDialog.Builder(A_Laeden.this)
                         .setTitle(R.string.a_laeden_alert_dialog_title)
                         .setView(alertLayoutLaeden)
@@ -121,7 +119,7 @@ public class A_Laeden extends AppCompatActivity {
 
                                 if(shopTitle.getText() != null && !shopTitle.getText().toString().isEmpty() ){
                                     if(!S.dbHandler.checkIfLadenExist(S.db, shopTitle.getText().toString())){
-                                        /**Hinzufügen Laden zur Datenbank */
+                                        //Hinzufügen Laden zur Datenbank
                                         S.dbHandler.addLaden(S.db, new C_Laden(shopTitle.getText().toString()));
                                         prepareShopData();
                                     } else {

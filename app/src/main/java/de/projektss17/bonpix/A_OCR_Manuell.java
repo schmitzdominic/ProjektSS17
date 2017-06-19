@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,8 +49,6 @@ import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.recognition.C_OCR;
 import static de.projektss17.bonpix.S.db;
-
-
 
 public class A_OCR_Manuell extends AppCompatActivity {
 
@@ -106,10 +105,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
 
-        /**
-         * Guarantee Listener - Triggers Dialog (NumberPicker)
-         * Is setting GuaranteeEnd with FormattedDate and Guarantee Boolean
-         */
         this.garantieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,7 +144,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        /** Save Button onClickListener */
+        // Save Button onClickListener
         this.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,7 +158,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                         finish();
 
                     } else {
-                        /** Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet */
+                        // Aufruf der Static-Methode popUpDialog(), welches ein Hinweis-Fenster öffnet
                         S.popUpDialogSaveBon(A_OCR_Manuell.this, upIntent,
                                 R.string.a_ocr_manuell_pop_up_title,
                                 R.string.a_ocr_manuell_pop_up_message,
@@ -175,7 +170,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        /** OCR Image onClickListener */
+        // OCR Image onClickListener
         this.ocrImageView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -186,7 +181,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        /** kamera Button onClickListener */
+        // kamera Button onClickListener
         this.kameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -196,7 +191,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         });
 
 
-        /** Sonstiges Eingabe onClickListener */
+        // Sonstiges Eingabe onClickListener
         this.sonstigesView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -228,11 +223,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        /** laden Spinner onClickListener */
+        // laden Spinner onClickListener
         ladenSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final AdapterView<?> parentView, final View selectedItemView, int position, long id) {
-
 
                 if ((int) id == 1) { // Itemid == 1 = Benutzerdefiniert, d.h. Wenn manuell eine Marke eingegeben werden soll
 
@@ -282,7 +276,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 }
             }
 
-            /** Wenn nichts selektiert wurde */
+            // Wenn nichts selektiert wurde
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 parentView.setSelection(0);
@@ -318,6 +312,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
     /**
      * öffnet den Kalender
      * onClickHandler für dateTextView
+     * @param view standard
      */
     public void setDate(View view) {
         this.showDialog(999);
@@ -325,6 +320,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * onClickHandler für den addArticleButton
+     * @param v standard
      */
     public void onAddNewClicked(View v) {
         this.inflateEditRow(null, null);
@@ -333,12 +329,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * onClickHandler für den artikel Löschen button (Mülleimer)
+     * @param v standard
      */
     public void onDeleteClicked(View v) {
         this.linearLayout.removeView((View) v.getParent());
         this.totalPrice.setText(String.format("%s", getFinalPrice()));
         this.addArticleButton.setVisibility(View.VISIBLE);
-
     }
 
     /**
@@ -391,6 +387,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Setzt das Aktuelle Datum in die TextView
+     * @param year Das ausgewählte Jahr
+     * @param month Der ausgewählte Monat
+     * @param day Der ausgewählte Tag
      */
     private void showDate(String year, String month, String day) {
         String sepa = ".";
@@ -400,6 +399,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Gibt eine Zahl wenn sie kleiner 10 ist mit einer 0 davor aus
+     * @param zahl Zahl die ggf mit einer 0vorne zurück gegeben wird
+     * @return  Zahl mit ggf 0 vorne
      */
     public String getNumberWithZero(int zahl) {
         if (zahl > 0 && zahl < 10) {
@@ -451,6 +452,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Was passiert wenn das Bild ausgewählt wurde
+     * @param requestCode  standard
+     * @param resultCode standard
+     * @param data  Bilddaten
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -492,7 +496,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         String preisArray[];
 
-        /** Wenn der Preis nicht leer ist dann setze ihn */
+        // Wenn der Preis nicht leer ist dann setze ihn
         if (preis != null && !preis.isEmpty()){
 
             if(Double.parseDouble(preis.replace(",",".")) < 0){
@@ -517,7 +521,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             centText.setText(preisArray[1]);
         }
 
-        /** Wenn der Name nicht leer ist dann setze ihn */
+        // Wenn der Name nicht leer ist dann setze ihn
         if (name != null && !name.isEmpty()) {
             articleText.setText(name);
         } else {
@@ -544,13 +548,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        /** Artikel Text changeListener*/
+        // Artikel Text changeListener
         articleText.addTextChangedListener(new TextWatcher() {
 
-            /** Wenn der Text geändert wird */
+            // Wenn der Text geändert wird
             @Override
             public void afterTextChanged(Editable s) {
-
 
                 if (s.toString().isEmpty()) { // Wenn der Text leer ist
 
@@ -561,7 +564,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     mExclusiveEmptyView = rowView;
                     addArticleButton.setVisibility(View.INVISIBLE);
                     addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
-
 
                 } else { // Wenn etwas eingegeben wurde
 
@@ -588,10 +590,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        /** Preis Text changeListener */
+        // Preis Text changeListener
         priceText.addTextChangedListener(new TextWatcher() {
 
-            /** Wenn der Text geändert wird */
+            // Wenn der Text geändert wird
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -608,7 +610,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                     totalPrice.setText(getFinalPrice());
                     mExclusiveEmptyView = rowView;
-
 
                 } else { // Wenn etwas eingegeben wurde
 
@@ -637,13 +638,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        /** Preis Text changeListener */
+        // Preis Text changeListener
         centText.addTextChangedListener(new TextWatcher() {
 
-            /** Wenn der Text geändert wird */
+            // Wenn der Text geändert wird
             @Override
             public void afterTextChanged(Editable s) {
-
 
                 if (s.toString().isEmpty()) { // Wenn der Text leer ist
                     addArticleButton.setVisibility(View.GONE);
@@ -654,7 +654,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     }
                     totalPrice.setText(getFinalPrice());
                     mExclusiveEmptyView = rowView;
-
 
                 } else { // Wenn etwas eingegeben wurde
 
@@ -699,6 +698,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Gibt alle Preise als String Array zurück
+     * @return String Array mit allen Preisen
      */
     private String[] getAllPrices(){
 
@@ -743,6 +743,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Summiert alle Preise und gibt die Summe als double zurück
+     * @return Alle Preise summiert als double
      */
     private String getFinalPrice(){
 
@@ -772,6 +773,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Befüllt alle Werte
+     * @param anschrift Anschrift
+     * @param datum Datum
+     * @param sonstiges Sonstiges
+     * @param articles Array mit Articels
      */
     private void fillMask(String path, String ladenName, String anschrift, String datum, String sonstiges, ArrayList<C_Artikel> articles){
 
@@ -837,6 +842,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Versucht anhand eines Bitmaps über OCR die Maske zu befüllen!
+     * @param path Pfad
      */
     private void fillMaskOCR(String path){
 
@@ -864,12 +870,13 @@ public class A_OCR_Manuell extends AppCompatActivity {
     /**
      * Prüft ob alle relevanten Felder befüllt wurden
      * Zeigt über die Rote Farbe an ob das Feld befüllt wurde oder nicht
+     * @return true, alles wurde befüllt, false ein Wert fehlt
      */
     public boolean checkAllRelevantValues(){
 
         boolean allRelevantFieldsFull = true;
 
-        /** Prüft ob ein Laden ausgewählt wurde */
+        // Prüft ob ein Laden ausgewählt wurde
         if(this.ladenSpinner.getSelectedItemPosition() == 0){
             this.ladenSpinner.setSelection(0,true);
             View v = this.ladenSpinner.getSelectedView();
@@ -880,7 +887,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             ((TextView)v).setTextColor(Color.BLACK);
         }
 
-        /** Prüft ob noch kein Artikel angegeben wurde */
+        // Prüft ob noch kein Artikel angegeben wurde
         if(this.linearLayout.getChildCount() == 2){
             this.addArticleButton.setTextColor(Color.RED);
             allRelevantFieldsFull = false;
@@ -917,6 +924,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Bekommt die Uri aus einem Bitmap zurück
+     * @param inImage Bitmap
+     * @return Uri des Bitmap
      */
     public Uri getImageUri(Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -934,6 +943,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Prüft nochmal expliziet den Status und gibt diesen wieder
+     * @return Status der Maske
      */
     public String getState(){
 
@@ -949,6 +959,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Handle, jeh nach state
+     * @param state Status der Maske
      */
     public void doState(String state){
 
@@ -1010,6 +1021,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Gibt alle Artikel zurück die in die Maske eingetragen wurden
+     * @return ArrayList mit allen Artikeln aus der Maske
      */
     public ArrayList<C_Artikel> getAllArticle(){
 
@@ -1085,6 +1097,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Prüft ob der vorherige Bon mit dem Editieren übereinstimmt
+     * @return true - Value Changed, false - Value not Changed
      */
     private boolean proofIfValuesChanged(){
 
@@ -1094,6 +1107,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Baut einen Bon der abgespeichert werden kann
+     * @return Bon mit allen Werten aus der Maske
      */
     public C_Bon saveBon(){
 
@@ -1135,7 +1149,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     this.bon.getGuarantee(),
                     this.getAllArticle());
         }
-
+        Log.e("BON", saveBon.toString());
         return saveBon;
     }
 }
