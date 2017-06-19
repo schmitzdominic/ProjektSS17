@@ -6,32 +6,35 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import de.projektss17.bonpix.daten.C_Adapter_Tutorial;
 
 public class A_Tutorial extends Activity {
 
-    ViewPager viewPager;
-    C_Adapter_Tutorial customSwip;
-    Button btn;
+    private ViewPager viewPager;
+    private C_Adapter_Tutorial customSwip;
+    private Button skipButton;
+    private int slideCount = 8;     // Anzahl der Slides
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.box_tutorial_content);
-        viewPager=(ViewPager)findViewById(R.id.viewPager);
-        customSwip = new C_Adapter_Tutorial(this);
-        viewPager.setAdapter(customSwip);
 
-        btn =(Button) findViewById(R.id.tutorial_skip_button);
+        this.viewPager=(ViewPager)findViewById(R.id.viewPager);
+        this.customSwip = new C_Adapter_Tutorial(this, slideCount);
+        this.viewPager.setAdapter(customSwip);
 
-        this.btn.setOnClickListener(new View.OnClickListener() {
+        this.skipButton =(Button) findViewById(R.id.tutorial_skip_button);
+        this.skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        this.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageScrollStateChanged(int state) {}
@@ -41,7 +44,7 @@ public class A_Tutorial extends Activity {
 
             @Override
             public void onPageSelected(int position) {
-                if(position == 7){
+                if(position == slideCount){
                     finish();
                 }
             }
