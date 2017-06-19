@@ -13,11 +13,9 @@ public class C_AssetHelper extends SQLiteAssetHelper {
     private static final String DATABASE_NAME = "produkt.db";
     private static final int DATABASE_VERSION = 1;
 
-
     public C_AssetHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -42,6 +40,4 @@ public class C_AssetHelper extends SQLiteAssetHelper {
         cursor.close();
         return list;
     }
-
-
 }

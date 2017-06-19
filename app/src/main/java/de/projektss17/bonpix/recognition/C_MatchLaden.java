@@ -2,7 +2,6 @@ package de.projektss17.bonpix.recognition;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.regex.Pattern;
@@ -10,15 +9,15 @@ import java.util.regex.Pattern;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.auswerter.*;
 
-/**
- * Created by Domi on 14.04.2017.
- */
-
 public class C_MatchLaden {
 
     Context context;
     Resources res;
 
+    /**
+     * Standard Constructor
+     * @param context
+     */
     public C_MatchLaden(Context context){
         this.context = context;
         this.res = this.context.getResources();
@@ -43,7 +42,6 @@ public class C_MatchLaden {
                 return laden;
             }
         }
-
         return "NOT SUPPORTED";
     }
 
@@ -55,7 +53,6 @@ public class C_MatchLaden {
     public Default getInstanceOf(String className){
 
         try {
-
             Class c = Class.forName("de.projektss17.bonpix.auswerter."+this.getAuswerterClass(className));
             Class[] cArg = new Class[1];
             cArg[0] = Context.class;
@@ -88,15 +85,11 @@ public class C_MatchLaden {
     public String getAuswerterClass(String name){
 
         String [] classArray = this.context.getResources().getStringArray(R.array.klassen);
-
         Pattern p  = Pattern.compile(name.replaceAll(" ", ""), Pattern.CASE_INSENSITIVE);
 
         for(String c : classArray)
             if(p.matcher(c).find())
                 return c;
-
         return null;
     }
-
-
 }

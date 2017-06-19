@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Budget;
-import de.projektss17.bonpix.daten.C_Adapter_Budget;
+import de.projektss17.bonpix.adapter.C_Adapter_Budget;
 
 
 public class A_Budget extends AppCompatActivity {

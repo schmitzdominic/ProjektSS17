@@ -3,11 +3,10 @@ package de.projektss17.bonpix;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import de.projektss17.bonpix.daten.C_Adapter_Tutorial;
+import de.projektss17.bonpix.adapter.C_Adapter_Tutorial;
 
 public class A_Tutorial extends Activity {
 

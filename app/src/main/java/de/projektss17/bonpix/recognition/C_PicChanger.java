@@ -56,7 +56,6 @@ public class C_PicChanger {
             }
         }
         return bwBitmap;
-
     }
 
     /**
@@ -66,12 +65,9 @@ public class C_PicChanger {
      * @return Array mit 2 Bitmaps, [0] links, [1] rechts
      */
     public Bitmap[] cutBitmapHorizontal(Bitmap bitmap, int coordinate){
-
         Bitmap[] bitmaps = new Bitmap[2];
-
         bitmaps[0] = this.cropBitmap(bitmap, 0, 0, coordinate, bitmap.getHeight());
         bitmaps[1] = this.cropBitmap(bitmap, coordinate, 0, bitmap.getWidth() - coordinate, bitmap.getHeight());
-
         return bitmaps;
     }
 
@@ -84,13 +80,10 @@ public class C_PicChanger {
     public ArrayList<Bitmap> getLineList(final Bitmap bitmap, int height){
 
         final int     bitHeight = bitmap.getHeight();
-
         ArrayList<Bitmap> list = new ArrayList<>();
-
         int iterations = bitHeight / height;
 
         for(int i = 0; i < iterations; i++){
-
             if(i == 0){
                 list.add(this.cropBitmap(bitmap, 0, i*height, bitmap.getWidth(), bitHeight - (bitHeight-height)));
             } else if (i == iterations - 1){
@@ -99,9 +92,7 @@ public class C_PicChanger {
                 list.add(this.cropBitmap(bitmap, 0, (int)(double)(i*height*0.9), bitmap.getWidth(), (int)(double)((bitHeight - (bitHeight-height))*1.3)));
             }
         }
-
         return list;
-
     }
 
     /**
@@ -115,13 +106,11 @@ public class C_PicChanger {
         ArrayList<Bitmap> list = new ArrayList<>();
         final int bitHeight = bitmap.getHeight(),
                   bitWidth = bitmap.getWidth();
-
         int iterations = bitWidth / width;
 
         for(int i = 0; i < iterations; i++){
-            list.add(Bitmap.createBitmap(bitmap, (i*width), 0, bitWidth - (bitWidth-width), bitHeight));
+            list.add(Bitmap.createBitmap(bitmap, (i * width), 0, bitWidth - (bitWidth - width), bitHeight));
         }
-
         return list;
     }
 
@@ -136,13 +125,9 @@ public class C_PicChanger {
                 height = bitmap.getHeight();
 
         bitmap = this.convertBitmapBlackAndWhite(bitmap);
-
         int count = 0;
-
         String lastState = " ";
-
         ArrayList<Integer> lineHeight = new ArrayList<>();
-
         Log.e("### TRYING TO DETECT","######");
 
         for(int i = 0; i < height; i++){
@@ -181,7 +166,6 @@ public class C_PicChanger {
         }
 
         Log.e("### LÄNGE", lineHeight.size() + "");
-
         return lineHeight;
     }
 
@@ -198,11 +182,9 @@ public class C_PicChanger {
                 yMin = 0,
                 yMax = 0,
                 height = 0;
-
         Point oRight = null;
 
         for(Point point : pointArray){
-
             if(x < point.x){
                 x = point.x;
                 oRight = point;
@@ -213,11 +195,9 @@ public class C_PicChanger {
 
         for(Point point : pointArray){
             if(point.x <= oRight.x+20 && point.x >= oRight.x-20){
-
                 if(yMin > point.y){
                     yMin = point.y;
                 }
-
                 if(yMax < point.y){
                     yMax = point.y;
                 }
@@ -231,7 +211,6 @@ public class C_PicChanger {
         }
 
         return cropBitmap(bitmap, 0, yMin, bitmap.getWidth(), height);
-
     }
 
     /**
@@ -244,9 +223,6 @@ public class C_PicChanger {
      * @return Zugeschnittenes Bild
      */
     public Bitmap cropBitmap(Bitmap bitmap, int x, int y, int width, int height){
-
         return Bitmap.createBitmap(bitmap, x, y, width, height);
-
     }
-
 }
