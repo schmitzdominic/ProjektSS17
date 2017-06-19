@@ -880,6 +880,16 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         boolean status = this.ocr.recognize(this.getBitmapFromPath(path));
 
+        /*Bitmap bit = this.ocr.testPic;
+
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(getImageUri(bit), projection, null, null, null);
+        int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String picturePath = cursor.getString(column_index_data);
+
+        Log.e("PATH",picturePath);*/
+
         if(status){
             this.removeAllArticles();
             this.fillMask(path, //path

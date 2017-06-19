@@ -36,6 +36,7 @@ public class C_OCR {
     private ArrayList<Point> pointList;
     private ArrayList<C_Artikel> articles;
     private C_PicChanger picChanger;
+    public Bitmap testPic;
 
 
     public C_OCR(Context context){
@@ -254,6 +255,12 @@ public class C_OCR {
 
             articleStripes = this.picChanger.getLineList(cropedBitmap, (int) ((cropedBitmap.getHeight() / lines)*this.ladenInstanz.getDefaultSize()));
 
+            /*this.testPic = cropedBitmap;
+
+            if(articleStripes.size() != 0){
+                this.testPic = articleStripes.get(0);
+            }
+*/
             Log.e("STRIPES COUNT", articleStripes.size() + "");
             if (articleStripes.size() == 0) {
                 return false;
