@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import de.projektss17.bonpix.daten.C_Bon;
-import de.projektss17.bonpix.daten.C_Adapter_Bon_Anzeigen;
+import de.projektss17.bonpix.adapter.C_Adapter_Bon_Anzeigen;
 import static de.projektss17.bonpix.S.db;
 
 public class A_Bon_Anzeigen extends AppCompatActivity {
