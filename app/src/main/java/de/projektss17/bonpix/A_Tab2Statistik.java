@@ -1,31 +1,23 @@
 package de.projektss17.bonpix;
 
-/**
- * Created by Domi on 28.03.2017.
- * Hier bitte die Logik des zweiten Tabs
- */
-
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import de.projektss17.bonpix.daten.C_Statistik_Adapter;
-
+import de.projektss17.bonpix.adapter.C_Adapter_Statistik;
 
 public class A_Tab2Statistik extends Fragment{
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private C_Statistik_Adapter mAdapter;
+    private C_Adapter_Statistik mAdapter;
     public FloatingActionButton fabPlus;
     private TabLayout tabLayout;
     private View rootView;
@@ -47,7 +39,7 @@ public class A_Tab2Statistik extends Fragment{
         this.fabPlus = ((A_Main) getActivity()).getFloatingActionButtonPlus();
         this.tabLayout = (((A_Main) getActivity()).getTimeTabLayout());
 
-        this.mAdapter = new C_Statistik_Adapter();
+        this.mAdapter = new C_Adapter_Statistik();
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(layoutManager);
         this.recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -60,9 +52,7 @@ public class A_Tab2Statistik extends Fragment{
                 super.onScrolled(recyclerView, dx, dy);
 
                 if (dy >0) {
-                    // Scroll Down
-                    if (fabPlus.isShown()) {
-
+                    if (fabPlus.isShown()) { // Scroll Down
                         if (((A_Main) getActivity()).getFabState()) {
                             ((A_Main) getActivity()).closeFABMenu();
                         }
@@ -70,8 +60,7 @@ public class A_Tab2Statistik extends Fragment{
                     }
                 }
                 else if (dy <0) {
-                    // Scroll Up
-                    if (!fabPlus.isShown()) {
+                    if (!fabPlus.isShown()) { // Scroll Up
                         fabPlus.show();
                     }
                 }
@@ -86,10 +75,10 @@ public class A_Tab2Statistik extends Fragment{
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
+            public void onTabUnselected(TabLayout.Tab tab) {} // MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts!
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
+            public void onTabReselected(TabLayout.Tab tab) {} // MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts!
         });
     }
 

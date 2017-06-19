@@ -9,13 +9,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +39,6 @@ import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,14 +48,11 @@ import de.projektss17.bonpix.daten.C_Artikel;
 import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
 import de.projektss17.bonpix.recognition.C_OCR;
-
 import static de.projektss17.bonpix.S.db;
-
 
 public class A_OCR_Manuell extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMAGE = 1;
-    private int bonId;
     private String year, month, day, imageOCRUriString, sonstigesText;
     private boolean setFocusOnLine = true, negPos;
     private ArrayAdapter<String> spinnerAdapter;
@@ -77,7 +71,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
     private A_OCR_Manuell context = this;
     private int valuePicked;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +86,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        // XML Instanziieren
         this.garantieButton = (ImageButton) findViewById(R.id.ocr_manuell_garantie_button); // Garantie Button
         this.saveButton = (ImageButton) findViewById(R.id.ocr_manuell_save_button); // Speichern Button
         this.linearLayout = (LinearLayout) findViewById(R.id.ocr_manuell_linear_layout); // Linear Layout
@@ -113,11 +105,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
         this.doState(this.getState()); // Überprüft den Status und befüllt ggf.
         this.ocrImageView.setClickable(false); // Icon ist am anfang nicht klickbar
 
-
-        /**
-         * Guarantee Listener - Triggers Dialog (NumberPicker)
-         * Is setting GuaranteeEnd with FormattedDate and Guarantee Boolean
-         */
         this.garantieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,7 +143,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 }
             }
         });
-
 
         // Save Button onClickListener
         this.saveButton.setOnClickListener(new View.OnClickListener() {
@@ -237,13 +223,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         });
 
-        //laden Spinner onClickListener
+        // laden Spinner onClickListener
         ladenSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final AdapterView<?> parentView, final View selectedItemView, int position, long id) {
 
-                // Itemid == 1 = Benutzerdefiniert, d.h. Wenn manuell eine Marke eingegeben werden soll
-                if ((int) id == 1) {
+                if ((int) id == 1) { // Itemid == 1 = Benutzerdefiniert, d.h. Wenn manuell eine Marke eingegeben werden soll
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(A_OCR_Manuell.this);
                     final EditText input = new EditText(A_OCR_Manuell.this);
@@ -288,9 +273,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 } else if ((int) id > 1){
                     bon.setShopName(parentView.getSelectedItem().toString());
                     ((ImageView) findViewById(R.id.ocr_manuell_image_view_shop)).setImageDrawable(RoundedBitmapDrawableFactory.create(getResources(), S.getShopIcon(getResources(), bon.getShopName())));
-
                 }
-
             }
 
             // Wenn nichts selektiert wurde
@@ -299,10 +282,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 parentView.setSelection(0);
             }
 
-
         });
-
-
     }
 
     /**
@@ -323,7 +303,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Standard
-     * @param savedInstanceState Status
      */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -341,7 +320,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * onClickHandler für den addArticleButton
-     * @param v Standard
+     * @param v standard
      */
     public void onAddNewClicked(View v) {
         this.inflateEditRow(null, null);
@@ -350,13 +329,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * onClickHandler für den artikel Löschen button (Mülleimer)
-     * @param v Standard
+     * @param v standard
      */
     public void onDeleteClicked(View v) {
         this.linearLayout.removeView((View) v.getParent());
         this.totalPrice.setText(String.format("%s", getFinalPrice()));
         this.addArticleButton.setVisibility(View.VISIBLE);
-
     }
 
     /**
@@ -396,8 +374,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Erzeugt eine Calendar Instanz
-     * Weißt year, month, day einen aktuellen wert zu
-     * Setzt über showDate die werte in die TextView
+     * Weist year, month, day einen aktuellen Wert zu
+     * Setzt über showDate die Werte in die TextView
      */
     public void createCalendar(){
         this.calendar = Calendar.getInstance();
@@ -421,8 +399,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Gibt eine Zahl wenn sie kleiner 10 ist mit einer 0 davor aus
-     * @param zahl Zahl die ggf mit einer 0 vorne zurück gegeben wird
-     * @return Zahl mit ggf 0 vorne
+     * @param zahl Zahl die ggf mit einer 0vorne zurück gegeben wird
+     * @return  Zahl mit ggf 0 vorne
      */
     public String getNumberWithZero(int zahl) {
         if (zahl > 0 && zahl < 10) {
@@ -474,9 +452,9 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Was passiert wenn das Bild ausgewählt wurde
-     * @param requestCode Standard
-     * @param resultCode Standard
-     * @param data Bild daten
+     * @param requestCode  standard
+     * @param resultCode standard
+     * @param data  Bilddaten
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -497,11 +475,10 @@ public class A_OCR_Manuell extends AppCompatActivity {
     /**
      * Erzeugt eine neue Artikel Reihe
      * @param name Name des Artikels
-     * @param preis Preis des Artikels WICHTIG Preis muss ein , enthalten!
+     * @param preis Preis des Artikels WICHTIG Preis muss ein , enthalten
      */
     private void inflateEditRow(String name, String preis) {
 
-        // XML Instanziieren
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.box_ocr_manuell_listview, null);
         final ImageButton deleteAticleButton = (ImageButton) rowView
@@ -580,8 +557,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                // Wenn der Text leer ist
-                if (s.toString().isEmpty()) {
+                if (s.toString().isEmpty()) { // Wenn der Text leer ist
 
                     if (mExclusiveEmptyView != null
                             && mExclusiveEmptyView != rowView) {
@@ -591,8 +567,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     addArticleButton.setVisibility(View.INVISIBLE);
                     addArticleButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorMenueIcon));
 
-                // Wenn etwas eingegeben wurde
-                } else {
+                } else { // Wenn etwas eingegeben wurde
 
                     if (mExclusiveEmptyView == rowView) {
                         mExclusiveEmptyView = null;
@@ -626,8 +601,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                 int inputType = priceText.getInputType();
 
-                // Wenn der Text leer ist
-                if (s.toString().isEmpty()) {
+
+                if (s.toString().isEmpty()) { // Wenn der Text leer ist
                     addArticleButton.setVisibility(View.GONE);
 
                     if (mExclusiveEmptyView != null
@@ -638,8 +613,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     totalPrice.setText(getFinalPrice());
                     mExclusiveEmptyView = rowView;
 
-                // Wenn etwas eingegeben wurde
-                } else {
+                } else { // Wenn etwas eingegeben wurde
 
                     if (mExclusiveEmptyView == rowView) {
                         mExclusiveEmptyView = null;
@@ -673,8 +647,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                // Wenn der Text leer ist
-                if (s.toString().isEmpty()) {
+                if (s.toString().isEmpty()) { // Wenn der Text leer ist
                     addArticleButton.setVisibility(View.GONE);
 
                     if (mExclusiveEmptyView != null
@@ -684,8 +657,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     totalPrice.setText(getFinalPrice());
                     mExclusiveEmptyView = rowView;
 
-                    // Wenn etwas eingegeben wurde
-                } else {
+                } else { // Wenn etwas eingegeben wurde
 
                     if (mExclusiveEmptyView == rowView) {
                         mExclusiveEmptyView = null;
@@ -808,7 +780,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
      * @param anschrift Anschrift
      * @param datum Datum
      * @param sonstiges Sonstiges
-     * @param articles Array mit Articles
+     * @param articles Array mit Articels
      */
     private void fillMask(String path, String ladenName, String anschrift, String datum, String sonstiges, ArrayList<C_Artikel> articles){
 
@@ -897,13 +869,12 @@ public class A_OCR_Manuell extends AppCompatActivity {
                 this.fillMask(path, null, null, null, null, null);
             }
         }
-
     }
 
     /**
      * Prüft ob alle relevanten Felder befüllt wurden
      * Zeigt über die Rote Farbe an ob das Feld befüllt wurde oder nicht
-     * @return true, alles wurde befüllt. false ein wert fehlt
+     * @return true, alles wurde befüllt, false ein Wert fehlt
      */
     public boolean checkAllRelevantValues(){
 
@@ -965,20 +936,6 @@ public class A_OCR_Manuell extends AppCompatActivity {
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
-    }
-
-    /**
-     * Gibt ein Bitmap bei Angabe der Uri zurück
-     * @param uri Uri
-     * @return Bitmap aus der Uri
-     */
-    public Bitmap getBitmapFromUri(Uri uri){
-        try {
-            return MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-        } catch (IOException e) {
-            Log.e("### getBitmapFromUri", e.toString());
-        }
-        return null;
     }
 
     public Bitmap getBitmapFromPath(String path){
@@ -1154,7 +1111,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Baut einen Bon der abgespeichert werden kann
-     * @return Bon mit allen werten aus der Maske
+     * @return Bon mit allen Werten aus der Maske
      */
     public C_Bon saveBon(){
 
@@ -1196,9 +1153,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
                     this.bon.getGuarantee(),
                     this.getAllArticle());
         }
-
         Log.e("BON", saveBon.toString());
-
         return saveBon;
     }
 }

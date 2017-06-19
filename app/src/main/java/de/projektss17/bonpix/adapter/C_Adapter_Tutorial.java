@@ -1,11 +1,12 @@
 package de.projektss17.bonpix.daten;
 
+package de.projektss17.bonpix.adapter;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import de.projektss17.bonpix.A_Tutorial;
 import de.projektss17.bonpix.R;
 
 import static de.projektss17.bonpix.R.id.textView;
@@ -33,13 +33,18 @@ public class C_Adapter_Tutorial extends PagerAdapter {
         this.ctx = c;
         this.slideCount = slideCount;
 
+    /**
+     * Standard constructor
+     * @param context
+     */
+    public C_Adapter_Tutorial(Context context) {
+        ctx = context;
     }
 
     @Override
     public int getCount() {
         return slideCount;
     }
-
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {

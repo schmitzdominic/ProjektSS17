@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.projektss17.bonpix.daten.C_Gruppe;
-import de.projektss17.bonpix.daten.C_Adapter_Gruppe;
+import de.projektss17.bonpix.adapter.C_Adapter_Gruppe;
 
 public class A_Gruppen extends AppCompatActivity {
 
