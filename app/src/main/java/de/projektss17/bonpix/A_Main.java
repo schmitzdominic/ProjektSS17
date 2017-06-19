@@ -267,7 +267,7 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Gibt den atkuellen Status des FAB Menüs zurück
-     * @ return boolean
+     * @return boolean
      */
     public boolean getFabState(){
         return this.isFABOpen;

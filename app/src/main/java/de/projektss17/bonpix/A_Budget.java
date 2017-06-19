@@ -131,6 +131,8 @@ public class A_Budget extends AppCompatActivity {
 
     /**
      * MOVE ITEM - Bewegen eines Items in der RecyclerView (Swip nach Oben oder Unten)
+     * @param oldPos Alte Position der View wird übergeben
+     * @param newPos Neue Position der View wird übergeben
      */
     private void moveItem(int oldPos, int newPos) {
 
@@ -144,6 +146,7 @@ public class A_Budget extends AppCompatActivity {
 
     /**
      * DELETE ITEM - Löschen eines Items in der RecyclerView (Swip nach Links)
+     * @param position Position der jeweiligen View wird übergeben
      */
     private void deleteItem(int position) {
 
@@ -154,6 +157,7 @@ public class A_Budget extends AppCompatActivity {
 
     /**
      * ADD ITEM - Befüllung der RecyclerView mit einem Budget
+     * @param budget Ein Budget Objekt das hinzugefügt werden soll
      */
     public void addItem(C_Budget budget) {
 

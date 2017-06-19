@@ -137,6 +137,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
     /**
      * Erstellt einen Kalender und führt diesen aus beim drücken der EditTextView
      * (Sobald Datum ausgewählt ist, werden die Inhalte in die EditText befüllt)
+     * @param content Übergabe einer Edit Text View
      */
     public void createDatePicker(final TextView content){
 
@@ -180,6 +181,8 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
     /**
      * Überprüft eine Zahl und fügt eine 0 hinzu sofern die Zahl < 10
      * (wird für den Kalender verwendet)
+     * @param content Übergabe der Zahl
+     * @return Rückgabe der Zahl - je nachdem ob transformiert oder nicht
      */
     public String proofNumber(int content){
         if(content<10)
@@ -190,6 +193,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
 
     /**
      * Überprüft ob alle Felder befüllt sind - wenn nicht wird die Edit Text rot markiert
+     * @return Rückgabe des Boolean-Wertes
      */
     public boolean proofContent(){
 

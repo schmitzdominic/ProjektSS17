@@ -61,6 +61,8 @@ public class A_Favoriten extends AppCompatActivity {
     /**
      * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
+     * @param menu
+     * @return true wenn alles hinzugefügt wurde
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

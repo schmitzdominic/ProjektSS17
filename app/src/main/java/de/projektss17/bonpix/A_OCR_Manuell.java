@@ -474,6 +474,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Erzeugt eine neue Artikel Reihe
+     * @param name Name des Artikels
+     * @param preis Preis des Artikels WICHTIG Preis muss ein , enthalten
      */
     private void inflateEditRow(String name, String preis) {
 
@@ -773,6 +775,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
     /**
      * Befüllt alle Werte
+     * @param path Pfad zum Bild
+     * @param ladenName Ladenname
      * @param anschrift Anschrift
      * @param datum Datum
      * @param sonstiges Sonstiges
