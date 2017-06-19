@@ -34,7 +34,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     private C_Laden barDataLaden;
     private C_Laden PieDataLaden;
 
-
     public C_DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -57,6 +56,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         this.barDataLaden = barDataLaden;
     }
 
+    /**
+     * Info to the BackupManager that data has changed
+     */
     public void backupDataChanged(){
         BackupManager backupManager = new BackupManager(context);
         backupManager.dataChanged();
@@ -79,10 +81,9 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         ArrayList rotateList = new ArrayList<>();
 
-        for(int i = list.size()-1; i >= 0; i--){
+        for(int i = list.size() - 1; i >= 0; i--){
             rotateList.add(list.get(i));
         }
-
         return rotateList;
     }
 
@@ -97,7 +98,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         } else {
             return date;
         }
-
     }
 
     /**
@@ -111,7 +111,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         } else {
             return date;
         }
-
     }
 
     /**
@@ -159,7 +158,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do {
-
                 C_Bon bon = new C_Bon(cursor.getInt(0),
                         cursor.getString(1),
                         this.getLaden(db, cursor.getInt(2)).getName(),
@@ -170,13 +168,10 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(7),
                         cursor.getInt(8) > 0,
                         cursor.getInt(9) > 0);
-
                 bon.setArticles(this.getAllArticleFromBon(db, bon));
                 bonsList.add(bon);
-
             } while (cursor.moveToNext());
         }
-
         cursor.close();
         return bonsList;
     }
@@ -194,7 +189,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do {
-
                 C_Budget budget = new C_Budget(cursor.getInt(0),
                         cursor.getInt(1),
                         cursor.getInt(2),
@@ -203,13 +197,10 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(5),
                         cursor.getString(6),
                         cursor.getInt(7) > 0);
-
                 budget.setBons(this.getAllBonsFromBudget(db, budget));
                 budgetList.add(budget);
-
             } while (cursor.moveToNext());
         }
-
         cursor.close();
         return budgetList;
     }
@@ -267,10 +258,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(7),
                         cursor.getInt(8) > 0,
                         cursor.getInt(9) > 0);
-
                 bon.setArticles(this.getAllArticleFromBon(db, bon));
                 bonList.add(bon);
-
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -287,7 +276,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<C_Bon> getBonsBetweenDate(SQLiteDatabase db, String date1, String date2){
 
         ArrayList<C_Bon> list = new ArrayList<>();
-        String query = "SELECT * FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"') ORDER BY bonid DESC";
+        String query = "SELECT * FROM bon WHERE datum BETWEEN date('" + this.convertToDateISO8601(date1) + "') AND date('" + this.convertToDateISO8601(date2) + "') ORDER BY bonid DESC";
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -303,7 +292,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(7),
                         cursor.getInt(8) > 0,
                         cursor.getInt(9) > 0);
-
                 bon.setArticles(this.getAllArticleFromBon(db, bon));
                 list.add(bon);
             } while (cursor.moveToNext());
@@ -324,7 +312,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         for(C_Bon bon : bons){
             summe += Double.parseDouble(bon.getTotalPrice().replace(",","."));
         }
-
         return summe;
     }
 
@@ -353,15 +340,12 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(7),
                         cursor.getInt(8) > 0,
                         cursor.getInt(9) > 0);
-
                 bon.setArticles(this.getAllArticleFromBon(db, bon));
                 list.add(bon);
-
             } while (cursor.moveToNext());
         }
         cursor.close();
         return list;
-
     }
 
     /**
@@ -396,7 +380,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         ArrayList<C_Bon> revertedBonList = new ArrayList<>();
         ArrayList<C_Bon> bonList = this.getAllBons(db);
 
-        for(int i = bonList.size()-1; i >= 0; i--){
+        for(int i = bonList.size() - 1; i >= 0; i--){
             revertedBonList.add(bonList.get(i));
         }
 
@@ -409,16 +393,12 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             }
 
             String sTotalPrice = "" + totalPrice;
-
             dataList.add(new Entry((float) counter, Float.parseFloat(sTotalPrice)));
             counter++;
             if(counter == count) break;
         }
-
         return dataList;
     }
-
-
 
     /**
      * Gibt alle Artikel zurück
@@ -495,7 +475,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 }
             }
         }
-
         return null;
     }
 
@@ -822,13 +801,13 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("favoriten", bon.getFavourite());
         values.put("garantie", bon.getGuarantee());
 
-        db.update("bon", values, "bonid="+bon.getId(), null);
+        db.update("bon", values, "bonid=" + bon.getId(), null);
 
         for(C_Artikel a : bon.getArticles()) {
             this.addArticle(db, a);
         }
 
-        db.delete("bonartikel", "bonid="+bon.getId(), null);
+        db.delete("bonartikel", "bonid=" + bon.getId(), null);
         backupDataChanged();
 
         for(C_Artikel bonArticle : bon.getArticles()){
@@ -838,7 +817,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 }
             }
         }
-
     }
 
     /**
@@ -859,8 +837,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         values.put("sonstiges", budget.getSonstiges());
         values.put("favorite", budget.getFavorite());
 
-        db.update("budget", values, "budgetid="+budget.getId(), null);
-        db.delete("bonbudget", "budgetid="+budget.getId(), null);
+        db.update("budget", values, "budgetid=" + budget.getId(), null);
+        db.delete("bonbudget", "budgetid=" + budget.getId(), null);
 
         backupDataChanged();
 
@@ -981,7 +959,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                     this.removeBon(db, bon.getId());
                 }
             }
-            db.delete("laden", "ladenid="+id, null);
+            db.delete("laden", "ladenid=" + id, null);
         } else {
             Log.e("#### DB-HANDLER", "LADEN " + id + " DOES NOT EXIST");
         }
@@ -1012,8 +990,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      */
     public void removeBon(SQLiteDatabase db, int id){
         if(this.checkIfBonExist(db, id)){
-            db.delete("bon", "bonid="+id, null);
-            db.delete("bonartikel", "bonid="+id, null);
+            db.delete("bon", "bonid=" + id, null);
+            db.delete("bonartikel", "bonid=" + id, null);
         }
     }
 
@@ -1024,8 +1002,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      */
     public void removeArticle(SQLiteDatabase db, int id){
         if(this.checkIfArticleExist(db, id)){
-            db.delete("artikel", "artikelid="+id, null);
-            db.delete("bonartikel", "artikelid="+id, null);
+            db.delete("artikel", "artikelid=" + id, null);
+            db.delete("bonartikel", "artikelid=" + id, null);
         }
     }
 
@@ -1036,8 +1014,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      */
     public void removeBudget(SQLiteDatabase db, int id){
         if(this.checkIfBudgetExist(db, id)){
-            db.delete("budget", "budgetid="+id, null);
-            db.delete("bonbudget", "budgetid="+id, null);
+            db.delete("budget", "budgetid=" + id, null);
+            db.delete("bonbudget", "budgetid=" + id, null);
         }
     }
 
@@ -1077,7 +1055,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 return budget;
             }
         }
-
         return null;
     }
 
@@ -1110,7 +1087,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * Gibt die Anzahl aller vorhandenen Bons zurück
+     * Gibt die Anzahl aller vorhandenen Bons innerhalb eines Zeitraums zurück
      * @param db Datenbank
      * @param date1 Von Datum
      * @param date2 Bis Datum
@@ -1120,7 +1097,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         int count = 0;
         String query = date1 != null && date2 != null ?
-                "SELECT bonid FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT bonid FROM bon WHERE datum BETWEEN date('" + this.convertToDateISO8601(date1) + "') AND date('" + this.convertToDateISO8601(date2) + "')" :
                 "SELECT bonid FROM bon";
 
         Cursor cursor = db.rawQuery(query, null);
@@ -1131,7 +1108,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-
         return count;
     }
 
@@ -1151,7 +1127,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 count++;
             } while (cursor.moveToNext());
         }
-
         return count;
     }
 
@@ -1193,7 +1168,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
 
         double totalExpenditure = 0;
         String query = date1 != null && date2 != null ?
-                "SELECT gesamtpreis FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT gesamtpreis FROM bon WHERE datum BETWEEN date('" + this.convertToDateISO8601(date1) + "') AND date('" + this.convertToDateISO8601(date2) + "')" :
                 "SELECT gesamtpreis FROM bon";
 
         Cursor cursor = db.rawQuery(query, null);
@@ -1236,7 +1211,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         }
 
         String query = date1 != null && date2 != null ?
-                "SELECT ladenname FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT ladenname FROM bon WHERE datum BETWEEN date('" + this.convertToDateISO8601(date1) + "') AND date('" + this.convertToDateISO8601(date2) + "')" :
                 "SELECT ladenname FROM bon";
 
         Cursor cursor = db.rawQuery(query, null);
@@ -1257,9 +1232,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 mostUsed = visitList.get(count);
             }
         }
-
         return id == 0 ? new C_Laden("") : this.getLaden(db, id);
-
     }
 
     /**
@@ -1285,7 +1258,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         double gesPreis = 0, anz = 0;
 
         String query = date1 != null && date2 != null ?
-                "SELECT gesamtpreis FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"') AND ( ladenname = '" + laden.getId() + "' )" :
+                "SELECT gesamtpreis FROM bon WHERE datum BETWEEN date('" + this.convertToDateISO8601(date1) + "') AND date('" + this.convertToDateISO8601(date2) + "') AND ( ladenname = '" + laden.getId() + "' )" :
                 "SELECT gesamtpreis FROM bon WHERE ( ladenname = '" + laden.getId() + "' )";
 
         Cursor cursor = db.rawQuery(query, null);
@@ -1302,7 +1275,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         DecimalFormat df = new DecimalFormat("#0.00");
 
         return df.format(average);
-
     }
 
     /**
@@ -1330,7 +1302,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         }
 
         String query = date1 != null && date2 != null ?
-                "SELECT gesamtpreis, ladenname FROM bon WHERE datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT gesamtpreis, ladenname FROM bon WHERE datum BETWEEN date('" + this.convertToDateISO8601(date1) + "') AND date('" + this.convertToDateISO8601(date2) + "')" :
                 "SELECT gesamtpreis, ladenname FROM bon";
 
         Cursor cursor = db.rawQuery(query, null);
@@ -1343,9 +1315,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-
         return entriesSortedByValues(visitList);
-
     }
 
     public ArrayList<String> getExpenditureLastWeek(SQLiteDatabase db){
@@ -1355,11 +1325,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         for(String date : S.getFullWeek()){
             expList.add(S.getWeekday(context.getResources(), S.getWeekdayNumber(date)) + "/" + S.dbHandler.getTotalExpenditure(S.db, date, date));
         }
-
         return expList;
-
     }
-
 
     /**
      * Gibt Artikel sortiert nach der Häufigkeit zurück
@@ -1397,7 +1364,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 buyList.put(article.getName(), buyList.get(article.getName()) + 1);
             }
         }
-
         return entriesSortedByValues(buyList);
     }
 
@@ -1437,7 +1403,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 }
             }
         }
-
         return entriesSortedByValues(ladenList);
     }
 
@@ -1485,7 +1450,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         int count = 0;
 
         if(date1 != null && date2 != null){
-
             for(Hashtable.Entry<Integer, Float> entry : this.getExpenditureAllLaeden(db, date1, date2)){
                 if(count == number){
                     dataList.add(new BarEntry(count+1, entry.getValue()));
@@ -1494,11 +1458,8 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 }
                 count++;
             }
-
         } else {
-
             for(Hashtable.Entry<Integer, Float> entry : this.getExpenditureAllLaeden(db)){
-
                 if(count == number){
                     dataList.add(new BarEntry(count+1, entry.getValue()));
                     this.setBarDataLaden(this.getLaden(db, entry.getKey()));
@@ -1507,7 +1468,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 count++;
             }
         }
-
         return dataList;
     }
 
@@ -1522,7 +1482,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
     public int bonsCountLaden(SQLiteDatabase db, C_Laden laden, String date1, String date2){
 
         String query = date1 != null && date2 != null ?
-                "SELECT ladenname FROM bon WHERE ladenname=" + laden.getId() + " AND datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT ladenname FROM bon WHERE ladenname=" + laden.getId() + " AND datum BETWEEN date('" + this.convertToDateISO8601(date1) + "') AND date('" + this.convertToDateISO8601(date2) + "')" :
                 "SELECT ladenname FROM bon WHERE ladenname=" + laden.getId();
 
         Cursor cursor = db.rawQuery(query, null);
@@ -1535,7 +1495,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-
         return count;
     }
 
@@ -1554,7 +1513,7 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         HashSet<String> articleCountList = new HashSet<>();
 
         String query = date1 != null && date2 != null ?
-                "SELECT bonid, ladenname FROM bon WHERE ladenname=" + laden.getId() + " AND datum BETWEEN date('"+this.convertToDateISO8601(date1)+"') AND date('"+this.convertToDateISO8601(date2)+"')" :
+                "SELECT bonid, ladenname FROM bon WHERE ladenname=" + laden.getId() + " AND datum BETWEEN date('" + this.convertToDateISO8601(date1) + "') AND date('" + this.convertToDateISO8601(date2) + "')" :
                 "SELECT bonid, ladenname FROM bon WHERE ladenname=" + laden.getId();
 
         Cursor cursor = db.rawQuery(query, null);
@@ -1575,7 +1534,6 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
                 articleCountList.add(artikel.getName());
             }
         }
-
         return articleCountList.size();
     }
 
@@ -1583,29 +1541,23 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
      * Gibt alle Daten aus der DB im Log aus.
      */
     public void showLogAllDBEntries(){
-
         Log.e("######### DB LAEDEN","#########################################");
         for(C_Laden laden : S.dbHandler.getAllLaeden(S.db)){
             Log.e("######### LADEN: ", laden.toString() + "\n---------------------");
         }
-
         Log.e("######### DB BONS","#########################################");
         for(C_Bon bon : S.dbHandler.getAllBons(S.db)){
             Log.e("######### BON: ", bon.toString() + "\n---------------------");
         }
-
         Log.e("######### DB ARTIKEL","#########################################");
         for(C_Artikel artikel : S.dbHandler.getAllArticle(S.db)){
             Log.e("######### ARTIKEL: ", artikel.toString() + "\n---------------------");
         }
-
         Log.e("######### DB BUDGETS","#########################################");
         for(C_Budget budget : S.dbHandler.getAllBudgets(S.db)){
             Log.e("######### BUDGET: ", budget.toString() + "\n---------------------");
         }
-
     }
-
 
     /**
      * Create Tables if not exists
@@ -1660,7 +1612,5 @@ public class C_DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_Budget);
         db.execSQL(CREATE_TABLE_BonArtikel);
         db.execSQL(CREATE_TABLE_BonBudget);
-
     }
-
 }

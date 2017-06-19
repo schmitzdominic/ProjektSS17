@@ -1,4 +1,4 @@
-package de.projektss17.bonpix.daten;
+package de.projektss17.bonpix.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -22,16 +22,11 @@ import java.util.Hashtable;
 
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
+import de.projektss17.bonpix.daten.C_Statistik;
 
+public class C_Adapter_Statistik extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-/**
- * ReCreated by Johanns on 18.05.2017 - 20.05.2017.
- */
-
-public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private int count = 6;              // Gibt an wie viele Cards die RecyclerView beinhalten soll (derzeit 6 feste CARDS!)
-
+    private int count = 6;          // Gibt an wie viele Cards die RecyclerView beinhalten soll
     private ViewHolderGeneral holderGeneral;
     private ViewHolderBar holderBar;
     private ViewHolderTopProducts holderTopProducts;
@@ -41,26 +36,19 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context context;
     private C_Statistik statistik;
 
-
-    // LAYOUT TopFacts
     public class ViewHolderTopFacts extends RecyclerView.ViewHolder {
 
         public TextView mostVisitedLaden, articleCount, bonsCount, averagePrice;
 
         public ViewHolderTopFacts(View view) {
             super(view);
-
-            // Implementierung des Layouts der einzelnen Objekte für die CardView
             this.mostVisitedLaden = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_one_content);
             this.articleCount = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_artikel_anzahl);
             this.bonsCount = (TextView) view.findViewById(R.id.statistik_card_topfacts_bons_anzahl);
             this.averagePrice = (TextView) view.findViewById(R.id.statistik_card_topfacts_fact_three_content);
-
         }
     }
 
-
-    // LAYOUT TopProducts
     public class ViewHolderTopProducts extends RecyclerView.ViewHolder {
 
         public TextView produkt1, produkt2, produkt3, percentage1, percentage2, percentage3;
@@ -68,41 +56,31 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ViewHolderTopProducts(View view) {
             super(view);
-
-            // Implementierung des Layouts der einzelnen Objekte für die CardView
             this.produkt1 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_one_title);
             this.produkt2 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_two_title);
             this.produkt3 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_three_title);
             this.percentage1 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_one_percentage);
             this.percentage2 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_two_percentage);
             this.percentage3 = (TextView) view.findViewById(R.id.statistik_card_topproducts_article_three_percentage);
-
             this.progress1 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_one_progressbar);
             this.progress2 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_two_progressbar);
             this.progress3 = (ProgressBar)view.findViewById(R.id.statistik_card_topproducts_article_three_progressbar);
         }
     }
 
-
-    // LAYOUT - Allgemeine Infos
     public class ViewHolderGeneral extends RecyclerView.ViewHolder {
 
         public TextView anzahlScans, ausgabenGesamt, anzahlLaeden, anzahlArtikel;
 
         public ViewHolderGeneral(View view) {
             super(view);
-
-            // Implementierung des Layouts der einzelnen Objekte für die CardView
             this.anzahlScans = (TextView) view.findViewById(R.id.statistik_card_general_scans_content);
             this.ausgabenGesamt = (TextView) view.findViewById(R.id.statistik_card_general_costs_content);
             this.anzahlLaeden = (TextView) view.findViewById(R.id.statistik_card_marketamount_content);
             this.anzahlArtikel = (TextView) view.findViewById(R.id.statistik_card_productamount_content);
-
         }
     }
 
-
-    // LAYOUT - Allgemeine Infos
     public class ViewHolderBar extends RecyclerView.ViewHolder {
         BarChart barChart;
 
@@ -112,8 +90,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-
-    // LAYOUT - LineChart
     public class ViewHolderLine extends RecyclerView.ViewHolder {
         LineChart lineChart;
 
@@ -123,8 +99,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-
-    // LAYOUT - PieChart
     public class ViewHolderPie extends RecyclerView.ViewHolder {
         PieChart pieChart;
 
@@ -133,7 +107,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
             pieChart = (PieChart) view.findViewById(R.id.statistik_card_pie);
         }
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -166,7 +139,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemViewType(int position) {
         return position;
-
     }
 
     @Override
@@ -174,42 +146,31 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         switch(getItemViewType(position)){
             case 0: // General
-
                 if(this.holderGeneral == null){
                     this.holderGeneral = (ViewHolderGeneral) holder;
                 }
-
                 this.holderGeneral.anzahlScans.setText(this.statistik.getCountBons());
                 this.holderGeneral.anzahlLaeden.setText(this.statistik.getCountLaeden());
                 this.holderGeneral.anzahlArtikel.setText(this.statistik.getCountArtikel());
                 this.holderGeneral.ausgabenGesamt.setText(this.statistik.getGesBetrag() + holderGeneral.itemView.getResources().getString(R.string.waehrung));
-
                 break;
             case 1: // Bar Chart
-
                 if(this.holderBar == null){
                     this.holderBar = (ViewHolderBar) holder;
                 }
-
                 if(S.dbHandler.getAllBonsCount(S.db) == 0){break;}
-
                 this.statistik.getBarData().setBarWidth(0.7f); // set custom bar width
                 this.statistik.getBarData().setValueTextColor(ContextCompat.getColor(context, R.color.cardview_light_background));
                 this.statistik.getBarData().setValueTextSize(8f);
-
                 this.holderBar.barChart.setData(this.statistik.getBarData());
                 this.holderBar.barChart = this.statistik.setBarChartSettings(holderBar.barChart);
                 this.holderBar.barChart.invalidate();
-
                 break;
             case 2: // Top Products
-
                 if(this.holderTopProducts == null){
                     this.holderTopProducts = (ViewHolderTopProducts) holder;
                 }
-
                 this.setTopThreeArticleInvisible();
-
                 int count = 0;
                 int size = 0;
 
@@ -218,9 +179,8 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 for(Hashtable.Entry<String, Integer> entry : this.statistik.getSortedArticleList()){
-
-                    int progress = (int)((double)entry.getValue()/size*100);
-                    double procent = ((double)entry.getValue()/size)*100 > 0 ? ((double)entry.getValue()/size)*100 : 0;
+                    int progress = (int) ((double) entry.getValue() / size * 100);
+                    double procent = ((double) entry.getValue() / size) * 100 > 0 ? ((double)entry.getValue()/size) * 100 : 0;
 
                     switch(count){
                         case 0:
@@ -239,19 +199,15 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             this.holderTopProducts.percentage3 = this.statistik.setTopThreeArticleProcent(this.holderTopProducts.percentage3, procent);
                             break;
                     }
-
                     if(++count == 3){break;}
                 }
-
                 break;
             case 3: // Pie Chart
-
                 if(this.holderPie == null){
                     this.holderPie = (ViewHolderPie) holder;
                 }
 
                 PieDataSet pieDataSet = new PieDataSet(this.statistik.getPieces() , "");
-
                 pieDataSet.setValueFormatter(new PercentFormatter() {
                     @Override
                     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
@@ -267,33 +223,25 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 this.holderPie.pieChart.setData(pieData);
                 this.holderPie.pieChart = this.statistik.setPieChartSettings(this.holderPie.pieChart);
                 this.holderPie.pieChart.invalidate();
-
                 break;
             case 4: // Top Facts
-
                 if(this.holderTopFacts == null){
                     this.holderTopFacts = (ViewHolderTopFacts) holder;
                 }
-
                 this.holderTopFacts.mostVisitedLaden.setText(this.statistik.getMostVisitedLaden());
                 this.holderTopFacts.averagePrice.setText(this.statistik.getAveragePrice() + " " + context.getResources().getString(R.string.waehrung));
                 this.holderTopFacts.bonsCount.setText(this.statistik.getMostVisitedLadenBonsCount());
                 this.holderTopFacts.articleCount.setText(this.statistik.getGetMostVisitedLadenArticleCount());
-
                 break;
             case 5: // LineChart
-
                 if(this.holderLine == null){
                     this.holderLine = (ViewHolderLine) holder;
                 }
-
                 this.statistik.setLineDataSetSettings();
                 this.statistik.setLineDataSettings(this.statistik.getLineDataList());
-
                 this.holderLine.lineChart.setData(this.statistik.getLineData());
                 this.holderLine.lineChart = this.statistik.setLineChartSettings(this.holderLine.lineChart);
                 this.holderLine.lineChart.invalidate();
-
                 break;
         }
     }
@@ -302,7 +250,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemCount() {
         return count;
     }
-
 
     /**
      * WICHTIG:
@@ -314,7 +261,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void createFilteredData(String filter, Context context){
 
         this.context = context;
-
         this.statistik = new C_Statistik(context);
 
         switch(filter){
@@ -333,7 +279,6 @@ public class C_Statistik_Adapter extends RecyclerView.Adapter<RecyclerView.ViewH
             default:
                 break;
         }
-
     }
 
     /**

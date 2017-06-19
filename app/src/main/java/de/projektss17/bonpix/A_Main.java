@@ -18,7 +18,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -30,7 +29,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.support.design.widget.NavigationView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -130,7 +128,6 @@ public class A_Main extends AppCompatActivity {
         this.initPersistence();
         this.initOnClickListener();
         this.onFirstStart();
-
     }
 
     @Override
@@ -147,7 +144,6 @@ public class A_Main extends AppCompatActivity {
         S.setMenuCounter(R.id.menu_nav_favoriten, S.dbHandler.getFavouriteCount(S.db), navigationView);
         S.setMenuCounter(R.id.menu_nav_garantie, warranty, navigationView);
         S.setMenuCounter(R.id.menu_nav_laeden, S.dbHandler.getAllLaedenCount(S.db), navigationView);
-
     }
 
     public NavigationView getNavigationView(){
@@ -219,12 +215,12 @@ public class A_Main extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 int id = item.getItemId();
                 switch (id) {
+                    /*case R.id.menu_nav_gruppen:
+                        S.showBudget(A_Main.this);
+                        return true;*/
                     case R.id.menu_nav_budget:
                         S.showBudget(A_Main.this);
                         return true;
-                    /*case R.id.menu_nav_gruppen:
-                        S.showGruppen(A_Main.this);
-                        return true;*/
                     case R.id.menu_nav_favoriten:
                         S.showFavoriten(A_Main.this);
                         return true;
@@ -312,7 +308,6 @@ public class A_Main extends AppCompatActivity {
             this.isDrawOpen = true;
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -339,7 +334,6 @@ public class A_Main extends AppCompatActivity {
         isFABOpen = true;
         this.fotoLayout.setVisibility(View.VISIBLE);
         this.manuellLayout.setVisibility(View.VISIBLE);
-
         this.plusButton.animate().rotationBy(90);
         this.fotoLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         this.manuellLayout.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
@@ -384,7 +378,6 @@ public class A_Main extends AppCompatActivity {
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         /**
          * Gibt das Fragment Item für die jeweilige Position der Tableiste zurück
          * Zur Info: Alle Tab Klassen erben von Fragment daher können die Instanzen
@@ -521,7 +514,6 @@ public class A_Main extends AppCompatActivity {
             this.setDefaultSettings();
             this.setDefaultDBValues();
             S.showTutorial(this);
-            //this.createDBDummyData(20);
 
             // Zurücksetzen um zu gewährleisten das es nicht mehr ausgeführt wird.
             S.prefs.savePrefBoolean("first_time", false);
@@ -550,7 +542,7 @@ public class A_Main extends AppCompatActivity {
 
     /**
      * Erstellt Dummy Daten
-     * @param value Wie viele Daten generiert werden
+     * @param value Wie viele Daten erstellt wurden
      */
     private void createDBDummyData(int value){
 
