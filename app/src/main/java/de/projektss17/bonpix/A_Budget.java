@@ -1,4 +1,3 @@
-
 package de.projektss17.bonpix;
 
 import android.content.Intent;
@@ -17,7 +16,6 @@ import java.util.List;
 import de.projektss17.bonpix.daten.C_Budget;
 import de.projektss17.bonpix.adapter.C_Adapter_Budget;
 
-
 public class A_Budget extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -28,12 +26,6 @@ public class A_Budget extends AppCompatActivity {
     private ItemTouchHelper swipper;
     private CardView card;
 
-
-    /**
-     * Content für diese Activity wird erstellt / gebaut / vorbereitet
-     *
-     * @param savedInstanceState
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,23 +40,17 @@ public class A_Budget extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        // LAYOUT - Implementierung aller Layouts
         recyclerView = (RecyclerView) findViewById(R.id.view_budget); // Recycler Liste
         bAdapter = new C_Adapter_Budget(budgetList);          // CardView Adapter
         card = (CardView) findViewById(R.id.budget_card_view);
-
-
-        // FAB - Drücken öffnet ein Dialog mit Eingabefeldern
         this.fab = (FloatingActionButton) findViewById(R.id.budget_fab);    //Floating Action Button
 
-        // SWIPPER - Implementierung des Swipper-Funktion
         swipper = new ItemTouchHelper(createHelperCallBack());      // ItemTouch -> Swipper
         swipper.attachToRecyclerView(recyclerView);
 
@@ -82,7 +68,6 @@ public class A_Budget extends AppCompatActivity {
                 Intent intent = new Intent(A_Budget.this, A_Budget_Edit.class);
                 intent.putExtra("state","new");
                 startActivity(intent);
-
             }
         });
 
@@ -110,7 +95,6 @@ public class A_Budget extends AppCompatActivity {
 
     /**
      * Methode soll die Daten aus der DB lesen und die RecyclerView damit befüllen
-     * (sobald DB vorhanden ist wird hier weiter programmiert)
      */
     public void onStartProofAndCreate() {
 
@@ -124,14 +108,6 @@ public class A_Budget extends AppCompatActivity {
         }
     }
 
-
-    /**
-     * Created by Johanns am 30.04.2017
-     * <p>
-     * CREATE HELPER CALLBACK - Funktion zum Swippen (bewegen od. löschen von Items durch swippen)
-     *
-     * @return ItemTouchHelper (Swipper-Funktion) wird zurückgegeben
-     */
     private ItemTouchHelper.Callback createHelperCallBack() {
 
         return new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
@@ -141,29 +117,22 @@ public class A_Budget extends AppCompatActivity {
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
                                   RecyclerView.ViewHolder target) {
 
-                // CARD VIEW - Items können bewegt werden (oben nach unten und umgekehrt)
                 moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;    // true wenn geswipped wird, ansonsten false
             }
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-
-                // CARD VIEW - Items werden gelöscht (nach Rechts oder Links)
                 deleteItem(viewHolder.getAdapterPosition());
                 S.outShort(A_Budget.this, "Budget wurde gelöscht!");
-
             }
-
-
         };
     }
 
     /**
      * MOVE ITEM - Bewegen eines Items in der RecyclerView (Swip nach Oben oder Unten)
-     *
-     * @param oldPos Alte Postion der View wird übergeben
-     * @param newPos Neue Postition der View wird übergeben
+     * @param oldPos Alte Position der View wird übergeben
+     * @param newPos Neue Position der View wird übergeben
      */
     private void moveItem(int oldPos, int newPos) {
 
@@ -175,10 +144,8 @@ public class A_Budget extends AppCompatActivity {
 
     }
 
-
     /**
      * DELETE ITEM - Löschen eines Items in der RecyclerView (Swip nach Links)
-     *
      * @param position Position der jeweiligen View wird übergeben
      */
     private void deleteItem(int position) {
@@ -188,10 +155,8 @@ public class A_Budget extends AppCompatActivity {
         bAdapter.notifyItemRemoved(position);
     }
 
-
     /**
      * ADD ITEM - Befüllung der RecyclerView mit einem Budget
-     *
      * @param budget Ein Budget Objekt das hinzugefügt werden soll
      */
     public void addItem(C_Budget budget) {

@@ -25,11 +25,6 @@ import java.util.Date;
 
 import de.projektss17.bonpix.daten.C_Budget;
 
-
-/**
- * Created by Johanns am 11.05.2017
- */
-
 public class A_Budget_Edit extends AppCompatActivity implements View.OnClickListener{
 
     Button saveButton;
@@ -86,12 +81,10 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
                                 }
                             })
                             .setPositiveButton(R.string.a_laeden_alert_dialog_ok, null).create().show();
-
                 }
             }
         });
     }
-
 
     @Override
     public void onClick(View v) {
@@ -105,11 +98,10 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
             createDatePicker(zeitraumBis);
     }
 
-
     /**
      * Vorbereitung zur Befüllung der DB -> Nutzung der proof-Methoden (siehe unteren Code)
      * Speicherung der Daten wenn vollständig und korrekt
-     * Wechseln auf die Haupt-Activity (A_Budget) nach dem speichern
+     * Wechseln auf die Haupt-Activity (A_Budget) nach dem Speichern
      */
     public void prepareAndSave(){
         if(proofContent()) {
@@ -139,14 +131,10 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
             }
 
             finish();
-
         }
     }
 
-
     /**
-     * Created by Johanns am 13.05.2017
-     *
      * Erstellt einen Kalender und führt diesen aus beim drücken der EditTextView
      * (Sobald Datum ausgewählt ist, werden die Inhalte in die EditText befüllt)
      * @param content Übergabe einer Edit Text View
@@ -188,19 +176,13 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
             },this.year, this.month, this.day);
             datePicker.show();
         }
-
-
-
     }
 
-
     /**
-     * Created by Johanns am 13.05.2017
-     *
      * Überprüft eine Zahl und fügt eine 0 hinzu sofern die Zahl < 10
      * (wird für den Kalender verwendet)
      * @param content Übergabe der Zahl
-     * @return Rückgabe der Zahl - je nachdem ob transformiert oder  nicht
+     * @return Rückgabe der Zahl - je nachdem ob transformiert oder nicht
      */
     public String proofNumber(int content){
         if(content<10)
@@ -209,10 +191,7 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
         return Integer.toString(content);
     }
 
-
     /**
-     * Created by Johanns am 14.05.2017
-     *
      * Überprüft ob alle Felder befüllt sind - wenn nicht wird die Edit Text rot markiert
      * @return Rückgabe des Boolean-Wertes
      */
@@ -264,8 +243,6 @@ public class A_Budget_Edit extends AppCompatActivity implements View.OnClickList
             }
         }
 
-
         return noError;
     }
-
 }

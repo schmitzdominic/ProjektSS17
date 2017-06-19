@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,15 +41,11 @@ public class A_Garantie extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     /**
      * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
-     *
-     * @param menu
-     * @return true wenn alles hinzugefügt wurde
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

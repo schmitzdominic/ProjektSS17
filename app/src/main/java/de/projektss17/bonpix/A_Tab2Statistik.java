@@ -1,10 +1,5 @@
 package de.projektss17.bonpix;
 
-/**
- * Created by Domi on 28.03.2017.
- * Hier bitte die Logik des zweiten Tabs
- */
-
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -17,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import de.projektss17.bonpix.adapter.C_Adapter_Statistik;
-
 
 public class A_Tab2Statistik extends Fragment{
 
@@ -58,9 +52,7 @@ public class A_Tab2Statistik extends Fragment{
                 super.onScrolled(recyclerView, dx, dy);
 
                 if (dy >0) {
-                    // Scroll Down
-                    if (fabPlus.isShown()) {
-
+                    if (fabPlus.isShown()) { // Scroll Down
                         if (((A_Main) getActivity()).getFabState()) {
                             ((A_Main) getActivity()).closeFABMenu();
                         }
@@ -68,8 +60,7 @@ public class A_Tab2Statistik extends Fragment{
                     }
                 }
                 else if (dy <0) {
-                    // Scroll Up
-                    if (!fabPlus.isShown()) {
+                    if (!fabPlus.isShown()) { // Scroll Up
                         fabPlus.show();
                     }
                 }
@@ -84,10 +75,10 @@ public class A_Tab2Statistik extends Fragment{
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
+            public void onTabUnselected(TabLayout.Tab tab) {} // MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts!
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {/* MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts! */}
+            public void onTabReselected(TabLayout.Tab tab) {} // MÜSSEN LEIDER mit implementiert werden, machen jedoch nichts!
         });
     }
 
