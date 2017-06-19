@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
-import de.projektss17.bonpix.daten.C_Adapter_Tutorial;
+import de.projektss17.bonpix.adapter.C_Adapter_Tutorial;
 
 public class A_Tutorial extends Activity {
 

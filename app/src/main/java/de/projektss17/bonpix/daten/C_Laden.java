@@ -2,20 +2,25 @@ package de.projektss17.bonpix.daten;
 
 import android.support.annotation.NonNull;
 
-/**
- * Created by Domi on 27.04.2017.
- */
-
 public class C_Laden implements Comparable{
 
     private int id;
     private String name;
 
+    /**
+     * Standard Constructor
+     * @param id
+     * @param name
+     */
     public C_Laden(int id, String name){
         this.id = id;
         this.name = name;
     }
 
+    /**
+     * 2nd Constructor without parameter id
+     * @param name
+     */
     public C_Laden(String name){
         this(0, name);
     }

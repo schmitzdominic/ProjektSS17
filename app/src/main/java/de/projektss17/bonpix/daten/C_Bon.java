@@ -2,10 +2,6 @@ package de.projektss17.bonpix.daten;
 
 import java.util.ArrayList;
 
-/**
- * Created by Marcus on 15.04.2017.
- */
-
 public class C_Bon {
 
     private int id;

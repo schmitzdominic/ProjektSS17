@@ -11,10 +11,6 @@ import java.io.IOException;
 
 import de.projektss17.bonpix.S;
 
-/**
- * Created by Marcus on 25.05.2017.
- */
-
 public class C_BackupAgent_DB extends BackupAgentHelper {
 
     @Override
