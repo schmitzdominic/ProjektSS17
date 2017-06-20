@@ -63,8 +63,8 @@
         android:id="@+id/bon_anzeigen_card_view"
         app:cardBackgroundColor="@color/colorSecondary"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="314dp">
+        android:layout_height="255dp"
+        android:layout_marginTop="55dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -149,6 +149,7 @@
                 android:layout_below="@+id/bon_anzeigen_adresse_title"
                 android:textColor="@color/cardview_light_background"
                 android:text="@string/bon_anzeigen_adresse"
+                android:layout_marginRight="15dp"
                 android:maxLength="50"
                 android:textSize="14sp"/>
 
@@ -206,7 +207,7 @@
         android:id="@+id/bon_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="255dp">
+        android:layout_marginTop="310dp">
 
     </android.support.v7.widget.RecyclerView>
 
