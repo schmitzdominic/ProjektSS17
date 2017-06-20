@@ -124,7 +124,7 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
 
         fillBonHeader();
 
-        this.mAdapter = new C_Adapter_Bon_Anzeigen(this.bon.getArticles());
+        this.mAdapter = new C_Adapter_Bon_Anzeigen(this,bon.getArticles());
         this.mLayoutManager = new LinearLayoutManager(this);
         this.recyclerView.setLayoutManager(mLayoutManager);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
