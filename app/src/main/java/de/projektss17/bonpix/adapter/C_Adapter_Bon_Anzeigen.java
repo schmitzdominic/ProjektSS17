@@ -32,8 +32,8 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<RecyclerView.Vi
      */
     public C_Adapter_Bon_Anzeigen(C_Bon bon){
         this.bon = bon;
-        artikel = bon.getArticles();
-        count = artikel.size() + 1;
+        this.artikel = bon.getArticles();
+        this.count = artikel.size() + 1;
     }
 
     @Override
