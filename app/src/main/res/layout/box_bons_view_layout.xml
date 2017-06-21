@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
     android:background="@color/cardview_light_background">
 
     <ImageView
@@ -19,10 +17,11 @@
     <TextView
         android:id="@+id/bons_shop_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_toLeftOf="@+id/bons_price"
         android:layout_toRightOf="@+id/bons_shop_image"
         android:paddingTop="20dp"
+        android:gravity="bottom"
         android:text="Default"
         android:maxLength="20"
         android:textSize="16sp"/>
@@ -30,31 +29,30 @@
     <TextView
         android:id="@+id/bons_buying_date"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@+id/bons_shop_name"
         android:layout_toLeftOf="@+id/bons_price"
         android:layout_toRightOf="@+id/bons_shop_image"
-        android:paddingBottom="20dp"
+        android:paddingBottom="15dp"
+        android:gravity="top"
         android:text="default"
-        android:maxLength="20"
+        android:maxLength="21"
         android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/bons_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/bons_favorite_icon"
-        android:paddingTop="30dp"
-        android:paddingBottom="20dp"
-        android:paddingRight="20dp"
         android:text="default"
-        android:maxLength="10"
-        android:textSize="24sp"/>
+        android:maxLength="12"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/bons_favorite_icon" />
 
     <ImageView
         android:id="@+id/bons_favorite_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         android:layout_centerVertical="true"
