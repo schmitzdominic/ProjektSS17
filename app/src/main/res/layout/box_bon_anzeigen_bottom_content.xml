@@ -45,6 +45,7 @@
             android:layout_alignBottom="@+id/bon_anzeigen_artikel"
             android:layout_alignStart="@+id/bon_anzeigen_artikel_preis_title"
             android:text="X02.0X €"
-            android:maxLength="10"/>
+            android:maxLength="7"
+            />
 
 </RelativeLayout>

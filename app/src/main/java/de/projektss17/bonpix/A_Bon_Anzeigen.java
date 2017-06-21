@@ -133,6 +133,11 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
         this.mAdapter.notifyDataSetChanged();
     }
 
+
+    /**
+     * Diese Funktion befüllt den Header mit den Kopfinformationen eines Bons
+     * INFO: wird direkt befüllt nachdem Bon implementiert wird (vor der RecyclerView)
+     */
     public void fillBonHeader(){
 
         if(bon.getPath() != null && bon.getPath().contains(".")){

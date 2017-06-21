@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 import de.projektss17.bonpix.daten.C_Artikel;
 
 public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<C_Adapter_Bon_Anzeigen.ViewHolder> {
@@ -45,11 +46,12 @@ public class C_Adapter_Bon_Anzeigen extends RecyclerView.Adapter<C_Adapter_Bon_A
     @Override
     public void onBindViewHolder(C_Adapter_Bon_Anzeigen.ViewHolder holder, int position) {
         holder.bonArtikel.setText(artikel.get(position).getName());
-        holder.preis.setText(Double.toString(artikel.get(position).getPrice())+" "+ context.getResources().getString(R.string.waehrung));
+        holder.preis.setText(S.roundPrice(artikel.get(position).getPrice())+" "+ context.getResources().getString(R.string.waehrung));
     }
 
     @Override
     public int getItemCount() {
         return artikel.size();
     }
+
 }
