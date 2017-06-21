@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="default"
-        android:maxLength="12"
+        android:maxLength="13"
         android:textSize="18sp"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/bons_favorite_icon" />
