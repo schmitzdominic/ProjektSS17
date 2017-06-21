@@ -17,7 +17,7 @@
     <TextView
         android:id="@+id/bons_shop_name"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/bons_price"
         android:layout_toRightOf="@+id/bons_shop_image"
         android:paddingTop="20dp"
@@ -29,11 +29,11 @@
     <TextView
         android:id="@+id/bons_buying_date"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/bons_shop_name"
         android:layout_toLeftOf="@+id/bons_price"
         android:layout_toRightOf="@+id/bons_shop_image"
-        android:paddingBottom="15dp"
+        android:paddingBottom="20dp"
         android:gravity="top"
         android:text="default"
         android:maxLength="21"
