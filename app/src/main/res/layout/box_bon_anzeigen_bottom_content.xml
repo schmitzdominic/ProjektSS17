@@ -24,7 +24,7 @@
             android:text="Preis"
             android:maxLength="5"
             android:textStyle="bold"
-            android:layout_marginEnd="102dp"
+            android:layout_marginEnd="99dp"
             android:layout_above="@+id/bon_anzeigen_artikel"
             android:layout_alignParentEnd="true" />
 
