@@ -6,12 +6,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
-
-/**
- * Created by Marcus on 14.04.2017.
- */
 
 public class F_Einstellungen extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -43,11 +40,13 @@ public class F_Einstellungen extends PreferenceFragment implements SharedPrefere
                 return true;
             }
         });
-
-
-
     }
 
+    /**
+     * Listener for SharedPreferences - Triggered if Preference has changed
+     * @param sharedPreferences
+     * @param key
+     */
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         BackupManager backupManager = new BackupManager(getActivity());
         backupManager.dataChanged();

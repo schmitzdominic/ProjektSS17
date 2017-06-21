@@ -43,6 +43,7 @@ public class A_Backup extends PreferenceActivity implements C_Drive_API.ConnectC
     private static boolean mBusy;
     public Context context;
     public Preference change;
+public class A_Backup extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +107,6 @@ public class A_Backup extends PreferenceActivity implements C_Drive_API.ConnectC
             root.addView(content);
             root.addView(bar);
         }
-
         bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

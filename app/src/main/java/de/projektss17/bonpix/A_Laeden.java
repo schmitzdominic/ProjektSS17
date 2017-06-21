@@ -1,14 +1,11 @@
 package de.projektss17.bonpix;
 
-
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,17 +25,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.projektss17.bonpix.daten.C_Bon;
 import de.projektss17.bonpix.daten.C_Laden;
-import de.projektss17.bonpix.daten.C_Laeden_Adapter;
-
+import de.projektss17.bonpix.adapter.C_Adapter_Laeden;
 
 public class A_Laeden extends AppCompatActivity {
 
-    private ArrayList<C_Bon> bonsList = new ArrayList<>();
     private ArrayList<C_Laden> shopList = new ArrayList<>();
     private RecyclerView recyclerViewLaeden;
-    private C_Laeden_Adapter mAdapter;
+    private C_Adapter_Laeden mAdapter;
     private FloatingActionButton fab;
     private Resources res;
 
@@ -67,7 +61,7 @@ public class A_Laeden extends AppCompatActivity {
         super.onResume();
 
         this.recyclerViewLaeden = (RecyclerView) findViewById(R.id.view_laeden);
-        this.mAdapter = new C_Laeden_Adapter(this, shopList);
+        this.mAdapter = new C_Adapter_Laeden(this, shopList);
         this.prepareShopData();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -85,15 +79,15 @@ public class A_Laeden extends AppCompatActivity {
                 super.onScrolled(recyclerView, dx, dy);
 
                 if (dy >0) {
-                    // Scroll Down
-                    if (fab.isShown()) {
+
+                    if (fab.isShown()) { // Scroll Down
                         fab.hide();
 
                     }
                 }
                 else if (dy <0) {
-                    // Scroll Up
-                    if (!fab.isShown()) {
+
+                    if (!fab.isShown()) { // Scroll Up
                         fab.show();
                     }
                 }
@@ -134,9 +128,7 @@ public class A_Laeden extends AppCompatActivity {
                                 } else {
                                     S.outLong(A_Laeden.this, res.getString(R.string.a_laeden_alert_dialog_toast2));
                                 }
-
                             }
-
                         }).create().show();
             }
 
@@ -146,16 +138,12 @@ public class A_Laeden extends AppCompatActivity {
     /**
      * Fügt alle optionen die in menu/menu.menu_mainl angegeben wurden
      * hinzu
-     *
-     * @param menu
-     * @return true wenn alles hinzugefügt wurde
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
@@ -208,7 +196,6 @@ public class A_Laeden extends AppCompatActivity {
 
         mAdapter.notifyDataSetChanged();
 
-        //Sortierung der Recycler View
-        Collections.sort(shopList);
+        Collections.sort(shopList); //Sortierung der Recycler View
     }
 }

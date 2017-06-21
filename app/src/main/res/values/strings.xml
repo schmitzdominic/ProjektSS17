@@ -56,9 +56,13 @@
     <string name="einstellungen_action_bar_title">Einstellungen</string>
     <string name="einstellungen_hilfe_titel">Hilfe</string>
     <string name="einstellungen_hilfe_tutorial_titel">Apptutorial</string>
-    <string name="einstellungen_hilfe_tutorial_beschreibung">Hier kannst du das Apptutorial starten</string>
+    <string name="einstellungen_hilfe_tutorial_beschreibung">Hier kann das Apptutorial gestartet werden</string>
+    <string name="einstellungen_notification">Notification</string>
     <string name="einstellungen_notification_title">Benachrichtigungen</string>
     <string name="einstellungen_notification_text">Aktivieren oder Deaktivieren der Benachrichtigungen</string>
+    <string name="einstellungen_daten_title">Daten</string>
+    <string name="einstellungen_backup_title">Backup</string>
+    <string name="einstellungen_backup_beschreibung">Hier können Backups erstellt werden</string>
 
     <!-- A_Backup -->
     <string name="title_backup_screen">Backup</string>
@@ -242,7 +246,6 @@
     <!-- A_Tutorial -->
     <string name="title_tutorial">Tutorial</string>
     <string name="tutorial_skip_button">Skip</string>
-    <string name="tutorial_tipp">Tipp: </string>
     <string name="tutorial_text1">Im Hometab werden die wichtigsten Daten angezeigt. Unter anderem die letzten eingescannten Bons, sowie die wichtigste Budgetplanung.</string>
     <string name="tutorial_text2">Im Statistikreiter werden alle relevanten Daten und Auswertungen angezeigt.</string>
     <string name="tutorial_text3">Über diese Tabs können verschiedene Zeiträume ausgewählt werden. Hierbei werden die Daten dementsprechend gefiltert und angezeigt.</string>
@@ -250,6 +253,8 @@
     <string name="tutorial_text5">Über den Plus-Button können Bons per Foto oder manuell hinzugefügt werden. Diese Funktion ist ebenfalls im Home-, wie auch im Statistikreiter verfügbar.</string>
     <string name="tutorial_text6">Alle Bons können ebenfalls manuell hinzugefügt werden. Hierzu wählt man einen Laden und mindestens einen Artikel aus.</string>
     <string name="tutorial_text7">Über den linken Button kann eine Garantie hinzugefügt werden. Mit dem rechten Button können alle Eingaben gespeichert werden.</string>
+    <string name="tutorial_title">Tutorial</string>
+    <string name="tutorial_text8">Das Tutorial wurde erfolgreich abgeschlossen. Viel Spaß mit der APP!</string>
 
     <!-- A_Export -->
     <string name="a_export_aktuelles_konto">default</string>

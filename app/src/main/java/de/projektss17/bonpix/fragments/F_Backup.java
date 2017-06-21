@@ -3,7 +3,6 @@ package de.projektss17.bonpix.fragments;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
