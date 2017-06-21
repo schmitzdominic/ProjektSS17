@@ -22,8 +22,8 @@
         android:textSize="18sp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="31dp"
-        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="27dp"
+        android:layout_marginEnd="27dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 </RelativeLayout>
