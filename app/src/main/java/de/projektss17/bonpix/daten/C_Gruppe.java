@@ -1,9 +1,5 @@
 package de.projektss17.bonpix.daten;
 
-/**
- * Created by SemperFi on 18.05.2017.
- */
-
 public class C_Gruppe {
 
     String name;
@@ -12,12 +8,19 @@ public class C_Gruppe {
         this.name = name;
     }
 
+    /**
+     * Get Group Name
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set Group Name
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
-
 }

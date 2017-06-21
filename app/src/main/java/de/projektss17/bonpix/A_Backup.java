@@ -13,8 +13,6 @@ import android.widget.ListView;
 
 import de.projektss17.bonpix.fragments.F_Backup;
 
-
-
 public class A_Backup extends PreferenceActivity {
 
     @Override
@@ -52,13 +50,10 @@ public class A_Backup extends PreferenceActivity {
             }else{
                 height = bar.getHeight();
             }
-
             content.setPadding(0, height, 0, 0);
             root.addView(content);
             root.addView(bar);
-
         }
-
         bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

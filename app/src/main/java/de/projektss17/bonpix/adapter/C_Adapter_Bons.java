@@ -1,18 +1,13 @@
-package de.projektss17.bonpix.daten;
+package de.projektss17.bonpix.adapter;
 
 import android.content.res.Resources;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +16,21 @@ import de.projektss17.bonpix.A_Bon_Anzeigen;
 import de.projektss17.bonpix.A_Main;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
+import de.projektss17.bonpix.daten.C_Bon;
 
 public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHolder> {
 
-
     private List<C_Bon> bonsList;
-    private List<C_Bon> filteredList;
     private int row_index = -1;
     private Intent intent;
-    private Bundle bundle;
+
+    /**
+     * Standard Constructor
+     * @param bonsList
+     */
+    public C_Adapter_Bons(List<C_Bon> bonsList){
+        this.bonsList = bonsList;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title, content, price;
@@ -58,15 +59,6 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
         }
     }
 
-    /**
-     * Constructor
-     * @param bonsList
-     */
-    public C_Adapter_Bons(List<C_Bon> bonsList){
-        this.bonsList = bonsList;
-        this.filteredList = new ArrayList<>();
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.box_bons_view_layout, parent, false);
@@ -75,14 +67,13 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position){
+
         final C_Bon bon = bonsList.get(position);
-
         holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
-
         holder.title.setText(bon.getShopName());
         holder.content.setText(S.getWeekday(holder.res, S.getWeekdayNumber(bon.getDate())) + "\n" + bon.getDate());
         holder.price.setText(String.format("%s €", bon.getTotalPrice().replace(".", ",")));
-        //Loading the FavoriteList
+
         if (bon.getFavourite()){
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star));
             holder.button.setColorFilter(holder.button.getContext().getResources().getColor(R.color.colorPrimary));
@@ -90,17 +81,15 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
             holder.button.setImageDrawable(holder.button.getContext().getResources().getDrawable(R.drawable.star_outline));
             holder.button.setColorFilter(holder.button.getContext().getResources().getColor(R.color.colorPrimary));
         }
-        holder.button.setOnClickListener(new View.OnClickListener(){
 
-            /**
-             * OnClickListener for the RecyclerView
-             * @param v
-             */
+        /**
+         * Set Favorite true / false and change Icon
+         */
+        holder.button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                     row_index = position;
 
-                    // Put the onClick cases here
                     switch (v.getId()) {
                         case R.id.bons_favorite_icon: {
                             if (bon.getFavourite()){
@@ -130,6 +119,11 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
         return bonsList.size();
     }
 
+    /**
+     * Set the Adapter List to the passed List
+     * Passed List contains the search objects
+     * @param passedList
+     */
     public void setFilter(List<C_Bon> passedList) {
         bonsList = new ArrayList<>();
         bonsList.addAll(passedList);

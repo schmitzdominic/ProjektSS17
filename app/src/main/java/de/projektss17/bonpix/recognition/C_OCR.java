@@ -38,7 +38,10 @@ public class C_OCR {
     private C_PicChanger picChanger;
     public Bitmap testPic;
 
-
+    /**
+     * Standard Constructor
+     * @param context
+     */
     public C_OCR(Context context){
         this.context = context;
         this.res = this.context.getResources();
@@ -54,11 +57,8 @@ public class C_OCR {
      * @param bitmap Bild das ausgewertet werden soll
      */
     public boolean recognize(Bitmap bitmap){
-
         this.recognizedText = this.recognizer(bitmap);
-
         return this.recognize(bitmap, this.laden.getLaden(this.recognizedText));
-
     }
 
     /**
@@ -97,7 +97,6 @@ public class C_OCR {
         }
 
         // Attribute setzen
-
         if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
 
             if(!this.ladenInstanz.getAdress(this.recognizedText).equals("KEINE ADRESSE GEFUNDEN!")){
@@ -114,7 +113,6 @@ public class C_OCR {
             } else {
                 return this.setArticlesArt2(bitmap);
             }
-
         } else {
             S.outLong((AppCompatActivity)(this.context), this.res.getString(R.string.c_ocr_kassenzettel_nicht_erkannt));
             return false;
@@ -129,13 +127,12 @@ public class C_OCR {
     private String recognizer(Bitmap bitmap) {
         this.pointList.clear();
         TextRecognizer textRecognizer = new TextRecognizer.Builder(this.context).build();
+
         if (!textRecognizer.isOperational()) {
             Log.e("ERROR", "Detector dependencies are not yet available");
         } else {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-
             SparseArray<TextBlock> items = textRecognizer.detect(frame); // TODO Absturz wenn Frame kein Text enthält.
-
             StringBuilder stringBuilder = new StringBuilder();
 
             if(items.size() != 0){
@@ -146,7 +143,6 @@ public class C_OCR {
                             if(point != null){
                                 this.pointList.add(point);
                             }
-
                         }
                     }
                     stringBuilder.append(item.getValue());
@@ -159,7 +155,6 @@ public class C_OCR {
             } else {
                 return "";
             }
-
         }
         return "";
     }
@@ -233,7 +228,6 @@ public class C_OCR {
             } else {
                 throw new E_NoBonFoundException(this.context,  "## C_OCR - SET ARTICLES", "ARTICLE SIZE DON´T MATCH PRICE SIZE");
             }
-
         } catch (E_NoBonFoundException e){
             return false;
         }
@@ -276,16 +270,13 @@ public class C_OCR {
                         this.articles.add(new C_Artikel(this.ladenInstanz.getProducts(this.recognizedText).get(0), Double.parseDouble(this.ladenInstanz.getPrices(this.recognizedText).get(0).replace(",","."))));
                         Log.e("MATCH", this.ladenInstanz.getProducts(this.recognizedText).get(0) + " - " + this.ladenInstanz.getPrices(this.recognizedText).get(0));
                     }
-
                 }
             }
             return true;
-
         } catch (E_NoBonFoundException e){
             return false;
         }
     }
-
 
     /**
      * Gibt alle gefunden Artikel zurück
@@ -294,7 +285,6 @@ public class C_OCR {
     public ArrayList<C_Artikel> getArticles(){
         return this.articles;
     }
-
 
     /**
      * Gibt den aktuell verwendeten Ladennamen zurück

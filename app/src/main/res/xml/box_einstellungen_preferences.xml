@@ -4,7 +4,7 @@
     android:key="settings_screen">
 
     <PreferenceCategory
-        android:title="Notifications"
+        android:title="@string/einstellungen_notification"
         android:key="category_notifications">
 
         <CheckBoxPreference
@@ -16,16 +16,16 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Daten"
+        android:title="@string/einstellungen_daten_title"
         android:key="category_data">
 
-        <Preference android:title="Backup"
+        <Preference android:title="@string/einstellungen_backup_title"
             android:key="pref_backup"
-            android:summary="Hier kannst du backups machen"/>
+            android:summary="@string/einstellungen_backup_beschreibung"/>
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@+string/einstellungen_hilfe_titel"
+        android:title="@string/einstellungen_hilfe_titel"
         android:key="category_data">
 
         <Preference android:title="@+string/einstellungen_hilfe_tutorial_titel"
