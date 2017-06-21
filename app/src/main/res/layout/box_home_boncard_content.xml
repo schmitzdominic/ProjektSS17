@@ -32,6 +32,7 @@
         android:paddingTop="20dp"
         android:gravity="bottom"
         android:text="Default"
+        android:maxLength="20"
         android:textSize="16sp"/>
 
     <TextView
@@ -44,6 +45,7 @@
         android:paddingBottom="20dp"
         android:gravity="top"
         android:text="default"
+        android:maxLength="21"
         android:textSize="14sp"/>
 
     <TextView
@@ -51,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="default"
+        android:maxLength="12"
         android:textSize="18sp"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/bons_favorite_icon" />
