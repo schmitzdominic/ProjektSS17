@@ -191,7 +191,7 @@ public class C_OCR {
             if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
                 articleList = this.ladenInstanz.getProducts(this.recognizedText);
                 if(articleList.size() != 0){
-                    articleStripes = this.picChanger.getLineList(halfLeft, halfLeft.getHeight()/articleList.size());
+                    articleStripes = this.picChanger.getLineList(halfLeft, halfLeft.getHeight()/articleList.size(), this.ladenInstanz.getCorrection());
                 } else {
                     throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: ARTICLESTRIPES=" + articleStripes.size());
                 }
@@ -245,22 +245,23 @@ public class C_OCR {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: POINTLIST=" + this.getPointList().size());
             }
 
-            int lines = this.lineCounter(cropedBitmap);
+            int lines = this.lineCounter(cropedBitmap, this.ladenInstanz.getFirstLine());
 
             if(lines == 0){
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: LINES=" + lines);
             }
 
             int stripeSize = (int) ((cropedBitmap.getHeight() / lines)*this.ladenInstanz.getDefaultSize());
+            double correction = this.ladenInstanz.getCorrection();
 
-            articleStripes = this.picChanger.getLineList(cropedBitmap, stripeSize);
+            articleStripes = this.picChanger.getLineList(cropedBitmap, stripeSize, correction);
 
-            /*this.testPic = cropedBitmap;
+            this.testPic = cropedBitmap;
 
             if(articleStripes.size() != 0){
                 this.testPic = articleStripes.get(0);
             }
-*/
+
             Log.e("STRIPES COUNT", articleStripes.size() + "");
             if (articleStripes.size() == 0) {
                 return false;
@@ -352,11 +353,34 @@ public class C_OCR {
      * @param bitmap Artikelbereich
      * @return Anzahl
      */
-    public int lineCounter(Bitmap bitmap){
+    public int lineCounter(Bitmap bitmap, int firstLineEUR){
 
+        ArrayList<String> lines = new ArrayList<>();
         String text = this.recognizer(bitmap);
+        String dumText = "";
 
         int count = 0;
+
+        if(firstLineEUR == 1){
+            for(int i = 0; i < text.length(); i++){
+
+                dumText += text.charAt(i);
+
+                if(text.charAt(i) == '\n' || i+1 == text.length()){
+                    lines.add(dumText);
+                    dumText = "";
+                }
+            }
+
+            for(String line : lines){
+
+                Log.e("LINE",line);
+
+                if(line.contains("EUR")){
+                    count += 2;
+                }
+            }
+        }
 
         for(int i = 0; i < text.length(); i++){
             if(text.charAt(i) == '\n'){

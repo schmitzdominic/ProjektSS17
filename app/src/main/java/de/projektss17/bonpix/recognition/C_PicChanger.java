@@ -77,19 +77,23 @@ public class C_PicChanger {
      * @param height Höhe der Linien
      * @return Liste mit Bitmaps (Linien)
      */
-    public ArrayList<Bitmap> getLineList(final Bitmap bitmap, int height){
+    public ArrayList<Bitmap> getLineList(final Bitmap bitmap, int height, double correction){
 
         final int     bitHeight = bitmap.getHeight();
         ArrayList<Bitmap> list = new ArrayList<>();
         int iterations = bitHeight / height;
+        int change = (int)(height*correction);
 
         for(int i = 0; i < iterations; i++){
-            if(i == 0){
-                list.add(this.cropBitmap(bitmap, 0, 0, bitmap.getWidth(), bitHeight - (bitHeight-height)));
-            } else if (i == iterations - 1){
-                list.add(this.cropBitmap(bitmap, 0, i*height, bitmap.getWidth(), bitHeight - (bitHeight-height)));
-            } else {
-                list.add(this.cropBitmap(bitmap, 0, i*height, bitmap.getWidth(),  bitHeight - (bitHeight-height)));
+            if(i == 0){ // Erster Stripe
+                list.add(this.cropBitmap(bitmap, 0, 0, bitmap.getWidth(), height)); // bitHeight - (bitHeight-height)
+
+            } else if (i == iterations - 1){ // Letzter Stripe
+                list.add(this.cropBitmap(bitmap, 0, i * height - change, bitmap.getWidth(), height + change));
+
+            } else { // Mittlere Stripes
+                list.add(this.cropBitmap(bitmap, 0, i * height - change, bitmap.getWidth(),  height + change));
+
             }
         }
         return list;

@@ -572,6 +572,7 @@ public class S extends Activity {
      * @param navigationView Navigation View
      */
     public static void setMenuCounter(int itemId, int count, NavigationView navigationView) {
+
         TextView view = (TextView) navigationView.getMenu().findItem(itemId).getActionView();
         if(count > 99){
             view.setText(count > 99 ? "99+" : String.valueOf(count));

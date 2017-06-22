@@ -116,6 +116,14 @@ public class Default implements I_Auswerter{
         return 2;
     }
 
+    public double getCorrection(){
+        return 0;
+    }
+
+    public int getFirstLine(){
+        return 0;
+    }
+
     public double getDefaultSize(){
         return 1.1;
     }

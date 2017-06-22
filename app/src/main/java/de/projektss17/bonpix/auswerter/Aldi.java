@@ -38,4 +38,8 @@ public class Aldi extends Default {
     public int getRecognizeArt() {
         return 1;
     }
+
+    public double getCorrection(){
+        return 0;
+    }
 }

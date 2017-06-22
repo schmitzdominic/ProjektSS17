@@ -40,4 +40,8 @@ public class Rossmann extends Default {
     public String getAdress(String txt) {
         return "KEINE ADRESSE GEFUNDEN!";
     }
+
+    public double getCorrection(){
+        return 0;
+    }
 }
