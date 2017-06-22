@@ -258,11 +258,10 @@ public class C_OCR {
 
             this.testPic = cropedBitmap;
 
-            if(articleStripes.size() != 0){
+            /*if(articleStripes.size() != 0){
                 this.testPic = articleStripes.get(0);
-            }
+            }*/
 
-            Log.e("STRIPES COUNT", articleStripes.size() + "");
             if (articleStripes.size() == 0) {
                 return false;
             }
