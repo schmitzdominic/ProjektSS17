@@ -173,7 +173,7 @@ public class C_OCR {
 
             // Es wird nur die Artikel/Preisregion herausgeschnitten
             if(this.getPointList().size() != 0){
-                cropedBitmap = this.picChanger.getOnlyArticleArea(bitmap, this.getPointList());
+                cropedBitmap = this.picChanger.getOnlyArticleArea(bitmap, this.getPointList(), this.ladenInstanz.getTolerance());
             } else {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: POINTLIST=" + this.getPointList().size());
             }
@@ -191,8 +191,10 @@ public class C_OCR {
             if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
                 articleList = this.ladenInstanz.getProducts(this.recognizedText);
                 if(articleList.size() != 0){
-                    this.recognizer(halfLeft);
-                    halfLeft = this.picChanger.getOnlyArticleArea(halfLeft, this.getPointList());
+                    if(this.ladenInstanz.croopLeftSide()){
+                        this.recognizer(halfLeft);
+                        halfLeft = this.picChanger.getOnlyArticleArea(halfLeft, this.getPointList(), this.ladenInstanz.getTolerance());
+                    }
                     articleStripes = this.picChanger.getLineList(halfLeft, halfLeft.getHeight()/articleList.size(), this.ladenInstanz.getCorrection());
                 } else {
                     throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: ARTICLESTRIPES=" + articleStripes.size());
@@ -209,9 +211,9 @@ public class C_OCR {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: RECOGNIZEDTEXT=NULL OR \"\"");
             }
 
-            /*this.testPic = cropedBitmap;
+            this.testPic = halfLeft;
 
-            if(articleStripes.size() != 0){
+            /*if(articleStripes.size() != 0){
                 this.testPic = articleStripes.get(0);
             }*/
 
@@ -247,7 +249,7 @@ public class C_OCR {
 
             // Es wird nur die Artikel/Preisregion herausgeschnitten
             if (this.getPointList().size() != 0) {
-                cropedBitmap = this.picChanger.getOnlyArticleArea(bitmap, this.getPointList());
+                cropedBitmap = this.picChanger.getOnlyArticleArea(bitmap, this.getPointList(), this.ladenInstanz.getTolerance());
             } else {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: POINTLIST=" + this.getPointList().size());
             }
@@ -263,7 +265,7 @@ public class C_OCR {
 
             articleStripes = this.picChanger.getLineList(cropedBitmap, stripeSize, correction);
 
-            /*this.testPic = cropedBitmap;*/
+            this.testPic = cropedBitmap;
 
             /*if(articleStripes.size() != 0){
                 this.testPic = articleStripes.get(0);
@@ -379,8 +381,6 @@ public class C_OCR {
             }
 
             for(String line : lines){
-
-                Log.e("LINE",line);
 
                 if(line.contains("EUR")){
                     count += 2;

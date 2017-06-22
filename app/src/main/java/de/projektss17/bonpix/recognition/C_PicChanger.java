@@ -180,7 +180,7 @@ public class C_PicChanger {
      * @param pointArray Liste mit Bildpunkten
      * @return Bitmap des Artikelbereichs
      */
-    public Bitmap getOnlyArticleArea(Bitmap bitmap, ArrayList<Point> pointArray){
+    public Bitmap getOnlyArticleArea(Bitmap bitmap, ArrayList<Point> pointArray, int tolerance){
 
         int x = 0,
                 yMin = 0,
@@ -198,7 +198,7 @@ public class C_PicChanger {
         yMin = oRight.y;
 
         for(Point point : pointArray){
-            if(point.x <= oRight.x+20 && point.x >= oRight.x-20){
+            if(point.x <= oRight.x+tolerance && point.x >= oRight.x-tolerance){
                 if(yMin > point.y){
                     yMin = point.y;
                 }
@@ -210,8 +210,8 @@ public class C_PicChanger {
 
         height = yMax - yMin;
 
-        if((yMin+height) <= (bitmap.getHeight()-20)){
-            height = height+20;
+        if((yMin+height) <= (bitmap.getHeight()-tolerance)){
+            height = height+tolerance;
         }
 
         return cropBitmap(bitmap, 0, yMin, bitmap.getWidth(), height);

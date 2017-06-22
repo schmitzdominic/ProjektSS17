@@ -128,6 +128,14 @@ public class Default implements I_Auswerter{
         return 1.1;
     }
 
+    public int getTolerance(){
+        return 20;
+    }
+
+    public boolean croopLeftSide(){
+        return true;
+    }
+
     /**
      * Liest die Postleitzahl aus einem String aus
      * @param txt

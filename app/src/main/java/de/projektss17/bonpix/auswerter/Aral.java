@@ -46,6 +46,7 @@ public class Aral extends Default {
         return 1;
     }
 
+    @Override
     public double getCorrection(){
         return 0;
     }

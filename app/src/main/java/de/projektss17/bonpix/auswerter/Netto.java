@@ -50,10 +50,12 @@ public class Netto extends Default {
         return 1;
     }
 
+    @Override
     public double getCorrection(){
         return 0.3 ;
     }
 
+    @Override
     public int getFirstLine(){
         return 1;
     }

@@ -852,7 +852,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         boolean status = this.ocr.recognize(this.getBitmapFromPath(path));
 
-        /*Bitmap bit = this.ocr.testPic;
+        Bitmap bit = this.ocr.testPic;
 
         String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = managedQuery(getImageUri(bit), projection, null, null, null);
@@ -860,11 +860,11 @@ public class A_OCR_Manuell extends AppCompatActivity {
         cursor.moveToFirst();
         String picturePath = cursor.getString(column_index_data);
 
-        Log.e("PATH",picturePath);*/
+        Log.e("PATH",picturePath);
 
         if(status){
             this.removeAllArticles();
-            this.fillMask(path, //path
+            this.fillMask(picturePath, //path
                     this.ocr.getLadenName(),
                     this.ocr.getAdresse(),
                     null,  // TODO Datum über OCR suchen!

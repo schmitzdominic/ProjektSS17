@@ -40,7 +40,13 @@ public class Rossmann extends Default {
         return "KEINE ADRESSE GEFUNDEN!";
     }
 
+    @Override
     public double getCorrection(){
         return 0;
+    }
+
+    @Override
+    public boolean croopLeftSide() {
+        return false;
     }
 }
