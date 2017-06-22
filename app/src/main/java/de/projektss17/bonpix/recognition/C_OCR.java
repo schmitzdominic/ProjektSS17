@@ -247,7 +247,13 @@ public class C_OCR {
 
             int lines = this.lineCounter(cropedBitmap);
 
-            articleStripes = this.picChanger.getLineList(cropedBitmap, (int) ((cropedBitmap.getHeight() / lines)*this.ladenInstanz.getDefaultSize()));
+            if(lines == 0){
+                throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: LINES=" + lines);
+            }
+
+            int stripeSize = (int) ((cropedBitmap.getHeight() / lines)*this.ladenInstanz.getDefaultSize());
+
+            articleStripes = this.picChanger.getLineList(cropedBitmap, stripeSize);
 
             /*this.testPic = cropedBitmap;
 
