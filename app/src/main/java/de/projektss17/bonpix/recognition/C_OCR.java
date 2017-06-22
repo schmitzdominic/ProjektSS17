@@ -191,6 +191,8 @@ public class C_OCR {
             if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
                 articleList = this.ladenInstanz.getProducts(this.recognizedText);
                 if(articleList.size() != 0){
+                    this.recognizer(halfLeft);
+                    halfLeft = this.picChanger.getOnlyArticleArea(halfLeft, this.getPointList());
                     articleStripes = this.picChanger.getLineList(halfLeft, halfLeft.getHeight()/articleList.size(), this.ladenInstanz.getCorrection());
                 } else {
                     throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: ARTICLESTRIPES=" + articleStripes.size());
@@ -207,13 +209,18 @@ public class C_OCR {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: RECOGNIZEDTEXT=NULL OR \"\"");
             }
 
+            this.testPic = cropedBitmap;
+
+            if(articleStripes.size() != 0){
+                this.testPic = articleStripes.get(0);
+            }
+
             Log.e("##### ERGEBNIS", "Artikel=" + articleList.size() + " Preise="+ priceList.size());
 
             // Wenn die Anzahl gleich ist, dann trag alle Artikel ein / Sonst nicht
             if(articleList.size() == priceList.size()){
                 int count = 0;
                 for(Bitmap article : articleStripes){
-
                     this.recognizedText = this.recognizer(article);
                     this.produkte = this.ladenInstanz.getProducts(this.recognizedText);
 
