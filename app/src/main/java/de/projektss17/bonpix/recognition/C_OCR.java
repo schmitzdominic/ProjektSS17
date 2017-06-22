@@ -209,11 +209,11 @@ public class C_OCR {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: RECOGNIZEDTEXT=NULL OR \"\"");
             }
 
-            this.testPic = cropedBitmap;
+            /*this.testPic = cropedBitmap;
 
             if(articleStripes.size() != 0){
                 this.testPic = articleStripes.get(0);
-            }
+            }*/
 
             Log.e("##### ERGEBNIS", "Artikel=" + articleList.size() + " Preise="+ priceList.size());
 
@@ -263,7 +263,7 @@ public class C_OCR {
 
             articleStripes = this.picChanger.getLineList(cropedBitmap, stripeSize, correction);
 
-            this.testPic = cropedBitmap;
+            /*this.testPic = cropedBitmap;*/
 
             /*if(articleStripes.size() != 0){
                 this.testPic = articleStripes.get(0);
