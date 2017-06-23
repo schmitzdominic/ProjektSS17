@@ -59,7 +59,7 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         C_Budget budget = budgetList.get(position);
-        holder.title.setText(budget.getTitle() + " " + budget.getBudgetMax() + "€");
+        holder.title.setText(budget.getTitle());
         holder.budgetCurrently.setText(S.roundPrice(this.getRestBudget(budget))+ " €");
         holder.monthBefore.setText(budget.getMonthVon());
         holder.yearBefore.setText(budget.getYearVon());
