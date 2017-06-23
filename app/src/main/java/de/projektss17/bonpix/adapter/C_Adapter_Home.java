@@ -90,11 +90,11 @@ public class C_Adapter_Home extends RecyclerView.Adapter<RecyclerView.ViewHolder
             super(view);
             this.budgetCurrently = (TextView) view.findViewById(R.id.budget_content);
             this.monthBefore = (TextView) view.findViewById(R.id.budget_monat_von);
-            this.yearBefore = (TextView) view.findViewById(R.id.budget_jahr_von);
+            this.tagVon = (TextView) view.findViewById(R.id.budget_jahr_von);
             this.monthAfter = (TextView) view.findViewById(R.id.budget_monat_bis);
-            this.yearAfter = (TextView) view.findViewById(R.id.budget_jahr_bis);
-            this.tagVon = (TextView) view.findViewById(R.id.budget_tag_von);
-            this.tagBis = (TextView) view.findViewById(R.id.budget_tag_bis);
+            this.tagBis = (TextView) view.findViewById(R.id.budget_jahr_bis);
+            this.yearBefore = (TextView) view.findViewById(R.id.budget_tag_von);
+            this.yearAfter = (TextView) view.findViewById(R.id.budget_tag_bis);
             this.progressBar = (ProgressBar) view.findViewById(R.id.budget_progress_bar_circle);
             this.progressPercentage = (TextView) view.findViewById(R.id.budget_progress_percentage);
         }
@@ -168,7 +168,7 @@ public class C_Adapter_Home extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case 1:
                 if(budget != null){
                     ViewHolderBudgetCard holderBudgetCard = (ViewHolderBudgetCard) holder;
-                    holderBudgetCard.budgetCurrently.setText(getRestBudget(budget) + curreny);
+                    holderBudgetCard.budgetCurrently.setText(S.roundPrice(getRestBudget(budget)) + curreny);
                     holderBudgetCard.yearBefore.setText(budget.getYearVon());
                     holderBudgetCard.monthBefore.setText(budget.getMonthVon());
                     holderBudgetCard.yearAfter.setText(budget.getYearBis());
@@ -251,8 +251,8 @@ public class C_Adapter_Home extends RecyclerView.Adapter<RecyclerView.ViewHolder
      * @param budget Ein ausgewähltes Budget aus der DB ( Derzeit wird immer das erste genommen! )
      * @return Rückgabe des Restbetrags
      */
-    private String getRestBudget(C_Budget budget) {
-        return "" + ((double) budget.getBudgetMax() - budget.getBudgetLost());
+    private double getRestBudget(C_Budget budget) {
+        return ((double) budget.getBudgetMax() - budget.getBudgetLost());
     }
 
     /**
@@ -261,7 +261,7 @@ public class C_Adapter_Home extends RecyclerView.Adapter<RecyclerView.ViewHolder
      * @return Rückgabe des Restbetrags als Prozent
      */
     private String getRestPercentage(C_Budget budget) {
-        return "" + (Math.round(((Double.parseDouble(this.getRestBudget(budget)) / budget.getBudgetMax()) * 100) * 100) / 100.00);
+        return "" + (Math.round((((this.getRestBudget(budget)) / budget.getBudgetMax()) * 100) * 100) / 100.00);
     }
 
     /**
