@@ -236,6 +236,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                     input.setFilters(new InputFilter[] {new InputFilter.LengthFilter(30)});
 
+
                     input.setInputType(InputType.TYPE_CLASS_TEXT);
                     builder.setView(input);
 
