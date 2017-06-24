@@ -21,6 +21,7 @@ public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favorite
 
     private List<C_Bon> bonListe;
     private C_Bon bon;
+    private String ladenName;
 
     /**
      * Standard Constructor
@@ -68,8 +69,14 @@ public class C_Adapter_Favoriten extends RecyclerView.Adapter<C_Adapter_Favorite
     public void onBindViewHolder(final C_Adapter_Favoriten.MyViewHolder holder, final int position) {
 
         this.bon = bonListe.get(position);
+
+        if(bon.getShopName().length()>10){
+            ladenName = bon.getShopName().substring(0,8) + "..";
+        } else{
+            ladenName = bon.getShopName();
+        }
         holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
-        holder.favoriteShopName.setText(bon.getShopName());
+        holder.favoriteShopName.setText(ladenName);
         holder.favouritePrice.setText(bon.getTotalPrice() + " €");
         holder.favoriteDate.setText(S.getWeekday(holder.res, S.getWeekdayNumber(bon.getDate())) + "\n" + bon.getDate());
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
