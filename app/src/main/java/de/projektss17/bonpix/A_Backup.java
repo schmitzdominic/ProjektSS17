@@ -43,7 +43,7 @@ public class A_Backup extends PreferenceActivity implements C_Drive_API.ConnectC
     private static boolean mBusy;
     public Context context;
     public Preference change;
-public class A_Backup extends PreferenceActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,12 +134,13 @@ public class A_Backup extends PreferenceActivity {
                             if (fl != null) {
                                 is = C_Drive_API.createFileAct(null, titl, C_Drive_UT.MIME_PNG, fl);
                                 fl.delete();
-
                                 boolean x = false;
                                 if (is != null){
                                     x = true;
                                 }
-                                Log.e("IntentContent","###" + x);
+                            }
+                            if (is == null){
+                                Log.e("WEHE!!!","xxx");
                             }
                             else try {
                                 startIntentSenderForResult(is, REQ_CREATE, null, 0, 0, 0);

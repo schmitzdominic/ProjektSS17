@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -155,6 +156,7 @@ public class C_Drive_API { public C_Drive_API() {}
         if (mGAC != null && mGAC.isConnected() && titl != null) try {
             DriveFolder pFldr;
             if (prnId != null) {
+                Log.e("CREATE FOLDER", "CHECK");
                 if (prnId.equalsIgnoreCase("root")) {
                     pFldr =  Drive.DriveApi.getRootFolder(mGAC);
                 } else if (prnId.equalsIgnoreCase("appfolder")) {
@@ -305,6 +307,7 @@ public class C_Drive_API { public C_Drive_API() {}
                         .setActivityStartFolder(pFldr.getDriveId())
                         .setInitialMetadata(meta).setInitialDriveContents(dc)
                         .build(mGAC);
+                //return Drive.DriveApi.getAppFolder(mGAC).createFile(mGAC, meta, dc);
             }
         } catch (Exception e) { C_Drive_UT.le(e); }
         return null;

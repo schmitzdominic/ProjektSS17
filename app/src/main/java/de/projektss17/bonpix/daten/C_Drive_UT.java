@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -83,13 +84,14 @@ public class C_Drive_UT {  private C_Drive_UT() {}
         return fl;
     }
     public static File bitToFile(String path){
-        File file = new File(path);
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String fuck = Environment.getExternalStorageDirectory().toString() + "/Download";
+        String fFile = "1_big.jpg";
+        File file = new File(fuck, fFile);
+
         Bitmap bitmap = BitmapFactory.decodeFile(path);
+        if (bitmap != null){
+            Log.e("BITMAP ########","CHECK");
+        }
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
         byte[] bitmapdata = bos.toByteArray();
