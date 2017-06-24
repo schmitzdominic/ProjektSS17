@@ -34,6 +34,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight=".7"
                 android:ems="10"
+                android:maxLength="30"
+
                 android:hint="@string/f_laeden_detail_titel_hint" />
 
         </LinearLayout>
