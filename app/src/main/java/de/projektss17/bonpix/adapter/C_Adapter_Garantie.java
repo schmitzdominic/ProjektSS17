@@ -70,11 +70,7 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
 
         this.bon = bonListe.get(position);
 
-        if(bon.getShopName().length()>10){
-            ladenName = bon.getShopName().substring(0,8) + "..";
-        } else{
-            ladenName = bon.getShopName();
-        }
+        ladenName = bon.getShopName().length()>10 ? bon.getShopName().substring(0,8) + ".." : bon.getShopName();
 
         holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
         holder.warrantyShop.setText(ladenName);

@@ -301,11 +301,7 @@ public class C_Adapter_Home extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         String ladenName;
 
-        if(bon.getShopName().length()>10){
-            ladenName = bon.getShopName().substring(0,8) + "..";
-        } else{
-            ladenName = bon.getShopName();
-        }
+        ladenName = bon.getShopName().length()>10 ? bon.getShopName().substring(0,8) + ".." : bon.getShopName();
 
         shopName.setText(ladenName);
         date.setText(bon.getDate());
