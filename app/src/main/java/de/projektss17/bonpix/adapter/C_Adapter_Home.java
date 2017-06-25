@@ -299,7 +299,11 @@ public class C_Adapter_Home extends RecyclerView.Adapter<RecyclerView.ViewHolder
         final ImageView shopIcon = (ImageView)rowView.findViewById(R.id.bons_shop_image);
         final ImageView favIcon = proofFavorite(bon,(ImageView)rowView.findViewById(R.id.bons_favorite_icon));
 
-        shopName.setText(bon.getShopName());
+        String ladenName;
+
+        ladenName = bon.getShopName().length()>10 ? bon.getShopName().substring(0,8) + ".." : bon.getShopName();
+
+        shopName.setText(ladenName);
         date.setText(bon.getDate());
         price.setText(bon.getTotalPrice() + " " + curreny);
         shopIcon.setImageBitmap(S.getShopIcon(context.getResources(), bon.getShopName()));
