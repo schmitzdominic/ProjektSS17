@@ -155,7 +155,12 @@ public class A_Bon_Anzeigen extends AppCompatActivity {
 
         if(bon.getAdress() != null && !bon.getAdress().isEmpty()){
             this.adresseTitle.setVisibility(View.VISIBLE);
-            this.adresse.setText(bon.getAdress());
+
+            if(bon.getAdress().length()>25){
+                this.adresse.setText(bon.getAdress().substring(0,22) +" ...");
+            } else{
+                this.adresse.setText(bon.getAdress());
+            }
         } else {
             this.adresseTitle.setVisibility(View.INVISIBLE);
             this.adresse.setText("");
