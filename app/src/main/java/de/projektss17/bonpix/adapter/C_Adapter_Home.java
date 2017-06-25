@@ -29,6 +29,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import de.projektss17.bonpix.A_Bon_Anzeigen;
+import de.projektss17.bonpix.A_Main;
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
 import de.projektss17.bonpix.daten.C_Bon;
@@ -312,11 +313,13 @@ public class C_Adapter_Home extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     favIcon.setColorFilter(favIcon.getContext().getResources().getColor(R.color.colorPrimary));
                     bon.setFavourite(false);
                     S.dbHandler.updateBon(S.db, bon);
+                    S.setMenuCounter(R.id.menu_nav_favoriten, S.dbHandler.getFavouriteCount(S.db), ((A_Main) v.getContext()).getNavigationView());
                 } else {
                     favIcon.setImageDrawable(favIcon.getContext().getResources().getDrawable(R.drawable.star));
                     favIcon.setColorFilter(favIcon.getContext().getResources().getColor(R.color.colorPrimary));
                     bon.setFavourite(true);
                     S.dbHandler.updateBon(S.db, bon);
+                    S.setMenuCounter(R.id.menu_nav_favoriten, S.dbHandler.getFavouriteCount(S.db), ((A_Main) v.getContext()).getNavigationView());
                 }
             }
         });

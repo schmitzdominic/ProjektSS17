@@ -6,7 +6,7 @@
 
         <item
             android:id="@+id/menu_nav_budget"
-            android:icon="@mipmap/ic_attach_money_black_24dp"
+            android:icon="@mipmap/ic_monetization_on_black_24dp"
             android:title="@string/nav_budget"
             app:actionLayout="@layout/box_navigation_drawer_item_counter" />
 
@@ -18,13 +18,13 @@
 
         <item
             android:id="@+id/menu_nav_favoriten"
-            android:icon="@mipmap/ic_favorite_border_black_24dp"
+            android:icon="@mipmap/ic_star_black_24dp"
             android:title="@string/nav_favoriten"
             app:actionLayout="@layout/box_navigation_drawer_item_counter"/>
 
         <item
             android:id="@+id/menu_nav_garantie"
-            android:icon="@mipmap/ic_build_black_24dp"
+            android:icon="@mipmap/ic_verified_user_black_24dp"
             android:title="@string/nav_garantie"
             app:actionLayout="@layout/box_navigation_drawer_item_counter"/>
 
@@ -44,7 +44,7 @@
 
         <item
             android:id="@+id/menu_nav_impressum"
-            android:icon="@mipmap/ic_info_outline_black_24dp"
+            android:icon="@mipmap/ic_info_black_24dp"
             android:title="@string/nav_impressum" />
 
     </group>

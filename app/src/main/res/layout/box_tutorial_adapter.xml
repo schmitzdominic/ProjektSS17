@@ -20,24 +20,26 @@
             <ImageView
                 android:id="@+id/swip_image_view"
                 android:layout_width="wrap_content"
-                android:layout_height="360dp"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@+id/tutorial_text_title"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="19dp" />
+                android:layout_marginTop="19dp"
+                android:layout_marginBottom="195dp"/>
 
             <TextView
                 android:id="@+id/tutorial_text_content"
                 android:layout_width="wrap_content"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="Hier kommt der Text rein, de die einzelnen Schritte erklärt ..."
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimary"
                 android:layout_above="@+id/tutorial_imageCount"
                 android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="35dp"/>
 
 
     <ProgressBar
