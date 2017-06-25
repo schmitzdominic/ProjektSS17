@@ -796,6 +796,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         if(ladenName != null && !ladenName.isEmpty()){
             if(ladenName.equals("NOT SUPPORTED")){
                 ladenSpinner.setSelection(0);
+                ((ImageView) findViewById(R.id.ocr_manuell_image_view_shop)).setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_shopping_cart_black_24dp));
             } else {
                 for(int i = 0; i < ladenSpinner.getCount(); i++){
                     if(ladenSpinner.getAdapter().getItem(i).toString().contains(ladenName)){
@@ -806,6 +807,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         } else {
             ladenSpinner.setSelection(0);
+            ((ImageView) findViewById(R.id.ocr_manuell_image_view_shop)).setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_shopping_cart_black_24dp));
         }
 
         if(anschrift != null && !anschrift.isEmpty()){

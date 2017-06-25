@@ -112,22 +112,42 @@ public class Default implements I_Auswerter{
         return retString;
     }
 
+    /**
+     * Gibt den Art des Recognizers zurück
+     * @return int
+     */
     public int getRecognizeArt(){
         return 2;
     }
 
+    /**
+     * Korrektur der Zeile
+     * @return int
+     */
     public double getCorrection(){
         return 0;
     }
 
+    /**
+     * Existiert eine EUR zahl und wird die Methode 2 angewedet?
+     * @return 1 Ja, 0 Nein
+     */
     public int getFirstLine(){
         return 0;
     }
 
+    /**
+     * Standard Größe eines Stripes
+     * @return Größe
+     */
     public double getDefaultSize(){
         return 1.1;
     }
 
+    /**
+     * Toleranz bei der Herausschneidung der Artikel
+     * @return Toleranz (Pixel)
+     */
     public int getTolerance(){
         return 20;
     }
