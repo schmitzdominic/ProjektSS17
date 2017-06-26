@@ -13,6 +13,8 @@ import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.projektss17.bonpix.R;
 import de.projektss17.bonpix.S;
@@ -34,6 +36,7 @@ public class C_OCR {
     private ArrayList<Point> pointList;
     private ArrayList<C_Artikel> articles;
     private C_PicChanger picChanger;
+    public Bitmap testPic;
 
     /**
      * Standard Constructor
@@ -170,7 +173,7 @@ public class C_OCR {
 
             // Es wird nur die Artikel/Preisregion herausgeschnitten
             if(this.getPointList().size() != 0){
-                cropedBitmap = this.picChanger.getOnlyArticleArea(bitmap, this.getPointList());
+                cropedBitmap = this.picChanger.getOnlyArticleArea(bitmap, this.getPointList(), this.ladenInstanz.getTolerance());
             } else {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: POINTLIST=" + this.getPointList().size());
             }
@@ -188,7 +191,11 @@ public class C_OCR {
             if(this.recognizedText != null && !this.recognizedText.equals("") && !this.recognizedText.isEmpty()){
                 articleList = this.ladenInstanz.getProducts(this.recognizedText);
                 if(articleList.size() != 0){
-                    articleStripes = this.picChanger.getLineList(halfLeft, halfLeft.getHeight()/articleList.size());
+                    if(this.ladenInstanz.croopLeftSide()){
+                        this.recognizer(halfLeft);
+                        halfLeft = this.picChanger.getOnlyArticleArea(halfLeft, this.getPointList(), this.ladenInstanz.getTolerance());
+                    }
+                    articleStripes = this.picChanger.getLineList(halfLeft, halfLeft.getHeight()/articleList.size(), this.ladenInstanz.getCorrection());
                 } else {
                     throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: ARTICLESTRIPES=" + articleStripes.size());
                 }
@@ -204,13 +211,18 @@ public class C_OCR {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: RECOGNIZEDTEXT=NULL OR \"\"");
             }
 
+            /*this.testPic = halfLeft;*/ // TODO Bitte diese beiden Codeblöcke nicht entfernen! Wichtig zum Testen!
+
+            /*if(articleStripes.size() != 0){
+                this.testPic = articleStripes.get(0);
+            }*/
+
             Log.e("##### ERGEBNIS", "Artikel=" + articleList.size() + " Preise="+ priceList.size());
 
             // Wenn die Anzahl gleich ist, dann trag alle Artikel ein / Sonst nicht
             if(articleList.size() == priceList.size()){
                 int count = 0;
                 for(Bitmap article : articleStripes){
-
                     this.recognizedText = this.recognizer(article);
                     this.produkte = this.ladenInstanz.getProducts(this.recognizedText);
 
@@ -237,20 +249,28 @@ public class C_OCR {
 
             // Es wird nur die Artikel/Preisregion herausgeschnitten
             if (this.getPointList().size() != 0) {
-                cropedBitmap = this.picChanger.getOnlyArticleArea(bitmap, this.getPointList());
+                cropedBitmap = this.picChanger.getOnlyArticleArea(bitmap, this.getPointList(), this.ladenInstanz.getTolerance());
             } else {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: POINTLIST=" + this.getPointList().size());
             }
 
-            this.recognizedText = this.recognizer(cropedBitmap);
+            int lines = this.lineCounter(cropedBitmap, this.ladenInstanz.getFirstLine());
 
-            int lines = (this.ladenInstanz.getProducts(this.recognizedText).size() < this.ladenInstanz.getPrices(this.recognizedText).size()) ?
-                    this.ladenInstanz.getProducts(this.recognizedText).size() :
-                    this.ladenInstanz.getPrices(this.recognizedText).size();
+            if(lines == 0){
+                throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: LINES=" + lines);
+            }
 
-            articleStripes = this.picChanger.getLineList(cropedBitmap, (int) ((cropedBitmap.getHeight() / lines)*this.ladenInstanz.getDefaultSize()));
+            int stripeSize = (int) ((cropedBitmap.getHeight() / lines)*this.ladenInstanz.getDefaultSize());
+            double correction = this.ladenInstanz.getCorrection();
 
-            Log.e("STRIPES COUNT", articleStripes.size() + "");
+            articleStripes = this.picChanger.getLineList(cropedBitmap, stripeSize, correction);
+
+            /*this.testPic = cropedBitmap;*/ // TODO Bitte diese beiden Codeblöcke nicht entfernen! Wichtig zum Testen!
+
+            /*if(articleStripes.size() != 0){
+                this.testPic = articleStripes.get(0);
+            }*/
+
             if (articleStripes.size() == 0) {
                 return false;
             }
@@ -334,5 +354,48 @@ public class C_OCR {
      */
     public String getTel() {
         return tel;
+    }
+
+    /**
+     * Gibt die Anzahl der Zeilen eines Bons zurück
+     * @param bitmap Artikelbereich
+     * @return Anzahl
+     */
+    public int lineCounter(Bitmap bitmap, int firstLineEUR){
+
+        ArrayList<String> lines = new ArrayList<>();
+        String text = this.recognizer(bitmap);
+        String dumText = "";
+
+        int count = 0;
+
+        if(firstLineEUR == 1){
+            for(int i = 0; i < text.length(); i++){
+
+                dumText += text.charAt(i);
+
+                if(text.charAt(i) == '\n' || i+1 == text.length()){
+                    lines.add(dumText);
+                    dumText = "";
+                }
+            }
+
+            for(String line : lines){
+
+                if(line.contains("EUR")){
+                    count += 2;
+                }
+            }
+        }
+
+        for(int i = 0; i < text.length(); i++){
+            if(text.charAt(i) == '\n'){
+                count++;
+            }
+        }
+
+        Log.e("CONTAINS", count + "");
+
+        return count/2;
     }
 }

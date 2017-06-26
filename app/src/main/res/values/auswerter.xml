@@ -6,6 +6,10 @@
         <item>Aldi</item>
         <item>Rossmann</item>
         <item>Aral</item>
+        <item>Rewe</item>
+        <item>Netto</item>
+        <item>Edeka</item>
+        <item>Karstadt</item>
     </string-array>
 
 </resources>

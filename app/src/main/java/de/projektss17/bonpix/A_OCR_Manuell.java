@@ -799,6 +799,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         if(ladenName != null && !ladenName.isEmpty()){
             if(ladenName.equals("NOT SUPPORTED")){
                 ladenSpinner.setSelection(0);
+                ((ImageView) findViewById(R.id.ocr_manuell_image_view_shop)).setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_shopping_cart_black_24dp));
             } else {
                 for(int i = 0; i < ladenSpinner.getCount(); i++){
                     if(ladenSpinner.getAdapter().getItem(i).toString().contains(ladenName)){
@@ -809,6 +810,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
             }
         } else {
             ladenSpinner.setSelection(0);
+            ((ImageView) findViewById(R.id.ocr_manuell_image_view_shop)).setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_shopping_cart_black_24dp));
         }
 
         if(anschrift != null && !anschrift.isEmpty()){
@@ -855,15 +857,26 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
         boolean status = this.ocr.recognize(this.getBitmapFromPath(path));
 
+        /*Bitmap bit = this.ocr.testPic;
+
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(getImageUri(bit), projection, null, null, null);
+        int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String picturePath = cursor.getString(column_index_data);
+
+        Log.e("PATH",picturePath);*/ // TODO Bitte nicht entfernen! ist wichtig zum testen!
+
         if(status){
             this.removeAllArticles();
-            this.fillMask(path,
+            this.fillMask(path, //path
                     this.ocr.getLadenName(),
                     this.ocr.getAdresse(),
                     null,  // TODO Datum über OCR suchen!
                     this.ocr.getTel(),
                     this.ocr.getArticles());
         } else {
+
             this.removeAllArticles();
 
             if(this.ocr.getLadenName() != null && !this.ocr.getLadenName().isEmpty()){

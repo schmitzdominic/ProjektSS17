@@ -77,19 +77,23 @@ public class C_PicChanger {
      * @param height Höhe der Linien
      * @return Liste mit Bitmaps (Linien)
      */
-    public ArrayList<Bitmap> getLineList(final Bitmap bitmap, int height){
+    public ArrayList<Bitmap> getLineList(final Bitmap bitmap, int height, double correction){
 
         final int     bitHeight = bitmap.getHeight();
         ArrayList<Bitmap> list = new ArrayList<>();
         int iterations = bitHeight / height;
+        int change = (int)(height*correction);
 
         for(int i = 0; i < iterations; i++){
-            if(i == 0){
-                list.add(this.cropBitmap(bitmap, 0, i*height, bitmap.getWidth(), bitHeight - (bitHeight-height)));
-            } else if (i == iterations - 1){
-                list.add(this.cropBitmap(bitmap, 0, (int)(double)(i*height*0.95), bitmap.getWidth(), (int)(double)((bitHeight - (bitHeight-height))*1.05)));
-            } else {
-                list.add(this.cropBitmap(bitmap, 0, (int)(double)(i*height*0.9), bitmap.getWidth(), (int)(double)((bitHeight - (bitHeight-height))*1.3)));
+            if(i == 0){ // Erster Stripe
+                list.add(this.cropBitmap(bitmap, 0, 0, bitmap.getWidth(), height)); // bitHeight - (bitHeight-height)
+
+            } else if (i == iterations - 1){ // Letzter Stripe
+                list.add(this.cropBitmap(bitmap, 0, i * height - change, bitmap.getWidth(), height + change));
+
+            } else { // Mittlere Stripes
+                list.add(this.cropBitmap(bitmap, 0, i * height - change, bitmap.getWidth(),  height + change));
+
             }
         }
         return list;
@@ -176,7 +180,7 @@ public class C_PicChanger {
      * @param pointArray Liste mit Bildpunkten
      * @return Bitmap des Artikelbereichs
      */
-    public Bitmap getOnlyArticleArea(Bitmap bitmap, ArrayList<Point> pointArray){
+    public Bitmap getOnlyArticleArea(Bitmap bitmap, ArrayList<Point> pointArray, int tolerance){
 
         int x = 0,
                 yMin = 0,
@@ -194,7 +198,7 @@ public class C_PicChanger {
         yMin = oRight.y;
 
         for(Point point : pointArray){
-            if(point.x <= oRight.x+20 && point.x >= oRight.x-20){
+            if(point.x <= oRight.x+tolerance && point.x >= oRight.x-tolerance){
                 if(yMin > point.y){
                     yMin = point.y;
                 }
@@ -206,8 +210,8 @@ public class C_PicChanger {
 
         height = yMax - yMin;
 
-        if((yMin+height) <= (bitmap.getHeight()-20)){
-            height = height+20;
+        if((yMin+height) <= (bitmap.getHeight()-tolerance)){
+            height = height+tolerance;
         }
 
         return cropBitmap(bitmap, 0, yMin, bitmap.getWidth(), height);

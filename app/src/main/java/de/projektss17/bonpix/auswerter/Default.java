@@ -24,21 +24,22 @@ public class Default implements I_Auswerter{
         String dumString = "";
         ArrayList<String> retString = new ArrayList<>();
 
-        txt = txt.replaceAll(" +","");
+        txt = txt.replaceAll(" +"," ");
         txt = txt.replaceAll("\\d","");
-        txt = txt.toLowerCase();
+        txt = txt.replaceAll(" \\w ", "");
+        txt = txt.replaceAll(" \\w\n", "\n");
 
         for(int i = 0; i < txt.length(); i++){
             if(txt.charAt(i) == '\n'){
-                if(dumString.length() > 4 && !dumString.contains("storno")){
-                    if(dumString.contains("pfand")){
-                        dumString = "pfand";
+                if(dumString.length() > 4 && !dumString.contains("storno") && !dumString.contains("STORNO")){
+                    if(dumString.contains("pfand") || dumString.contains("PFAND") || dumString.contains("Pfand")){
+                        dumString = "Pfand";
                     }
-                    retString.add(dumString.toUpperCase());
+                    retString.add(dumString);
                 }
                 dumString = "";
             } else {
-                if(this.isLetter(txt.charAt(i)) || txt.charAt(i) == '.' || txt.charAt(i) == '&'){
+                if(this.isLetter(txt.charAt(i)) || txt.charAt(i) == '.' || txt.charAt(i) == '&' || txt.charAt(i) == ' '){
                     dumString += txt.charAt(i);
                 }
             }
@@ -111,12 +112,48 @@ public class Default implements I_Auswerter{
         return retString;
     }
 
+    /**
+     * Gibt den Art des Recognizers zurück
+     * @return int
+     */
     public int getRecognizeArt(){
         return 2;
     }
 
+    /**
+     * Korrektur der Zeile
+     * @return int
+     */
+    public double getCorrection(){
+        return 0;
+    }
+
+    /**
+     * Existiert eine EUR zahl und wird die Methode 2 angewedet?
+     * @return 1 Ja, 0 Nein
+     */
+    public int getFirstLine(){
+        return 0;
+    }
+
+    /**
+     * Standard Größe eines Stripes
+     * @return Größe
+     */
     public double getDefaultSize(){
         return 1.1;
+    }
+
+    /**
+     * Toleranz bei der Herausschneidung der Artikel
+     * @return Toleranz (Pixel)
+     */
+    public int getTolerance(){
+        return 20;
+    }
+
+    public boolean croopLeftSide(){
+        return true;
     }
 
     /**
@@ -133,6 +170,7 @@ public class Default implements I_Auswerter{
 
         if(m.find()){
             try {
+                Log.e("GROUP", m.group());
                 return m.group();
             } catch(IllegalStateException e){
                 return "KEINE ADRESSE GEFUNDEN!";
@@ -188,7 +226,7 @@ public class Default implements I_Auswerter{
      * @return true, false
      */
     public boolean isLetter(char c) {
-        return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+        return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == 'ä') || (c == 'Ä') || (c == 'ü') || (c == 'Ü') || (c == 'ö') || (c == 'Ö') || (c == 'ß'));
     }
 
     /**

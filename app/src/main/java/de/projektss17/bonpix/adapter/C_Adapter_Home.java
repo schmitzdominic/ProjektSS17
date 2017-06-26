@@ -198,7 +198,6 @@ public class C_Adapter_Home extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     holderLine.lineChart.getLegend().setEnabled(false);
                     holderLine.lineChart.getAxisLeft().setEnabled(true);
                     holderLine.lineChart.getAxisRight().setEnabled(false);
-                    holderLine.lineChart.setViewPortOffsets(145f, 18f, 15f, 30f);
                     holderLine.lineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
                         @Override
                         public String getFormattedValue(float value, AxisBase axis) {
@@ -230,7 +229,8 @@ public class C_Adapter_Home extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     this.lineData.setValueFormatter(new IValueFormatter() {
                         @Override
                         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                            return bons.get((int)entry.getX() - 1).getShopName();
+                            String laden = bons.get((int)entry.getX() - 1).getShopName();
+                            return laden.length() > 5 ? laden.substring(0, 5) + ".." : laden;
                         }
                     });
                 } else {
