@@ -13,6 +13,7 @@ import java.util.List;
 
 import de.projektss17.bonpix.A_Budget_Edit;
 import de.projektss17.bonpix.R;
+import de.projektss17.bonpix.S;
 import de.projektss17.bonpix.daten.C_Budget;
 
 public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.ViewHolder> {
@@ -39,11 +40,11 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
             this.title = (TextView) view.findViewById(R.id.budget_title);
             this.budgetCurrently = (TextView) view.findViewById(R.id.budget_content);
             this.monthBefore = (TextView) view.findViewById(R.id.budget_monat_von);
-            this.yearBefore = (TextView) view.findViewById(R.id.budget_jahr_von);
+            this.tagVon = (TextView) view.findViewById(R.id.budget_jahr_von);
             this.monthAfter = (TextView) view.findViewById(R.id.budget_monat_bis);
-            this.yearAfter = (TextView) view.findViewById(R.id.budget_jahr_bis);
-            this.tagVon = (TextView) view.findViewById(R.id.budget_tag_von);
-            this.tagBis = (TextView) view.findViewById(R.id.budget_tag_bis);
+            this.tagBis = (TextView) view.findViewById(R.id.budget_jahr_bis);
+            this.yearBefore = (TextView) view.findViewById(R.id.budget_tag_von);
+            this.yearAfter = (TextView) view.findViewById(R.id.budget_tag_bis);
             this.progressBar = (ProgressBar)view.findViewById(R.id.budget_progress_bar_circle);
             this.progressPercentage = (TextView) view.findViewById(R.id.budget_progress_percentage);
         }
@@ -58,8 +59,8 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         C_Budget budget = budgetList.get(position);
-        holder.title.setText(budget.getTitle() + " " + budget.getBudgetMax() + "€");
-        holder.budgetCurrently.setText(this.getRestBudget(budget)+ " €");
+        holder.title.setText(budget.getTitle());
+        holder.budgetCurrently.setText(S.roundPrice(this.getRestBudget(budget))+ " €");
         holder.monthBefore.setText(budget.getMonthVon());
         holder.yearBefore.setText(budget.getYearVon());
         holder.monthAfter.setText(budget.getMonthBis());
@@ -84,8 +85,8 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
      * @param budget
      * @return
      */
-    private String getRestBudget(C_Budget budget){
-        return "" + ((double) budget.getBudgetMax() - budget.getBudgetLost());
+    private double getRestBudget(C_Budget budget){
+        return ((double) budget.getBudgetMax() - budget.getBudgetLost());
     }
 
     /**
@@ -94,7 +95,7 @@ public class C_Adapter_Budget extends RecyclerView.Adapter<C_Adapter_Budget.View
      * @return
      */
     private String getRestPercentage(C_Budget budget){
-        return "" + (Math.round(((Double.parseDouble(this.getRestBudget(budget)) / budget.getBudgetMax()) * 100) * 100) / 100.00);
+        return "" + (Math.round(((this.getRestBudget(budget) / budget.getBudgetMax()) * 100) * 100) / 100.00);
     }
 
     @Override

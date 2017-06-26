@@ -23,6 +23,7 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
     private List<C_Bon> bonsList;
     private int row_index = -1;
     private Intent intent;
+    private String ladenName;
 
     /**
      * Standard Constructor
@@ -69,8 +70,11 @@ public class C_Adapter_Bons extends RecyclerView.Adapter<C_Adapter_Bons.ViewHold
     public void onBindViewHolder(final ViewHolder holder, final int position){
 
         final C_Bon bon = bonsList.get(position);
+
+        ladenName = bon.getShopName().length()>10 ? bon.getShopName().substring(0,8) + ".." : bon.getShopName();
+
         holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
-        holder.title.setText(bon.getShopName());
+        holder.title.setText(ladenName);
         holder.content.setText(S.getWeekday(holder.res, S.getWeekdayNumber(bon.getDate())) + "\n" + bon.getDate());
         holder.price.setText(String.format("%s €", bon.getTotalPrice().replace(".", ",")));
 

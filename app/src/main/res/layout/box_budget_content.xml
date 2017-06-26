@@ -59,7 +59,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_toLeftOf="@+id/budget_card_relative_layout"
                     android:layout_toStartOf="@+id/budget_card_relative_layout"
-                    android:text="T"
+                    android:text="JahrVon"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -88,7 +88,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_toLeftOf="@+id/budget_card_relative_layout"
                     android:layout_toStartOf="@+id/budget_card_relative_layout"
-                    android:text="Jahrvon"
+                    android:text="T"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -116,7 +116,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_toRightOf="@+id/budget_card_relative_layout"
-                    android:text="T"
+                    android:text="JahrBis"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -143,7 +143,7 @@
                     android:layout_alignEnd="@+id/budget_bis"
                     android:layout_alignRight="@+id/budget_bis"
                     android:layout_toRightOf="@+id/budget_card_relative_layout"
-                    android:text="JahrBis "
+                    android:text="T"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold" />
