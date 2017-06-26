@@ -862,7 +862,7 @@ public class A_OCR_Manuell extends AppCompatActivity {
         cursor.moveToFirst();
         String picturePath = cursor.getString(column_index_data);
 
-        Log.e("PATH",picturePath);*/
+        Log.e("PATH",picturePath);*/ // TODO Bitte nicht entfernen! ist wichtig zum testen!
 
         if(status){
             this.removeAllArticles();

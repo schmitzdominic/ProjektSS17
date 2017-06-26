@@ -211,7 +211,7 @@ public class C_OCR {
                 throw new E_NoBonFoundException(this.context, "## C_OCR - SET ARTICLES", "ERROR: RECOGNIZEDTEXT=NULL OR \"\"");
             }
 
-            /*this.testPic = halfLeft;*/
+            /*this.testPic = halfLeft;*/ // TODO Bitte diese beiden Codeblöcke nicht entfernen! Wichtig zum Testen!
 
             /*if(articleStripes.size() != 0){
                 this.testPic = articleStripes.get(0);
@@ -265,7 +265,7 @@ public class C_OCR {
 
             articleStripes = this.picChanger.getLineList(cropedBitmap, stripeSize, correction);
 
-            /*this.testPic = cropedBitmap;*/
+            /*this.testPic = cropedBitmap;*/ // TODO Bitte diese beiden Codeblöcke nicht entfernen! Wichtig zum Testen!
 
             /*if(articleStripes.size() != 0){
                 this.testPic = articleStripes.get(0);
