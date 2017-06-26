@@ -4,10 +4,6 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-/**
- * Created by Domi on 15.04.2017.
- */
-
 public class Rossmann extends Default {
 
     private String name = "Rossmann";
@@ -18,6 +14,9 @@ public class Rossmann extends Default {
 
     @Override
     public ArrayList<String> getProducts(String txt) {
+
+        txt = txt.replaceAll("\\d\\w+ ", "");
+
         return super.getProducts(txt);
     }
 
@@ -39,5 +38,15 @@ public class Rossmann extends Default {
     @Override
     public String getAdress(String txt) {
         return "KEINE ADRESSE GEFUNDEN!";
+    }
+
+    @Override
+    public double getCorrection(){
+        return 0;
+    }
+
+    @Override
+    public boolean croopLeftSide() {
+        return false;
     }
 }

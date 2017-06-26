@@ -4,11 +4,11 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-public class Aral extends Default {
+public class Rewe extends Default {
 
-    private String name = "Aral";
+    private String name = "REWE";
 
-    public Aral(Context context){
+    public Rewe(Context context){
         super(context);
     }
 
@@ -19,6 +19,10 @@ public class Aral extends Default {
 
     @Override
     public ArrayList<String> getPrices(String txt) {
+
+        txt = txt.replaceAll("\\. ",".");
+        txt = txt.replaceAll(", ",".");
+        txt = txt.replaceAll("#", "");
 
         ArrayList<String> prices = super.getPrices(txt);
         ArrayList<String> onePrice = new ArrayList<>();
@@ -48,6 +52,11 @@ public class Aral extends Default {
 
     @Override
     public double getCorrection(){
-        return 0;
+        return 0.3 ;
+    }
+
+    @Override
+    public int getFirstLine(){
+        return 1;
     }
 }

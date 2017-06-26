@@ -1,6 +1,7 @@
 package de.projektss17.bonpix.auswerter;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -8,19 +9,17 @@ import java.util.ArrayList;
  * Created by Domi on 15.04.2017.
  */
 
-public class Aldi extends Default {
+public class Karstadt extends Default {
 
     private String name = "Aldi";
 
-    public Aldi(Context context){
+    public Karstadt(Context context){
         super(context);
     }
 
     @Override
     public ArrayList<String> getProducts(String txt) {
-
-        txt = txt.replaceAll("Sofortstorno","");
-
+        Log.e("TEST","#########################");
         return super.getProducts(txt);
     }
 

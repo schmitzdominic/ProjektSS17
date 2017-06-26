@@ -13,6 +13,7 @@
     <string name="title_tab3">BONS</string>
     <string name="foto_button"> Foto </string>
     <string name="manuell_button"> Manuell </string>
+    <string name="foto_deaktiviert">Die Foto-Funktion ist derzeit deaktiviert!</string>
 
     <!-- Navigation Drawer -->
     <string name="open">Open</string>

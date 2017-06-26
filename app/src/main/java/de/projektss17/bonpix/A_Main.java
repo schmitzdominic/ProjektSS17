@@ -51,6 +51,7 @@ public class A_Main extends AppCompatActivity {
     // Primitive Datentypen
     private boolean isFABOpen = false;
     private boolean isDrawOpen = false;
+    private boolean FOTOENABLED = false;
     private boolean cameraPermissions;
     private String fileNameTakenPhoto;
     public ArrayList<String> picturePathList;
@@ -466,22 +467,26 @@ public class A_Main extends AppCompatActivity {
      */
     public void activeTakePhoto() {
 
-        this.closeFABMenu();
+        if(this.FOTOENABLED){
+            this.closeFABMenu();
 
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            Date date = Calendar.getInstance().getTime();
-            DateFormat formatter = new SimpleDateFormat("ddMMyyyyHH:mm");
-            String today = formatter.format(date);
-            fileNameTakenPhoto = today + ".jpg";
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, fileNameTakenPhoto);
-            mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
-            takePictureIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            takePictureIntent.putExtra(MediaStore.EXTRA_SIZE_LIMIT,5582912L);
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                Date date = Calendar.getInstance().getTime();
+                DateFormat formatter = new SimpleDateFormat("ddMMyyyyHH:mm");
+                String today = formatter.format(date);
+                fileNameTakenPhoto = today + ".jpg";
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.TITLE, fileNameTakenPhoto);
+                mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+                takePictureIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                takePictureIntent.putExtra(MediaStore.EXTRA_SIZE_LIMIT,5582912L);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        } else {
+            S.outLong(this, this.getResources().getString(R.string.foto_deaktiviert));
         }
     }
 
