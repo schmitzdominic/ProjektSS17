@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BonPix</string>
-    <string name="impressum_version_nummer">Version 0.5 BETA</string>
-    <string name="impressum_version_stand">Stand: 12.06.2017</string>
+    <string name="impressum_version_nummer">Version 0.6 PROJEKTTAG</string>
+    <string name="impressum_version_stand">Stand: 28.06.2017</string>
 
     <!-- Allgemein -->
     <string name="waehrung">€</string>
