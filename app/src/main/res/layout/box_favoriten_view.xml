@@ -49,8 +49,8 @@
         android:paddingRight="20dp"
         android:gravity="center_vertical"
         android:text="@string/a_favoriten_preis"
-        android:maxLength="10"
-        android:textSize="18sp"/>
+        android:maxLength="13"
+        android:textSize="14sp"/>
 
 
     <ImageView
