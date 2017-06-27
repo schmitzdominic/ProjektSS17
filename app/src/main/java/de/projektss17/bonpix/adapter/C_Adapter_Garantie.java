@@ -21,6 +21,7 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
 
     private List<C_Bon> bonListe;
     private C_Bon bon;
+    private String ladenName;
 
     /**
      * Standard Constructor
@@ -68,6 +69,9 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
     public void onBindViewHolder(final C_Adapter_Garantie.MyViewHolder holder, final int position) {
 
         this.bon = bonListe.get(position);
+
+        ladenName = bon.getShopName().length()>10 ? bon.getShopName().substring(0,8) + ".." : bon.getShopName();
+
         holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
         holder.warrantyShop.setText(bon.getShopName());
         holder.warrantyEnd.setText(holder.res.getString(R.string.a_garantie_garantie_bis) + "\n" + bon.getGuaranteeEnd());

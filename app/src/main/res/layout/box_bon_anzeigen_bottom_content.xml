@@ -21,11 +21,11 @@
             android:id="@+id/bon_anzeigen_artikel_preis_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="100dp"
             android:text="Preis"
             android:maxLength="5"
             android:textStyle="bold"
-            android:layout_above="@+id/bon_anzeigen_artikel_preis"
+            android:layout_marginEnd="99dp"
+            android:layout_above="@+id/bon_anzeigen_artikel"
             android:layout_alignParentEnd="true" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TestArtikel"
-            android:maxLength="30"
+            android:maxLength="20"
             android:layout_below="@+id/bon_anzeigen_artikel_title"
             android:layout_alignStart="@+id/bon_anzeigen_artikel_title" />
 
@@ -41,10 +41,9 @@
             android:id="@+id/bon_anzeigen_artikel_preis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/bon_anzeigen_artikel"
-            android:layout_alignBottom="@+id/bon_anzeigen_artikel"
-            android:layout_alignStart="@+id/bon_anzeigen_artikel_preis_title"
             android:text="X02.0X €"
-            android:maxLength="10"/>
+            android:maxLength="12"
+            android:layout_below="@+id/bon_anzeigen_artikel_preis_title"
+            android:layout_alignStart="@+id/bon_anzeigen_artikel_preis_title"/>
 
 </RelativeLayout>

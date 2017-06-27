@@ -19,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -232,6 +233,8 @@ public class A_OCR_Manuell extends AppCompatActivity {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(A_OCR_Manuell.this);
                     final EditText input = new EditText(A_OCR_Manuell.this);
+
+                    input.setFilters(new InputFilter[] {new InputFilter.LengthFilter(30)});
 
                     input.setInputType(InputType.TYPE_CLASS_TEXT);
                     builder.setView(input);
