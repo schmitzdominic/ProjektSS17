@@ -70,7 +70,7 @@ public class C_Adapter_Garantie extends RecyclerView.Adapter<C_Adapter_Garantie.
         this.bon = bonListe.get(position);
         holder.icon.setImageBitmap(S.getShopIcon(holder.res, bon.getShopName()));
         holder.warrantyShop.setText(bon.getShopName());
-        holder.warrantyEnd.setText(holder.res.getString(R.string.a_garantie_garantie_bis) + " " + bon.getGuaranteeEnd());
+        holder.warrantyEnd.setText(holder.res.getString(R.string.a_garantie_garantie_bis) + "\n" + bon.getGuaranteeEnd());
         holder.warrantyPrice.setText(bon.getTotalPrice() + holder.res.getString(R.string.waehrung));
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
