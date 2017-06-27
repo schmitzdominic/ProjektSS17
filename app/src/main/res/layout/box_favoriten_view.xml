@@ -49,7 +49,7 @@
         android:paddingRight="20dp"
         android:gravity="center_vertical"
         android:text="@string/a_favoriten_preis"
-        android:maxLength="10"
+        android:maxLength="13"
         android:textSize="24sp"/>
 
 

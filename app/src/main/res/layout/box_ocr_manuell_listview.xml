@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="0.1"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/cardview_light_background"
         android:src="@mipmap/ic_add_box_black_24dp"
         android:tint="@color/positiv" />
 
@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="0.19"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/cardview_light_background"
         android:contentDescription="@string/a_ocr_manuell_button_delete_row_description"
         android:onClick="onDeleteClicked"
         android:src="@mipmap/ic_delete_black_24dp"

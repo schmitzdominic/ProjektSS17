@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="20dp"
         android:text="Ende der Garantie"
-        android:maxLength="20"
+        android:maxLength="25"
         android:textSize="14sp"
         android:layout_toLeftOf="@id/garantie_view_zusatz_favorite_price"
         android:layout_toRightOf="@+id/garantie_view_laden_bild"
@@ -49,7 +49,7 @@
         android:paddingRight="20dp"
         android:gravity="center_vertical"
         android:text="Preis"
-        android:maxLength="10"
+        android:maxLength="13"
         android:textSize="24sp"/>
 
 
